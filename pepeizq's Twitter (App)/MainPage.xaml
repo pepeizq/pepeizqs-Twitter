@@ -1,0 +1,247 @@
+﻿<Page
+    x:Class="pepeizqs_Twitter_App.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
+  
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Loaded="Page_Loaded">
+
+    <Grid Background="{StaticResource ColorGridPrincipal}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="gridTitulo" Grid.Row="0" Background="{StaticResource GridTituloBackground}">
+            <TextBlock x:Name="tbTitulo" Margin="30,0,0,0" FontSize="13" Foreground="White" VerticalAlignment="Center"/>
+        </Grid>
+
+        <Grid x:Name="gridPrincipal" Grid.Row="1" Background="{StaticResource GridTituloBackground}">
+            <Grid.Transitions>
+                <TransitionCollection>
+                    <EdgeUIThemeTransition Edge="Bottom"/>
+                </TransitionCollection>
+            </Grid.Transitions>
+
+            <Grid x:Name="gridConfig" Visibility="Collapsed" Background="{StaticResource GridAcrilico}">
+                <ScrollViewer>
+                    <StackPanel Orientation="Vertical" Width="700" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Button x:Name="botonConfigVolver" Margin="40,20" Padding="10" Background="{StaticResource BrushSecundario}" HorizontalAlignment="Center" BorderBrush="{StaticResource BrushPrimario}" BorderThickness="1">
+                            <Button.Content>
+                                <StackPanel Orientation="Horizontal">
+                                    <SymbolIcon Symbol="Back" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="White"/>
+                                    <TextBlock x:Uid="buttonBack" Foreground="White"/>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+
+                        <StackPanel Orientation="Vertical" Margin="40,20" BorderBrush="{StaticResource BrushSecundario}" BorderThickness="1">
+                            <StackPanel.Background>
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <GradientStop Color="#FFE4E4E4" Offset="0.5" />
+                                    <GradientStop Color="#FFBFBFBF" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </StackPanel.Background>
+
+                            <Grid x:Name="gridConfigCuentas" HorizontalAlignment="Stretch" Padding="10" Background="{StaticResource GridTituloBackground}">
+                                <TextBlock x:Uid="tbConfigAccounts" FontSize="16" Foreground="White" Margin="5,0,0,0"/>
+                            </Grid>
+
+                            <StackPanel Orientation="Vertical" Padding="15">
+                                <ListView x:Name="lvConfigUsuarios" ItemContainerStyle="{StaticResource ListViewEstilo1}"/>
+
+                                <Button x:Name="botonAñadirCuenta" Padding="10" Margin="0,15,0,0" Background="{StaticResource BrushSecundario}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <SymbolIcon Symbol="Add" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="White"/>
+                                        <TextBlock x:Uid="buttonAddAccount" Foreground="White"/>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Margin="40,20" BorderBrush="{StaticResource BrushSecundario}" BorderThickness="1">
+                            <StackPanel.Background>
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <GradientStop Color="#FFE4E4E4" Offset="0.5" />
+                                    <GradientStop Color="#FFBFBFBF" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </StackPanel.Background>
+
+                            <Grid x:Name="gridConfigNotificaciones" HorizontalAlignment="Stretch" Padding="10" Background="{StaticResource GridTituloBackground}" Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock x:Uid="tbConfigNotifications" Grid.Column="0" FontSize="16" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0"/>
+
+                                <CheckBox x:Name="cbConfigNotificaciones" Grid.Column="1" MinWidth="0"/>
+                            </Grid>
+
+                            <StackPanel x:Name="spConfigNotificaciones" Orientation="Vertical" Padding="15,5,15,15">
+                                <CheckBox x:Name="cbConfigNotificacionesTiempo">
+                                    <CheckBox.Content>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <TextBlock x:Uid="tbConfigNotificationsTime" Grid.Row="0"/>
+
+                                            <StackPanel x:Name="spConfigNotificacionesTiempo" Grid.Row="1" Orientation="Horizontal" Visibility="Collapsed" Margin="0,10,0,0">
+                                                <TextBox x:Name="tbConfigNotificacionesSegundos" MinWidth="40" Width="40" TextAlignment="Justify"/>
+                                                <TextBlock x:Uid="tbConfigNotificationsSeconds" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="14"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </CheckBox.Content>
+                                </CheckBox>
+
+                                <CheckBox x:Name="cbConfigNotificacionesSonido" Margin="0,15">
+                                    <CheckBox.Content>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <TextBlock x:Uid="tbConfigNotificationsSound" Grid.Row="0"/>
+
+                                            <StackPanel x:Name="spConfigNotificacionesSonido" Grid.Row="1" Orientation="Horizontal" Visibility="Collapsed" Margin="0,10,0,0">
+                                                <ComboBox x:Name="cbConfigNotificacionesSonidoElegido">
+                                                    <ComboBoxItem Content="Twitter.Default" Tag="ms-appx:///Assets/Sonidos/Twitter.Default.mp3"/>
+                                                    <ComboBoxItem Content="Windows.Default" Tag="ms-winsoundevent:Notification.Default"/>
+                                                    <ComboBoxItem Content="Windows.IM" Tag="ms-winsoundevent:Notification.IM"/>
+                                                    <ComboBoxItem Content="Windows.Mail" Tag="ms-winsoundevent:Notification.Mail"/>
+                                                    <ComboBoxItem Content="Windows.Reminder" Tag="ms-winsoundevent:Notification.Reminder"/>
+                                                    <ComboBoxItem Content="Windows.SMS" Tag="ms-winsoundevent:Notification.SMS"/>
+                                                </ComboBox>
+
+                                                <Button x:Name="botonConfigNotificacionesSonido" Padding="4" Background="{StaticResource BrushSecundario}" Margin="15,0,0,0">
+                                                    <Button.Content>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <SymbolIcon Symbol="Play" Margin="0,0,5,0" VerticalAlignment="Center" Foreground="White"/>
+                                                            <TextBlock x:Uid="buttonConfigNotificationsSound" Foreground="White"/>
+                                                        </StackPanel>
+                                                    </Button.Content>
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                    </CheckBox.Content>
+                                </CheckBox>
+
+                                <CheckBox x:Name="cbConfigNotificacionesImagen">
+                                    <CheckBox.Content>
+                                        <Grid>
+                                            <TextBlock x:Uid="tbConfigNotificationsImage"/>
+                                        </Grid>
+                                    </CheckBox.Content>
+                                </CheckBox>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+
+            <Grid x:Name="gridImagenAmpliada" Visibility="Collapsed" Background="{StaticResource GridAcrilico}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="10">
+                    <Border BorderThickness="1" BorderBrush="{StaticResource BrushSecundario}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
+                        <controls:ImageEx x:Name="imagenAmpliada" Stretch="None" IsCacheEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ScrollViewer>
+
+                <Button x:Name="botonCerrarImagen" Margin="10" Padding="10" Background="{StaticResource BrushSecundario}" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="{StaticResource BrushCuarto}">
+                    <SymbolIcon Symbol="Cancel" Foreground="White"/>
+                </Button>
+            </Grid>
+
+            <Grid x:Name="gridVideoAmpliado" Visibility="Collapsed" Background="{StaticResource GridAcrilico}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Button x:Name="botonCerrarVideo" Grid.Row="0" Margin="10,10,10,0" Padding="10" Background="{StaticResource BrushSecundario}" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="{StaticResource BrushCuarto}">
+                    <SymbolIcon Symbol="Cancel" Foreground="White"/>
+                </Button>
+
+                <Border Grid.Row="1" BorderThickness="1" BorderBrush="{StaticResource BrushSecundario}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
+                    <MediaPlayerElement x:Name="videoAmpliado" AreTransportControlsEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+            </Grid>
+
+            <Grid x:Name="gridMasCosas" Visibility="Collapsed" Background="{StaticResource GridAcrilico}">
+                <ScrollViewer>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Orientation="Vertical" Margin="20" BorderBrush="{StaticResource BrushSecundario}" BorderThickness="1" Padding="15" VerticalAlignment="Top">
+                            <StackPanel.Background>
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <GradientStop Color="#FFE4E4E4" Offset="0.5" />
+                                    <GradientStop Color="#FFBFBFBF" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </StackPanel.Background>
+
+                            <ListView IsItemClickEnabled="True" ItemClick="LvMasCosasItemClick">
+                                <ListViewItem Background="{StaticResource BrushSecundario}" Margin="0,0,0,30">
+                                    <StackPanel Orientation="Horizontal" Tag="0">
+                                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8E1;" Foreground="White" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                        <TextBlock x:Uid="VoteApp" Foreground="White" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </ListViewItem>
+                                <ListViewItem x:Name="lvMasCosasMasApps" Background="{StaticResource BrushSecundario}" Margin="0,0,0,5">
+                                    <StackPanel Orientation="Horizontal" Tag="1">
+                                        <controls:ImageEx Source="Assets\MasCosas\pepeizq.png" Margin="0,0,10,0" Width="15" Height="15" IsCacheEnabled="True" VerticalAlignment="Center"/>
+                                        <TextBlock x:Uid="MoreApps" Foreground="White" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </ListViewItem>
+                                <ListViewItem x:Name="lvMasCosasContacto" Background="{StaticResource BrushSecundario}" Margin="0,0,0,5">
+                                    <StackPanel Orientation="Horizontal" Tag="3">
+                                        <controls:ImageEx Source="Assets\MasCosas\contacto.png" Margin="0,0,10,0" Width="15" Height="15" IsCacheEnabled="True" VerticalAlignment="Center"/>
+                                        <TextBlock x:Uid="Contact" Foreground="White" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </ListViewItem>
+                                <ListViewItem x:Name="lvMasCosasReportarFallo" Background="{StaticResource BrushSecundario}" Margin="0,0,0,30">
+                                    <StackPanel Orientation="Horizontal" Tag="4">
+                                        <controls:ImageEx Source="Assets\MasCosas\feedback.png" Margin="0,0,10,0" Width="15" Height="15" IsCacheEnabled="True" VerticalAlignment="Center"/>
+                                        <TextBlock x:Uid="ReportBug" Foreground="White" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </ListViewItem>
+                                <ListViewItem x:Name="lvMasCosasTraduccion" Background="{StaticResource BrushSecundario}" Margin="0,0,0,5">
+                                    <StackPanel Orientation="Horizontal" Tag="5">
+                                        <controls:ImageEx Source="Assets\MasCosas\poeditor.png" Margin="0,0,10,0" Width="15" Height="15" IsCacheEnabled="True" VerticalAlignment="Center"/>
+                                        <TextBlock x:Uid="HelpTranslate" Foreground="White" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </ListViewItem>
+                                <ListViewItem x:Name="lvMasCosasCodigoFuente" Background="{StaticResource BrushSecundario}">
+                                    <StackPanel Orientation="Horizontal" Tag="6">
+                                        <controls:ImageEx Source="Assets\MasCosas\github.png" Margin="0,0,10,0" Width="15" Height="15" IsCacheEnabled="True" VerticalAlignment="Center"/>
+                                        <TextBlock x:Uid="SourceCode" Foreground="White" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </ListViewItem>
+                            </ListView>
+                        </StackPanel>
+
+                        <Grid Grid.Column="1" Margin="20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <ProgressBar x:Name="pbMasCosas" Grid.Row="0" Foreground="{StaticResource BrushSecundario}" Visibility="Collapsed" Height="20" IsIndeterminate="True"/>
+                            <WebView x:Name="wvMasCosas" Grid.Row="1"/>
+                        </Grid>
+                    </Grid>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "pepeizq's Twitter (App)", "pepeizq's Twitter (App)\pepeizq's Twitter (App).vbproj", "{BAF4B838-6180-437A-B392-9F8B4B212BEB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|ARM = Release|ARM
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+		Tienda|ARM = Tienda|ARM
+		Tienda|x64 = Tienda|x64
+		Tienda|x86 = Tienda|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Debug|ARM.ActiveCfg = Debug|ARM
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Debug|ARM.Build.0 = Debug|ARM
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Debug|ARM.Deploy.0 = Debug|ARM
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Debug|x64.ActiveCfg = Debug|x64
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Debug|x64.Build.0 = Debug|x64
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Debug|x64.Deploy.0 = Debug|x64
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Debug|x86.ActiveCfg = Debug|x86
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Debug|x86.Build.0 = Debug|x86
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Debug|x86.Deploy.0 = Debug|x86
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Release|ARM.ActiveCfg = Release|ARM
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Release|ARM.Build.0 = Release|ARM
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Release|ARM.Deploy.0 = Release|ARM
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Release|x64.ActiveCfg = Release|x64
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Release|x64.Build.0 = Release|x64
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Release|x64.Deploy.0 = Release|x64
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Release|x86.ActiveCfg = Release|x86
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Release|x86.Build.0 = Release|x86
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Release|x86.Deploy.0 = Release|x86
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Tienda|ARM.ActiveCfg = Tienda|ARM
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Tienda|ARM.Build.0 = Tienda|ARM
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Tienda|ARM.Deploy.0 = Tienda|ARM
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Tienda|x64.ActiveCfg = Tienda|x64
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Tienda|x64.Build.0 = Tienda|x64
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Tienda|x64.Deploy.0 = Tienda|x64
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Tienda|x86.ActiveCfg = Tienda|x86
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Tienda|x86.Build.0 = Tienda|x86
+		{BAF4B838-6180-437A-B392-9F8B4B212BEB}.Tienda|x86.Deploy.0 = Tienda|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E7CF0A3E-449C-4DE1-85EB-7A4854FF4857}
+	EndGlobalSection
+EndGlobal
