@@ -208,9 +208,12 @@
     <value>Responder Tweet</value>
   </data>
   <data name="Retweet" xml:space="preserve">
-    <value>Retwitea</value>
+    <value>Retwitear</value>
   </data>
   <data name="RetweetSent" xml:space="preserve">
     <value>Retwitteado con Éxito</value>
+  </data>
+  <data name="Favorite" xml:space="preserve">
+    <value>Favorito</value>
   </data>
 </root>

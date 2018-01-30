@@ -15,8 +15,10 @@ Namespace pepeTwitterXaml
                 .Height = 35
             }
 
+            '------------------------------------------
+
             Dim botonResponder As New Button With {
-                .Content = ConstructorBotones(59217, recursos.GetString("ReplyTweet")),
+                .Content = ConstructorBotones(57862, recursos.GetString("ReplyTweet")),
                 .Padding = New Thickness(5, 5, 5, 5),
                 .Margin = New Thickness(0, 0, 0, 0),
                 .Background = New SolidColorBrush(Colors.Transparent),
@@ -32,20 +34,55 @@ Namespace pepeTwitterXaml
 
             spBotones.Children.Add(botonResponder)
 
+            '------------------------------------------
+
             Dim botonRetweet As New Button With {
                 .Content = ConstructorBotones(59627, recursos.GetString("Retweet")),
                 .Padding = New Thickness(5, 5, 5, 5),
                 .Margin = New Thickness(15, 0, 0, 0),
                 .Background = New SolidColorBrush(Colors.Transparent),
                 .BorderThickness = New Thickness(0, 0, 0, 0),
-                .Tag = New pepeTwitter.Objetos.RetweetBoton(tweet, megaUsuario),
+                .Tag = New pepeTwitter.Objetos.RetweetBoton(tweet, megaUsuario, gridTweet),
                 .Visibility = Visibility.Collapsed,
                 .Style = App.Current.Resources("ButtonRevealStyle")
             }
 
+            If tweet.Retwitteado = True Then
+                botonRetweet.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+                botonRetweet.Foreground = New SolidColorBrush(Colors.White)
+            End If
+
             AddHandler botonRetweet.Click, AddressOf BotonRetweetClick
+            AddHandler botonRetweet.PointerEntered, AddressOf BotonRetweetUsuarioEntra
+            AddHandler botonRetweet.PointerExited, AddressOf BotonRetweetUsuarioSale
 
             spBotones.Children.Add(botonRetweet)
+
+            '------------------------------------------
+
+            Dim botonFavorito As New Button With {
+                .Content = ConstructorBotones(57350, recursos.GetString("Favorite")),
+                .Padding = New Thickness(5, 5, 5, 5),
+                .Margin = New Thickness(15, 0, 0, 0),
+                .Background = New SolidColorBrush(Colors.Transparent),
+                .BorderThickness = New Thickness(0, 0, 0, 0),
+                .Tag = New pepeTwitter.Objetos.RetweetBoton(tweet, megaUsuario, gridTweet),
+                .Visibility = Visibility.Collapsed,
+                .Style = App.Current.Resources("ButtonRevealStyle")
+            }
+
+            If tweet.Favoriteado = True Then
+                botonFavorito.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+                botonFavorito.Foreground = New SolidColorBrush(Colors.White)
+            End If
+
+            AddHandler botonFavorito.Click, AddressOf BotonFavoritoClick
+            AddHandler botonFavorito.PointerEntered, AddressOf BotonFavoritoUsuarioEntra
+            AddHandler botonFavorito.PointerExited, AddressOf BotonFavoritoUsuarioSale
+
+            spBotones.Children.Add(botonFavorito)
+
+            '------------------------------------------
 
             Return spBotones
         End Function
@@ -61,8 +98,12 @@ Namespace pepeTwitterXaml
 
             If gridResponder.Visibility = Visibility.Visible Then
                 gridResponder.Visibility = Visibility.Collapsed
+                boton.Background = New SolidColorBrush(Colors.Transparent)
+                boton.Foreground = New SolidColorBrush(Colors.Black)
             Else
                 gridResponder.Visibility = Visibility.Visible
+                boton.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+                boton.Foreground = New SolidColorBrush(Colors.White)
             End If
 
         End Sub
@@ -73,14 +114,38 @@ Namespace pepeTwitterXaml
             Dim cosas As pepeTwitter.Objetos.RetweetBoton = boton.Tag
 
             Dim status As New TwitterStatus With {
-               .TweetID = cosas.Tweet.ID
+                .TweetID = cosas.Tweet.ID
             }
-
-            Await cosas.MegaUsuario.Servicio.reTweetStatusAsync(status)
 
             Dim recursos As New Resources.ResourceLoader
 
-            Notificaciones.Toast.Enseñar(recursos.GetString("RetweetSent"))
+            If cosas.Tweet.Retwitteado = False Then
+                Await cosas.MegaUsuario.Servicio.RetweetStatusAsync(status)
+
+                Notificaciones.Toast.Enseñar(recursos.GetString("RetweetSent"))
+
+                boton.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+
+                Dim spBoton As StackPanel = boton.Content
+                Dim tb As TextBlock = spBoton.Children(0)
+                tb.Foreground = New SolidColorBrush(Colors.White)
+
+                cosas.Tweet.Retwitteado = True
+            Else
+                Await cosas.MegaUsuario.Servicio.DeshacerRetweetStatusAsync(status)
+
+                boton.Background = New SolidColorBrush(Colors.Transparent)
+
+                Dim spBoton As StackPanel = boton.Content
+                Dim tb As TextBlock = spBoton.Children(0)
+                tb.Foreground = New SolidColorBrush(Colors.Black)
+
+                cosas.Tweet.Retwitteado = False
+            End If
+
+        End Sub
+
+        Private Sub BotonFavoritoClick(sender As Object, e As RoutedEventArgs)
 
         End Sub
 
@@ -94,7 +159,8 @@ Namespace pepeTwitterXaml
             }
 
             Dim sp As New StackPanel With {
-                .Orientation = Orientation.Horizontal
+                .Orientation = Orientation.Horizontal,
+                .Margin = New Thickness(2, 2, 2, 2)
             }
 
             Dim tbToolTip As TextBlock = New TextBlock With {
@@ -114,20 +180,98 @@ Namespace pepeTwitterXaml
         Private Sub BotonResponderUsuarioEntra(sender As Object, e As PointerRoutedEventArgs)
 
             Dim boton As Button = sender
-            Dim sp As StackPanel = boton.Content
+            Dim grid As Grid = boton.Tag
+            Dim grid2 As Grid = grid.Children(1)
+            Dim sp As StackPanel = grid2.Children(1)
 
-            Dim tb As TextBlock = sp.Children(0)
-            tb.Foreground = New SolidColorBrush(App.Current.Resources("ColorCuarto"))
+            Dim gridResponder As Grid = sp.Children(sp.Children.Count - 1)
+
+            Dim spBoton As StackPanel = boton.Content
+
+            Dim tb As TextBlock = spBoton.Children(0)
+
+            If gridResponder.Visibility = Visibility.Collapsed Then
+                tb.Foreground = New SolidColorBrush(App.Current.Resources("ColorCuarto"))
+                boton.Background = New SolidColorBrush(Colors.Transparent)
+            Else
+                tb.Foreground = New SolidColorBrush(Colors.White)
+                boton.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+            End If
 
         End Sub
 
         Private Sub BotonResponderUsuarioSale(sender As Object, e As PointerRoutedEventArgs)
 
             Dim boton As Button = sender
-            Dim sp As StackPanel = boton.Content
+            Dim grid As Grid = boton.Tag
+            Dim grid2 As Grid = grid.Children(1)
+            Dim sp As StackPanel = grid2.Children(1)
 
-            Dim tb As TextBlock = sp.Children(0)
-            tb.Foreground = New SolidColorBrush(Colors.Black)
+            Dim gridResponder As Grid = sp.Children(sp.Children.Count - 1)
+
+            Dim spBoton As StackPanel = boton.Content
+
+            Dim tb As TextBlock = spBoton.Children(0)
+
+            If gridResponder.Visibility = Visibility.Collapsed Then
+                tb.Foreground = New SolidColorBrush(Colors.Black)
+                boton.Background = New SolidColorBrush(Colors.Transparent)
+            Else
+                tb.Foreground = New SolidColorBrush(Colors.White)
+                boton.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+            End If
+
+        End Sub
+
+        Private Sub BotonRetweetUsuarioEntra(sender As Object, e As PointerRoutedEventArgs)
+
+            Dim boton As Button = sender
+            Dim spBoton As StackPanel = boton.Content
+
+            Dim tb As TextBlock = spBoton.Children(0)
+            tb.Foreground = New SolidColorBrush(Colors.Green)
+
+        End Sub
+
+        Private Sub BotonRetweetUsuarioSale(sender As Object, e As PointerRoutedEventArgs)
+
+            Dim boton As Button = sender
+            Dim cosas As pepeTwitter.Objetos.RetweetBoton = boton.Tag
+            Dim spBoton As StackPanel = boton.Content
+
+            Dim tb As TextBlock = spBoton.Children(0)
+
+            If cosas.Tweet.Retwitteado = True Then
+                tb.Foreground = New SolidColorBrush(Colors.White)
+            Else
+                tb.Foreground = New SolidColorBrush(Colors.Black)
+            End If
+
+        End Sub
+
+        Private Sub BotonFavoritoUsuarioEntra(sender As Object, e As PointerRoutedEventArgs)
+
+            Dim boton As Button = sender
+            Dim spBoton As StackPanel = boton.Content
+
+            Dim tb As TextBlock = spBoton.Children(0)
+            tb.Foreground = New SolidColorBrush(Colors.Red)
+
+        End Sub
+
+        Private Sub BotonFavoritoUsuarioSale(sender As Object, e As PointerRoutedEventArgs)
+
+            Dim boton As Button = sender
+            Dim cosas As pepeTwitter.Objetos.RetweetBoton = boton.Tag
+            Dim spBoton As StackPanel = boton.Content
+
+            Dim tb As TextBlock = spBoton.Children(0)
+
+            If cosas.Tweet.Favoriteado = True Then
+                tb.Foreground = New SolidColorBrush(Colors.White)
+            Else
+                tb.Foreground = New SolidColorBrush(Colors.Black)
+            End If
 
         End Sub
 

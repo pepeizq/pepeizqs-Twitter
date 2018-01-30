@@ -213,4 +213,7 @@
   <data name="RetweetSent" xml:space="preserve">
     <value>Successfully Retweeted</value>
   </data>
+  <data name="Favorite" xml:space="preserve">
+    <value>Favorite</value>
+  </data>
 </root>

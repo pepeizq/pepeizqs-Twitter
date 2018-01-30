@@ -223,10 +223,17 @@ Module TweetXaml
         Dim subgrid As Grid = grid.Children(1)
         Dim sp As StackPanel = subgrid.Children(1)
         Dim spBotones As StackPanel = sp.Children(sp.Children.Count - 2)
+        Dim gridResponder As Grid = sp.Children(sp.Children.Count - 1)
 
-        For Each boton In spBotones.Children
-            boton.Visibility = Visibility.Collapsed
-        Next
+        If gridResponder.Visibility = Visibility.Collapsed Then
+            For Each boton In spBotones.Children
+                boton.Visibility = Visibility.Collapsed
+            Next
+        Else
+            For Each boton In spBotones.Children
+                boton.Visibility = Visibility.Visible
+            Next
+        End If
 
     End Sub
 
