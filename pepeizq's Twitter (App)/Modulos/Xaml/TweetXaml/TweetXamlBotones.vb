@@ -120,7 +120,7 @@ Namespace pepeTwitterXaml
             Dim recursos As New Resources.ResourceLoader
 
             If cosas.Tweet.Retwitteado = False Then
-                Await cosas.MegaUsuario.Servicio.RetweetStatusAsync(status)
+                Await cosas.MegaUsuario.Servicio.Retwitear(status)
 
                 Notificaciones.Toast.Enseñar(recursos.GetString("RetweetSent"))
 
@@ -132,7 +132,7 @@ Namespace pepeTwitterXaml
 
                 cosas.Tweet.Retwitteado = True
             Else
-                Await cosas.MegaUsuario.Servicio.DeshacerRetweetStatusAsync(status)
+                Await cosas.MegaUsuario.Servicio.DeshacerRetweet(status)
 
                 boton.Background = New SolidColorBrush(Colors.Transparent)
 
@@ -145,7 +145,40 @@ Namespace pepeTwitterXaml
 
         End Sub
 
-        Private Sub BotonFavoritoClick(sender As Object, e As RoutedEventArgs)
+        Private Async Sub BotonFavoritoClick(sender As Object, e As RoutedEventArgs)
+
+            Dim boton As Button = sender
+            Dim cosas As pepeTwitter.Objetos.RetweetBoton = boton.Tag
+
+            Dim status As New TwitterStatus With {
+                .TweetID = cosas.Tweet.ID
+            }
+
+            Dim recursos As New Resources.ResourceLoader
+
+            If cosas.Tweet.Favoriteado = False Then
+                Await cosas.MegaUsuario.Servicio.Favoritear(status)
+
+                Notificaciones.Toast.Enseñar(recursos.GetString("FavoriteSent"))
+
+                boton.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+
+                Dim spBoton As StackPanel = boton.Content
+                Dim tb As TextBlock = spBoton.Children(0)
+                tb.Foreground = New SolidColorBrush(Colors.White)
+
+                cosas.Tweet.Favoriteado = True
+            Else
+                Await cosas.MegaUsuario.Servicio.DeshacerFavorito(status)
+
+                boton.Background = New SolidColorBrush(Colors.Transparent)
+
+                Dim spBoton As StackPanel = boton.Content
+                Dim tb As TextBlock = spBoton.Children(0)
+                tb.Foreground = New SolidColorBrush(Colors.Black)
+
+                cosas.Tweet.Favoriteado = False
+            End If
 
         End Sub
 
