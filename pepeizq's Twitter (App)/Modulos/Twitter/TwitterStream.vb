@@ -59,82 +59,82 @@ Module TwitterStream
         '                   End Try
         '               End Sub)
 
-        Await megaUsuario.Servicio.StartUserStreamAsync(Async Sub(tweet_)
-                                                            Await Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, Async Sub()
+        Await megaUsuario.Servicio.ArrancarStreamUsuario(Async Sub(tweet_)
+                                                             Await Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Low, Async Sub()
 
-                                                                                                                                                                  If TypeOf tweet_ Is TwitterStreamEvento Then
-                                                                                                                                                                      Dim evento As TwitterStreamEvento = tweet_
+                                                                                                                                                                If TypeOf tweet_ Is TwitterStreamEvento Then
+                                                                                                                                                                    Dim evento As TwitterStreamEvento = tweet_
 
-                                                                                                                                                                      Notificaciones.Toast.Enseñar(evento.EventoTipo.ToString)
-                                                                                                                                                                  End If
+                                                                                                                                                                    Notificaciones.Toast.Enseñar(evento.EventoTipo.ToString)
+                                                                                                                                                                End If
 
-                                                                                                                                                                  If TypeOf tweet_ Is TwitterStreamEventoBorrar Then
-                                                                                                                                                                      Dim borrar As TwitterStreamEventoBorrar = tweet_
+                                                                                                                                                                If TypeOf tweet_ Is TwitterStreamEventoBorrar Then
+                                                                                                                                                                    Dim borrar As TwitterStreamEventoBorrar = tweet_
 
-                                                                                                                                                                      If Not borrar Is Nothing Then
-                                                                                                                                                                          Dim i As Integer = 0
+                                                                                                                                                                    If Not borrar Is Nothing Then
+                                                                                                                                                                        Dim i As Integer = 0
 
-                                                                                                                                                                          For Each item In lvInicio.Items
-                                                                                                                                                                              Dim lvitem As ListViewItem = item
-                                                                                                                                                                              Dim grid As Grid = lvitem.Content
-                                                                                                                                                                              Dim tweet As Tweet = grid.Tag
+                                                                                                                                                                        For Each item In lvInicio.Items
+                                                                                                                                                                            Dim lvitem As ListViewItem = item
+                                                                                                                                                                            Dim grid As Grid = lvitem.Content
+                                                                                                                                                                            Dim tweet As Tweet = grid.Tag
 
-                                                                                                                                                                              If borrar.Id = tweet.ID Then
-                                                                                                                                                                                  lvInicio.Items.RemoveAt(i)
-                                                                                                                                                                              End If
+                                                                                                                                                                            If borrar.Id = tweet.ID Then
+                                                                                                                                                                                lvInicio.Items.RemoveAt(i)
+                                                                                                                                                                            End If
 
-                                                                                                                                                                              i += 1
-                                                                                                                                                                          Next
+                                                                                                                                                                            i += 1
+                                                                                                                                                                        Next
 
-                                                                                                                                                                          For Each item In lvMenciones.Items
-                                                                                                                                                                              Dim lvitem As ListViewItem = item
-                                                                                                                                                                              Dim grid As Grid = lvitem.Content
-                                                                                                                                                                              Dim tweet As Tweet = grid.Tag
+                                                                                                                                                                        For Each item In lvMenciones.Items
+                                                                                                                                                                            Dim lvitem As ListViewItem = item
+                                                                                                                                                                            Dim grid As Grid = lvitem.Content
+                                                                                                                                                                            Dim tweet As Tweet = grid.Tag
 
-                                                                                                                                                                              If borrar.Id = tweet.ID Then
-                                                                                                                                                                                  lvMenciones.Items.RemoveAt(i)
-                                                                                                                                                                              End If
+                                                                                                                                                                            If borrar.Id = tweet.ID Then
+                                                                                                                                                                                lvMenciones.Items.RemoveAt(i)
+                                                                                                                                                                            End If
 
-                                                                                                                                                                              i += 1
-                                                                                                                                                                          Next
-                                                                                                                                                                      End If
-                                                                                                                                                                  End If
+                                                                                                                                                                            i += 1
+                                                                                                                                                                        Next
+                                                                                                                                                                    End If
+                                                                                                                                                                End If
 
-                                                                                                                                                                  If TypeOf tweet_ Is Tweet Then
-                                                                                                                                                                      Dim tweet As Tweet = tweet_
+                                                                                                                                                                If TypeOf tweet_ Is Tweet Then
+                                                                                                                                                                    Dim tweet As Tweet = tweet_
 
-                                                                                                                                                                      If Not tweet Is Nothing Then
-                                                                                                                                                                          Dim mostrar As Boolean = True
+                                                                                                                                                                    If Not tweet Is Nothing Then
+                                                                                                                                                                        Dim mostrar As Boolean = True
 
-                                                                                                                                                                          For Each item In lvInicio.Items
-                                                                                                                                                                              Dim lvitem As ListViewItem = item
-                                                                                                                                                                              Dim grid As Grid = lvitem.Content
-                                                                                                                                                                              Dim itemTweet As Tweet = grid.Tag
+                                                                                                                                                                        For Each item In lvInicio.Items
+                                                                                                                                                                            Dim lvitem As ListViewItem = item
+                                                                                                                                                                            Dim grid As Grid = lvitem.Content
+                                                                                                                                                                            Dim itemTweet As Tweet = grid.Tag
 
-                                                                                                                                                                              If itemTweet.ID = tweet.ID Then
-                                                                                                                                                                                  mostrar = False
-                                                                                                                                                                              End If
+                                                                                                                                                                            If itemTweet.ID = tweet.ID Then
+                                                                                                                                                                                mostrar = False
+                                                                                                                                                                            End If
 
-                                                                                                                                                                              If Not tweet.RespuestaUsuarioScreenNombre = Nothing Then
-                                                                                                                                                                                  mostrar = False
-                                                                                                                                                                              End If
-                                                                                                                                                                          Next
+                                                                                                                                                                            If Not tweet.RespuestaUsuarioScreenNombre = Nothing Then
+                                                                                                                                                                                mostrar = False
+                                                                                                                                                                            End If
+                                                                                                                                                                        Next
 
-                                                                                                                                                                          If mostrar = True Then
-                                                                                                                                                                              Dim tweetNuevo As List(Of Tweet) = Await TwitterQuery.Ejecutar(megaUsuario.Servicio, 2, tweet.ID, Nothing)
+                                                                                                                                                                        If mostrar = True Then
+                                                                                                                                                                            Dim tweetNuevo As List(Of Tweet) = Await TwitterQuery.Ejecutar(megaUsuario.Servicio, 2, tweet.ID, Nothing)
 
-                                                                                                                                                                              If Not ApplicationData.Current.LocalSettings.Values("notificacion") Is Nothing Then
-                                                                                                                                                                                  If Not ApplicationData.Current.LocalSettings.Values("notificacion") = False Then
-                                                                                                                                                                                      Notificaciones.ToastTweet.Enseñar(tweetNuevo(0))
-                                                                                                                                                                                  End If
-                                                                                                                                                                              End If
+                                                                                                                                                                            If Not ApplicationData.Current.LocalSettings.Values("notificacion") Is Nothing Then
+                                                                                                                                                                                If Not ApplicationData.Current.LocalSettings.Values("notificacion") = False Then
+                                                                                                                                                                                    Notificaciones.ToastTweet.Enseñar(tweetNuevo(0))
+                                                                                                                                                                                End If
+                                                                                                                                                                            End If
 
-                                                                                                                                                                              lvInicio.Items.Insert(0, TweetXaml.Añadir(tweetNuevo(0), megaUsuario))
-                                                                                                                                                                          End If
-                                                                                                                                                                      End If
-                                                                                                                                                                  End If
-                                                                                                                                                              End Sub)
-                                                        End Sub)
+                                                                                                                                                                            lvInicio.Items.Insert(0, TweetXaml.Añadir(tweetNuevo(0), megaUsuario))
+                                                                                                                                                                        End If
+                                                                                                                                                                    End If
+                                                                                                                                                                End If
+                                                                                                                                                            End Sub)
+                                                         End Sub)
 
     End Sub
 

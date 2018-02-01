@@ -12,8 +12,14 @@ Namespace pepeTwitterXaml
 
             If tweet.Retweet Is Nothing Then
                 textoTweet = tweet.Texto
+
+                textoTweet = textoTweet.Remove(tweet.TextoRango(1), textoTweet.Length - tweet.TextoRango(1))
+                textoTweet = textoTweet.Remove(0, tweet.TextoRango(0))
             Else
                 textoTweet = tweet.Retweet.Texto
+
+                textoTweet = textoTweet.Remove(tweet.Retweet.TextoRango(1), textoTweet.Length - tweet.Retweet.TextoRango(1))
+                textoTweet = textoTweet.Remove(0, tweet.Retweet.TextoRango(0))
             End If
 
             If Not textoTweet = String.Empty Then
@@ -77,11 +83,13 @@ Namespace pepeTwitterXaml
 
                                 Dim tbTextoAnterior As String = WebUtility.HtmlDecode(textoTweet)
 
-                                Dim fragmentoAnterior As New Run With {
-                                    .Text = tbTextoAnterior.Remove(int, tbTextoAnterior.Length - int)
-                                }
+                                If tbTextoAnterior.Trim.Length > 0 Then
+                                    Dim fragmentoAnterior As New Run With {
+                                       .Text = tbTextoAnterior.Remove(int, tbTextoAnterior.Length - int)
+                                   }
 
-                                textoSpan.Inlines.Add(fragmentoAnterior)
+                                    textoSpan.Inlines.Add(fragmentoAnterior)
+                                End If
 
                                 textoTweet = textoTweet.Remove(0, int + int2)
 
@@ -134,21 +142,27 @@ Namespace pepeTwitterXaml
                 If textoTweet.Trim.Length > 0 Then
                     textoTweet = LimpiarEnlaces(textoTweet)
 
-                    Dim fragmento As New Run With {
-                       .Text = WebUtility.HtmlDecode(textoTweet)
-                    }
+                    If textoTweet.Trim.Length > 0 Then
+                        Dim fragmento As New Run With {
+                           .Text = WebUtility.HtmlDecode(textoTweet)
+                        }
 
-                    textoSpan.Inlines.Add(fragmento)
+                        textoSpan.Inlines.Add(fragmento)
+                    End If
                 End If
 
-                Dim tbTweet As New TextBlock With {
-                    .TextWrapping = TextWrapping.Wrap,
-                    .Margin = New Thickness(5, 10, 5, 5)
-                }
+                If textoSpan.Inlines.Count > 0 Then
+                    Dim tbTweet As New TextBlock With {
+                        .TextWrapping = TextWrapping.Wrap,
+                        .Margin = New Thickness(5, 10, 5, 5)
+                    }
 
-                tbTweet.Inlines.Add(textoSpan)
+                    tbTweet.Inlines.Add(textoSpan)
 
-                Return tbTweet
+                    Return tbTweet
+                Else
+                    Return Nothing
+                End If
             Else
                 Return Nothing
             End If

@@ -316,7 +316,7 @@ Namespace pepeTwitterXaml
                 .Mensaje = mensaje
             }
 
-            Await cosas.MegaUsuario.Servicio.TweetStatusAsync(status)
+            Await cosas.MegaUsuario.Servicio.EnviarTweet(status)
 
             tb.Text = String.Empty
 

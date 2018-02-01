@@ -84,7 +84,25 @@ Namespace pepeTwitterXaml
 
             '------------------------------------------
 
+            Dim botonMasOpciones As New Button With {
+                .Content = ConstructorBotones(59154, recursos.GetString("MoreOptions")),
+                .Padding = New Thickness(5, 5, 5, 5),
+                .Margin = New Thickness(15, 0, 0, 0),
+                .Background = New SolidColorBrush(Colors.Transparent),
+                .BorderThickness = New Thickness(0, 0, 0, 0),
+                .Tag = New pepeTwitter.Objetos.RetweetBoton(tweet, megaUsuario, gridTweet),
+                .Visibility = Visibility.Collapsed,
+                .Style = App.Current.Resources("ButtonRevealStyle")
+            }
+
+            AddHandler botonMasOpciones.Click, AddressOf BotonMasOpcionesClick
+
+            spBotones.Children.Add(botonMasOpciones)
+
+            '------------------------------------------
+
             Return spBotones
+
         End Function
 
         Private Sub BotonResponderClick(sender As Object, e As RoutedEventArgs)
@@ -181,6 +199,34 @@ Namespace pepeTwitterXaml
             End If
 
         End Sub
+
+        Private Sub BotonMasOpcionesClick(sender As Object, e As RoutedEventArgs)
+
+            Dim recursos As New Resources.ResourceLoader
+
+            Dim boton As Button = sender
+
+            Dim menu As New Flyout With {
+                .Placement = FlyoutPlacementMode.Bottom
+            }
+
+            Dim listaBotones As New ListView
+
+            Dim botonCopiarEnlaceTweet As New ListViewItem With {
+                .Content = recursos.GetString("CopyUrlTweet"),
+                .Style = App.Current.Resources("ListViewEstilo1")
+            }
+
+            listaBotones.Items.Add(botonCopiarEnlaceTweet)
+
+            menu.Content = listaBotones
+
+            FlyoutBase.SetAttachedFlyout(boton, menu)
+            menu.ShowAt(boton)
+
+        End Sub
+
+        '------------------------------------------
 
         Private Function ConstructorBotones(icono As Integer, texto As String)
 

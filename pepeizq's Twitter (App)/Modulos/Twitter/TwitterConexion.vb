@@ -163,7 +163,7 @@ Module TwitterConexion
         Dim conexion As Boolean = Desconectar(servicio)
 
         If conexion = False Then
-            servicio.StopUserStream()
+            servicio.PararStreamUsuario()
 
             Dim frame As Frame = Window.Current.Content
             Dim pagina As Page = frame.Content

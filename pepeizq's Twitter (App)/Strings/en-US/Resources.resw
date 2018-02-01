@@ -216,4 +216,13 @@
   <data name="Favorite" xml:space="preserve">
     <value>Favorite</value>
   </data>
+  <data name="FavoriteSent" xml:space="preserve">
+    <value>Successfully Favorited</value>
+  </data>
+  <data name="MoreOptions" xml:space="preserve">
+    <value>More Options</value>
+  </data>
+  <data name="CopyUrlTweet" xml:space="preserve">
+    <value>Copy Tweet Link</value>
+  </data>
 </root>
