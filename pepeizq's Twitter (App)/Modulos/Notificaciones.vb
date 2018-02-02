@@ -107,16 +107,16 @@ Namespace Notificaciones
                 End If
 
                 Dim textoTweet As New AdaptiveText With {
-                .Text = texto,
-                .HintMaxLines = 4
-            }
+                    .Text = texto,
+                    .HintMaxLines = 4
+                }
 
                 Dim cuenta As String = Nothing
 
                 If tweet.Retweet Is Nothing Then
-                    cuenta = tweet.Usuario.ScreenNombre
+                    cuenta = tweet.Usuario.Nombre
                 Else
-                    cuenta = tweet.Retweet.Usuario.ScreenNombre
+                    cuenta = tweet.Retweet.Usuario.Nombre
                 End If
 
                 Dim textoCuenta As New AdaptiveText With {
@@ -127,9 +127,9 @@ Namespace Notificaciones
                 Dim avatarUrl As String = Nothing
 
                 If tweet.Retweet Is Nothing Then
-                    avatarUrl = tweet.Usuario.Avatar
+                    avatarUrl = tweet.Usuario.ImagenAvatar
                 Else
-                    avatarUrl = tweet.Retweet.Usuario.Avatar
+                    avatarUrl = tweet.Retweet.Usuario.ImagenAvatar
                 End If
 
                 Dim logo As New ToastGenericAppLogo With {

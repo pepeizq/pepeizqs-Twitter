@@ -12,13 +12,13 @@ Namespace pepeTwitterXaml
 
             If tweet.Retweet Is Nothing Then
                 Try
-                    imagenAvatar.ImageSource = New BitmapImage(New Uri(tweet.Usuario.Avatar))
+                    imagenAvatar.ImageSource = New BitmapImage(New Uri(tweet.Usuario.ImagenAvatar))
                 Catch ex As Exception
 
                 End Try
             Else
                 Try
-                    imagenAvatar.ImageSource = New BitmapImage(New Uri(tweet.Retweet.Usuario.Avatar))
+                    imagenAvatar.ImageSource = New BitmapImage(New Uri(tweet.Retweet.Usuario.ImagenAvatar))
                 Catch ex As Exception
 
                 End Try

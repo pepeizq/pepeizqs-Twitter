@@ -1,5 +1,6 @@
 ﻿Imports System.Net
 Imports pepeizq.Twitter.Tweet
+Imports Windows.System
 Imports Windows.UI.Xaml.Documents
 
 Namespace pepeTwitterXaml
@@ -51,7 +52,7 @@ Namespace pepeTwitterXaml
                             mencion.Rango(1)
                         }
 
-                        listaEntidades.Add(New pepeTwitter.Objetos.TextoTweetEntidad("@" + mencion.ScreenNombre, "https://twitter.com/" + mencion.ScreenNombre, coordenadas, 1))
+                        listaEntidades.Add(New pepeTwitter.Objetos.TextoTweetEntidad("@" + mencion.ScreenNombre, "pepeizqtwitter://@" + mencion.ScreenNombre, coordenadas, 1))
                     Next
                 End If
 
@@ -62,7 +63,7 @@ Namespace pepeTwitterXaml
                             tag.Rango(1)
                         }
 
-                        listaEntidades.Add(New pepeTwitter.Objetos.TextoTweetEntidad("#" + tag.Nombre, "https://twitter.com/hashtag/" + tag.Nombre, coordenadas, 2))
+                        listaEntidades.Add(New pepeTwitter.Objetos.TextoTweetEntidad("#" + tag.Nombre, "https://twitter.com/#" + tag.Nombre, coordenadas, 2))
                     Next
                 End If
 
@@ -127,10 +128,12 @@ Namespace pepeTwitterXaml
                                 }
 
                                 Dim enlace As New Hyperlink With {
-                                    .NavigateUri = New Uri("https://twitter.com/" + entidad.Enlace),
+                                    .NavigateUri = New Uri(entidad.Enlace, UriKind.RelativeOrAbsolute),
                                     .TextDecorations = Nothing,
                                     .Foreground = New SolidColorBrush(App.Current.Resources("ColorCuarto"))
                                 }
+
+                                AddHandler enlace.Click, AddressOf EnlaceClick
 
                                 enlace.Inlines.Add(contenidoEnlace)
                                 textoSpan.Inlines.Add(enlace)
@@ -194,6 +197,23 @@ Namespace pepeTwitterXaml
             Return texto
 
         End Function
+
+        Private Async Sub EnlaceClick(sender As Object, e As HyperlinkClickEventArgs)
+            Dim test As Hyperlink = e.OriginalSource
+            Dim enlace As Hyperlink = sender
+            Dim enlaceString As String = enlace.NavigateUri.ToString
+
+            If enlaceString.IndexOf("pepeizqtwitter://@") = 0 Then
+
+            Else
+                Try
+                    Await Launcher.LaunchUriAsync(New Uri(enlaceString))
+                Catch ex As Exception
+
+                End Try
+            End If
+
+        End Sub
 
     End Module
 End Namespace

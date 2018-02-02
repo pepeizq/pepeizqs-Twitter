@@ -121,7 +121,7 @@ Module UsuarioXaml
         }
 
         Try
-            imagenAvatar.ImageSource = New BitmapImage(New Uri(usuario.Avatar))
+            imagenAvatar.ImageSource = New BitmapImage(New Uri(usuario.ImagenAvatar))
         Catch ex As Exception
 
         End Try

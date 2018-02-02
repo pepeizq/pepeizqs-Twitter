@@ -149,11 +149,11 @@ Module InicioXaml
         Dim tweet As Tweet = grid.Tag
 
         If Not tweet.Entidades.Enlaces Is Nothing Then
-            Try
-                Await Launcher.LaunchUriAsync(New Uri(tweet.Entidades.Enlaces(0).Expandida))
-            Catch ex As Exception
+            'Try
+            '    Await Launcher.LaunchUriAsync(New Uri(tweet.Entidades.Enlaces(0).Expandida))
+            'Catch ex As Exception
 
-            End Try
+            'End Try
         End If
 
     End Sub

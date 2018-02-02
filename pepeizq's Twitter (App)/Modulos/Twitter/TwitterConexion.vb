@@ -112,7 +112,7 @@ Module TwitterConexion
 
         Dim imagenAvatar As New ImageBrush With {
             .Stretch = Stretch.Uniform,
-            .ImageSource = New BitmapImage(New Uri(usuario.Avatar))
+            .ImageSource = New BitmapImage(New Uri(usuario.ImagenAvatar))
         }
 
         Dim circulo As New Ellipse With {

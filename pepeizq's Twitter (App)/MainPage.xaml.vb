@@ -85,6 +85,7 @@ Public NotInheritable Class MainPage
             gridConfigCuentas.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
             gridConfigNotificaciones.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
             gridImagenAmpliada.Background = New SolidColorBrush(Colors.LightGray)
+            gridVideoAmpliado.Background = New SolidColorBrush(Colors.LightGray)
             gridMasCosas.Background = New SolidColorBrush(Colors.LightGray)
         End If
 
@@ -100,6 +101,7 @@ Public NotInheritable Class MainPage
 
         gridImagenAmpliada.Visibility = Visibility.Collapsed
         gridVideoAmpliado.Visibility = Visibility.Collapsed
+        gridUsuarioAmpliado.Visibility = Visibility.Collapsed
         gridConfig.Visibility = Visibility.Collapsed
         gridMasCosas.Visibility = Visibility.Collapsed
 

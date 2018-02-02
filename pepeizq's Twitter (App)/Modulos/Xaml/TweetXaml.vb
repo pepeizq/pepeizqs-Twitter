@@ -226,11 +226,27 @@ Module TweetXaml
         Dim gridResponder As Grid = sp.Children(sp.Children.Count - 1)
 
         If gridResponder.Visibility = Visibility.Collapsed Then
-            For Each boton In spBotones.Children
-                boton.Visibility = Visibility.Collapsed
+            Dim mostrar As Boolean = False
+
+            For Each boton As Button In spBotones.Children
+                Dim cosas As pepeTwitter.Objetos.TweetXamlBoton = boton.Tag
+
+                If cosas.Mostrar = True Then
+                    mostrar = True
+                End If
             Next
+
+            If mostrar = False Then
+                For Each boton As Button In spBotones.Children
+                    boton.Visibility = Visibility.Collapsed
+                Next
+            Else
+                For Each boton As Button In spBotones.Children
+                    boton.Visibility = Visibility.Visible
+                Next
+            End If
         Else
-            For Each boton In spBotones.Children
+            For Each boton As Button In spBotones.Children
                 boton.Visibility = Visibility.Visible
             Next
         End If
