@@ -14,13 +14,17 @@ Namespace pepeTwitterXaml
             If tweet.Retweet Is Nothing Then
                 textoTweet = tweet.Texto
 
-                textoTweet = textoTweet.Remove(tweet.TextoRango(1), textoTweet.Length - tweet.TextoRango(1))
-                textoTweet = textoTweet.Remove(0, tweet.TextoRango(0))
+                If Not tweet.TextoRango(0) = tweet.TextoRango(1) Then
+                    textoTweet = textoTweet.Remove(tweet.TextoRango(1), textoTweet.Length - tweet.TextoRango(1))
+                    textoTweet = textoTweet.Remove(0, tweet.TextoRango(0))
+                End If
             Else
                 textoTweet = tweet.Retweet.Texto
 
-                textoTweet = textoTweet.Remove(tweet.Retweet.TextoRango(1), textoTweet.Length - tweet.Retweet.TextoRango(1))
-                textoTweet = textoTweet.Remove(0, tweet.Retweet.TextoRango(0))
+                If Not tweet.Retweet.TextoRango(0) = tweet.Retweet.TextoRango(1) Then
+                    textoTweet = textoTweet.Remove(tweet.Retweet.TextoRango(1), textoTweet.Length - tweet.Retweet.TextoRango(1))
+                    textoTweet = textoTweet.Remove(0, tweet.Retweet.TextoRango(0))
+                End If
             End If
 
             If Not textoTweet = String.Empty Then
@@ -32,7 +36,7 @@ Namespace pepeTwitterXaml
                     entidades = tweet.Retweet.Entidades
                 End If
 
-                Dim listaEntidades As New List(Of pepeTwitter.Objetos.TextoTweetEntidad)
+                Dim listaEntidades As New List(Of pepeizq.Twitter.Objetos.TextoTweetEntidad)
 
                 If entidades.Enlaces.Count > 0 Then
                     For Each url In entidades.Enlaces
@@ -41,7 +45,7 @@ Namespace pepeTwitterXaml
                            url.Rango(1)
                         }
 
-                        listaEntidades.Add(New pepeTwitter.Objetos.TextoTweetEntidad(url.Mostrar, url.Expandida, coordenadas, 0))
+                        listaEntidades.Add(New pepeizq.Twitter.Objetos.TextoTweetEntidad(url.Mostrar, url.Expandida, coordenadas, 0))
                     Next
                 End If
 
@@ -52,7 +56,7 @@ Namespace pepeTwitterXaml
                             mencion.Rango(1)
                         }
 
-                        listaEntidades.Add(New pepeTwitter.Objetos.TextoTweetEntidad("@" + mencion.ScreenNombre, "pepeizqtwitter://@" + mencion.ScreenNombre, coordenadas, 1))
+                        listaEntidades.Add(New pepeizq.Twitter.Objetos.TextoTweetEntidad("@" + mencion.ScreenNombre, "https://twitter.com/@" + mencion.ScreenNombre, coordenadas, 1))
                     Next
                 End If
 
@@ -63,7 +67,7 @@ Namespace pepeTwitterXaml
                             tag.Rango(1)
                         }
 
-                        listaEntidades.Add(New pepeTwitter.Objetos.TextoTweetEntidad("#" + tag.Nombre, "https://twitter.com/#" + tag.Nombre, coordenadas, 2))
+                        listaEntidades.Add(New pepeizq.Twitter.Objetos.TextoTweetEntidad("#" + tag.Nombre, "https://twitter.com/#" + tag.Nombre, coordenadas, 2))
                     Next
                 End If
 
@@ -87,7 +91,7 @@ Namespace pepeTwitterXaml
                                 If tbTextoAnterior.Trim.Length > 0 Then
                                     Dim fragmentoAnterior As New Run With {
                                        .Text = tbTextoAnterior.Remove(int, tbTextoAnterior.Length - int)
-                                   }
+                                    }
 
                                     textoSpan.Inlines.Add(fragmentoAnterior)
                                 End If
@@ -132,8 +136,6 @@ Namespace pepeTwitterXaml
                                     .TextDecorations = Nothing,
                                     .Foreground = New SolidColorBrush(App.Current.Resources("ColorCuarto"))
                                 }
-
-                                AddHandler enlace.Click, AddressOf EnlaceClick
 
                                 enlace.Inlines.Add(contenidoEnlace)
                                 textoSpan.Inlines.Add(enlace)
@@ -197,23 +199,6 @@ Namespace pepeTwitterXaml
             Return texto
 
         End Function
-
-        Private Async Sub EnlaceClick(sender As Object, e As HyperlinkClickEventArgs)
-            Dim test As Hyperlink = e.OriginalSource
-            Dim enlace As Hyperlink = sender
-            Dim enlaceString As String = enlace.NavigateUri.ToString
-
-            If enlaceString.IndexOf("pepeizqtwitter://@") = 0 Then
-
-            Else
-                Try
-                    Await Launcher.LaunchUriAsync(New Uri(enlaceString))
-                Catch ex As Exception
-
-                End Try
-            End If
-
-        End Sub
 
     End Module
 End Namespace

@@ -8,7 +8,7 @@ Imports Windows.UI.Xaml.Documents
 Namespace pepeTwitterXaml
     Module TweetXamlEnviarTweet
 
-        Public Function Generar(tweet As Tweet, megaUsuario As pepeTwitter.MegaUsuario)
+        Public Function Generar(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario)
 
             Dim recursos As New Resources.ResourceLoader
 
@@ -182,7 +182,7 @@ Namespace pepeTwitterXaml
             spBoton.Children.Add(tbBoton)
 
             botonEnviarTweet.Content = spBoton
-            botonEnviarTweet.Tag = New pepeTwitter.Objetos.EnviarTweetBoton(tbMensaje, megaUsuario, tweet, listaMenciones)
+            botonEnviarTweet.Tag = New pepeizq.Twitter.Objetos.EnviarTweetBoton(tbMensaje, megaUsuario, tweet, listaMenciones)
             AddHandler botonEnviarTweet.Click, AddressOf BotonEnviarTweetClick
 
             gridInferior.Children.Add(botonEnviarTweet)
@@ -205,7 +205,7 @@ Namespace pepeTwitterXaml
 
             gridInferior.Children.Add(tbContadorCaracteres)
 
-            tbMensaje.Tag = New pepeTwitter.Objetos.EnviarTweetTextoCambia(botonEnviarTweet, tbContadorCaracteres, prContadorCaracteres)
+            tbMensaje.Tag = New pepeizq.Twitter.Objetos.EnviarTweetTextoCambia(botonEnviarTweet, tbContadorCaracteres, prContadorCaracteres)
 
             '---------------------------------
 
@@ -265,7 +265,7 @@ Namespace pepeTwitterXaml
         Private Sub TbTweetEscribirTextChanged(sender As Object, e As TextChangedEventArgs)
 
             Dim tb As TextBox = sender
-            Dim objeto As pepeTwitter.Objetos.EnviarTweetTextoCambia = tb.Tag
+            Dim objeto As pepeizq.Twitter.Objetos.EnviarTweetTextoCambia = tb.Tag
 
             Dim boton As Button = objeto.Boton
 
@@ -296,7 +296,7 @@ Namespace pepeTwitterXaml
         Private Async Sub BotonEnviarTweetClick(sender As Object, e As RoutedEventArgs)
 
             Dim boton As Button = sender
-            Dim cosas As pepeTwitter.Objetos.EnviarTweetBoton = boton.Tag
+            Dim cosas As pepeizq.Twitter.Objetos.EnviarTweetBoton = boton.Tag
 
             Dim tb As TextBox = cosas.CajaTexto
             Dim mensaje As String = Nothing

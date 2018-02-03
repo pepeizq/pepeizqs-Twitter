@@ -1,6 +1,6 @@
 ﻿Imports pepeizq.Twitter.Tweet
 
-Namespace pepeTwitter.Objetos
+Namespace pepeizq.Twitter.Objetos
     Public Class EnviarTweetBoton
 
         Public CajaTexto As TextBox

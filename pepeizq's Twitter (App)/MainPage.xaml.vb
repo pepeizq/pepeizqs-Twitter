@@ -49,7 +49,7 @@ Public NotInheritable Class MainPage
         Dim i As Integer = 0
 
         For Each usuario In listaUsuarios
-            Dim megaUsuario As pepeTwitter.MegaUsuario = Await TwitterConexion.Iniciar(usuario)
+            Dim megaUsuario As pepeizq.Twitter.MegaUsuario = Await TwitterConexion.Iniciar(usuario)
 
             Dim visibilidad As New Visibility
 
@@ -139,10 +139,10 @@ Public NotInheritable Class MainPage
 
         Dim helper As New LocalObjectStorageHelper
 
-        Dim listaUsuarios As New List(Of pepeTwitter.MegaUsuario)
+        Dim listaUsuarios As New List(Of pepeizq.Twitter.MegaUsuario)
 
         If helper.KeyExists("listaUsuarios2") Then
-            listaUsuarios = helper.Read(Of List(Of pepeTwitter.MegaUsuario))("listaUsuarios2")
+            listaUsuarios = helper.Read(Of List(Of pepeizq.Twitter.MegaUsuario))("listaUsuarios2")
         End If
 
         Dim visibilidad As New Visibility
@@ -153,7 +153,7 @@ Public NotInheritable Class MainPage
             visibilidad = Visibility.Collapsed
         End If
 
-        Dim usuario As pepeTwitter.MegaUsuario = Await TwitterConexion.Iniciar(Nothing)
+        Dim usuario As pepeizq.Twitter.MegaUsuario = Await TwitterConexion.Iniciar(Nothing)
 
         If Not usuario Is Nothing Then
             UsuarioXaml.Generar(usuario, visibilidad)
@@ -279,6 +279,12 @@ Public NotInheritable Class MainPage
         If Not animacion Is Nothing Then
             animacion.TryStart(imagenOrigen)
         End If
+
+    End Sub
+
+    Private Sub BotonCerrarUsuario_Click(sender As Object, e As RoutedEventArgs) Handles botonCerrarUsuario.Click
+
+        gridUsuarioAmpliado.Visibility = Visibility.Collapsed
 
     End Sub
 

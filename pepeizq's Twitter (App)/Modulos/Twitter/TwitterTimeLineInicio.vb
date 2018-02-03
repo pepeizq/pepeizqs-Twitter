@@ -5,7 +5,7 @@ Module TwitterTimeLineInicio
 
     Dim intentosCarga As Integer = 0
 
-    Public Async Sub CargarTweets(megaUsuario As pepeTwitter.MegaUsuario, ultimoTweet As String)
+    Public Async Sub CargarTweets(megaUsuario As pepeizq.Twitter.MegaUsuario, ultimoTweet As String)
 
         Dim usuario As TwitterUsuario = megaUsuario.Usuario
 
@@ -37,10 +37,12 @@ Module TwitterTimeLineInicio
 
             Dim sv As ScrollViewer = gridTweets.Children(1)
             Dim lv As ListView = sv.Content
+
+            Dim provider As TwitterDataProvider = megaUsuario.Servicio.Provider
             Dim listaTweets As New List(Of Tweet)
 
             Try
-                listaTweets = Await TwitterQuery.Ejecutar(megaUsuario.Servicio, 0, ultimoTweet, Nothing)
+                listaTweets = Await provider.CogerTweetsTimelineInicio(Of Tweet)(ultimoTweet, New TweetParser)
             Catch ex As Exception
 
             End Try
@@ -59,7 +61,7 @@ Module TwitterTimeLineInicio
                 Else
                     TwitterConexion.Desconectar(megaUsuario.Servicio)
 
-                    Dim megaUsuarioNuevo As pepeTwitter.MegaUsuario = Await TwitterConexion.Iniciar(megaUsuario.Usuario)
+                    Dim megaUsuarioNuevo As pepeizq.Twitter.MegaUsuario = Await TwitterConexion.Iniciar(megaUsuario.Usuario)
 
                     If Not megaUsuarioNuevo Is Nothing Then
                         TwitterTimeLineInicio.CargarTweets(megaUsuarioNuevo, Nothing)

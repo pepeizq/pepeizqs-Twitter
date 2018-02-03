@@ -6,7 +6,7 @@ Imports Windows.UI.Xaml.Shapes
 
 Module TwitterConexion
 
-    Public Async Function Iniciar(usuarioRecibido As TwitterUsuario) As Task(Of pepeTwitter.MegaUsuario)
+    Public Async Function Iniciar(usuarioRecibido As TwitterUsuario) As Task(Of pepeizq.Twitter.MegaUsuario)
 
         Dim consumerKey As String = "poGVvY5De5zBqQ4ceqp7jw7cj"
         Dim consumerSecret As String = "f8PCcuwFZxYi0r5iG6UaysgxD0NoaCT2RgYG8I41mvjghy58rc"
@@ -32,7 +32,7 @@ Module TwitterConexion
 
             If Not usuario Is Nothing Then
 
-                Dim megaUsuario As New pepeTwitter.MegaUsuario(usuario, servicio)
+                Dim megaUsuario As New pepeizq.Twitter.MegaUsuario(usuario, servicio)
 
                 Dim helper As New LocalObjectStorageHelper
 
@@ -89,7 +89,7 @@ Module TwitterConexion
 
     End Function
 
-    Private Function ConfigAñadirUsuarioXaml(megaUsuario As pepeTwitter.MegaUsuario)
+    Private Function ConfigAñadirUsuarioXaml(megaUsuario As pepeizq.Twitter.MegaUsuario)
 
         Dim usuario As TwitterUsuario = megaUsuario.Usuario
 
@@ -157,7 +157,7 @@ Module TwitterConexion
     Private Sub BotonQuitarCuenta(sender As Object, e As RoutedEventArgs)
 
         Dim boton As Button = sender
-        Dim megaUsuario As pepeTwitter.MegaUsuario = boton.Tag
+        Dim megaUsuario As pepeizq.Twitter.MegaUsuario = boton.Tag
         Dim servicio As TwitterServicio = megaUsuario.Servicio
 
         Dim conexion As Boolean = Desconectar(servicio)
@@ -173,7 +173,7 @@ Module TwitterConexion
             Dim i As Integer = 0
             For Each item In lvConfigUsuarios.Items
                 Dim grid As Grid = item
-                Dim megaUsuarioGrid As pepeTwitter.MegaUsuario = grid.Tag
+                Dim megaUsuarioGrid As pepeizq.Twitter.MegaUsuario = grid.Tag
 
                 If megaUsuarioGrid.Usuario.ID = megaUsuario.Usuario.ID Then
                     lvConfigUsuarios.Items.RemoveAt(i)

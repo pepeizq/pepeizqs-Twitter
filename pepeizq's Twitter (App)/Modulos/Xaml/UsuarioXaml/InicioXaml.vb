@@ -5,7 +5,7 @@ Imports Windows.System
 
 Module InicioXaml
 
-    Public Function Generar(megaUsuario As pepeTwitter.MegaUsuario, visibilidad As Visibility)
+    Public Function Generar(megaUsuario As pepeizq.Twitter.MegaUsuario, visibilidad As Visibility)
 
         Dim usuario As TwitterUsuario = megaUsuario.Usuario
 
@@ -92,7 +92,7 @@ Module InicioXaml
 
         gridTweets.Children.Add(pbTweets)
 
-        svTweets.Tag = New pepeTwitter.Objetos.ScrollViewerTweets(megaUsuario, prTweets, pbTweets, 0)
+        svTweets.Tag = New pepeizq.Twitter.Objetos.ScrollViewerTweets(megaUsuario, prTweets, pbTweets, 0)
 
         '---------------------------------
 
@@ -100,16 +100,16 @@ Module InicioXaml
 
     End Function
 
-    Public Sub SvTweets_ViewChanging(sender As Object, e As ScrollViewerViewChangingEventArgs)
+    Public Async Sub SvTweets_ViewChanging(sender As Object, e As ScrollViewerViewChangingEventArgs)
 
         Dim sv As ScrollViewer = sender
-        Dim objeto As pepeTwitter.Objetos.ScrollViewerTweets = sv.Tag
+        Dim cosas As pepeizq.Twitter.Objetos.ScrollViewerTweets = sv.Tag
 
-        Dim pr As ProgressRing = objeto.Anillo
-        Dim pb As ProgressBar = objeto.Barra
+        Dim pr As ProgressRing = cosas.Anillo
+        Dim pb As ProgressBar = cosas.Barra
 
         Dim lv As ListView = sv.Content
-        lv.Tag = objeto.MegaUsuario
+        lv.Tag = cosas.MegaUsuario
 
         If pb.Visibility = Visibility.Collapsed Then
             If (sv.ScrollableHeight - 200) < sv.VerticalOffset Then
@@ -130,17 +130,43 @@ Module InicioXaml
 
                     If lv.Items.Count > 0 And lv.Items.Count < 280 Then
                         If Not ultimoTweet.ID = Nothing Then
-                            If objeto.Query = 0 Then
-                                TwitterTimeLineInicio.CargarTweets(lv.Tag, ultimoTweet.ID)
-                            ElseIf objeto.Query = 1 Then
-                                TwitterTimeLineMenciones.CargarTweets(lv.Tag, ultimoTweet.ID)
+                            Dim provider As TwitterDataProvider = cosas.MegaUsuario.Servicio.Provider
+                            Dim listaTweets As New List(Of Tweet)
+
+                            Try
+                                If cosas.Query = 0 Then
+                                    listaTweets = Await provider.CogerTweetsTimelineInicio(Of Tweet)(ultimoTweet.ID, New TweetParser)
+                                ElseIf cosas.Query = 1 Then
+                                    listaTweets = Await provider.CogerTweetsTimelineMenciones(Of Tweet)(ultimoTweet.ID, New TweetParser)
+                                End If
+                            Catch ex As Exception
+
+                            End Try
+
+                            If listaTweets.Count > 0 Then
+                                For Each tweet In listaTweets
+                                    Dim boolAñadir As Boolean = True
+
+                                    For Each item In lv.Items
+                                        Dim lvItem2 As ListViewItem = item
+                                        Dim gridTweet2 As Grid = lvItem2.Content
+                                        Dim lvTweet As Tweet = gridTweet2.Tag
+
+                                        If lvTweet.ID = tweet.ID Then
+                                            boolAñadir = False
+                                        End If
+                                    Next
+
+                                    If boolAñadir = True Then
+                                        lv.Items.Add(TweetXaml.Añadir(tweet, cosas.MegaUsuario))
+                                    End If
+                                Next
                             End If
                         End If
                     End If
                 End If
             End If
         End If
-
     End Sub
 
     Public Async Sub LvTweets_ItemClick(sender As Object, e As ItemClickEventArgs)

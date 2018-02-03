@@ -1,6 +1,6 @@
 ﻿Imports Microsoft.Toolkit.Uwp.UI.Controls
 
-Namespace pepeTwitter.Objetos
+Namespace pepeizq.Twitter.Objetos
     Public Class EnviarTweetTextoCambia
 
         Public Boton As Button

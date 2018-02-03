@@ -5,7 +5,7 @@ Imports Windows.UI.Xaml.Shapes
 
 Module UsuarioXaml
 
-    Public Sub Generar(megaUsuario As pepeTwitter.MegaUsuario, visibilidad As Visibility)
+    Public Sub Generar(megaUsuario As pepeizq.Twitter.MegaUsuario, visibilidad As Visibility)
 
         Dim recursos As New Resources.ResourceLoader
 

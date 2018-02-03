@@ -6,7 +6,7 @@ Imports Windows.UI.Core
 
 Module TwitterStream
 
-    Public Async Sub Iniciar(megaUsuario As pepeTwitter.MegaUsuario)
+    Public Async Sub Iniciar(megaUsuario As pepeizq.Twitter.MegaUsuario)
 
         Dim usuario As TwitterUsuario = megaUsuario.Usuario
 

@@ -2,7 +2,7 @@
 
 Module MencionesXaml
 
-    Public Function Generar(megaUsuario As pepeTwitter.MegaUsuario)
+    Public Function Generar(megaUsuario As pepeizq.Twitter.MegaUsuario)
 
         Dim usuario As TwitterUsuario = megaUsuario.Usuario
 
@@ -38,7 +38,7 @@ Module MencionesXaml
         pbTweets.Padding = New Thickness(10, 10, 10, 10)
         pbTweets.Name = "pbTweets" + usuario.ScreenNombre
 
-        svTweets.Tag = New pepeTwitter.Objetos.ScrollViewerTweets(megaUsuario, Nothing, pbTweets, 1)
+        svTweets.Tag = New pepeizq.Twitter.Objetos.ScrollViewerTweets(megaUsuario, Nothing, pbTweets, 1)
 
         gridMenciones.Children.Add(pbTweets)
 

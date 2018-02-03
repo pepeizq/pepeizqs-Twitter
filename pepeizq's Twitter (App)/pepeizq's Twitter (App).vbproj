@@ -114,6 +114,7 @@
     <Compile Include="Clases\Objetos\TweetXamlBoton.vb" />
     <Compile Include="Clases\Objetos\ScrollViewerTweets.vb" />
     <Compile Include="Clases\Objetos\TextoTweetEntidad.vb" />
+    <Compile Include="Clases\Objetos\UsuarioAmpliado.vb" />
     <Compile Include="MainPage.xaml.vb">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -129,7 +130,7 @@
     <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlBotones.vb" />
     <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlEnviarTweet.vb" />
     <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlMedia.vb" />
-    <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlQuote.vb" />
+    <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlCita.vb" />
     <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlRetweet.vb" />
     <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlTexto.vb" />
     <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlUsuario.vb" />
@@ -227,7 +228,7 @@
       <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="pepeizq.Twitter">
-      <Version>1.0.22</Version>
+      <Version>1.0.26</Version>
     </PackageReference>
     <PackageReference Include="Unicode.net">
       <Version>0.1.2</Version>

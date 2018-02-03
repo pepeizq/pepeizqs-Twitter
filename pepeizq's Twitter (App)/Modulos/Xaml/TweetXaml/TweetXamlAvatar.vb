@@ -28,8 +28,8 @@ Namespace pepeTwitterXaml
                 .Fill = imagenAvatar,
                 .VerticalAlignment = VerticalAlignment.Top,
                 .Margin = New Thickness(15, 0, 10, 0),
-                .Height = 50,
-                .Width = 50
+                .Height = 48,
+                .Width = 48
             }
 
             Return circulo

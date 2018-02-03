@@ -1,6 +1,6 @@
 ﻿Imports pepeizq.Twitter
 
-Namespace pepeTwitter
+Namespace pepeizq.Twitter
     Public Class MegaUsuario
 
         Public Usuario As TwitterUsuario

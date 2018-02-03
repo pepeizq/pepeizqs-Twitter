@@ -5,7 +5,7 @@ Imports Windows.UI.Core
 
 Module TweetXaml
 
-    Public Function Añadir(tweet As Tweet, megaUsuario As pepeTwitter.MegaUsuario)
+    Public Function Añadir(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario)
 
         Dim grid As New Grid
 
@@ -94,14 +94,14 @@ Module TweetXaml
 
             spInferiorCentro.SetValue(Grid.ColumnProperty, 1)
 
-            spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlUsuario.Generar(tweet))
+            spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlUsuario.Generar(tweet, megaUsuario))
             spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlTexto.Generar(tweet, Nothing))
 
             If Not tweet.Cita Is Nothing Then
                 If tweet.Retweet Is Nothing Then
-                    spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlQuote.Generar(tweet))
+                    spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlCita.Generar(tweet, megaUsuario))
                 Else
-                    spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlQuote.Generar(tweet.Retweet))
+                    spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlCita.Generar(tweet.Retweet, megaUsuario))
                 End If
             End If
 
@@ -229,7 +229,7 @@ Module TweetXaml
             Dim mostrar As Boolean = False
 
             For Each boton As Button In spBotones.Children
-                Dim cosas As pepeTwitter.Objetos.TweetXamlBoton = boton.Tag
+                Dim cosas As pepeizq.Twitter.Objetos.TweetXamlBoton = boton.Tag
 
                 If cosas.Mostrar = True Then
                     mostrar = True

@@ -1,4 +1,4 @@
-﻿Namespace pepeTwitter.Objetos
+﻿Namespace pepeizq.Twitter.Objetos
     Public Class TextoTweetEntidad
 
         Public Mostrar As String

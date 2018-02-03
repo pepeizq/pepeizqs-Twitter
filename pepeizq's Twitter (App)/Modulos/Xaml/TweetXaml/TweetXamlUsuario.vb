@@ -1,12 +1,15 @@
-﻿Imports pepeizq.Twitter.Tweet
+﻿Imports Microsoft.Toolkit.Uwp.Helpers
+Imports pepeizq.Twitter
+Imports pepeizq.Twitter.Tweet
 Imports Windows.UI
 Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Documents
+Imports Windows.UI.Xaml.Shapes
 
 Namespace pepeTwitterXaml
     Module TweetXamlUsuario
 
-        Public Function Generar(tweet As Tweet)
+        Public Function Generar(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario)
 
             Dim sp As New StackPanel With {
                 .Orientation = Orientation.Horizontal
@@ -40,11 +43,11 @@ Namespace pepeTwitterXaml
             If tweet.Retweet Is Nothing Then
                 tb1.Text = tweet.Usuario.Nombre
                 tb2.Text = "@" + tweet.Usuario.ScreenNombre
-                botonUsuario.Tag = tweet.Usuario
+                botonUsuario.Tag = New pepeizq.Twitter.Objetos.UsuarioAmpliado(megaUsuario, tweet.Usuario)
             Else
                 tb1.Text = tweet.Retweet.Usuario.Nombre
                 tb2.Text = "@" + tweet.Retweet.Usuario.ScreenNombre
-                botonUsuario.Tag = tweet.Retweet.Usuario
+                botonUsuario.Tag = New pepeizq.Twitter.Objetos.UsuarioAmpliado(megaUsuario, tweet.Retweet.Usuario)
             End If
 
             spUsuario.Children.Add(tb1)
@@ -52,6 +55,7 @@ Namespace pepeTwitterXaml
 
             botonUsuario.Content = spUsuario
 
+            AddHandler botonUsuario.Click, AddressOf UsuarioPulsaBoton
             AddHandler botonUsuario.PointerEntered, AddressOf UsuarioEntraBoton
             AddHandler botonUsuario.PointerExited, AddressOf UsuarioSaleBoton
 
@@ -107,6 +111,78 @@ Namespace pepeTwitterXaml
             Return sp
 
         End Function
+
+        Private Async Sub UsuarioPulsaBoton(sender As Object, e As RoutedEventArgs)
+
+            Dim boton As Button = sender
+            Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = boton.Tag
+            Dim usuario As TwitterUsuario = cosas.Usuario
+
+            Dim frame As Frame = Window.Current.Content
+            Dim pagina As Page = frame.Content
+
+            Dim gridUsuario As Grid = pagina.FindName("gridUsuarioAmpliado")
+            gridUsuario.Visibility = Visibility.Visible
+
+            Dim transpariencia As New UISettings
+            Dim boolTranspariencia As Boolean = transpariencia.AdvancedEffectsEnabled
+
+            If boolTranspariencia = False Then
+                gridUsuario.Background = New SolidColorBrush(("#" + usuario.ColorEnlace).ToColor)
+            Else
+                Dim acrilico As New AcrylicBrush With {
+                    .BackgroundSource = AcrylicBackgroundSource.HostBackdrop,
+                    .TintOpacity = 0.7,
+                    .TintColor = ("#" + usuario.ColorEnlace).ToColor
+                }
+
+                gridUsuario.Background = acrilico
+            End If
+
+            Dim lvTweets As ListView = pagina.FindName("lvTweetsUsuario")
+
+            If lvTweets.Items.Count > 0 Then
+                lvTweets.Items.Clear()
+            End If
+
+            Dim circuloAvatar As Ellipse = pagina.FindName("ellipseAvatar")
+
+            Dim imagenAvatar As New ImageBrush With {
+                .Stretch = Stretch.Uniform,
+                .ImageSource = New BitmapImage(New Uri(usuario.ImagenAvatar.Replace("_normal.png", "_bigger.png")))
+            }
+
+            circuloAvatar.Fill = imagenAvatar
+
+            Dim provider As TwitterDataProvider = cosas.MegaUsuario.Servicio.Provider
+            Dim listaTweets As New List(Of Tweet)
+
+            Try
+                listaTweets = Await provider.CogerTweetsTimelineUsuario(Of Tweet)(usuario.ScreenNombre, Nothing, New TweetParser)
+            Catch ex As Exception
+
+            End Try
+
+            For Each tweet In listaTweets
+                Dim boolAñadir As Boolean = True
+
+                For Each item In lvTweets.Items
+                    Dim lvItem As ListViewItem = item
+                    Dim gridTweet As Grid = lvItem.Content
+                    Dim lvTweet As Tweet = gridTweet.Tag
+
+                    If lvTweet.ID = tweet.ID Then
+                        boolAñadir = False
+                    End If
+                Next
+
+                If boolAñadir = True Then
+                    lvTweets.Items.Add(TweetXaml.Añadir(tweet, cosas.MegaUsuario))
+                End If
+            Next
+
+
+        End Sub
 
         Private Sub UsuarioEntraBoton(sender As Object, e As PointerRoutedEventArgs)
 

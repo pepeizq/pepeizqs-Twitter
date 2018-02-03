@@ -174,12 +174,40 @@
                 </Border>
             </Grid>
 
-            <Grid x:Name="gridUsuarioAmpliado" Visibility="Collapsed">
+            <Grid x:Name="gridUsuarioAmpliado" Visibility="Collapsed" Background="{StaticResource GridAcrilico}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                <Button x:Name="botonCerrarUsuario" Margin="10,10,10,0" Padding="10" Background="{StaticResource BrushSecundario}" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="{StaticResource BrushCuarto}">
+                <Button x:Name="botonCerrarUsuario" Grid.Column="0" Margin="10" Padding="10" Background="{StaticResource BrushSecundario}" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="{StaticResource BrushCuarto}">
                     <SymbolIcon Symbol="Cancel" Foreground="White"/>
                 </Button>
 
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Padding="10" Margin="0,0,0,20">
+                        <StackPanel.Background>
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                <GradientStop Color="#FFE4E4E4" Offset="0.5" />
+                                <GradientStop Color="#FFBFBFBF" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </StackPanel.Background>
+
+                        <Ellipse x:Name="ellipseAvatar" Width="60" Height="60" />
+
+                        <TextBlock x:Name="tbNombreUsuario"/>
+                    </StackPanel>
+
+                    <ScrollViewer x:Name="svTweetsUsuario" Grid.Row="1">
+                        <ListView x:Name="lvTweetsUsuario" ItemContainerStyle="{StaticResource ListViewEstilo1}"/>
+                    </ScrollViewer>
+                    
+                </Grid>
             </Grid> 
 
             <Grid x:Name="gridMasCosas" Visibility="Collapsed" Background="{StaticResource GridAcrilico}">
