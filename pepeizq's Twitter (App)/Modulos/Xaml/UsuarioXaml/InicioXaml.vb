@@ -92,7 +92,7 @@ Module InicioXaml
 
         gridTweets.Children.Add(pbTweets)
 
-        svTweets.Tag = New pepeizq.Twitter.Objetos.ScrollViewerTweets(megaUsuario, prTweets, pbTweets, 0)
+        svTweets.Tag = New pepeizq.Twitter.Objetos.ScrollViewerTweets(megaUsuario, prTweets, pbTweets, 0, Nothing)
 
         '---------------------------------
 
@@ -113,6 +113,7 @@ Module InicioXaml
 
         If pb.Visibility = Visibility.Collapsed Then
             If (sv.ScrollableHeight - 200) < sv.VerticalOffset Then
+
                 Dim mostrar As Boolean = False
 
                 If pr Is Nothing Then
@@ -124,11 +125,13 @@ Module InicioXaml
                 End If
 
                 If mostrar = True Then
-                    Dim lvItem As ListViewItem = lv.Items(lv.Items.Count - 1)
-                    Dim gridTweet As Grid = lvItem.Content
-                    Dim ultimoTweet As Tweet = gridTweet.Tag
+                    pb.Visibility = Visibility.Visible
 
                     If lv.Items.Count > 0 And lv.Items.Count < 280 Then
+                        Dim lvItem As ListViewItem = lv.Items(lv.Items.Count - 1)
+                        Dim gridTweet As Grid = lvItem.Content
+                        Dim ultimoTweet As Tweet = gridTweet.Tag
+
                         If Not ultimoTweet.ID = Nothing Then
                             Dim provider As TwitterDataProvider = cosas.MegaUsuario.Servicio.Provider
                             Dim listaTweets As New List(Of Tweet)
@@ -138,6 +141,8 @@ Module InicioXaml
                                     listaTweets = Await provider.CogerTweetsTimelineInicio(Of Tweet)(ultimoTweet.ID, New TweetParser)
                                 ElseIf cosas.Query = 1 Then
                                     listaTweets = Await provider.CogerTweetsTimelineMenciones(Of Tweet)(ultimoTweet.ID, New TweetParser)
+                                ElseIf cosas.Query = 2 Then
+                                    listaTweets = Await provider.CogerTweetsTimelineUsuario(Of Tweet)(cosas.UsuarioScreenNombre, ultimoTweet.ID, New TweetParser)
                                 End If
                             Catch ex As Exception
 
@@ -158,12 +163,14 @@ Module InicioXaml
                                     Next
 
                                     If boolAñadir = True Then
-                                        lv.Items.Add(TweetXaml.Añadir(tweet, cosas.MegaUsuario))
+                                        lv.Items.Add(TweetXaml.Añadir(tweet, cosas.MegaUsuario, Nothing))
                                     End If
                                 Next
                             End If
                         End If
                     End If
+
+                    pb.Visibility = Visibility.Collapsed
                 End If
             End If
         End If

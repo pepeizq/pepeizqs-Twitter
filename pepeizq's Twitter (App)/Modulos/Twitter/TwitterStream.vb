@@ -129,7 +129,7 @@ Module TwitterStream
                                                                                                                                                                                 End If
                                                                                                                                                                             End If
 
-                                                                                                                                                                            lvInicio.Items.Insert(0, TweetXaml.Añadir(tweetNuevo(0), megaUsuario))
+                                                                                                                                                                            lvInicio.Items.Insert(0, TweetXaml.Añadir(tweetNuevo(0), megaUsuario, Nothing))
                                                                                                                                                                         End If
                                                                                                                                                                     End If
                                                                                                                                                                 End If

@@ -25,7 +25,7 @@ Module TwitterQuery
 
         Dim config As New TwitterDataConfig With {
             .Query = query,
-            .QueryTipo = TwitterQueryTipo.Custom
+            .QueryTipo = TwitterQueryTipo.Personalizada
         }
 
         Dim provider As TwitterDataProvider = servicio.Provider

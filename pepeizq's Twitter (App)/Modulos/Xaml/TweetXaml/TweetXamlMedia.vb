@@ -166,6 +166,9 @@ Namespace pepeTwitterXaml
             Dim frame As Frame = Window.Current.Content
             Dim pagina As Page = frame.Content
 
+            'Dim gridUsuario As Grid = pagina.FindName("gridUsuarioAmpliado")
+            'gridUsuario.Visibility = Visibility.Collapsed
+
             Dim gridImagen As Grid = pagina.FindName("gridImagenAmpliada")
             gridImagen.Visibility = Visibility.Visible
 

@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
 
         <Grid x:Name="gridTitulo" Grid.Row="0" Background="{StaticResource GridTituloBackground}">
-            <TextBlock x:Name="tbTitulo" Margin="30,0,0,0" FontSize="13" Foreground="White" VerticalAlignment="Center"/>
+            <TextBlock x:Name="tbTitulo" Margin="20,0,0,0" FontSize="13" Foreground="White" VerticalAlignment="Center"/>
         </Grid>
 
         <Grid x:Name="gridPrincipal" Grid.Row="1" Background="{StaticResource GridTituloBackground}">
@@ -147,6 +147,71 @@
                 </ScrollViewer>
             </Grid>
 
+            <Grid x:Name="gridUsuarioAmpliado" Visibility="Collapsed" Background="{StaticResource GridAcrilico}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="botonCerrarUsuario" Grid.Column="0" Margin="10" Padding="10" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White">
+                    <SymbolIcon Symbol="Cancel" Foreground="White"/>
+                </Button>
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Height="200">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="600"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0" Background="Black">
+                            <controls:ImageEx x:Name="imagenFondoUsuario" IsCacheEnabled="True" Height="200" Width="600" Opacity="0.3" Stretch="Uniform"/>
+                        </Grid>
+
+                        <StackPanel x:Name="gridImagenFondoUsuario" Grid.Column="0" Orientation="Vertical" Padding="10" Margin="0,0,20,0" VerticalAlignment="Center">
+
+                            <Ellipse x:Name="ellipseAvatar" Width="60" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15">
+                                <TextBlock x:Name="tbNombreUsuario" Foreground="White" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+                                <controls:ImageEx x:Name="imagenUsuarioVerificado" Source="Assets/Verificado.png" IsCacheEnabled="True" Margin="10,0,0,0" Height="20" Width="20" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <TextBlock x:Name="tbScreenNombreUsuario" Foreground="White" FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                            </StackPanel>                                                      
+                        </StackPanel>
+
+                        <Grid x:Name="gridDatosUsuario" Grid.Column="1">
+                            <Grid.Background>
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <GradientStop Color="#FFE4E4E4" Offset="0.5" />
+                                    <GradientStop Color="#FFBFBFBF" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                            
+                            
+                        </Grid>
+                    </Grid>
+
+
+
+
+
+                    <ScrollViewer x:Name="svTweetsUsuario" Grid.Row="1" Margin="0,20,0,0">
+                        <ListView x:Name="lvTweetsUsuario" ItemContainerStyle="{StaticResource ListViewEstilo1}"/>
+                    </ScrollViewer>
+
+                    <ProgressBar x:Name="pbTweetsUsuario" Grid.Row="2" IsIndeterminate="True" Margin="10" Padding="10" Visibility="Collapsed"/>
+                </Grid>
+            </Grid>
+
             <Grid x:Name="gridImagenAmpliada" Visibility="Collapsed" Background="{StaticResource GridAcrilico}">
                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="10">
                     <Border BorderThickness="1" BorderBrush="{StaticResource BrushSecundario}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
@@ -173,42 +238,6 @@
                     <MediaPlayerElement x:Name="videoAmpliado" AreTransportControlsEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 </Border>
             </Grid>
-
-            <Grid x:Name="gridUsuarioAmpliado" Visibility="Collapsed" Background="{StaticResource GridAcrilico}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <Button x:Name="botonCerrarUsuario" Grid.Column="0" Margin="10" Padding="10" Background="{StaticResource BrushSecundario}" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="{StaticResource BrushCuarto}">
-                    <SymbolIcon Symbol="Cancel" Foreground="White"/>
-                </Button>
-
-                <Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <StackPanel Grid.Row="0" Orientation="Horizontal" Padding="10" Margin="0,0,0,20">
-                        <StackPanel.Background>
-                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                <GradientStop Color="#FFE4E4E4" Offset="0.5" />
-                                <GradientStop Color="#FFBFBFBF" Offset="1.0" />
-                            </LinearGradientBrush>
-                        </StackPanel.Background>
-
-                        <Ellipse x:Name="ellipseAvatar" Width="60" Height="60" />
-
-                        <TextBlock x:Name="tbNombreUsuario"/>
-                    </StackPanel>
-
-                    <ScrollViewer x:Name="svTweetsUsuario" Grid.Row="1">
-                        <ListView x:Name="lvTweetsUsuario" ItemContainerStyle="{StaticResource ListViewEstilo1}"/>
-                    </ScrollViewer>
-                    
-                </Grid>
-            </Grid> 
 
             <Grid x:Name="gridMasCosas" Visibility="Collapsed" Background="{StaticResource GridAcrilico}">
                 <ScrollViewer>

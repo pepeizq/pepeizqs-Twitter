@@ -1,5 +1,7 @@
 ﻿Imports Microsoft.Toolkit.Uwp.Helpers
+Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports pepeizq.Twitter
+Imports pepeizq.Twitter.Banner
 Imports pepeizq.Twitter.Tweet
 Imports Windows.UI
 Imports Windows.UI.Core
@@ -9,7 +11,11 @@ Imports Windows.UI.Xaml.Shapes
 Namespace pepeTwitterXaml
     Module TweetXamlUsuario
 
-        Public Function Generar(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario)
+        Public Function Generar(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario, color As Color)
+
+            If color = Nothing Then
+                color = App.Current.Resources("ColorSecundario")
+            End If
 
             Dim sp As New StackPanel With {
                 .Orientation = Orientation.Horizontal
@@ -25,7 +31,7 @@ Namespace pepeTwitterXaml
                 .Orientation = Orientation.Horizontal,
                 .Padding = New Thickness(5, 5, 5, 5),
                 .CornerRadius = New CornerRadius(5),
-                .Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+                .Background = New SolidColorBrush(color)
             }
 
             Dim tb1 As New TextBlock With {
@@ -118,22 +124,32 @@ Namespace pepeTwitterXaml
             Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = boton.Tag
             Dim usuario As TwitterUsuario = cosas.Usuario
 
+            Dim provider As TwitterDataProvider = cosas.MegaUsuario.Servicio.Provider
+
             Dim frame As Frame = Window.Current.Content
             Dim pagina As Page = frame.Content
 
             Dim gridUsuario As Grid = pagina.FindName("gridUsuarioAmpliado")
             gridUsuario.Visibility = Visibility.Visible
 
+            Dim color As Color = Nothing
+
+            Try
+                color = ("#" + usuario.ColorEnlace).ToColor
+            Catch ex As Exception
+                color = App.Current.Resources("ColorSecundario")
+            End Try
+
             Dim transpariencia As New UISettings
             Dim boolTranspariencia As Boolean = transpariencia.AdvancedEffectsEnabled
 
             If boolTranspariencia = False Then
-                gridUsuario.Background = New SolidColorBrush(("#" + usuario.ColorEnlace).ToColor)
+                gridUsuario.Background = New SolidColorBrush(color)
             Else
                 Dim acrilico As New AcrylicBrush With {
-                    .BackgroundSource = AcrylicBackgroundSource.HostBackdrop,
+                    .BackgroundSource = AcrylicBackgroundSource.Backdrop,
                     .TintOpacity = 0.7,
-                    .TintColor = ("#" + usuario.ColorEnlace).ToColor
+                    .TintColor = color
                 }
 
                 gridUsuario.Background = acrilico
@@ -145,6 +161,36 @@ Namespace pepeTwitterXaml
                 lvTweets.Items.Clear()
             End If
 
+            Dim pbTweets As ProgressBar = pagina.FindName("pbTweetsUsuario")
+            Dim svTweets As ScrollViewer = pagina.FindName("svTweetsUsuario")
+            svTweets.Tag = New pepeizq.Twitter.Objetos.ScrollViewerTweets(cosas.MegaUsuario, Nothing, pbTweets, 2, usuario.ScreenNombre)
+            svTweets.Foreground = New SolidColorBrush(("#" + usuario.ColorTexto).ToColor)
+            AddHandler svTweets.ViewChanging, AddressOf SvTweets_ViewChanging
+
+            '------------------------------------
+
+            Dim botonCerrar As Button = pagina.FindName("botonCerrarUsuario")
+            botonCerrar.Background = New SolidColorBrush(color)
+
+            Dim banner As Banner = Nothing
+
+            Try
+                banner = Await provider.CogerBannerUsuario(usuario.ScreenNombre, New BannerParser)
+            Catch ex As Exception
+
+            End Try
+
+            Dim spFondo As StackPanel = pagina.FindName("gridImagenFondoUsuario")
+
+            If Not banner Is Nothing Then
+                Dim imagenFondo As ImageEx = pagina.FindName("imagenFondoUsuario")
+                imagenFondo.Source = New Uri(banner.Tamaños.I600x200.Enlace)
+
+                spFondo.Background = New SolidColorBrush(Colors.Transparent)
+            Else
+                spFondo.Background = New SolidColorBrush(Colors.DarkSlateGray)
+            End If
+
             Dim circuloAvatar As Ellipse = pagina.FindName("ellipseAvatar")
 
             Dim imagenAvatar As New ImageBrush With {
@@ -154,7 +200,22 @@ Namespace pepeTwitterXaml
 
             circuloAvatar.Fill = imagenAvatar
 
-            Dim provider As TwitterDataProvider = cosas.MegaUsuario.Servicio.Provider
+            Dim tbNombre As TextBlock = pagina.FindName("tbNombreUsuario")
+            tbNombre.Text = usuario.Nombre
+
+            Dim imagenVerificado As ImageEx = pagina.FindName("imagenUsuarioVerificado")
+
+            If usuario.Verificado = True Then
+                imagenVerificado.Visibility = Visibility.Visible
+            Else
+                imagenVerificado.Visibility = Visibility.Collapsed
+            End If
+
+            Dim tbScreenNombre As TextBlock = pagina.FindName("tbScreenNombreUsuario")
+            tbScreenNombre.Text = "@" + usuario.ScreenNombre
+
+            '------------------------------------
+
             Dim listaTweets As New List(Of Tweet)
 
             Try
@@ -177,7 +238,7 @@ Namespace pepeTwitterXaml
                 Next
 
                 If boolAñadir = True Then
-                    lvTweets.Items.Add(TweetXaml.Añadir(tweet, cosas.MegaUsuario))
+                    lvTweets.Items.Add(TweetXaml.Añadir(tweet, cosas.MegaUsuario, color))
                 End If
             Next
 

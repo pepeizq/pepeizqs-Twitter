@@ -38,7 +38,7 @@ Module MencionesXaml
         pbTweets.Padding = New Thickness(10, 10, 10, 10)
         pbTweets.Name = "pbTweets" + usuario.ScreenNombre
 
-        svTweets.Tag = New pepeizq.Twitter.Objetos.ScrollViewerTweets(megaUsuario, Nothing, pbTweets, 1)
+        svTweets.Tag = New pepeizq.Twitter.Objetos.ScrollViewerTweets(megaUsuario, Nothing, pbTweets, 1, Nothing)
 
         gridMenciones.Children.Add(pbTweets)
 

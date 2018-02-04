@@ -5,7 +5,7 @@ Imports Windows.UI.Core
 
 Module TweetXaml
 
-    Public Function Añadir(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario)
+    Public Function Añadir(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario, color As Windows.UI.Color)
 
         Dim grid As New Grid
 
@@ -94,14 +94,14 @@ Module TweetXaml
 
             spInferiorCentro.SetValue(Grid.ColumnProperty, 1)
 
-            spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlUsuario.Generar(tweet, megaUsuario))
-            spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlTexto.Generar(tweet, Nothing))
+            spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlUsuario.Generar(tweet, megaUsuario, color))
+            spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlTexto.Generar(tweet, Nothing, color))
 
             If Not tweet.Cita Is Nothing Then
                 If tweet.Retweet Is Nothing Then
-                    spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlCita.Generar(tweet, megaUsuario))
+                    spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlCita.Generar(tweet, megaUsuario, color))
                 Else
-                    spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlCita.Generar(tweet.Retweet, megaUsuario))
+                    spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlCita.Generar(tweet.Retweet, megaUsuario, color))
                 End If
             End If
 

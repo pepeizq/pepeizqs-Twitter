@@ -4,7 +4,7 @@ Imports pepeizq.Twitter.Tweet
 Namespace pepeTwitterXaml
     Module TweetXamlCita
 
-        Public Function Generar(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario)
+        Public Function Generar(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario, color As Windows.UI.Color)
 
             Dim color1 As New GradientStop With {
                 .Color = ColorHelper.ToColor("#e0e0e0"),
@@ -36,8 +36,8 @@ Namespace pepeTwitterXaml
                 .CornerRadius = New CornerRadius(5)
             }
 
-            sp.Children.Add(TweetXamlUsuario.Generar(tweet.Cita, megaUsuario))
-            sp.Children.Add(TweetXamlTexto.Generar(tweet.Cita, tweet))
+            sp.Children.Add(TweetXamlUsuario.Generar(tweet.Cita, megaUsuario, color))
+            sp.Children.Add(TweetXamlTexto.Generar(tweet.Cita, tweet, color))
             sp.Children.Add(TweetXamlMedia.Generar(tweet.Cita))
 
             Return sp

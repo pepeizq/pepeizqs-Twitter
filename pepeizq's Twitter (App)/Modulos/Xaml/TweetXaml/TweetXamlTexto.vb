@@ -1,12 +1,17 @@
 ﻿Imports System.Net
 Imports pepeizq.Twitter.Tweet
 Imports Windows.System
+Imports Windows.UI
 Imports Windows.UI.Xaml.Documents
 
 Namespace pepeTwitterXaml
     Module TweetXamlTexto
 
-        Public Function Generar(tweet As Tweet, citaOrigen As Tweet)
+        Public Function Generar(tweet As Tweet, citaOrigen As Tweet, color As Color)
+
+            If color = Nothing Then
+                color = App.Current.Resources("ColorCuarto")
+            End If
 
             Dim textoSpan As New Span
             Dim textoTweet As String = Nothing
@@ -88,9 +93,17 @@ Namespace pepeTwitterXaml
 
                                 Dim tbTextoAnterior As String = WebUtility.HtmlDecode(textoTweet)
 
-                                If tbTextoAnterior.Trim.Length > 0 Then
+                                If tbTextoAnterior.Trim.Length >= 0 Then
+                                    Dim textoFragmentoAnterior As String = Nothing
+
+                                    If (tbTextoAnterior.Length - int) >= 0 Then
+                                        textoFragmentoAnterior = tbTextoAnterior.Remove(int, tbTextoAnterior.Length - int)
+                                    Else
+                                        textoFragmentoAnterior = tbTextoAnterior
+                                    End If
+
                                     Dim fragmentoAnterior As New Run With {
-                                       .Text = tbTextoAnterior.Remove(int, tbTextoAnterior.Length - int)
+                                       .Text = textoFragmentoAnterior
                                     }
 
                                     textoSpan.Inlines.Add(fragmentoAnterior)
@@ -105,7 +118,7 @@ Namespace pepeTwitterXaml
                                 Dim enlace As New Hyperlink With {
                                     .NavigateUri = New Uri(entidad.Enlace),
                                     .TextDecorations = Nothing,
-                                    .Foreground = New SolidColorBrush(App.Current.Resources("ColorCuarto"))
+                                    .Foreground = New SolidColorBrush(color)
                                 }
 
                                 enlace.Inlines.Add(contenidoEnlace)
@@ -119,8 +132,16 @@ Namespace pepeTwitterXaml
 
                                 Dim int As Integer = textoTweet.ToLower.IndexOf(entidad.Mostrar.ToLower)
 
+                                Dim textoFragmentoAnterior As String = Nothing
+
+                                If (textoTweet.Length - int) >= 0 Then
+                                    textoFragmentoAnterior = textoTweet.Remove(int, textoTweet.Length - int)
+                                Else
+                                    textoFragmentoAnterior = textoTweet
+                                End If
+
                                 Dim fragmentoAnterior As New Run With {
-                                    .Text = textoTweet.Remove(int, textoTweet.Length - int)
+                                    .Text = textoFragmentoAnterior
                                 }
 
                                 textoSpan.Inlines.Add(fragmentoAnterior)
@@ -134,7 +155,7 @@ Namespace pepeTwitterXaml
                                 Dim enlace As New Hyperlink With {
                                     .NavigateUri = New Uri(entidad.Enlace, UriKind.RelativeOrAbsolute),
                                     .TextDecorations = Nothing,
-                                    .Foreground = New SolidColorBrush(App.Current.Resources("ColorCuarto"))
+                                    .Foreground = New SolidColorBrush(color)
                                 }
 
                                 enlace.Inlines.Add(contenidoEnlace)
@@ -144,10 +165,10 @@ Namespace pepeTwitterXaml
                     Next
                 End If
 
-                If textoTweet.Trim.Length > 0 Then
+                If textoTweet.Trim.Length >= 0 Then
                     textoTweet = LimpiarEnlaces(textoTweet)
 
-                    If textoTweet.Trim.Length > 0 Then
+                    If textoTweet.Trim.Length >= 0 Then
                         Dim fragmento As New Run With {
                            .Text = WebUtility.HtmlDecode(textoTweet)
                         }

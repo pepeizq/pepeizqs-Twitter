@@ -70,7 +70,7 @@ Module TwitterTimeLineInicio
                     End If
                 End If
             Else
-                For Each Tweet In listaTweets
+                For Each tweet In listaTweets
                     Dim boolAñadir As Boolean = True
 
                     For Each item In lv.Items
@@ -78,13 +78,13 @@ Module TwitterTimeLineInicio
                         Dim gridTweet As Grid = lvItem.Content
                         Dim lvTweet As Tweet = gridTweet.Tag
 
-                        If lvTweet.ID = Tweet.ID Then
+                        If lvTweet.ID = tweet.ID Then
                             boolAñadir = False
                         End If
                     Next
 
                     If boolAñadir = True Then
-                        lv.Items.Add(TweetXaml.Añadir(Tweet, megaUsuario))
+                        lv.Items.Add(TweetXaml.Añadir(tweet, megaUsuario, Nothing))
                     End If
                 Next
 

@@ -155,6 +155,7 @@
     <Content Include="Assets\MasCosas\pepeizq.png" />
     <Content Include="Assets\MasCosas\poeditor.png" />
     <Content Include="Assets\Sonidos\Twitter.Default.mp3" />
+    <Content Include="Assets\Verificado.png" />
     <Content Include="My Project\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -228,7 +229,7 @@
       <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="pepeizq.Twitter">
-      <Version>1.0.26</Version>
+      <Version>1.0.30</Version>
     </PackageReference>
     <PackageReference Include="Unicode.net">
       <Version>0.1.2</Version>
