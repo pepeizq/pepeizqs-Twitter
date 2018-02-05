@@ -107,7 +107,7 @@ Module TweetXaml
 
             spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlMedia.Generar(tweet))
             spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlBotones.Generar(tweet, grid, megaUsuario))
-            spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlEnviarTweet.Generar(tweet, megaUsuario))
+            spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlEnviarTweet.Generar(tweet, megaUsuario, Visibility.Collapsed))
 
             gridInferior.Children.Add(spInferiorCentro)
 

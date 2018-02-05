@@ -68,11 +68,11 @@ Public NotInheritable Class MainPage
 
         If listaUsuarios.Count = 0 Then
             botonConfigVolver.Visibility = Visibility.Collapsed
-            botonAñadirCuenta.Visibility = Visibility.Visible
+            'botonAñadirCuenta.Visibility = Visibility.Visible
             GridVisibilidad(gridConfig, recursos.GetString("Config"))
         Else
             botonConfigVolver.Visibility = Visibility.Visible
-            botonAñadirCuenta.Visibility = Visibility.Collapsed
+            'botonAñadirCuenta.Visibility = Visibility.Collapsed
         End If
 
         '--------------------------------------------------------
@@ -137,6 +137,7 @@ Public NotInheritable Class MainPage
 
     Private Async Sub BotonAñadirCuenta_Click(sender As Object, e As RoutedEventArgs) Handles botonAñadirCuenta.Click
 
+        Dim recursos As New Resources.ResourceLoader
         Dim helper As New LocalObjectStorageHelper
 
         Dim listaUsuarios As New List(Of pepeizq.Twitter.MegaUsuario)
@@ -147,16 +148,56 @@ Public NotInheritable Class MainPage
 
         Dim visibilidad As New Visibility
 
-        If listaUsuarios.Count = 0 Then
-            visibilidad = Visibility.Visible
-        Else
-            visibilidad = Visibility.Collapsed
-        End If
+        'If listaUsuarios.Count = 0 Then
+        '    visibilidad = Visibility.Visible
+        'Else
+        '    visibilidad = Visibility.Collapsed
+        'End If
 
         Dim usuario As pepeizq.Twitter.MegaUsuario = Await TwitterConexion.Iniciar(Nothing)
 
         If Not usuario Is Nothing Then
             UsuarioXaml.Generar(usuario, visibilidad)
+
+            For Each grid As Grid In gridPrincipal.Children
+                If grid.Name.Contains("gridUsuario") Then
+                    If Not grid.Name = "gridUsuarioAmpliado" Then
+                        If Not grid.Name = "gridUsuario" + usuario.Usuario.ScreenNombre Then
+                            Dim subGrid As Grid = grid.Children(0)
+
+                            If Not subGrid Is Nothing Then
+                                Dim subGrid_ As Grid = subGrid.Children(0)
+                                Dim spBotonesSuperior As StackPanel = subGrid_.Children(0)
+                                Dim menu As Menu = spBotonesSuperior.Children(0)
+                                Dim menuItem As MenuItem = menu.Items(0)
+                                menuItem.Items.RemoveAt(0)
+
+                                Dim menuItemCuentas As New MenuFlyoutSubItem With {
+                                    .Text = recursos.GetString("Accounts")
+                                }
+
+                                Dim listaUsuarios2 As New List(Of TwitterUsuario)
+
+                                If helper.KeyExists("listaUsuarios2") Then
+                                    listaUsuarios2 = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios2")
+                                End If
+
+                                For Each item In listaUsuarios2
+                                    Dim subCuenta As New MenuFlyoutItem With {
+                                        .Text = item.Nombre + " (@" + item.ScreenNombre + ")",
+                                        .Tag = item
+                                    }
+
+                                    AddHandler subCuenta.Click, AddressOf BotonCambiarCuentaClick
+                                    menuItemCuentas.Items.Add(subCuenta)
+                                Next
+
+                                menuItem.Items.Insert(0, menuItemCuentas)
+                            End If
+                        End If
+                    End If
+                End If
+            Next
         End If
 
     End Sub
@@ -284,6 +325,7 @@ Public NotInheritable Class MainPage
 
     Private Sub BotonCerrarUsuario_Click(sender As Object, e As RoutedEventArgs) Handles botonCerrarUsuario.Click
 
+        gridTitulo.Background = App.Current.Resources("GridTituloBackground")
         gridUsuarioAmpliado.Visibility = Visibility.Collapsed
 
     End Sub

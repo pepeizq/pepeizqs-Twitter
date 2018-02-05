@@ -225,4 +225,10 @@
   <data name="CopyUrlTweet" xml:space="preserve">
     <value>Copiar Enlace del Tweet</value>
   </data>
+  <data name="tbNumTweetsUser.Text" xml:space="preserve">
+    <value>Tweets</value>
+  </data>
+  <data name="tbNumFollowersUser.Text" xml:space="preserve">
+    <value>Seguidores</value>
+  </data>
 </root>

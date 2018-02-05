@@ -164,40 +164,64 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <Grid Grid.Row="0" Height="200">
+                    <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="600"/>
                             <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Grid Grid.Column="0" Background="Black">
-                            <controls:ImageEx x:Name="imagenFondoUsuario" IsCacheEnabled="True" Height="200" Width="600" Opacity="0.3" Stretch="Uniform"/>
-                        </Grid>
+                        <Grid Grid.Column="0" Width="600" Margin="0,0,20,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="200"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
 
-                        <StackPanel x:Name="gridImagenFondoUsuario" Grid.Column="0" Orientation="Vertical" Padding="10" Margin="0,0,20,0" VerticalAlignment="Center">
+                            <Grid Grid.Row="0" Background="Black">
+                                <controls:ImageEx x:Name="imagenFondoUsuario" IsCacheEnabled="True" Height="200" Opacity="0.3" Stretch="UniformtoFill"/>
+                            </Grid>
 
-                            <Ellipse x:Name="ellipseAvatar" Width="60" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <StackPanel x:Name="gridImagenFondoUsuario" Grid.Row="0" Orientation="Vertical" Padding="10" VerticalAlignment="Center">
 
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15">
-                                <TextBlock x:Name="tbNombreUsuario" Foreground="White" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
-                                <controls:ImageEx x:Name="imagenUsuarioVerificado" Source="Assets/Verificado.png" IsCacheEnabled="True" Margin="10,0,0,0" Height="20" Width="20" VerticalAlignment="Center"/>
+                                <Ellipse x:Name="ellipseAvatar" Width="60" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15">
+                                    <TextBlock x:Name="tbNombreUsuario" Foreground="White" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+                                    <controls:ImageEx x:Name="imagenUsuarioVerificado" Source="Assets/Verificado.png" IsCacheEnabled="True" Margin="10,0,0,0" Height="20" Width="20" VerticalAlignment="Center" Visibility="Collapsed"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <TextBlock x:Name="tbScreenNombreUsuario" Foreground="White" FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                </StackPanel>
                             </StackPanel>
 
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <TextBlock x:Name="tbScreenNombreUsuario" Foreground="White" FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center"/>
-                            </StackPanel>                                                      
-                        </StackPanel>
+                            <Grid x:Name="gridDatosUsuario" Grid.Row="1">
+                                <Grid.Background>
+                                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                        <GradientStop Color="#FFE4E4E4" Offset="0.5" />
+                                        <GradientStop Color="#FFBFBFBF" Offset="1.0" />
+                                    </LinearGradientBrush>
+                                </Grid.Background>
 
-                        <Grid x:Name="gridDatosUsuario" Grid.Column="1">
-                            <Grid.Background>
-                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                    <GradientStop Color="#FFE4E4E4" Offset="0.5" />
-                                    <GradientStop Color="#FFBFBFBF" Offset="1.0" />
-                                </LinearGradientBrush>
-                            </Grid.Background>
-                            
-                            
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0" Orientation="Vertical" Padding="10" HorizontalAlignment="Center">
+                                    <TextBlock x:Uid="tbNumTweetsUser" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+                                    <TextBlock x:Name="tbNumTweetsUsuario" HorizontalAlignment="Center"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1" Orientation="Vertical" Padding="10" HorizontalAlignment="Center">
+                                    <TextBlock x:Uid="tbNumFollowersUser" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+                                    <TextBlock x:Name="tbNumSeguidoresUsuario" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
                         </Grid>
+
+                        
+
+                        
                     </Grid>
 
 

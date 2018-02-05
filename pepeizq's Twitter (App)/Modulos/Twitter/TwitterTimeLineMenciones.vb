@@ -31,7 +31,7 @@ Module TwitterTimeLineMenciones
             Dim listaTweets As New List(Of Tweet)
 
             Try
-                listaTweets = Await provider.CogerTweetsTimelineMenciones(Of Tweet)(ultimoTweet, New TweetParser)
+                listaTweets = Await provider.CogerTweetsTimelineMenciones(Of Tweet)(megaUsuario.Usuario.Tokens, ultimoTweet, New TweetParser)
             Catch ex As Exception
 
             End Try

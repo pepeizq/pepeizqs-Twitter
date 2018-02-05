@@ -138,9 +138,9 @@ Module InicioXaml
 
                             Try
                                 If cosas.Query = 0 Then
-                                    listaTweets = Await provider.CogerTweetsTimelineInicio(Of Tweet)(ultimoTweet.ID, New TweetParser)
+                                    listaTweets = Await provider.CogerTweetsTimelineInicio(Of Tweet)(cosas.MegaUsuario.Usuario.Tokens, ultimoTweet.ID, New TweetParser)
                                 ElseIf cosas.Query = 1 Then
-                                    listaTweets = Await provider.CogerTweetsTimelineMenciones(Of Tweet)(ultimoTweet.ID, New TweetParser)
+                                    listaTweets = Await provider.CogerTweetsTimelineMenciones(Of Tweet)(cosas.MegaUsuario.Usuario.Tokens, ultimoTweet.ID, New TweetParser)
                                 ElseIf cosas.Query = 2 Then
                                     listaTweets = Await provider.CogerTweetsTimelineUsuario(Of Tweet)(cosas.UsuarioScreenNombre, ultimoTweet.ID, New TweetParser)
                                 End If

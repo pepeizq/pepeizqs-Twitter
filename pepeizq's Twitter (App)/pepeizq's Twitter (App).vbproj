@@ -135,6 +135,7 @@
     <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlTexto.vb" />
     <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlUsuario.vb" />
     <Compile Include="Modulos\Xaml\UsuarioXaml.vb" />
+    <Compile Include="Modulos\Xaml\UsuarioXaml\EscribirXaml.vb" />
     <Compile Include="Modulos\Xaml\UsuarioXaml\InicioXaml.vb" />
     <Compile Include="Modulos\Xaml\UsuarioXaml\MencionesXaml.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -229,7 +230,7 @@
       <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="pepeizq.Twitter">
-      <Version>1.0.30</Version>
+      <Version>1.0.34</Version>
     </PackageReference>
     <PackageReference Include="Unicode.net">
       <Version>0.1.2</Version>

@@ -1,4 +1,5 @@
-﻿Imports Microsoft.Toolkit.Uwp.UI.Controls
+﻿Imports Microsoft.Toolkit.Uwp.Helpers
+Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports pepeizq.Twitter
 Imports Windows.UI
 Imports Windows.UI.Xaml.Shapes
@@ -72,31 +73,31 @@ Module UsuarioXaml
             .Foreground = New SolidColorBrush(Colors.White)
         }
 
-        'Dim menuItemCuentas As New MenuFlyoutSubItem With {
-        '    .Text = recursos.GetString("Accounts")
-        '}
+        Dim menuItemCuentas As New MenuFlyoutSubItem With {
+            .Text = recursos.GetString("Accounts")
+        }
 
-        'Dim helper As New LocalObjectStorageHelper
+        Dim helper As New LocalObjectStorageHelper
 
-        'Dim listaUsuarios As New List(Of TwitterUser)
+        Dim listaUsuarios As New List(Of TwitterUsuario)
 
-        'If helper.KeyExists("listaUsuarios2") Then
-        '    listaUsuarios = helper.Read(Of List(Of TwitterUser))("listaUsuarios2")
-        'End If
+        If helper.KeyExists("listaUsuarios2") Then
+            listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios2")
+        End If
 
-        'For Each item In listaUsuarios
-        '    Dim subCuenta As New MenuFlyoutItem With {
-        '        .Text = item.Name + " (@" + item.ScreenName + ")",
-        '        .Tag = item
-        '    }
+        For Each item In listaUsuarios
+            Dim subCuenta As New MenuFlyoutItem With {
+                .Text = item.Nombre + " (@" + item.ScreenNombre + ")",
+                .Tag = item
+            }
 
-        '    AddHandler subCuenta.Click, AddressOf BotonCambiarCuentaClick
-        '    menuItemCuentas.Items.Add(subCuenta)
-        'Next
+            AddHandler subCuenta.Click, AddressOf BotonCambiarCuentaClick
+            menuItemCuentas.Items.Add(subCuenta)
+        Next
 
-        'menuItem.Items.Add(menuItemCuentas)
+        menuItem.Items.Add(menuItemCuentas)
 
-        'menuItem.Items.Add(New MenuFlyoutSeparator)
+        menuItem.Items.Add(New MenuFlyoutSeparator)
 
         Dim menuItemConfig As New MenuFlyoutItem With {
             .Text = recursos.GetString("Config")
@@ -138,6 +139,7 @@ Module UsuarioXaml
 
         spBotonesSuperior.Children.Add(ConstructorBotones("botonInicio" + usuario.ScreenNombre, 59407, recursos.GetString("Home"), usuario))
         spBotonesSuperior.Children.Add(ConstructorBotones("botonMenciones" + usuario.ScreenNombre, 60047, recursos.GetString("Mentions"), usuario))
+        spBotonesSuperior.Children.Add(ConstructorBotones("botonEscribir" + usuario.ScreenNombre, 59151, recursos.GetString("WriteTweet"), usuario))
 
         gridBarraSuperiorBotones.Children.Add(spBotonesSuperior)
 
@@ -158,6 +160,7 @@ Module UsuarioXaml
         gridUsuario.Children.Add(gridBarraSuperior)
         gridUsuario.Children.Add(InicioXaml.Generar(megaUsuario, visibilidad))
         gridUsuario.Children.Add(MencionesXaml.Generar(megaUsuario))
+        gridUsuario.Children.Add(EscribirXaml.Generar(megaUsuario))
 
         '---------------------------------
 
@@ -263,7 +266,7 @@ Module UsuarioXaml
 
     End Sub
 
-    Private Sub BotonClick(sender As Object, e As RoutedEventArgs)
+    Public Sub BotonClick(sender As Object, e As RoutedEventArgs)
 
         Dim recursos As New Resources.ResourceLoader
 
@@ -284,6 +287,11 @@ Module UsuarioXaml
         ElseIf tb.Text = recursos.GetString("Mentions") Then
 
             Dim grid As Grid = pagina.FindName("gridMenciones" + usuario.ScreenNombre)
+            GridVisibilidad(grid, boton)
+
+        ElseIf tb.Text = recursos.GetString("WriteTweet") Then
+
+            Dim grid As Grid = pagina.FindName("gridEscribir" + usuario.ScreenNombre)
             GridVisibilidad(grid, boton)
 
         End If
@@ -348,11 +356,14 @@ Module UsuarioXaml
         Dim gridMenciones As Grid = pagina.FindName("gridMenciones" + usuario.ScreenNombre)
         gridMenciones.Visibility = Visibility.Collapsed
 
+        Dim gridEscribir As Grid = pagina.FindName("gridEscribir" + usuario.ScreenNombre)
+        gridEscribir.Visibility = Visibility.Collapsed
+
         gridElegido.Visibility = Visibility.Visible
 
     End Sub
 
-    Private Sub BotonCambiarCuentaClick(sender As Object, e As RoutedEventArgs)
+    Public Sub BotonCambiarCuentaClick(sender As Object, e As RoutedEventArgs)
 
         Dim boton As MenuFlyoutItem = sender
         Dim usuario As TwitterUsuario = boton.Tag
@@ -364,11 +375,13 @@ Module UsuarioXaml
 
         For Each grid As Grid In gridPrincipal.Children
             If grid.Name.Contains("gridUsuario") Then
-                For Each subgrid As Grid In grid.Children
-                    subgrid.Visibility = Visibility.Collapsed
-                Next
+                If Not grid.Name = "gridUsuarioAmpliado" Then
+                    For Each subgrid As Grid In grid.Children
+                        subgrid.Visibility = Visibility.Collapsed
+                    Next
 
-                grid.Visibility = Visibility.Collapsed
+                    grid.Visibility = Visibility.Collapsed
+                End If
             End If
 
             If grid.Name = "gridUsuario" + usuario.ScreenNombre Then

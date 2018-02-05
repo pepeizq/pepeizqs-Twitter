@@ -8,13 +8,21 @@ Imports Windows.UI.Xaml.Documents
 Namespace pepeTwitterXaml
     Module TweetXamlEnviarTweet
 
-        Public Function Generar(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario)
+        Public Function Generar(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario, visibilidad As Visibility)
 
             Dim recursos As New Resources.ResourceLoader
 
+            Dim nombreGrid As String = Nothing
+
+            If tweet Is Nothing Then
+                nombreGrid = "gridTweetEscribir"
+            Else
+                nombreGrid = "gridTweetEscribir" + tweet.ID
+            End If
+
             Dim gridTweetEscribir As New Grid With {
-                .Name = "gridTweetEscribir" + tweet.ID,
-                .Visibility = Visibility.Collapsed,
+                .Name = nombreGrid,
+                .Visibility = visibilidad,
                 .Margin = New Thickness(5, 10, 0, 5)
             }
 
@@ -55,68 +63,70 @@ Namespace pepeTwitterXaml
 
             '---------------------------------
 
-            Dim tbRespondiendo As New TextBlock
-            tbRespondiendo.SetValue(Grid.RowProperty, 0)
-
-            Dim tbRespondiendoSpan As New Span
-
-            Dim fragmento1 As New Run With {
-                .Text = recursos.GetString("ReplyingTo") + ": "
-            }
-
-            tbRespondiendoSpan.Inlines.Add(fragmento1)
-
-            If Not tweet.Usuario.ScreenNombre = megaUsuario.Usuario.ScreenNombre Then
-                Dim fragmento2 As New Run With {
-                    .Text = "@" + tweet.Usuario.ScreenNombre
-                }
-
-                Dim enlace As New Hyperlink With {
-                    .NavigateUri = New Uri("https://twitter.com/" + tweet.Usuario.ScreenNombre),
-                    .TextDecorations = Nothing,
-                    .Foreground = New SolidColorBrush(App.Current.Resources("ColorCuarto"))
-                }
-
-                enlace.Inlines.Add(fragmento2)
-                tbRespondiendoSpan.Inlines.Add(enlace)
-            End If
-
             Dim listaMenciones As TweetMencion()
 
-            If tweet.Retweet Is Nothing Then
-                listaMenciones = tweet.Entidades.Menciones
-            Else
-                listaMenciones = tweet.Retweet.Entidades.Menciones
-            End If
+            If Not tweet Is Nothing Then
+                Dim tbRespondiendo As New TextBlock
+                tbRespondiendo.SetValue(Grid.RowProperty, 0)
 
-            For Each mencion In listaMenciones
-                If Not mencion.ScreenNombre = megaUsuario.Usuario.ScreenNombre Then
-                    If tbRespondiendoSpan.Inlines.Count > 1 Then
-                        Dim fragmentoAnterior As New Run With {
-                           .Text = ", "
-                        }
+                Dim tbRespondiendoSpan As New Span
 
-                        tbRespondiendoSpan.Inlines.Add(fragmentoAnterior)
-                    End If
+                Dim fragmento1 As New Run With {
+                    .Text = recursos.GetString("ReplyingTo") + ": "
+                }
 
-                    Dim fragmentoMencion As New Run With {
-                        .Text = "@" + mencion.ScreenNombre
+                tbRespondiendoSpan.Inlines.Add(fragmento1)
+
+                If Not tweet.Usuario.ScreenNombre = megaUsuario.Usuario.ScreenNombre Then
+                    Dim fragmento2 As New Run With {
+                        .Text = "@" + tweet.Usuario.ScreenNombre
                     }
 
-                    Dim enlaceMencion As New Hyperlink With {
-                        .NavigateUri = New Uri("https://twitter.com/" + mencion.ScreenNombre),
+                    Dim enlace As New Hyperlink With {
+                        .NavigateUri = New Uri("https://twitter.com/" + tweet.Usuario.ScreenNombre),
                         .TextDecorations = Nothing,
                         .Foreground = New SolidColorBrush(App.Current.Resources("ColorCuarto"))
                     }
 
-                    enlaceMencion.Inlines.Add(fragmentoMencion)
-                    tbRespondiendoSpan.Inlines.Add(enlaceMencion)
+                    enlace.Inlines.Add(fragmento2)
+                    tbRespondiendoSpan.Inlines.Add(enlace)
                 End If
-            Next
 
-            tbRespondiendo.Inlines.Add(tbRespondiendoSpan)
+                If tweet.Retweet Is Nothing Then
+                    listaMenciones = tweet.Entidades.Menciones
+                Else
+                    listaMenciones = tweet.Retweet.Entidades.Menciones
+                End If
 
-            gridTweetEscribir.Children.Add(tbRespondiendo)
+                For Each mencion In listaMenciones
+                    If Not mencion.ScreenNombre = megaUsuario.Usuario.ScreenNombre Then
+                        If tbRespondiendoSpan.Inlines.Count > 1 Then
+                            Dim fragmentoAnterior As New Run With {
+                               .Text = ", "
+                            }
+
+                            tbRespondiendoSpan.Inlines.Add(fragmentoAnterior)
+                        End If
+
+                        Dim fragmentoMencion As New Run With {
+                            .Text = "@" + mencion.ScreenNombre
+                        }
+
+                        Dim enlaceMencion As New Hyperlink With {
+                            .NavigateUri = New Uri("https://twitter.com/" + mencion.ScreenNombre),
+                            .TextDecorations = Nothing,
+                            .Foreground = New SolidColorBrush(App.Current.Resources("ColorCuarto"))
+                        }
+
+                        enlaceMencion.Inlines.Add(fragmentoMencion)
+                        tbRespondiendoSpan.Inlines.Add(enlaceMencion)
+                    End If
+                Next
+
+                tbRespondiendo.Inlines.Add(tbRespondiendoSpan)
+
+                gridTweetEscribir.Children.Add(tbRespondiendo)
+            End If
 
             '---------------------------------
 
@@ -316,7 +326,7 @@ Namespace pepeTwitterXaml
                 .Mensaje = mensaje
             }
 
-            Await cosas.MegaUsuario.Servicio.EnviarTweet(status)
+            Await cosas.MegaUsuario.Servicio.EnviarTweet(cosas.MegaUsuario.Usuario.Tokens, status)
 
             tb.Text = String.Empty
 

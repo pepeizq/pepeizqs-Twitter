@@ -140,7 +140,7 @@ Namespace pepeTwitterXaml
             Dim recursos As New Resources.ResourceLoader
 
             If cosas.Tweet.Retwitteado = False Then
-                Await cosas.MegaUsuario.Servicio.Retwitear(status)
+                Await cosas.MegaUsuario.Servicio.Retwitear(cosas.MegaUsuario.Usuario.Tokens, status)
 
                 Notificaciones.Toast.Enseñar(recursos.GetString("RetweetSent"))
 
@@ -152,7 +152,7 @@ Namespace pepeTwitterXaml
 
                 cosas.Tweet.Retwitteado = True
             Else
-                Await cosas.MegaUsuario.Servicio.DeshacerRetweet(status)
+                Await cosas.MegaUsuario.Servicio.DeshacerRetweet(cosas.MegaUsuario.Usuario.Tokens, status)
 
                 boton.Background = New SolidColorBrush(Colors.Transparent)
 
@@ -177,7 +177,7 @@ Namespace pepeTwitterXaml
             Dim recursos As New Resources.ResourceLoader
 
             If cosas.Tweet.Favoriteado = False Then
-                Await cosas.MegaUsuario.Servicio.Favoritear(status)
+                Await cosas.MegaUsuario.Servicio.Favoritear(cosas.MegaUsuario.Usuario.Tokens, status)
 
                 Notificaciones.Toast.Enseñar(recursos.GetString("FavoriteSent"))
 
@@ -189,7 +189,7 @@ Namespace pepeTwitterXaml
 
                 cosas.Tweet.Favoriteado = True
             Else
-                Await cosas.MegaUsuario.Servicio.DeshacerFavorito(status)
+                Await cosas.MegaUsuario.Servicio.DeshacerFavorito(cosas.MegaUsuario.Usuario.Tokens, status)
 
                 boton.Background = New SolidColorBrush(Colors.Transparent)
 

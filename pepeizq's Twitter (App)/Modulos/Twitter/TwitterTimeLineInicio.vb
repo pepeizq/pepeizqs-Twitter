@@ -42,7 +42,7 @@ Module TwitterTimeLineInicio
             Dim listaTweets As New List(Of Tweet)
 
             Try
-                listaTweets = Await provider.CogerTweetsTimelineInicio(Of Tweet)(ultimoTweet, New TweetParser)
+                listaTweets = Await provider.CogerTweetsTimelineInicio(Of Tweet)(megaUsuario.Usuario.Tokens, ultimoTweet, New TweetParser)
             Catch ex As Exception
 
             End Try

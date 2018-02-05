@@ -129,6 +129,8 @@ Namespace pepeTwitterXaml
             Dim frame As Frame = Window.Current.Content
             Dim pagina As Page = frame.Content
 
+            Dim gridTitulo As Grid = pagina.FindName("gridTitulo")
+
             Dim gridUsuario As Grid = pagina.FindName("gridUsuarioAmpliado")
             gridUsuario.Visibility = Visibility.Visible
 
@@ -144,6 +146,7 @@ Namespace pepeTwitterXaml
             Dim boolTranspariencia As Boolean = transpariencia.AdvancedEffectsEnabled
 
             If boolTranspariencia = False Then
+                gridTitulo.Background = New SolidColorBrush(color)
                 gridUsuario.Background = New SolidColorBrush(color)
             Else
                 Dim acrilico As New AcrylicBrush With {
@@ -152,6 +155,7 @@ Namespace pepeTwitterXaml
                     .TintColor = color
                 }
 
+                gridTitulo.Background = acrilico
                 gridUsuario.Background = acrilico
             End If
 
@@ -181,14 +185,14 @@ Namespace pepeTwitterXaml
             End Try
 
             Dim spFondo As StackPanel = pagina.FindName("gridImagenFondoUsuario")
+            Dim imagenFondo As ImageEx = pagina.FindName("imagenFondoUsuario")
 
             If Not banner Is Nothing Then
-                Dim imagenFondo As ImageEx = pagina.FindName("imagenFondoUsuario")
                 imagenFondo.Source = New Uri(banner.Tamaños.I600x200.Enlace)
-
                 spFondo.Background = New SolidColorBrush(Colors.Transparent)
             Else
-                spFondo.Background = New SolidColorBrush(Colors.DarkSlateGray)
+                imagenFondo.Source = Nothing
+                spFondo.Background = New SolidColorBrush(Colors.Black)
             End If
 
             Dim circuloAvatar As Ellipse = pagina.FindName("ellipseAvatar")
@@ -213,6 +217,12 @@ Namespace pepeTwitterXaml
 
             Dim tbScreenNombre As TextBlock = pagina.FindName("tbScreenNombreUsuario")
             tbScreenNombre.Text = "@" + usuario.ScreenNombre
+
+            Dim tbNumTweets As TextBlock = pagina.FindName("tbNumTweetsUsuario")
+            tbNumTweets.Text = String.Format("{0:n0}", Integer.Parse(usuario.NumTweets))
+
+            Dim tbNumSeguidores As TextBlock = pagina.FindName("tbNumSeguidoresUsuario")
+            tbNumSeguidores.Text = String.Format("{0:n0}", Integer.Parse(usuario.Followers))
 
             '------------------------------------
 
