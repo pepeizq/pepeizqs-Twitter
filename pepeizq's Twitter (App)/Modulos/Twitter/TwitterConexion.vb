@@ -23,7 +23,7 @@ Module TwitterConexion
 
         Try
             servicio.Initialize(consumerKey, consumerSecret, "https://pepeizqapps.com/")
-            estado = Await servicio.Provider.LoginAsync()
+            estado = Await servicio.Provider.Logear
         Catch ex As Exception
             estado = False
         End Try
@@ -81,12 +81,12 @@ Module TwitterConexion
     Public Function Desconectar(servicio As TwitterServicio)
 
         Try
-            servicio.Logout()
+            servicio.Deslogear()
         Catch ex As Exception
 
         End Try
 
-        Return servicio.Provider.LoggedIn
+        Return servicio.Provider.Logeado
 
     End Function
 

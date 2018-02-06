@@ -167,10 +167,10 @@
                     <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <Grid Grid.Column="0" Width="600" Margin="0,0,20,0">
+                        <Grid Grid.Column="0" Width="600">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="200"/>
                                 <RowDefinition Height="Auto"/>
@@ -191,6 +191,11 @@
 
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                     <TextBlock x:Name="tbScreenNombreUsuario" Foreground="White" FontSize="15" FontWeight="SemiBold" VerticalAlignment="Center"/>
+
+                                    <StackPanel x:Name="spEnlaceUsuario" Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <AppBarSeparator Foreground="White"/>
+                                        <HyperlinkButton x:Name="hlEnlaceUsuario" Foreground="White"/>
+                                    </StackPanel> 
                                 </StackPanel>
                             </StackPanel>
 
@@ -219,7 +224,9 @@
                             </Grid>
                         </Grid>
 
-                        
+                        <StackPanel Grid.Column="1" Orientation="Vertical" Width="150">
+                            <Button x:Name="botonSeguirUsuario" Padding="10" Margin="10" BorderThickness="1" BorderBrush="White" Foreground="White" HorizontalAlignment="Stretch"/>
+                        </StackPanel>
 
                         
                     </Grid>

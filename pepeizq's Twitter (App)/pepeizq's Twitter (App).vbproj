@@ -125,7 +125,8 @@
     <Compile Include="Modulos\Twitter\TwitterStream.vb" />
     <Compile Include="Modulos\Twitter\TwitterTimeLineInicio.vb" />
     <Compile Include="Modulos\Twitter\TwitterTimeLineMenciones.vb" />
-    <Compile Include="Modulos\Xaml\TweetXaml.vb" />
+    <Compile Include="Modulos\Xaml\FichaUsuarioXaml.vb" />
+    <Compile Include="Modulos\Xaml\TweetXaml\TweetXaml.vb" />
     <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlAvatar.vb" />
     <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlBotones.vb" />
     <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlEnviarTweet.vb" />
@@ -134,7 +135,7 @@
     <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlRetweet.vb" />
     <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlTexto.vb" />
     <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlUsuario.vb" />
-    <Compile Include="Modulos\Xaml\UsuarioXaml.vb" />
+    <Compile Include="Modulos\Xaml\UsuarioXaml\UsuarioXaml.vb" />
     <Compile Include="Modulos\Xaml\UsuarioXaml\EscribirXaml.vb" />
     <Compile Include="Modulos\Xaml\UsuarioXaml\InicioXaml.vb" />
     <Compile Include="Modulos\Xaml\UsuarioXaml\MencionesXaml.vb" />
@@ -230,7 +231,7 @@
       <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="pepeizq.Twitter">
-      <Version>1.0.34</Version>
+      <Version>1.0.36</Version>
     </PackageReference>
     <PackageReference Include="Unicode.net">
       <Version>0.1.2</Version>

@@ -63,7 +63,7 @@ Namespace pepeTwitterXaml
 
             '---------------------------------
 
-            Dim listaMenciones As TweetMencion()
+            Dim listaMenciones As TweetMencion() = Nothing
 
             If Not tweet Is Nothing Then
                 Dim tbRespondiendo As New TextBlock

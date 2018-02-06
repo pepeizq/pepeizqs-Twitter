@@ -231,4 +231,10 @@
   <data name="tbNumFollowersUser.Text" xml:space="preserve">
     <value>Seguidores</value>
   </data>
+  <data name="Follow" xml:space="preserve">
+    <value>Seguir</value>
+  </data>
+  <data name="Following" xml:space="preserve">
+    <value>Siguiendo</value>
+  </data>
 </root>
