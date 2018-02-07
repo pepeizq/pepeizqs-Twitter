@@ -82,7 +82,7 @@ Module TweetXaml
 
             spIzquierda.SetValue(Grid.ColumnProperty, 0)
 
-            spIzquierda.Children.Add(pepeTwitterXaml.TweetXamlAvatar.Generar(tweet))
+            spIzquierda.Children.Add(pepeTwitterXaml.TweetXamlAvatar.Generar(tweet, megaUsuario))
 
             gridInferior.Children.Add(spIzquierda)
 
@@ -105,7 +105,7 @@ Module TweetXaml
                 End If
             End If
 
-            spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlMedia.Generar(tweet))
+            spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlMedia.Generar(tweet, color))
             spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlBotones.Generar(tweet, grid, megaUsuario))
             spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlEnviarTweet.Generar(tweet, megaUsuario, Visibility.Collapsed))
 

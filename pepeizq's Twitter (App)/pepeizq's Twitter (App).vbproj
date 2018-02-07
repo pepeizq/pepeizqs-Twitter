@@ -111,6 +111,7 @@
     <Compile Include="Clases\MegaUsuario.vb" />
     <Compile Include="Clases\Objetos\EnviarTweetBoton.vb" />
     <Compile Include="Clases\Objetos\EnviarTweetTextoCambia.vb" />
+    <Compile Include="Clases\Objetos\SeguirUsuarioBoton.vb" />
     <Compile Include="Clases\Objetos\TweetXamlBoton.vb" />
     <Compile Include="Clases\Objetos\ScrollViewerTweets.vb" />
     <Compile Include="Clases\Objetos\TextoTweetEntidad.vb" />
@@ -231,7 +232,7 @@
       <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="pepeizq.Twitter">
-      <Version>1.0.36</Version>
+      <Version>1.0.40</Version>
     </PackageReference>
     <PackageReference Include="Unicode.net">
       <Version>0.1.2</Version>

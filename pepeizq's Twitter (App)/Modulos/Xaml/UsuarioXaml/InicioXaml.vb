@@ -92,7 +92,7 @@ Module InicioXaml
 
         gridTweets.Children.Add(pbTweets)
 
-        svTweets.Tag = New pepeizq.Twitter.Objetos.ScrollViewerTweets(megaUsuario, prTweets, pbTweets, 0, Nothing)
+        svTweets.Tag = New pepeizq.Twitter.Objetos.ScrollViewerTweets(megaUsuario, prTweets, pbTweets, 0, Nothing, Nothing)
 
         '---------------------------------
 
@@ -163,7 +163,7 @@ Module InicioXaml
                                     Next
 
                                     If boolAñadir = True Then
-                                        lv.Items.Add(TweetXaml.Añadir(tweet, cosas.MegaUsuario, Nothing))
+                                        lv.Items.Add(TweetXaml.Añadir(tweet, cosas.MegaUsuario, cosas.Color))
                                     End If
                                 Next
                             End If
@@ -176,7 +176,7 @@ Module InicioXaml
         End If
     End Sub
 
-    Public Async Sub LvTweets_ItemClick(sender As Object, e As ItemClickEventArgs)
+    Public Sub LvTweets_ItemClick(sender As Object, e As ItemClickEventArgs)
 
         Dim grid As Grid = e.ClickedItem
         Dim tweet As Tweet = grid.Tag

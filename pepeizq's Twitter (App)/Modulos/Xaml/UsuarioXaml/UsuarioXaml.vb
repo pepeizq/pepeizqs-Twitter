@@ -175,7 +175,7 @@ Module UsuarioXaml
             BotonClick(botonInicio, New RoutedEventArgs)
         End If
 
-        TwitterTimeLineInicio.CargarTweets(megaUsuario, Nothing)
+        TwitterTimeLineInicio.CargarTweets(megaUsuario, Nothing, False)
         TwitterTimeLineMenciones.CargarTweets(megaUsuario, Nothing)
 
         TwitterStream.Iniciar(megaUsuario)

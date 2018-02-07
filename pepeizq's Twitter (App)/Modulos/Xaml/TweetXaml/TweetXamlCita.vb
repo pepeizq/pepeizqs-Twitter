@@ -6,6 +6,10 @@ Namespace pepeTwitterXaml
 
         Public Function Generar(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario, color As Windows.UI.Color)
 
+            If color = Nothing Then
+                color = App.Current.Resources("ColorSecundario")
+            End If
+
             Dim color1 As New GradientStop With {
                 .Color = ColorHelper.ToColor("#e0e0e0"),
                 .Offset = 0.5
@@ -31,14 +35,14 @@ Namespace pepeTwitterXaml
                 .Background = brush,
                 .Margin = New Thickness(5, 5, 5, 5),
                 .Padding = New Thickness(10, 10, 10, 10),
-                .BorderBrush = New SolidColorBrush(App.Current.Resources("ColorPrimario")),
+                .BorderBrush = New SolidColorBrush(color),
                 .BorderThickness = New Thickness(1, 1, 1, 1),
                 .CornerRadius = New CornerRadius(5)
             }
 
             sp.Children.Add(TweetXamlUsuario.Generar(tweet.Cita, megaUsuario, color))
             sp.Children.Add(TweetXamlTexto.Generar(tweet.Cita, tweet, color))
-            sp.Children.Add(TweetXamlMedia.Generar(tweet.Cita))
+            sp.Children.Add(TweetXamlMedia.Generar(tweet.Cita, color))
 
             Return sp
 

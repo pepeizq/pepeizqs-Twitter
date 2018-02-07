@@ -325,6 +325,8 @@ Public NotInheritable Class MainPage
 
     Private Sub BotonCerrarUsuario_Click(sender As Object, e As RoutedEventArgs) Handles botonCerrarUsuario.Click
 
+        App.Current.Resources("ButtonBackgroundPointerOver") = App.Current.Resources("ColorPrimario")
+
         gridTitulo.Background = App.Current.Resources("GridTituloBackground")
         gridUsuarioAmpliado.Visibility = Visibility.Collapsed
 

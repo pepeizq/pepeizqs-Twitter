@@ -237,4 +237,7 @@
   <data name="Following" xml:space="preserve">
     <value>Following</value>
   </data>
+  <data name="tbNumFavoritesUser.Text" xml:space="preserve">
+    <value>Likes</value>
+  </data>
 </root>

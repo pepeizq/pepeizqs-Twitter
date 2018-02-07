@@ -8,7 +8,11 @@ Imports Windows.UI.Xaml.Media.Animation
 Namespace pepeTwitterXaml
     Module TweetXamlMedia
 
-        Public Function Generar(tweet As Tweet)
+        Public Function Generar(tweet As Tweet, color As Color)
+
+            If color = Nothing Then
+                color = App.Current.Resources("ColorSecundario")
+            End If
 
             If Not tweet.Entidades.Media Is Nothing Then
                 Dim spMedia As New StackPanel With {
@@ -61,7 +65,7 @@ Namespace pepeTwitterXaml
                         End If
 
                         Dim gridMedia As New Grid With {
-                            .BorderBrush = New SolidColorBrush(App.Current.Resources("ColorSecundario")),
+                            .BorderBrush = New SolidColorBrush(color),
                             .BorderThickness = New Thickness(1, 1, 1, 1),
                             .MaxHeight = 200,
                             .MaxWidth = 500,
