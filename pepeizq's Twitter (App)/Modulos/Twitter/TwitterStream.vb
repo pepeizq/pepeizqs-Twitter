@@ -128,15 +128,15 @@ Module TwitterStream
                                                                                                                                                                                                     Next
 
                                                                                                                                                                                                     If mostrar = True Then
-                                                                                                                                                                                                        Dim tweetNuevo As List(Of Tweet) = Await TwitterQuery.Ejecutar(megaUsuario.Servicio, 2, tweet.ID, Nothing)
+                                                                                                                                                                                                        Dim tweetNuevo As Tweet = Await megaUsuario.Servicio.Provider.CogerTweet(megaUsuario.Usuario.Tokens, tweet.ID, New TweetParserIndividual)
 
                                                                                                                                                                                                         If Not ApplicationData.Current.LocalSettings.Values("notificacion") Is Nothing Then
                                                                                                                                                                                                             If Not ApplicationData.Current.LocalSettings.Values("notificacion") = False Then
-                                                                                                                                                                                                                Notificaciones.ToastTweet.Enseñar(tweetNuevo(0))
+                                                                                                                                                                                                                Notificaciones.ToastTweet.Enseñar(tweetNuevo)
                                                                                                                                                                                                             End If
                                                                                                                                                                                                         End If
 
-                                                                                                                                                                                                        lvInicio.Items.Insert(0, TweetXaml.Añadir(tweetNuevo(0), megaUsuario, Nothing))
+                                                                                                                                                                                                        lvInicio.Items.Insert(0, TweetXaml.Añadir(tweetNuevo, megaUsuario, Nothing))
                                                                                                                                                                                                     End If
                                                                                                                                                                                                 End If
                                                                                                                                                                                             End If

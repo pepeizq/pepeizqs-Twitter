@@ -148,105 +148,103 @@
             </Grid>
 
             <Grid x:Name="gridUsuarioAmpliado" Visibility="Collapsed" Background="{StaticResource GridAcrilico}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+            
+                <ScrollViewer x:Name="svTweetsUsuario" Grid.Row="0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
-                <Button x:Name="botonCerrarUsuario" Grid.Column="0" Margin="10" Padding="10" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White">
-                    <SymbolIcon Symbol="Cancel" Foreground="White"/>
-                </Button>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
 
-                <Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+                            <Button x:Name="botonCerrarUsuario" Grid.Column="0" Margin="20" Padding="10" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White">
+                                <SymbolIcon Symbol="Cancel" Foreground="White"/>
+                            </Button>
 
-                    <Grid Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="1">
+                                <Grid Background="Black">
+                                    <controls:ImageEx x:Name="imagenFondoUsuario" IsCacheEnabled="True" Opacity="0.3" Stretch="Uniform"/>
+                                </Grid>
 
-                        <Grid Grid.Column="0" Height="200" Width="600" Background="Black">
-                            <controls:ImageEx x:Name="imagenFondoUsuario" IsCacheEnabled="True" Opacity="0.3" Stretch="UniformtoFill"/>
-                        </Grid>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
 
-                        <Grid Grid.Column="0" Height="200" Width="600">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
+                                    <StackPanel x:Name="gridImagenFondoUsuario" Grid.Row="0" Orientation="Horizontal" Padding="25" VerticalAlignment="Top" HorizontalAlignment="Left">
 
-                            <StackPanel x:Name="gridImagenFondoUsuario" Grid.Row="0" Orientation="Horizontal" Padding="10" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <Ellipse x:Name="ellipseAvatar" Width="60" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-                                <Ellipse x:Name="ellipseAvatar" Width="60" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="15,0">
+                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                                <TextBlock x:Name="tbNombreUsuario" Foreground="White" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+                                                <controls:ImageEx x:Name="imagenUsuarioVerificado" Source="Assets/Verificado.png" IsCacheEnabled="True" Height="20" Width="20" Margin="15,0,0,0" VerticalAlignment="Center" Visibility="Collapsed"/>
+                                            </StackPanel>
 
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="15,0">
-                                    <TextBlock x:Name="tbNombreUsuario" Foreground="White" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
-                                    <controls:ImageEx x:Name="imagenUsuarioVerificado" Source="Assets/Verificado.png" IsCacheEnabled="True" Height="20" Width="20" Margin="15,0,0,0" VerticalAlignment="Center" Visibility="Collapsed"/>
-                                </StackPanel>
+                                            <TextBlock x:Name="tbScreenNombreUsuario" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left"/>
+                                        </StackPanel>
 
-                            </StackPanel>
-
-                            <Grid Grid.Row="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition x:Name="columnaEnlaceUsuario" Width="*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <TextBlock x:Name="tbScreenNombreUsuario" Grid.Column="0" Foreground="White" Padding="10" FontWeight="SemiBold" HorizontalAlignment="Center"/>
-
-                                <HyperlinkButton x:Name="hlEnlaceUsuario" Grid.Column="1" Foreground="White" Padding="10" HorizontalAlignment="Center"/>
-                            </Grid> 
-
-                            <Grid Grid.Row="2" Padding="10">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <StackPanel Grid.Column="0" Orientation="Horizontal" Padding="10" HorizontalAlignment="Center">
-                                    <TextBlock x:Uid="tbNumTweetsUser" Margin="0,0,5,0" HorizontalAlignment="Center" Foreground="White"/>
-                                    <TextBlock x:Name="tbNumTweetsUsuario" HorizontalAlignment="Center" Foreground="White"/>
-                                </StackPanel>
-
-                                <HyperlinkButton x:Name="hlSeguidoresUsuario" Grid.Column="1" Padding="10" HorizontalAlignment="Center">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock x:Uid="tbNumFollowersUser" Margin="0,0,5,0" HorizontalAlignment="Center" Foreground="White"/>
-                                        <TextBlock x:Name="tbNumSeguidoresUsuario" HorizontalAlignment="Center" Foreground="White"/>
                                     </StackPanel>
-                                </HyperlinkButton>
 
-                                <HyperlinkButton x:Name="hlFavoritosUsuario" Grid.Column="2" Padding="10" HorizontalAlignment="Center">
-                                    <StackPanel Orientation="Horizontal">
-                                        <TextBlock x:Uid="tbNumFavoritesUser" Margin="0,0,5,0" HorizontalAlignment="Center" Foreground="White"/>
-                                        <TextBlock x:Name="tbNumFavoritosUsuario" HorizontalAlignment="Center" Foreground="White"/>
-                                    </StackPanel>
-                                </HyperlinkButton>
+                                    <Grid Grid.Row="1" Padding="25,0">
+                                        <HyperlinkButton x:Name="hlEnlaceUsuario" Foreground="White" HorizontalAlignment="Left"/>
+                                    </Grid>
+
+                                    <Grid Grid.Row="2" Padding="25,20" VerticalAlignment="Bottom">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <HyperlinkButton x:Name="hlNumTweetsUsuario" Grid.Column="0" HorizontalAlignment="Center">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock x:Uid="tbNumTweetsUser" Margin="0,0,5,0" HorizontalAlignment="Center" Foreground="White"/>
+                                                <TextBlock x:Name="tbNumTweetsUsuario" HorizontalAlignment="Center" Foreground="White"/>
+                                            </StackPanel>
+                                        </HyperlinkButton>
+
+                                        <HyperlinkButton x:Name="hlSeguidoresUsuario" Grid.Column="1" Padding="35,0" HorizontalAlignment="Center">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock x:Uid="tbNumFollowersUser" Margin="0,0,5,0" HorizontalAlignment="Center" Foreground="White"/>
+                                                <TextBlock x:Name="tbNumSeguidoresUsuario" HorizontalAlignment="Center" Foreground="White"/>
+                                            </StackPanel>
+                                        </HyperlinkButton>
+
+                                        <HyperlinkButton x:Name="hlFavoritosUsuario" Grid.Column="2" HorizontalAlignment="Center">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock x:Uid="tbNumFavoritesUser" Margin="0,0,5,0" HorizontalAlignment="Center" Foreground="White"/>
+                                                <TextBlock x:Name="tbNumFavoritosUsuario" HorizontalAlignment="Center" Foreground="White"/>
+                                            </StackPanel>
+                                        </HyperlinkButton>
+                                    </Grid>
+                                </Grid>
                             </Grid>
+
+                            <StackPanel Grid.Column="2" Orientation="Vertical" Width="150">
+                                <Button x:Name="botonSeguirUsuario" Padding="10" Margin="20" BorderThickness="1" BorderBrush="White" Foreground="White" HorizontalAlignment="Stretch"/>
+
+                                <Button x:Name="botonMasOpcionesUsuario" Padding="10" Margin="20,0" BorderThickness="1" BorderBrush="White" Foreground="White" HorizontalAlignment="Stretch" FontFamily="Segoe MDL2 Assets"/>
+                            </StackPanel>
                         </Grid>
 
-                        <StackPanel Grid.Column="1" Orientation="Vertical" Width="150">
-                            <Button x:Name="botonSeguirUsuario" Padding="10" Margin="10" BorderThickness="1" BorderBrush="White" Foreground="White" HorizontalAlignment="Stretch"/>
-                        </StackPanel>
-                       
+                        <ListView x:Name="lvTweetsUsuario" Grid.Row="1" ItemContainerStyle="{StaticResource ListViewEstilo1}" Margin="0,30,0,0"/>
                     </Grid>
+                </ScrollViewer>
 
-
-
-
-
-                    <ScrollViewer x:Name="svTweetsUsuario" Grid.Row="1" Margin="0,20,0,0">
-                        <ListView x:Name="lvTweetsUsuario" ItemContainerStyle="{StaticResource ListViewEstilo1}"/>
-                    </ScrollViewer>
-
-                    <ProgressBar x:Name="pbTweetsUsuario" Grid.Row="2" IsIndeterminate="True" Margin="10" Padding="10" Visibility="Collapsed"/>
-                </Grid>
+                <ProgressBar x:Name="pbTweetsUsuario" Grid.Row="1" IsIndeterminate="True" Margin="10" Padding="10" Visibility="Collapsed"/>
             </Grid>
 
             <Grid x:Name="gridImagenAmpliada" Visibility="Collapsed" Background="{StaticResource GridAcrilico}">

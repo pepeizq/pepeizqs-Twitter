@@ -5,10 +5,12 @@ Namespace pepeizq.Twitter.Objetos
 
         Public MegaUsuario As MegaUsuario
         Public Usuario As TwitterUsuario
+        Public ScreenNombre As String
 
-        Public Sub New(megaUsuario As MegaUsuario, usuario As TwitterUsuario)
+        Public Sub New(megaUsuario As MegaUsuario, usuario As TwitterUsuario, screenNombre As String)
             Me.MegaUsuario = megaUsuario
             Me.Usuario = usuario
+            Me.ScreenNombre = screenNombre
         End Sub
 
     End Class

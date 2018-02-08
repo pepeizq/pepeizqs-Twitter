@@ -208,43 +208,45 @@ Module TwitterConexion
 
             helper.Save(Of List(Of TwitterUsuario))("listaUsuarios2", listaUsuarios)
 
-            Dim gridPrincipal As Grid = pagina.FindName("gridPrincipal")
-            For Each grid As Grid In gridPrincipal.Children
-                If grid.Name.Contains("gridUsuario") Then
-                    If Not grid.Name = "gridUsuarioAmpliado" Then
-                        If Not grid.Name = "gridUsuario" + megaUsuario.Usuario.ScreenNombre Then
-                            Dim subGrid As Grid = grid.Children(0)
-                            Dim subGrid_ As Grid = subGrid.Children(0)
-                            Dim spBotonesSuperior As StackPanel = subGrid_.Children(0)
-                            Dim menu As Menu = spBotonesSuperior.Children(0)
-                            Dim menuItem As MenuItem = menu.Items(0)
-                            menuItem.Items.RemoveAt(0)
+            If listaUsuarios.Count > 0 Then
+                Dim gridPrincipal As Grid = pagina.FindName("gridPrincipal")
+                For Each grid As Grid In gridPrincipal.Children
+                    If grid.Name.Contains("gridUsuario") Then
+                        If Not grid.Name = "gridUsuarioAmpliado" Then
+                            If Not grid.Name = "gridUsuario" + megaUsuario.Usuario.ScreenNombre Then
+                                Dim subGrid As Grid = grid.Children(0)
+                                Dim subGrid_ As Grid = subGrid.Children(0)
+                                Dim spBotonesSuperior As StackPanel = subGrid_.Children(0)
+                                Dim menu As Menu = spBotonesSuperior.Children(0)
+                                Dim menuItem As MenuItem = menu.Items(0)
+                                menuItem.Items.RemoveAt(0)
 
-                            Dim menuItemCuentas As New MenuFlyoutSubItem With {
-                                .Text = recursos.GetString("Accounts")
-                            }
-
-                            Dim listaUsuarios2 As New List(Of TwitterUsuario)
-
-                            If helper.KeyExists("listaUsuarios2") Then
-                                listaUsuarios2 = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios2")
-                            End If
-
-                            For Each item In listaUsuarios2
-                                Dim subCuenta As New MenuFlyoutItem With {
-                                    .Text = item.Nombre + " (@" + item.ScreenNombre + ")",
-                                    .Tag = item
+                                Dim menuItemCuentas As New MenuFlyoutSubItem With {
+                                    .Text = recursos.GetString("Accounts")
                                 }
 
-                                AddHandler subCuenta.Click, AddressOf BotonCambiarCuentaClick
-                                menuItemCuentas.Items.Add(subCuenta)
-                            Next
+                                Dim listaUsuarios2 As New List(Of TwitterUsuario)
 
-                            menuItem.Items.Insert(0, menuItemCuentas)
+                                If helper.KeyExists("listaUsuarios2") Then
+                                    listaUsuarios2 = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios2")
+                                End If
+
+                                For Each item In listaUsuarios2
+                                    Dim subCuenta As New MenuFlyoutItem With {
+                                        .Text = item.Nombre + " (@" + item.ScreenNombre + ")",
+                                        .Tag = item
+                                    }
+
+                                    AddHandler subCuenta.Click, AddressOf BotonCambiarCuentaClick
+                                    menuItemCuentas.Items.Add(subCuenta)
+                                Next
+
+                                menuItem.Items.Insert(0, menuItemCuentas)
+                            End If
                         End If
                     End If
-                End If
-            Next
+                Next
+            End If
 
             'Dim botonAñadirCuenta As Button = pagina.FindName("botonAñadirCuenta")
 

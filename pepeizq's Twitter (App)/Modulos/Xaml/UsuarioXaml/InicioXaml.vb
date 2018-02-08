@@ -108,7 +108,17 @@ Module InicioXaml
         Dim pr As ProgressRing = cosas.Anillo
         Dim pb As ProgressBar = cosas.Barra
 
-        Dim lv As ListView = sv.Content
+        Dim lv As ListView = Nothing
+
+        If TypeOf sv.Content Is ListView Then
+            lv = sv.Content
+        End If
+
+        If TypeOf sv.Content Is Grid Then
+            Dim grid As Grid = sv.Content
+            lv = grid.Children(1)
+        End If
+
         lv.Tag = cosas.MegaUsuario
 
         If pb.Visibility = Visibility.Collapsed Then

@@ -95,7 +95,7 @@ Module TweetXaml
             spInferiorCentro.SetValue(Grid.ColumnProperty, 1)
 
             spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlUsuario.Generar(tweet, megaUsuario, color))
-            spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlTexto.Generar(tweet, Nothing, color))
+            spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlTexto.Generar(tweet, Nothing, color, megaUsuario))
 
             If Not tweet.Cita Is Nothing Then
                 If tweet.Retweet Is Nothing Then

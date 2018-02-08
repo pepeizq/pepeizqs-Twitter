@@ -5,24 +5,29 @@ Imports pepeizq.Twitter.Banner
 Imports pepeizq.Twitter.Tweet
 Imports Windows.UI
 Imports Windows.UI.Text
+Imports Windows.UI.Xaml.Media.Animation
 Imports Windows.UI.Xaml.Shapes
 
 Module FichaUsuarioXaml
 
-    Public Async Sub Generar(cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado)
+    Public Async Sub Generar(cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado, objetoAnimar As Object)
 
         Dim recursos As New Resources.ResourceLoader
-
-        Dim usuario As TwitterUsuario = cosas.Usuario
-        Dim provider As TwitterDataProvider = cosas.MegaUsuario.Servicio.Provider
 
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
-        Dim gridTitulo As Grid = pagina.FindName("gridTitulo")
+        Dim provider As TwitterDataProvider = cosas.MegaUsuario.Servicio.Provider
+        Dim usuario As TwitterUsuario = Nothing
 
+        If Not cosas.Usuario Is Nothing Then
+            usuario = cosas.Usuario
+        Else
+            usuario = Await provider.GenerarUsuario(cosas.ScreenNombre)
+        End If
+
+        Dim gridTitulo As Grid = pagina.FindName("gridTitulo")
         Dim gridUsuario As Grid = pagina.FindName("gridUsuarioAmpliado")
-        gridUsuario.Visibility = Visibility.Visible
 
         Dim color As Color = Nothing
 
@@ -51,6 +56,20 @@ Module FichaUsuarioXaml
             gridUsuario.Background = acrilico
         End If
 
+        Try
+            ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("animacionUsuario", objetoAnimar)
+
+            Dim animacion As ConnectedAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("animacionUsuario")
+
+            If Not animacion Is Nothing Then
+                animacion.TryStart(gridUsuario)
+            End If
+        Catch ex As Exception
+
+        End Try
+
+        gridUsuario.Visibility = Visibility.Visible
+
         Dim lvTweets As ListView = pagina.FindName("lvTweetsUsuario")
 
         If lvTweets.Items.Count > 0 Then
@@ -59,14 +78,14 @@ Module FichaUsuarioXaml
 
         Dim pbTweets As ProgressBar = pagina.FindName("pbTweetsUsuario")
         Dim svTweets As ScrollViewer = pagina.FindName("svTweetsUsuario")
-        svTweets.Tag = New pepeizq.Twitter.Objetos.ScrollViewerTweets(cosas.MegaUsuario, Nothing, pbTweets, 2, usuario.ScreenNombre, color)
+        svTweets.Tag = New pepeizq.Twitter.Objetos.ScrollViewerTweets(cosas.MegaUsuario, Nothing, pbTweets, 2, usuario.ScreenNombre, Color)
         svTweets.Foreground = New SolidColorBrush(("#" + usuario.ColorTexto).ToColor)
         AddHandler svTweets.ViewChanging, AddressOf SvTweets_ViewChanging
 
         '------------------------------------
 
         Dim botonCerrar As Button = pagina.FindName("botonCerrarUsuario")
-        botonCerrar.Background = New SolidColorBrush(color)
+        botonCerrar.Background = New SolidColorBrush(Color)
 
         Dim banner As Banner = Nothing
 
@@ -80,7 +99,7 @@ Module FichaUsuarioXaml
         Dim imagenFondo As ImageEx = pagina.FindName("imagenFondoUsuario")
 
         If Not banner Is Nothing Then
-            imagenFondo.Source = New Uri(banner.Tamaños.I600x200.Enlace)
+            imagenFondo.Source = New Uri(banner.Tamaños.I1500x500.Enlace)
             spFondo.Background = New SolidColorBrush(Colors.Transparent)
         Else
             imagenFondo.Source = Nothing
@@ -110,11 +129,10 @@ Module FichaUsuarioXaml
         Dim tbScreenNombre As TextBlock = pagina.FindName("tbScreenNombreUsuario")
         tbScreenNombre.Text = "@" + usuario.ScreenNombre
 
-        Dim columnaEnlace As ColumnDefinition = pagina.FindName("columnaEnlaceUsuario")
+        Dim hlEnlace As HyperlinkButton = pagina.FindName("hlEnlaceUsuario")
 
         If Not usuario.Entidades.Enlace Is Nothing Then
             Try
-                Dim hlEnlace As HyperlinkButton = pagina.FindName("hlEnlaceUsuario")
                 hlEnlace.NavigateUri = New Uri(usuario.Entidades.Enlace.Enlaces(0).Expandida)
 
                 Dim tbEnlace As New TextBlock With {
@@ -124,17 +142,18 @@ Module FichaUsuarioXaml
                 }
 
                 hlEnlace.Content = tbEnlace
-
-                columnaEnlace.Width = New GridLength(1, GridUnitType.Star)
             Catch ex As Exception
-                columnaEnlace.Width = New GridLength(1, GridUnitType.Auto)
+                hlEnlace.Content = Nothing
             End Try
         Else
-            columnaEnlace.Width = New GridLength(1, GridUnitType.Auto)
+            hlEnlace.Content = Nothing
         End If
 
         Dim tbNumTweets As TextBlock = pagina.FindName("tbNumTweetsUsuario")
         tbNumTweets.Text = String.Format("{0:n0}", Integer.Parse(usuario.NumTweets))
+
+        Dim hlNumTweets As HyperlinkButton = pagina.FindName("hlNumTweetsUsuario")
+        hlNumTweets.NavigateUri = New Uri("https://twitter.com/" + usuario.ScreenNombre)
 
         Dim tbNumSeguidores As TextBlock = pagina.FindName("tbNumSeguidoresUsuario")
         tbNumSeguidores.Text = String.Format("{0:n0}", Integer.Parse(usuario.Followers))
@@ -148,6 +167,8 @@ Module FichaUsuarioXaml
         Dim hlFavoritos As HyperlinkButton = pagina.FindName("hlFavoritosUsuario")
         hlFavoritos.NavigateUri = New Uri("https://twitter.com/" + usuario.ScreenNombre + "/likes")
 
+        '------------------------------------
+
         Dim botonSeguir As Button = pagina.FindName("botonSeguirUsuario")
 
         If usuario.Siguiendo = True Then
@@ -156,9 +177,15 @@ Module FichaUsuarioXaml
             botonSeguir.Content = recursos.GetString("Follow")
         End If
 
-        botonSeguir.Background = New SolidColorBrush(color)
+        botonSeguir.Background = New SolidColorBrush(Color)
         botonSeguir.Tag = New pepeizq.Twitter.Objetos.SeguirUsuarioBoton(cosas.MegaUsuario, cosas.Usuario)
         AddHandler botonSeguir.Click, AddressOf BotonSeguirClick
+
+        Dim botonMasOpciones As Button = pagina.FindName("botonMasOpcionesUsuario")
+        botonMasOpciones.Content = Char.ConvertFromUtf32(57361)
+        botonMasOpciones.Background = New SolidColorBrush(color)
+
+        AddHandler botonMasOpciones.Click, AddressOf BotonMasOpcionesClick
 
         '------------------------------------
 
@@ -184,7 +211,7 @@ Module FichaUsuarioXaml
             Next
 
             If boolAñadir = True Then
-                lvTweets.Items.Add(TweetXaml.Añadir(tweet, cosas.MegaUsuario, color))
+                lvTweets.Items.Add(TweetXaml.Añadir(tweet, cosas.MegaUsuario, Color))
             End If
         Next
 
@@ -206,6 +233,28 @@ Module FichaUsuarioXaml
         End If
 
         TwitterTimeLineInicio.CargarTweets(cosas.MegaUsuario, Nothing, True)
+
+    End Sub
+
+    Private Sub BotonMasOpcionesClick(sender As Object, e As RoutedEventArgs)
+
+        Dim boton As Button = sender
+
+        Dim menu As New MenuFlyout With {
+            .Placement = FlyoutPlacementMode.Bottom
+        }
+
+        'Dim botonCopiarEnlaceTweet As New MenuFlyoutItem With {
+        '       .Text = recursos.GetString("CopyUrlTweet"),
+        '       .Tag = cosas
+        '   }
+
+        'AddHandler botonCopiarEnlaceTweet.Click, AddressOf BotonCopiarEnlaceTweetClick
+
+        'menu.Items.Add(botonCopiarEnlaceTweet)
+
+        FlyoutBase.SetAttachedFlyout(boton, menu)
+        menu.ShowAt(boton)
 
     End Sub
 

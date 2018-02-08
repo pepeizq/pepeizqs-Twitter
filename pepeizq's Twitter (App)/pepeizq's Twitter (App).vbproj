@@ -122,7 +122,6 @@
     <Compile Include="Modulos\Configuracion.vb" />
     <Compile Include="Modulos\Notificaciones.vb" />
     <Compile Include="Modulos\Twitter\TwitterConexion.vb" />
-    <Compile Include="Modulos\Twitter\TwitterQuery.vb" />
     <Compile Include="Modulos\Twitter\TwitterStream.vb" />
     <Compile Include="Modulos\Twitter\TwitterTimeLineInicio.vb" />
     <Compile Include="Modulos\Twitter\TwitterTimeLineMenciones.vb" />
@@ -222,17 +221,23 @@
     <PackageReference Include="Microsoft.Services.Store.SDK">
       <Version>10.1705.16001</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp">
+      <Version>2.1.1</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
       <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Services">
       <Version>2.1.1</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI">
+      <Version>2.1.1</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
       <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="pepeizq.Twitter">
-      <Version>1.0.40</Version>
+      <Version>1.0.45</Version>
     </PackageReference>
     <PackageReference Include="Unicode.net">
       <Version>0.1.2</Version>

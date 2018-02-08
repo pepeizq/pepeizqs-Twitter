@@ -6,7 +6,9 @@ Imports Windows.UI.Xaml.Documents
 Namespace pepeTwitterXaml
     Module TweetXamlTexto
 
-        Public Function Generar(tweet As Tweet, citaOrigen As Tweet, color As Color)
+        Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = Nothing
+
+        Public Function Generar(tweet As Tweet, citaOrigen As Tweet, color As Color, megaUsuario As pepeizq.Twitter.MegaUsuario)
 
             If color = Nothing Then
                 color = App.Current.Resources("ColorCuarto")
@@ -151,14 +153,28 @@ Namespace pepeTwitterXaml
                                     .Text = entidad.Mostrar
                                 }
 
-                                Dim enlace As New Hyperlink With {
-                                    .NavigateUri = New Uri(entidad.Enlace, UriKind.RelativeOrAbsolute),
-                                    .TextDecorations = Nothing,
-                                    .Foreground = New SolidColorBrush(color)
-                                }
+                                If entidad.Tipo = 1 Then
+                                    cosas = New pepeizq.Twitter.Objetos.UsuarioAmpliado(megaUsuario, Nothing, Nothing)
 
-                                enlace.Inlines.Add(contenidoEnlace)
-                                textoSpan.Inlines.Add(enlace)
+                                    Dim enlace As New Hyperlink With {
+                                        .TextDecorations = Nothing,
+                                        .Foreground = New SolidColorBrush(color)
+                                    }
+
+                                    AddHandler enlace.Click, AddressOf EnlaceClick
+
+                                    enlace.Inlines.Add(contenidoEnlace)
+                                    textoSpan.Inlines.Add(enlace)
+                                Else
+                                    Dim enlace As New Hyperlink With {
+                                        .NavigateUri = New Uri(entidad.Enlace, UriKind.RelativeOrAbsolute),
+                                        .TextDecorations = Nothing,
+                                        .Foreground = New SolidColorBrush(color)
+                                    }
+
+                                    enlace.Inlines.Add(contenidoEnlace)
+                                    textoSpan.Inlines.Add(enlace)
+                                End If
                             End If
                         End If
                     Next
@@ -219,6 +235,18 @@ Namespace pepeTwitterXaml
             Return texto
 
         End Function
+
+        Private Sub EnlaceClick(sender As Object, e As HyperlinkClickEventArgs)
+
+            Dim enlace As Hyperlink = sender
+            Dim contenido As Run = enlace.Inlines(0)
+            Dim usuario As String = contenido.Text
+
+            cosas.ScreenNombre = usuario.Replace("@", Nothing)
+
+            FichaUsuarioXaml.Generar(cosas, enlace)
+
+        End Sub
 
     End Module
 End Namespace

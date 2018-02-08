@@ -43,7 +43,7 @@ Namespace pepeTwitterXaml
                 .Width = 48
             }
 
-            botonAvatar.Tag = New pepeizq.Twitter.Objetos.UsuarioAmpliado(megaUsuario, tweet.Usuario)
+            botonAvatar.Tag = New pepeizq.Twitter.Objetos.UsuarioAmpliado(megaUsuario, tweet.Usuario, Nothing)
             botonAvatar.Content = circulo
 
             AddHandler botonAvatar.Click, AddressOf UsuarioPulsaBoton
@@ -59,7 +59,7 @@ Namespace pepeTwitterXaml
             Dim boton As Button = sender
             Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = boton.Tag
 
-            FichaUsuarioXaml.Generar(cosas)
+            FichaUsuarioXaml.Generar(cosas, boton)
 
         End Sub
 

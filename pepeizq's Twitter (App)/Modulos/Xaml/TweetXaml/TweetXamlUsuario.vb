@@ -7,6 +7,8 @@ Imports Windows.UI.Xaml.Documents
 Namespace pepeTwitterXaml
     Module TweetXamlUsuario
 
+        Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = Nothing
+
         Public Function Generar(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario, color As Color)
 
             If color = Nothing Then
@@ -45,11 +47,11 @@ Namespace pepeTwitterXaml
             If tweet.Retweet Is Nothing Then
                 tb1.Text = tweet.Usuario.Nombre
                 tb2.Text = "@" + tweet.Usuario.ScreenNombre
-                botonUsuario.Tag = New pepeizq.Twitter.Objetos.UsuarioAmpliado(megaUsuario, tweet.Usuario)
+                botonUsuario.Tag = New pepeizq.Twitter.Objetos.UsuarioAmpliado(megaUsuario, tweet.Usuario, Nothing)
             Else
                 tb1.Text = tweet.Retweet.Usuario.Nombre
                 tb2.Text = "@" + tweet.Retweet.Usuario.ScreenNombre
-                botonUsuario.Tag = New pepeizq.Twitter.Objetos.UsuarioAmpliado(megaUsuario, tweet.Retweet.Usuario)
+                botonUsuario.Tag = New pepeizq.Twitter.Objetos.UsuarioAmpliado(megaUsuario, tweet.Retweet.Usuario, Nothing)
             End If
 
             spUsuario.Children.Add(tb1)
@@ -62,6 +64,8 @@ Namespace pepeTwitterXaml
             AddHandler botonUsuario.PointerExited, AddressOf UsuarioSaleBoton
 
             sp.Children.Add(botonUsuario)
+
+            '-------------------------------------
 
             Dim respuestaUsuarioScreenNombre As String = Nothing
 
@@ -76,6 +80,8 @@ Namespace pepeTwitterXaml
             End If
 
             If Not respuestaUsuarioScreenNombre = Nothing Then
+                cosas = New pepeizq.Twitter.Objetos.UsuarioAmpliado(megaUsuario, Nothing, Nothing)
+
                 Dim recursos As New Resources.ResourceLoader
 
                 Dim textoSpanRespuesta As New Span
@@ -90,11 +96,20 @@ Namespace pepeTwitterXaml
                     .Text = "@" + respuestaUsuarioScreenNombre
                 }
 
+                Dim colorRespuesta As New Color
+
+                If color = App.Current.Resources("ColorSecundario") Then
+                    colorRespuesta = App.Current.Resources("ColorCuarto")
+                Else
+                    colorRespuesta = color
+                End If
+
                 Dim enlace As New Hyperlink With {
-                    .NavigateUri = New Uri("https://twitter.com/" + respuestaUsuarioScreenNombre),
                     .TextDecorations = Nothing,
-                    .Foreground = New SolidColorBrush(App.Current.Resources("ColorCuarto"))
+                    .Foreground = New SolidColorBrush(colorRespuesta)
                 }
+
+                AddHandler enlace.Click, AddressOf EnlaceClick
 
                 enlace.Inlines.Add(contenidoEnlace)
                 textoSpanRespuesta.Inlines.Add(enlace)
@@ -119,7 +134,7 @@ Namespace pepeTwitterXaml
             Dim boton As Button = sender
             Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = boton.Tag
 
-            FichaUsuarioXaml.Generar(cosas)
+            FichaUsuarioXaml.Generar(cosas, boton)
 
         End Sub
 
@@ -132,6 +147,18 @@ Namespace pepeTwitterXaml
         Private Sub UsuarioSaleBoton(sender As Object, e As PointerRoutedEventArgs)
 
             Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
+
+        End Sub
+
+        Private Sub EnlaceClick(sender As Object, e As HyperlinkClickEventArgs)
+
+            Dim enlace As Hyperlink = sender
+            Dim contenido As Run = enlace.Inlines(0)
+            Dim usuario As String = contenido.Text
+
+            cosas.ScreenNombre = usuario.Replace("@", Nothing)
+
+            FichaUsuarioXaml.Generar(cosas, enlace)
 
         End Sub
 

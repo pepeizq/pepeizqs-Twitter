@@ -41,7 +41,7 @@ Namespace pepeTwitterXaml
             }
 
             sp.Children.Add(TweetXamlUsuario.Generar(tweet.Cita, megaUsuario, color))
-            sp.Children.Add(TweetXamlTexto.Generar(tweet.Cita, tweet, color))
+            sp.Children.Add(TweetXamlTexto.Generar(tweet.Cita, tweet, color, megaUsuario))
             sp.Children.Add(TweetXamlMedia.Generar(tweet.Cita, color))
 
             Return sp

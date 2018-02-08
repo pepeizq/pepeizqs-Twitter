@@ -14,6 +14,14 @@ Namespace pepeTwitterXaml
                 color = App.Current.Resources("ColorSecundario")
             End If
 
+            Dim colorPlay As New Color
+
+            If color = App.Current.Resources("ColorSecundario") Then
+                colorPlay = App.Current.Resources("ColorPrimario")
+            Else
+                colorPlay = color
+            End If
+
             If Not tweet.Entidades.Media Is Nothing Then
                 Dim spMedia As New StackPanel With {
                     .Orientation = Orientation.Horizontal,
@@ -51,7 +59,7 @@ Namespace pepeTwitterXaml
                         Dim gridPlay As New Grid
 
                         If itemMedia.Tipo = "video" Or itemMedia.Tipo = "animated_gif" Then
-                            gridPlay.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
+                            gridPlay.Background = New SolidColorBrush(colorPlay)
                             gridPlay.MinHeight = 50
                             gridPlay.MinWidth = 50
                             gridPlay.CornerRadius = New CornerRadius(30)
