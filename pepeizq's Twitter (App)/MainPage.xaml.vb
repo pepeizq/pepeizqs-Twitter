@@ -102,6 +102,7 @@ Public NotInheritable Class MainPage
         gridImagenAmpliada.Visibility = Visibility.Collapsed
         gridVideoAmpliado.Visibility = Visibility.Collapsed
         gridUsuarioAmpliado.Visibility = Visibility.Collapsed
+        gridTweetAmpliado.Visibility = Visibility.Collapsed
         gridConfig.Visibility = Visibility.Collapsed
         gridMasCosas.Visibility = Visibility.Collapsed
 
@@ -329,6 +330,15 @@ Public NotInheritable Class MainPage
 
         gridTitulo.Background = App.Current.Resources("GridTituloBackground")
         gridUsuarioAmpliado.Visibility = Visibility.Collapsed
+
+    End Sub
+
+    Private Sub BotonCerrarTweet_Click(sender As Object, e As RoutedEventArgs) Handles botonCerrarTweet.Click
+
+        App.Current.Resources("ButtonBackgroundPointerOver") = App.Current.Resources("ColorPrimario")
+
+        gridTitulo.Background = App.Current.Resources("GridTituloBackground")
+        gridTweetAmpliado.Visibility = Visibility.Collapsed
 
     End Sub
 

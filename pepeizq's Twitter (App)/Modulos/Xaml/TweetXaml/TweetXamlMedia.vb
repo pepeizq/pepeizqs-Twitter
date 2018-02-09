@@ -148,7 +148,9 @@ Namespace pepeTwitterXaml
                 If spMedia.Children.Count > 0 Then
                     Dim sv As New ScrollViewer With {
                         .HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
-                        .Content = spMedia
+                        .Content = spMedia,
+                        .HorizontalAlignment = HorizontalAlignment.Left,
+                        .VerticalScrollBarVisibility = ScrollBarVisibility.Disabled
                     }
 
                     Return sv

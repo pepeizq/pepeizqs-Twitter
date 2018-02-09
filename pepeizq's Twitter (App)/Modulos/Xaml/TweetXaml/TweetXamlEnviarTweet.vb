@@ -1,14 +1,26 @@
-﻿Imports Microsoft.Toolkit.Uwp.Helpers
-Imports Microsoft.Toolkit.Uwp.UI.Controls
+﻿Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports NeoSmart.Unicode
 Imports pepeizq.Twitter
 Imports pepeizq.Twitter.Tweet
+Imports Windows.UI
 Imports Windows.UI.Xaml.Documents
 
 Namespace pepeTwitterXaml
     Module TweetXamlEnviarTweet
 
-        Public Function Generar(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario, visibilidad As Visibility)
+        Public Function Generar(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario, visibilidad As Visibility, color As Color)
+
+            If color = Nothing Then
+                color = App.Current.Resources("ColorCuarto")
+            End If
+
+            Dim colorBoton As Color = Nothing
+
+            If color = App.Current.Resources("ColorCuarto") Then
+                colorBoton = App.Current.Resources("ColorSecundario")
+            Else
+                colorBoton = color
+            End If
 
             Dim recursos As New Resources.ResourceLoader
 
@@ -27,12 +39,12 @@ Namespace pepeTwitterXaml
             }
 
             Dim color1 As New GradientStop With {
-                .Color = ColorHelper.ToColor("#e0e0e0"),
+                .Color = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToColor("#e0e0e0"),
                 .Offset = 0.5
             }
 
             Dim color2 As New GradientStop With {
-                .Color = ColorHelper.ToColor("#d6d6d6"),
+                .Color = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToColor("#d6d6d6"),
                 .Offset = 1.0
             }
 
@@ -85,7 +97,7 @@ Namespace pepeTwitterXaml
                     Dim enlace As New Hyperlink With {
                         .NavigateUri = New Uri("https://twitter.com/" + tweet.Usuario.ScreenNombre),
                         .TextDecorations = Nothing,
-                        .Foreground = New SolidColorBrush(App.Current.Resources("ColorCuarto"))
+                        .Foreground = New SolidColorBrush(color)
                     }
 
                     enlace.Inlines.Add(fragmento2)
@@ -115,7 +127,7 @@ Namespace pepeTwitterXaml
                         Dim enlaceMencion As New Hyperlink With {
                             .NavigateUri = New Uri("https://twitter.com/" + mencion.ScreenNombre),
                             .TextDecorations = Nothing,
-                            .Foreground = New SolidColorBrush(App.Current.Resources("ColorCuarto"))
+                            .Foreground = New SolidColorBrush(color)
                         }
 
                         enlaceMencion.Inlines.Add(fragmentoMencion)
@@ -130,18 +142,28 @@ Namespace pepeTwitterXaml
 
             '---------------------------------
 
-            Dim tbMensaje As New TextBox
-            tbMensaje.SetValue(Grid.RowProperty, 1)
-            tbMensaje.MaxLength = 280
-            tbMensaje.Height = 100
-            tbMensaje.Width = 600
-            tbMensaje.AcceptsReturn = True
-            tbMensaje.TextWrapping = TextWrapping.Wrap
-            tbMensaje.HorizontalAlignment = HorizontalAlignment.Left
-            tbMensaje.Margin = New Thickness(0, 10, 0, 10)
+            Dim bordeTbMensaje As New Border With {
+                .BorderThickness = New Thickness(1, 1, 1, 1),
+                .BorderBrush = New SolidColorBrush(color),
+                .Height = 110,
+                .Width = 600,
+                .HorizontalAlignment = HorizontalAlignment.Left,
+                .Margin = New Thickness(0, 10, 0, 10)
+            }
+
+            Dim tbMensaje As New TextBox With {
+                .MaxLength = 280,
+                .AcceptsReturn = True,
+                .TextWrapping = TextWrapping.Wrap,
+                .BorderThickness = New Thickness(0, 0, 0, 0)
+            }
+
             AddHandler tbMensaje.TextChanged, AddressOf TbTweetEscribirTextChanged
 
-            gridTweetEscribir.Children.Add(tbMensaje)
+            bordeTbMensaje.SetValue(Grid.RowProperty, 1)
+            bordeTbMensaje.Child = tbMensaje
+
+            gridTweetEscribir.Children.Add(bordeTbMensaje)
 
             '---------------------------------
 
@@ -167,7 +189,7 @@ Namespace pepeTwitterXaml
             Dim botonEnviarTweet As New Button
             botonEnviarTweet.SetValue(Grid.ColumnProperty, 0)
             botonEnviarTweet.Padding = New Thickness(10, 10, 10, 10)
-            botonEnviarTweet.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+            botonEnviarTweet.Background = New SolidColorBrush(colorBoton)
             botonEnviarTweet.IsEnabled = False
             botonEnviarTweet.HorizontalAlignment = HorizontalAlignment.Left
 
@@ -178,14 +200,14 @@ Namespace pepeTwitterXaml
             Dim simboloBoton As New SymbolIcon With {
                 .Symbol = Symbol.Send,
                 .Margin = New Thickness(0, 0, 10, 0),
-                .Foreground = New SolidColorBrush(Windows.UI.Colors.White),
+                .Foreground = New SolidColorBrush(Colors.White),
                 .VerticalAlignment = VerticalAlignment.Center
             }
 
             spBoton.Children.Add(simboloBoton)
 
             Dim tbBoton As New TextBlock With {
-                .Foreground = New SolidColorBrush(Windows.UI.Colors.White),
+                .Foreground = New SolidColorBrush(Colors.White),
                 .Text = recursos.GetString("SendTweet")
             }
 
@@ -224,7 +246,7 @@ Namespace pepeTwitterXaml
             botonEmojis.Padding = New Thickness(10, 10, 10, 10)
             botonEmojis.VerticalAlignment = VerticalAlignment.Center
             botonEmojis.Margin = New Thickness(15, 0, 0, 0)
-            botonEmojis.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+            botonEmojis.Background = New SolidColorBrush(colorBoton)
             AddHandler botonEmojis.Click, AddressOf BotonEmojisClick
 
             Dim tbEmojis As New TextBlock With {
@@ -243,7 +265,7 @@ Namespace pepeTwitterXaml
             popupEmojis.VerticalOffset = 50
 
             Dim gridEmojis As New Grid With {
-                .Background = New SolidColorBrush(ColorHelper.ToColor("#FFE4E4E4")),
+                .Background = New SolidColorBrush(Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToColor("#FFE4E4E4")),
                 .BorderBrush = New SolidColorBrush(App.Current.Resources("ColorSecundario")),
                 .BorderThickness = New Thickness(1, 1, 1, 1)
             }

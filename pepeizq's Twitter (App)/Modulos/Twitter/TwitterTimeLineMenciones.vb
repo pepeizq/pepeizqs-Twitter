@@ -43,7 +43,8 @@ Module TwitterTimeLineMenciones
                     For Each item In lv.Items
                         Dim lvItem As ListViewItem = item
                         Dim gridTweet As Grid = lvItem.Content
-                        Dim lvTweet As Tweet = gridTweet.Tag
+                        Dim tweetAmpliado As pepeizq.Twitter.Objetos.TweetAmpliado = gridTweet.Tag
+                        Dim lvTweet As Tweet = tweetAmpliado.Tweet
 
                         If lvTweet.ID = tweet.ID Then
                             boolAñadir = False

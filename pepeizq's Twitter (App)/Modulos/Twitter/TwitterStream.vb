@@ -77,7 +77,8 @@ Module TwitterStream
                                                                                                                                                                                                     For Each item In lvInicio.Items
                                                                                                                                                                                                         Dim lvitem As ListViewItem = item
                                                                                                                                                                                                         Dim grid As Grid = lvitem.Content
-                                                                                                                                                                                                        Dim tweet As Tweet = grid.Tag
+                                                                                                                                                                                                        Dim tweetAmpliado As pepeizq.Twitter.Objetos.TweetAmpliado = grid.Tag
+                                                                                                                                                                                                        Dim tweet As Tweet = tweetAmpliado.Tweet
 
                                                                                                                                                                                                         If borrar.Id = tweet.ID Then
                                                                                                                                                                                                             lvInicio.Items.RemoveAt(i)
@@ -89,9 +90,10 @@ Module TwitterStream
                                                                                                                                                                                                     For Each item In lvMenciones.Items
                                                                                                                                                                                                         Dim lvitem As ListViewItem = item
                                                                                                                                                                                                         Dim grid As Grid = lvitem.Content
-                                                                                                                                                                                                        Dim tweet As Tweet = grid.Tag
+                                                                                                                                                                                                        Dim tweetAmpliado As pepeizq.Twitter.Objetos.TweetAmpliado = grid.Tag
+                                                                                                                                                                                                        Dim lvTweet As Tweet = tweetAmpliado.Tweet
 
-                                                                                                                                                                                                        If borrar.Id = tweet.ID Then
+                                                                                                                                                                                                        If borrar.Id = lvTweet.ID Then
                                                                                                                                                                                                             lvMenciones.Items.RemoveAt(i)
                                                                                                                                                                                                         End If
 
@@ -109,7 +111,8 @@ Module TwitterStream
                                                                                                                                                                                                     For Each item In lvInicio.Items
                                                                                                                                                                                                         Dim lvitem As ListViewItem = item
                                                                                                                                                                                                         Dim grid As Grid = lvitem.Content
-                                                                                                                                                                                                        Dim itemTweet As Tweet = grid.Tag
+                                                                                                                                                                                                        Dim tweetAmpliado As pepeizq.Twitter.Objetos.TweetAmpliado = grid.Tag
+                                                                                                                                                                                                        Dim itemTweet As Tweet = tweetAmpliado.Tweet
 
                                                                                                                                                                                                         If itemTweet.ID = tweet.ID Then
                                                                                                                                                                                                             mostrar = False

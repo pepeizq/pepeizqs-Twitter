@@ -112,6 +112,7 @@
     <Compile Include="Clases\Objetos\EnviarTweetBoton.vb" />
     <Compile Include="Clases\Objetos\EnviarTweetTextoCambia.vb" />
     <Compile Include="Clases\Objetos\SeguirUsuarioBoton.vb" />
+    <Compile Include="Clases\Objetos\TweetAmpliado.vb" />
     <Compile Include="Clases\Objetos\TweetXamlBoton.vb" />
     <Compile Include="Clases\Objetos\ScrollViewerTweets.vb" />
     <Compile Include="Clases\Objetos\TextoTweetEntidad.vb" />
@@ -125,6 +126,7 @@
     <Compile Include="Modulos\Twitter\TwitterStream.vb" />
     <Compile Include="Modulos\Twitter\TwitterTimeLineInicio.vb" />
     <Compile Include="Modulos\Twitter\TwitterTimeLineMenciones.vb" />
+    <Compile Include="Modulos\Xaml\FichaTweetXaml.vb" />
     <Compile Include="Modulos\Xaml\FichaUsuarioXaml.vb" />
     <Compile Include="Modulos\Xaml\TweetXaml\TweetXaml.vb" />
     <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlAvatar.vb" />
@@ -237,7 +239,7 @@
       <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="pepeizq.Twitter">
-      <Version>1.0.45</Version>
+      <Version>1.0.46</Version>
     </PackageReference>
     <PackageReference Include="Unicode.net">
       <Version>0.1.2</Version>

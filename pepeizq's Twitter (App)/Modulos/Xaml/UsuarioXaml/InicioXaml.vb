@@ -1,7 +1,6 @@
 ﻿Imports Microsoft.Toolkit.Uwp.Helpers
 Imports pepeizq.Twitter
 Imports pepeizq.Twitter.Tweet
-Imports Windows.System
 
 Module InicioXaml
 
@@ -140,7 +139,8 @@ Module InicioXaml
                     If lv.Items.Count > 0 And lv.Items.Count < 280 Then
                         Dim lvItem As ListViewItem = lv.Items(lv.Items.Count - 1)
                         Dim gridTweet As Grid = lvItem.Content
-                        Dim ultimoTweet As Tweet = gridTweet.Tag
+                        Dim tweetAmpliado As pepeizq.Twitter.Objetos.TweetAmpliado = gridTweet.Tag
+                        Dim ultimoTweet As Tweet = tweetAmpliado.Tweet
 
                         If Not ultimoTweet.ID = Nothing Then
                             Dim provider As TwitterDataProvider = cosas.MegaUsuario.Servicio.Provider
@@ -165,7 +165,8 @@ Module InicioXaml
                                     For Each item In lv.Items
                                         Dim lvItem2 As ListViewItem = item
                                         Dim gridTweet2 As Grid = lvItem2.Content
-                                        Dim lvTweet As Tweet = gridTweet2.Tag
+                                        Dim tweetAmpliado2 As pepeizq.Twitter.Objetos.TweetAmpliado = gridTweet2.Tag
+                                        Dim lvTweet As Tweet = tweetAmpliado2.Tweet
 
                                         If lvTweet.ID = tweet.ID Then
                                             boolAñadir = False
@@ -189,15 +190,8 @@ Module InicioXaml
     Public Sub LvTweets_ItemClick(sender As Object, e As ItemClickEventArgs)
 
         Dim grid As Grid = e.ClickedItem
-        Dim tweet As Tweet = grid.Tag
 
-        If Not tweet.Entidades.Enlaces Is Nothing Then
-            'Try
-            '    Await Launcher.LaunchUriAsync(New Uri(tweet.Entidades.Enlaces(0).Expandida))
-            'Catch ex As Exception
-
-            'End Try
-        End If
+        FichaTweetXaml.Generar(grid.Tag, grid)
 
     End Sub
 

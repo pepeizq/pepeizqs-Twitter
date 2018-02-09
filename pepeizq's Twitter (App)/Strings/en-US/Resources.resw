@@ -240,4 +240,7 @@
   <data name="tbNumFavoritesUser.Text" xml:space="preserve">
     <value>Likes</value>
   </data>
+  <data name="Block" xml:space="preserve">
+    <value>Block</value>
+  </data>
 </root>

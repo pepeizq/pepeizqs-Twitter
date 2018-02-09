@@ -195,7 +195,8 @@ Namespace pepeTwitterXaml
                 If textoSpan.Inlines.Count > 0 Then
                     Dim tbTweet As New TextBlock With {
                         .TextWrapping = TextWrapping.Wrap,
-                        .Margin = New Thickness(5, 10, 5, 5)
+                        .Margin = New Thickness(5, 10, 5, 5),
+                        .HorizontalAlignment = HorizontalAlignment.Left
                     }
 
                     tbTweet.Inlines.Add(textoSpan)

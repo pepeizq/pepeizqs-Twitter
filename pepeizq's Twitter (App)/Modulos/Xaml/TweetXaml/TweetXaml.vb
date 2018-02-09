@@ -11,7 +11,7 @@ Module TweetXaml
 
         If Not tweet Is Nothing Then
             grid.Name = "gridTweet" + tweet.ID
-            grid.Tag = tweet
+            grid.Tag = New pepeizq.Twitter.Objetos.TweetAmpliado(megaUsuario, tweet)
             grid.Padding = New Thickness(0, 15, 0, 10)
 
             Dim color1 As New GradientStop With {
@@ -106,8 +106,8 @@ Module TweetXaml
             End If
 
             spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlMedia.Generar(tweet, color))
-            spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlBotones.Generar(tweet, grid, megaUsuario))
-            spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlEnviarTweet.Generar(tweet, megaUsuario, Visibility.Collapsed))
+            spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlBotones.Generar(tweet, grid, megaUsuario, 0, color))
+            spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlEnviarTweet.Generar(tweet, megaUsuario, Visibility.Collapsed, color))
 
             gridInferior.Children.Add(spInferiorCentro)
 
@@ -204,8 +204,6 @@ Module TweetXaml
 
         Dim item As ListViewItem = sender
         Dim grid As Grid = item.Content
-        Dim tweet As Tweet = grid.Tag
-
         Dim subgrid As Grid = grid.Children(1)
         Dim sp As StackPanel = subgrid.Children(1)
         Dim spBotones As StackPanel = sp.Children(sp.Children.Count - 2)

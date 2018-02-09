@@ -1,5 +1,4 @@
-﻿Imports Microsoft.Toolkit.Uwp.Helpers
-Imports pepeizq.Twitter
+﻿Imports pepeizq.Twitter
 
 Module EscribirXaml
 
@@ -13,12 +12,12 @@ Module EscribirXaml
         gridEscribir.Padding = New Thickness(15, 0, 0, 0)
 
         Dim color1 As New GradientStop With {
-            .Color = ColorHelper.ToColor("#e0e0e0"),
+            .Color = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToColor("#e0e0e0"),
             .Offset = 0.5
         }
 
         Dim color2 As New GradientStop With {
-            .Color = ColorHelper.ToColor("#d6d6d6"),
+            .Color = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToColor("#d6d6d6"),
             .Offset = 1.0
         }
 
@@ -35,7 +34,7 @@ Module EscribirXaml
 
         gridEscribir.Background = brush
 
-        gridEscribir.Children.Add(pepeTwitterXaml.TweetXamlEnviarTweet.Generar(Nothing, megaUsuario, Visibility.Visible))
+        gridEscribir.Children.Add(pepeTwitterXaml.TweetXamlEnviarTweet.Generar(Nothing, megaUsuario, Visibility.Visible, Nothing))
 
         Return gridEscribir
 

@@ -247,6 +247,34 @@
                 <ProgressBar x:Name="pbTweetsUsuario" Grid.Row="1" IsIndeterminate="True" Margin="10" Padding="10" Visibility="Collapsed"/>
             </Grid>
 
+            <Grid x:Name="gridTweetAmpliado" Visibility="Collapsed" Background="{StaticResource GridAcrilico}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Button x:Name="botonCerrarTweet" Grid.Column="0" Margin="20" Padding="10" Background="{StaticResource BrushSecundario}" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White">
+                    <SymbolIcon Symbol="Cancel" Foreground="White"/>
+                </Button>
+
+                <Grid Grid.Column="1" Padding="0,15">
+                    <Grid.Background>
+                        <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                            <GradientStop Color="#FFE4E4E4" Offset="0.5" />
+                            <GradientStop Color="#FFBFBFBF" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Grid.Background>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel x:Name="spTweetIzquierda" Grid.Column="0"/>
+                    <StackPanel x:Name="spTweetDerecha" Grid.Column="1"/>
+                </Grid>
+            </Grid> 
+
             <Grid x:Name="gridImagenAmpliada" Visibility="Collapsed" Background="{StaticResource GridAcrilico}">
                 <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="10">
                     <Border BorderThickness="1" BorderBrush="{StaticResource BrushSecundario}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">

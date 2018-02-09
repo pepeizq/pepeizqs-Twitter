@@ -17,6 +17,9 @@ Module FichaUsuarioXaml
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
+        Dim gridTweetAmpliado As Grid = pagina.FindName("gridTweetAmpliado")
+        gridTweetAmpliado.Visibility = Visibility.Collapsed
+
         Dim provider As TwitterDataProvider = cosas.MegaUsuario.Servicio.Provider
         Dim usuario As TwitterUsuario = Nothing
 
@@ -24,6 +27,7 @@ Module FichaUsuarioXaml
             usuario = cosas.Usuario
         Else
             usuario = Await provider.GenerarUsuario(cosas.ScreenNombre)
+            cosas.Usuario = usuario
         End If
 
         Dim gridTitulo As Grid = pagina.FindName("gridTitulo")
@@ -71,10 +75,13 @@ Module FichaUsuarioXaml
         gridUsuario.Visibility = Visibility.Visible
 
         Dim lvTweets As ListView = pagina.FindName("lvTweetsUsuario")
+        lvTweets.IsItemClickEnabled = True
 
         If lvTweets.Items.Count > 0 Then
             lvTweets.Items.Clear()
         End If
+
+        AddHandler lvTweets.ItemClick, AddressOf LvTweets_ItemClick
 
         Dim pbTweets As ProgressBar = pagina.FindName("pbTweetsUsuario")
         Dim svTweets As ScrollViewer = pagina.FindName("svTweetsUsuario")
@@ -85,7 +92,7 @@ Module FichaUsuarioXaml
         '------------------------------------
 
         Dim botonCerrar As Button = pagina.FindName("botonCerrarUsuario")
-        botonCerrar.Background = New SolidColorBrush(Color)
+        botonCerrar.Background = New SolidColorBrush(color)
 
         Dim banner As Banner = Nothing
 
@@ -184,6 +191,7 @@ Module FichaUsuarioXaml
         Dim botonMasOpciones As Button = pagina.FindName("botonMasOpcionesUsuario")
         botonMasOpciones.Content = Char.ConvertFromUtf32(57361)
         botonMasOpciones.Background = New SolidColorBrush(color)
+        botonMasOpciones.Tag = cosas
 
         AddHandler botonMasOpciones.Click, AddressOf BotonMasOpcionesClick
 
@@ -203,7 +211,8 @@ Module FichaUsuarioXaml
             For Each item In lvTweets.Items
                 Dim lvItem As ListViewItem = item
                 Dim gridTweet As Grid = lvItem.Content
-                Dim lvTweet As Tweet = gridTweet.Tag
+                Dim tweetAmpliado As pepeizq.Twitter.Objetos.TweetAmpliado = gridTweet.Tag
+                Dim lvTweet As Tweet = tweetAmpliado.Tweet
 
                 If lvTweet.ID = tweet.ID Then
                     boolAñadir = False
@@ -238,23 +247,40 @@ Module FichaUsuarioXaml
 
     Private Sub BotonMasOpcionesClick(sender As Object, e As RoutedEventArgs)
 
+        Dim recursos As New Resources.ResourceLoader
+
         Dim boton As Button = sender
+        Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = boton.Tag
 
         Dim menu As New MenuFlyout With {
             .Placement = FlyoutPlacementMode.Bottom
         }
 
-        'Dim botonCopiarEnlaceTweet As New MenuFlyoutItem With {
-        '       .Text = recursos.GetString("CopyUrlTweet"),
-        '       .Tag = cosas
-        '   }
+        Dim botonBloquearUsuario As New MenuFlyoutItem With {
+            .Text = recursos.GetString("Block") + " @" + cosas.Usuario.ScreenNombre,
+            .Tag = cosas
+        }
 
-        'AddHandler botonCopiarEnlaceTweet.Click, AddressOf BotonCopiarEnlaceTweetClick
+        AddHandler botonBloquearUsuario.Click, AddressOf botonBloquearUsuarioClick
 
-        'menu.Items.Add(botonCopiarEnlaceTweet)
+        menu.Items.Add(botonBloquearUsuario)
 
         FlyoutBase.SetAttachedFlyout(boton, menu)
         menu.ShowAt(boton)
+
+    End Sub
+
+    Private Async Sub BotonBloquearUsuarioClick(sender As Object, e As RoutedEventArgs)
+
+        Dim boton As MenuFlyoutItem = sender
+        Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = boton.Tag
+
+        Try
+            Await cosas.MegaUsuario.Servicio.BloquearUsuario(cosas.MegaUsuario.Usuario.Tokens, cosas.Usuario.ScreenNombre)
+        Catch ex As Exception
+
+        End Try
+
 
     End Sub
 
