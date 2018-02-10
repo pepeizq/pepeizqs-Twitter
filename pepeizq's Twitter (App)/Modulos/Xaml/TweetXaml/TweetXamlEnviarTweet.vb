@@ -38,29 +38,6 @@ Namespace pepeTwitterXaml
                 .Margin = New Thickness(5, 10, 0, 5)
             }
 
-            Dim color1 As New GradientStop With {
-                .Color = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToColor("#e0e0e0"),
-                .Offset = 0.5
-            }
-
-            Dim color2 As New GradientStop With {
-                .Color = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToColor("#d6d6d6"),
-                .Offset = 1.0
-            }
-
-            Dim coleccion As New GradientStopCollection From {
-                color1,
-                color2
-            }
-
-            Dim brush As New LinearGradientBrush With {
-                .StartPoint = New Point(0.5, 0),
-                .EndPoint = New Point(0.5, 1),
-                .GradientStops = coleccion
-            }
-
-            gridTweetEscribir.Background = brush
-
             Dim rowTweetEscribir1 As New RowDefinition
             Dim rowTweetEscribir2 As New RowDefinition
             Dim rowTweetEscribir3 As New RowDefinition

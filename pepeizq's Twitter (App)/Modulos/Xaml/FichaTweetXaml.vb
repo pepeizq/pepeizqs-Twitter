@@ -86,6 +86,45 @@ Module FichaTweetXaml
         spDerecha.Children.Add(pepeTwitterXaml.TweetXamlBotones.Generar(tweetNuevo, gridTweet, cosas.MegaUsuario, 1, color))
         spDerecha.Children.Add(pepeTwitterXaml.TweetXamlEnviarTweet.Generar(tweetNuevo, cosas.MegaUsuario, Visibility.Collapsed, color))
 
+        Dim listaTweetRespuestas As New List(Of Tweet)
+        listaTweetRespuestas = Await provider.CogerRespuestasTweet(Of Tweet)(cosas.MegaUsuario.Usuario.Tokens, tweetNuevo.Usuario.ScreenNombre, tweetNuevo.ID, New TwitterBusquedaParser)
+
+        Dim lvTweets As ListView = pagina.FindName("lvTweetRespuestas")
+        lvTweets.IsItemClickEnabled = True
+
+        If lvTweets.Items.Count > 0 Then
+            lvTweets.Items.Clear()
+        End If
+
+        AddHandler lvTweets.ItemClick, AddressOf LvTweets_ItemClick
+
+        For Each tweet In listaTweetRespuestas
+            Dim boolAñadir As Boolean = True
+
+            For Each item In lvTweets.Items
+                Dim lvItem As ListViewItem = item
+                Dim subGridTweet As Grid = lvItem.Content
+                Dim tweetAmpliado As pepeizq.Twitter.Objetos.TweetAmpliado = subGridTweet.Tag
+                Dim lvTweet As Tweet = tweetAmpliado.Tweet
+
+                If lvTweet.ID = tweet.ID Then
+                    boolAñadir = False
+                End If
+
+                If Not lvTweet.RespuestaUsuarioID = tweetNuevo.ID Then
+                    boolAñadir = False
+                End If
+
+                If Not tweetNuevo.Retweet Is Nothing Then
+                    boolAñadir = False
+                End If
+            Next
+
+            If boolAñadir = True Then
+                lvTweets.Items.Add(TweetXaml.Añadir(tweet, cosas.MegaUsuario, color))
+            End If
+        Next
+
     End Sub
 
 End Module
