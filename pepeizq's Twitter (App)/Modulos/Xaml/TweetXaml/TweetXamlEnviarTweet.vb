@@ -8,6 +8,8 @@ Imports Windows.UI.Xaml.Documents
 Namespace pepeTwitterXaml
     Module TweetXamlEnviarTweet
 
+        Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = Nothing
+
         Public Function Generar(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario, visibilidad As Visibility, color As Color)
 
             If color = Nothing Then
@@ -66,16 +68,19 @@ Namespace pepeTwitterXaml
 
                 tbRespondiendoSpan.Inlines.Add(fragmento1)
 
+                cosas = New pepeizq.Twitter.Objetos.UsuarioAmpliado(megaUsuario, Nothing, Nothing)
+
                 If Not tweet.Usuario.ScreenNombre = megaUsuario.Usuario.ScreenNombre Then
                     Dim fragmento2 As New Run With {
                         .Text = "@" + tweet.Usuario.ScreenNombre
                     }
 
                     Dim enlace As New Hyperlink With {
-                        .NavigateUri = New Uri("https://twitter.com/" + tweet.Usuario.ScreenNombre),
                         .TextDecorations = Nothing,
                         .Foreground = New SolidColorBrush(color)
                     }
+
+                    AddHandler enlace.Click, AddressOf EnlaceClick
 
                     enlace.Inlines.Add(fragmento2)
                     tbRespondiendoSpan.Inlines.Add(enlace)
@@ -102,10 +107,11 @@ Namespace pepeTwitterXaml
                         }
 
                         Dim enlaceMencion As New Hyperlink With {
-                            .NavigateUri = New Uri("https://twitter.com/" + mencion.ScreenNombre),
                             .TextDecorations = Nothing,
                             .Foreground = New SolidColorBrush(color)
                         }
+
+                        AddHandler enlaceMencion.Click, AddressOf EnlaceClick
 
                         enlaceMencion.Inlines.Add(fragmentoMencion)
                         tbRespondiendoSpan.Inlines.Add(enlaceMencion)
@@ -377,6 +383,18 @@ Namespace pepeTwitterXaml
             Dim tb As TextBox = gv.Tag
 
             tb.Text = tb.Text + e.ClickedItem
+
+        End Sub
+
+        Private Sub EnlaceClick(sender As Object, e As HyperlinkClickEventArgs)
+
+            Dim enlace As Hyperlink = sender
+            Dim contenido As Run = enlace.Inlines(0)
+            Dim usuario As String = contenido.Text
+
+            cosas.ScreenNombre = usuario.Replace("@", Nothing)
+
+            FichaUsuarioXaml.Generar(cosas, enlace)
 
         End Sub
 

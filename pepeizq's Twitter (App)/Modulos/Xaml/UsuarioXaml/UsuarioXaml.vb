@@ -176,7 +176,7 @@ Module UsuarioXaml
         End If
 
         TwitterTimeLineInicio.CargarTweets(megaUsuario, Nothing, False)
-        TwitterTimeLineMenciones.CargarTweets(megaUsuario, Nothing)
+        TwitterTimeLineMenciones.CargarTweets(megaUsuario, Nothing, False)
 
         TwitterStream.Iniciar(megaUsuario)
 
@@ -429,6 +429,12 @@ Module UsuarioXaml
 
         Dim paginaPrincipal As New MainPage
         paginaPrincipal.GridVisibilidad(gridConfig, recursos.GetString("MoreThings"))
+
+        Dim lvItem As ListViewItem = pagina.FindName("lvMasCosasMasApps")
+        paginaPrincipal.NavegarMasCosas(lvItem, "https://pepeizqapps.com/")
+
+        Dim wv As WebView = pagina.FindName("wvMasCosas")
+        wv.Navigate(New Uri("https://pepeizqapps.com/"))
 
     End Sub
 

@@ -331,6 +331,12 @@
                             </StackPanel.Background>
 
                             <ListView IsItemClickEnabled="True" ItemClick="LvMasCosasItemClick">
+                                <ListViewItem Background="{StaticResource BrushSecundario}" Margin="0,0,0,5">
+                                    <StackPanel Orientation="Horizontal" Tag="7">
+                                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#59440;" Foreground="White" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                        <TextBlock x:Uid="buttonBack" Foreground="White" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </ListViewItem>
                                 <ListViewItem Background="{StaticResource BrushSecundario}" Margin="0,0,0,30">
                                     <StackPanel Orientation="Horizontal" Tag="0">
                                         <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8E1;" Foreground="White" Margin="0,0,10,0" VerticalAlignment="Center"/>

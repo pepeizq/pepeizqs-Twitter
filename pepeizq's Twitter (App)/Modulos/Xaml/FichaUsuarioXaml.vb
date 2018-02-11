@@ -261,9 +261,24 @@ Module FichaUsuarioXaml
             .Tag = cosas
         }
 
-        AddHandler botonBloquearUsuario.Click, AddressOf botonBloquearUsuarioClick
-
+        AddHandler botonBloquearUsuario.Click, AddressOf BotonBloquearUsuarioClick
         menu.Items.Add(botonBloquearUsuario)
+
+        Dim botonMutearUsuario As New MenuFlyoutItem With {
+            .Text = recursos.GetString("Mute") + " @" + cosas.Usuario.ScreenNombre,
+            .Tag = cosas
+        }
+
+        AddHandler botonMutearUsuario.Click, AddressOf BotonMutearUsuarioClick
+        menu.Items.Add(botonMutearUsuario)
+
+        Dim botonReportarUsuario As New MenuFlyoutItem With {
+            .Text = recursos.GetString("Report") + " @" + cosas.Usuario.ScreenNombre,
+            .Tag = cosas
+        }
+
+        AddHandler botonReportarUsuario.Click, AddressOf BotonReportarUsuarioClick
+        menu.Items.Add(botonReportarUsuario)
 
         FlyoutBase.SetAttachedFlyout(boton, menu)
         menu.ShowAt(boton)
@@ -281,6 +296,40 @@ Module FichaUsuarioXaml
 
         End Try
 
+        TwitterTimeLineInicio.CargarTweets(cosas.MegaUsuario, Nothing, True)
+        TwitterTimeLineMenciones.CargarTweets(cosas.MegaUsuario, Nothing, True)
+
+    End Sub
+
+    Private Async Sub BotonMutearUsuarioClick(sender As Object, e As RoutedEventArgs)
+
+        Dim boton As MenuFlyoutItem = sender
+        Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = boton.Tag
+
+        Try
+            Await cosas.MegaUsuario.Servicio.MutearUsuario(cosas.MegaUsuario.Usuario.Tokens, cosas.Usuario.ScreenNombre)
+        Catch ex As Exception
+
+        End Try
+
+        TwitterTimeLineInicio.CargarTweets(cosas.MegaUsuario, Nothing, True)
+        TwitterTimeLineMenciones.CargarTweets(cosas.MegaUsuario, Nothing, True)
+
+    End Sub
+
+    Private Async Sub BotonReportarUsuarioClick(sender As Object, e As RoutedEventArgs)
+
+        Dim boton As MenuFlyoutItem = sender
+        Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = boton.Tag
+
+        Try
+            Await cosas.MegaUsuario.Servicio.ReportarUsuario(cosas.MegaUsuario.Usuario.Tokens, cosas.Usuario.ScreenNombre)
+        Catch ex As Exception
+
+        End Try
+
+        TwitterTimeLineInicio.CargarTweets(cosas.MegaUsuario, Nothing, True)
+        TwitterTimeLineMenciones.CargarTweets(cosas.MegaUsuario, Nothing, True)
 
     End Sub
 

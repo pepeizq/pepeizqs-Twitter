@@ -3,7 +3,7 @@ Imports pepeizq.Twitter.Tweet
 
 Module TwitterTimeLineMenciones
 
-    Public Async Sub CargarTweets(megaUsuario As pepeizq.Twitter.MegaUsuario, ultimoTweet As String)
+    Public Async Sub CargarTweets(megaUsuario As pepeizq.Twitter.MegaUsuario, ultimoTweet As String, limpiar As Boolean)
 
         Dim usuario As TwitterUsuario = megaUsuario.Usuario
 
@@ -26,6 +26,10 @@ Module TwitterTimeLineMenciones
         If Not gridTweets Is Nothing Then
             Dim sv As ScrollViewer = gridTweets.Children(0)
             Dim lv As ListView = sv.Content
+
+            If limpiar = True Then
+                lv.Items.Clear()
+            End If
 
             Dim provider As TwitterDataProvider = megaUsuario.Servicio.Provider
             Dim listaTweets As New List(Of Tweet)

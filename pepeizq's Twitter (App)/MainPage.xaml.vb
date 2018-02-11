@@ -377,11 +377,15 @@ Public NotInheritable Class MainPage
 
             NavegarMasCosas(lvMasCosasCodigoFuente, "https://github.com/pepeizq/Steam-Tiles")
 
+        ElseIf sp.Tag.ToString = 7 Then
+
+            GridVisibilidad(gridPrincipal, Nothing)
+
         End If
 
     End Sub
 
-    Private Sub NavegarMasCosas(lvItem As ListViewItem, url As String)
+    Public Sub NavegarMasCosas(lvItem As ListViewItem, url As String)
 
         lvMasCosasMasApps.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
         lvMasCosasContacto.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))

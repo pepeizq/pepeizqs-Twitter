@@ -243,4 +243,10 @@
   <data name="Block" xml:space="preserve">
     <value>Bloquear</value>
   </data>
+  <data name="Report" xml:space="preserve">
+    <value>Reportar</value>
+  </data>
+  <data name="Mute" xml:space="preserve">
+    <value>Silenciar</value>
+  </data>
 </root>
