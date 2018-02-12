@@ -1,7 +1,10 @@
 ﻿Imports System.Globalization
+Imports System.Net
 Imports pepeizq.Twitter
 Imports pepeizq.Twitter.Tweet
 Imports Windows.ApplicationModel.DataTransfer
+Imports Windows.Storage
+Imports Windows.System
 Imports Windows.UI
 Imports Windows.UI.Core
 
@@ -371,14 +374,40 @@ Namespace pepeTwitterXaml
 
             AddHandler menu.Closed, AddressOf MenuMasOpcionesCerrar
 
+            Dim botonCompartirTweet As New MenuFlyoutItem With {
+                .Text = recursos.GetString("ShareTweet"),
+                .Tag = cosas
+            }
+
+            AddHandler botonCompartirTweet.Click, AddressOf BotonCompartirTweetClick
+            menu.Items.Add(botonCompartirTweet)
+
             Dim botonCopiarEnlaceTweet As New MenuFlyoutItem With {
                 .Text = recursos.GetString("CopyUrlTweet"),
                 .Tag = cosas
             }
 
             AddHandler botonCopiarEnlaceTweet.Click, AddressOf BotonCopiarEnlaceTweetClick
-
             menu.Items.Add(botonCopiarEnlaceTweet)
+
+            Dim separador As New MenuFlyoutSeparator
+            menu.Items.Add(separador)
+
+            Dim botonAbrirNavegadorTweet As New MenuFlyoutItem With {
+                .Text = recursos.GetString("OpenWebBrowserTweet"),
+                .Tag = cosas
+            }
+
+            AddHandler botonAbrirNavegadorTweet.Click, AddressOf BotonAbrirNavegadorTweetClick
+            menu.Items.Add(botonAbrirNavegadorTweet)
+
+            Dim botonOEmbedTweet As New MenuFlyoutItem With {
+                .Text = recursos.GetString("OEmbedTweet"),
+                .Tag = cosas
+            }
+
+            AddHandler botonOEmbedTweet.Click, AddressOf BotonOEmbedTweetClick
+            menu.Items.Add(botonOEmbedTweet)
 
             FlyoutBase.SetAttachedFlyout(boton, menu)
             menu.ShowAt(boton)
@@ -579,6 +608,32 @@ Namespace pepeTwitterXaml
 
         End Sub
 
+        Private Sub BotonCompartirTweetClick(sender As Object, e As RoutedEventArgs)
+
+            Dim boton As MenuFlyoutItem = sender
+            Dim cosas As pepeizq.Twitter.Objetos.TweetXamlBoton = boton.Tag
+
+            ApplicationData.Current.LocalSettings.Values("TweetCompartirTitulo") = "@" + cosas.Tweet.Usuario.ScreenNombre
+            ApplicationData.Current.LocalSettings.Values("TweetCompartirDescripcion") = WebUtility.HtmlDecode(cosas.Tweet.Texto)
+            ApplicationData.Current.LocalSettings.Values("TweetCompartirEnlace") = "https://twitter.com/" + cosas.Tweet.Usuario.ScreenNombre + "/status/" + cosas.Tweet.ID
+
+            Dim datos As DataTransferManager = DataTransferManager.GetForCurrentView()
+            AddHandler datos.DataRequested, AddressOf DatosCompartirClick
+
+            DataTransferManager.ShowShareUI()
+
+        End Sub
+
+        Private Sub DatosCompartirClick(sender As Object, e As DataRequestedEventArgs)
+
+            Dim request As DataRequest = e.Request
+
+            request.Data.Properties.Title = ApplicationData.Current.LocalSettings.Values("TweetCompartirTitulo")
+            request.Data.Properties.Description = ApplicationData.Current.LocalSettings.Values("TweetCompartirDescripcion")
+            request.Data.SetWebLink(New Uri(ApplicationData.Current.LocalSettings.Values("TweetCompartirEnlace")))
+
+        End Sub
+
         Private Sub BotonCopiarEnlaceTweetClick(sender As Object, e As RoutedEventArgs)
 
             Dim boton As MenuFlyoutItem = sender
@@ -588,6 +643,28 @@ Namespace pepeTwitterXaml
             texto.SetText("https://twitter.com/" + cosas.Tweet.Usuario.ScreenNombre + "/status/" + cosas.Tweet.ID)
 
             Clipboard.SetContent(texto)
+
+        End Sub
+
+        Private Async Sub BotonAbrirNavegadorTweetClick(sender As Object, e As RoutedEventArgs)
+
+            Dim boton As MenuFlyoutItem = sender
+            Dim cosas As pepeizq.Twitter.Objetos.TweetXamlBoton = boton.Tag
+
+            Try
+                Await Launcher.LaunchUriAsync(New Uri("https://twitter.com/" + cosas.Tweet.Usuario.ScreenNombre + "/status/" + cosas.Tweet.ID))
+            Catch ex As Exception
+
+            End Try
+
+        End Sub
+
+        Private Sub BotonOEmbedTweetClick(sender As Object, e As RoutedEventArgs)
+
+            Dim boton As MenuFlyoutItem = sender
+            Dim cosas As pepeizq.Twitter.Objetos.TweetXamlBoton = boton.Tag
+
+            FichaOEmbedXaml.Generar(cosas.MegaUsuario.Servicio.Provider, cosas.Tweet)
 
         End Sub
 

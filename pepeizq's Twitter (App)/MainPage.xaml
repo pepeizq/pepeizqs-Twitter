@@ -314,6 +314,19 @@
                 </Border>
             </Grid>
 
+            <Grid x:Name="gridOEmbedAmpliado" Visibility="Collapsed" Background="{StaticResource GridAcrilico}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Button x:Name="botonCerrarOEmbed" Grid.Row="0" Margin="20" Padding="10" Background="{StaticResource BrushSecundario}" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="{StaticResource BrushCuarto}">
+                    <SymbolIcon Symbol="Cancel" Foreground="White"/>
+                </Button>
+
+                <TextBox x:Name="tbOEmbed" Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" Margin="20"/>
+            </Grid>
+
             <Grid x:Name="gridMasCosas" Visibility="Collapsed" Background="{StaticResource GridAcrilico}">
                 <ScrollViewer>
                     <Grid>

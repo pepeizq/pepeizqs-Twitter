@@ -86,6 +86,7 @@ Public NotInheritable Class MainPage
             gridConfigNotificaciones.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
             gridImagenAmpliada.Background = New SolidColorBrush(Colors.LightGray)
             gridVideoAmpliado.Background = New SolidColorBrush(Colors.LightGray)
+            gridOEmbedAmpliado.Background = New SolidColorBrush(Colors.LightGray)
             gridMasCosas.Background = New SolidColorBrush(Colors.LightGray)
         End If
 
@@ -339,6 +340,12 @@ Public NotInheritable Class MainPage
 
         gridTitulo.Background = App.Current.Resources("GridTituloBackground")
         gridTweetAmpliado.Visibility = Visibility.Collapsed
+
+    End Sub
+
+    Private Sub BotonCerrarOEmbed_Click(sender As Object, e As RoutedEventArgs) Handles botonCerrarOEmbed.Click
+
+        gridOEmbedAmpliado.Visibility = Visibility.Collapsed
 
     End Sub
 

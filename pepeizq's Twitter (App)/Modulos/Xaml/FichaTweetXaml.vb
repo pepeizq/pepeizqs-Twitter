@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.Toolkit.Uwp.Helpers
 Imports pepeizq.Twitter
+Imports pepeizq.Twitter.Busqueda
 Imports pepeizq.Twitter.Tweet
 Imports Windows.UI
 Imports Windows.UI.Xaml.Media.Animation
@@ -87,7 +88,12 @@ Module FichaTweetXaml
         spDerecha.Children.Add(pepeTwitterXaml.TweetXamlEnviarTweet.Generar(tweetNuevo, cosas.MegaUsuario, Visibility.Collapsed, color))
 
         Dim listaTweetRespuestas As New List(Of Tweet)
-        listaTweetRespuestas = Await provider.CogerRespuestasTweet(Of Tweet)(cosas.MegaUsuario.Usuario.Tokens, tweetNuevo.Usuario.ScreenNombre, tweetNuevo.ID, New TwitterBusquedaParser)
+
+        Try
+            listaTweetRespuestas = Await provider.CogerRespuestasTweet(cosas.MegaUsuario.Usuario.Tokens, tweetNuevo.Usuario.ScreenNombre, tweetNuevo.ID, New TwitterBusquedaTweetsParser)
+        Catch ex As Exception
+
+        End Try
 
         Dim lvTweets As ListView = pagina.FindName("lvTweetRespuestas")
         lvTweets.IsItemClickEnabled = True
@@ -110,15 +116,15 @@ Module FichaTweetXaml
                 If lvTweet.ID = tweet.ID Then
                     boolAñadir = False
                 End If
-
-                If Not lvTweet.RespuestaUsuarioID = tweetNuevo.ID Then
-                    boolAñadir = False
-                End If
-
-                If Not tweetNuevo.Retweet Is Nothing Then
-                    boolAñadir = False
-                End If
             Next
+
+            'If Not tweet.RespuestaUsuarioID = tweetNuevo.ID Then
+            '    boolAñadir = False
+            'End If
+
+            If Not tweet.Retweet Is Nothing Then
+                boolAñadir = False
+            End If
 
             If boolAñadir = True Then
                 lvTweets.Items.Add(TweetXaml.Añadir(tweet, cosas.MegaUsuario, color))

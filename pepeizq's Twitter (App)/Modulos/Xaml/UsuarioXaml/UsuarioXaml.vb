@@ -140,6 +140,7 @@ Module UsuarioXaml
         spBotonesSuperior.Children.Add(ConstructorBotones("botonInicio" + usuario.ScreenNombre, 59407, recursos.GetString("Home"), usuario))
         spBotonesSuperior.Children.Add(ConstructorBotones("botonMenciones" + usuario.ScreenNombre, 60047, recursos.GetString("Mentions"), usuario))
         spBotonesSuperior.Children.Add(ConstructorBotones("botonEscribir" + usuario.ScreenNombre, 59151, recursos.GetString("WriteTweet"), usuario))
+        spBotonesSuperior.Children.Add(ConstructorBotones("botonBusqueda" + usuario.ScreenNombre, 59166, recursos.GetString("Search"), usuario))
 
         gridBarraSuperiorBotones.Children.Add(spBotonesSuperior)
 
@@ -161,6 +162,7 @@ Module UsuarioXaml
         gridUsuario.Children.Add(InicioXaml.Generar(megaUsuario, visibilidad))
         gridUsuario.Children.Add(MencionesXaml.Generar(megaUsuario))
         gridUsuario.Children.Add(EscribirXaml.Generar(megaUsuario))
+        gridUsuario.Children.Add(BusquedaXaml.Generar(megaUsuario))
 
         '---------------------------------
 
@@ -294,6 +296,11 @@ Module UsuarioXaml
             Dim grid As Grid = pagina.FindName("gridEscribir" + usuario.ScreenNombre)
             GridVisibilidad(grid, boton)
 
+        ElseIf tb.Text = recursos.GetString("Search") Then
+
+            Dim grid As Grid = pagina.FindName("gridBusqueda" + usuario.ScreenNombre)
+            GridVisibilidad(grid, boton)
+
         End If
 
     End Sub
@@ -358,6 +365,9 @@ Module UsuarioXaml
 
         Dim gridEscribir As Grid = pagina.FindName("gridEscribir" + usuario.ScreenNombre)
         gridEscribir.Visibility = Visibility.Collapsed
+
+        Dim gridBusqueda As Grid = pagina.FindName("gridBusqueda" + usuario.ScreenNombre)
+        gridBusqueda.Visibility = Visibility.Collapsed
 
         gridElegido.Visibility = Visibility.Visible
 

@@ -249,4 +249,25 @@
   <data name="Mute" xml:space="preserve">
     <value>Mute</value>
   </data>
+  <data name="OEmbedTweet" xml:space="preserve">
+    <value>Embed This Tweet</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="Search2" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="OpenWebBrowserTweet" xml:space="preserve">
+    <value>Open Tweet in the Web Browser</value>
+  </data>
+  <data name="OpenWebBrowserUser" xml:space="preserve">
+    <value>Open User in the Web Browser</value>
+  </data>
+  <data name="ShareTweet" xml:space="preserve">
+    <value>Share Tweet</value>
+  </data>
 </root>

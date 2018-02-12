@@ -109,6 +109,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Clases\MegaUsuario.vb" />
+    <Compile Include="Clases\Objetos\BusquedaUsuario.vb" />
     <Compile Include="Clases\Objetos\EnviarTweetBoton.vb" />
     <Compile Include="Clases\Objetos\EnviarTweetTextoCambia.vb" />
     <Compile Include="Clases\Objetos\SeguirUsuarioBoton.vb" />
@@ -126,6 +127,7 @@
     <Compile Include="Modulos\Twitter\TwitterStream.vb" />
     <Compile Include="Modulos\Twitter\TwitterTimeLineInicio.vb" />
     <Compile Include="Modulos\Twitter\TwitterTimeLineMenciones.vb" />
+    <Compile Include="Modulos\Xaml\FichaOEmbedXaml.vb" />
     <Compile Include="Modulos\Xaml\FichaTweetXaml.vb" />
     <Compile Include="Modulos\Xaml\FichaUsuarioXaml.vb" />
     <Compile Include="Modulos\Xaml\TweetXaml\TweetXaml.vb" />
@@ -137,6 +139,7 @@
     <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlRetweet.vb" />
     <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlTexto.vb" />
     <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlUsuario.vb" />
+    <Compile Include="Modulos\Xaml\UsuarioXaml\BusquedaXaml.vb" />
     <Compile Include="Modulos\Xaml\UsuarioXaml\UsuarioXaml.vb" />
     <Compile Include="Modulos\Xaml\UsuarioXaml\EscribirXaml.vb" />
     <Compile Include="Modulos\Xaml\UsuarioXaml\InicioXaml.vb" />
@@ -239,7 +242,7 @@
       <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="pepeizq.Twitter">
-      <Version>1.0.51</Version>
+      <Version>1.0.55</Version>
     </PackageReference>
     <PackageReference Include="Unicode.net">
       <Version>0.1.2</Version>

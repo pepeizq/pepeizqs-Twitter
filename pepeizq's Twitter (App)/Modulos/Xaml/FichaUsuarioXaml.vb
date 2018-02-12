@@ -3,6 +3,7 @@ Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports pepeizq.Twitter
 Imports pepeizq.Twitter.Banner
 Imports pepeizq.Twitter.Tweet
+Imports Windows.System
 Imports Windows.UI
 Imports Windows.UI.Text
 Imports Windows.UI.Xaml.Media.Animation
@@ -85,7 +86,7 @@ Module FichaUsuarioXaml
 
         Dim pbTweets As ProgressBar = pagina.FindName("pbTweetsUsuario")
         Dim svTweets As ScrollViewer = pagina.FindName("svTweetsUsuario")
-        svTweets.Tag = New pepeizq.Twitter.Objetos.ScrollViewerTweets(cosas.MegaUsuario, Nothing, pbTweets, 2, usuario.ScreenNombre, Color)
+        svTweets.Tag = New pepeizq.Twitter.Objetos.ScrollViewerTweets(cosas.MegaUsuario, Nothing, pbTweets, 2, usuario.ScreenNombre, color)
         svTweets.Foreground = New SolidColorBrush(("#" + usuario.ColorTexto).ToColor)
         AddHandler svTweets.ViewChanging, AddressOf SvTweets_ViewChanging
 
@@ -184,7 +185,7 @@ Module FichaUsuarioXaml
             botonSeguir.Content = recursos.GetString("Follow")
         End If
 
-        botonSeguir.Background = New SolidColorBrush(Color)
+        botonSeguir.Background = New SolidColorBrush(color)
         botonSeguir.Tag = New pepeizq.Twitter.Objetos.SeguirUsuarioBoton(cosas.MegaUsuario, cosas.Usuario)
         AddHandler botonSeguir.Click, AddressOf BotonSeguirClick
 
@@ -220,7 +221,7 @@ Module FichaUsuarioXaml
             Next
 
             If boolAñadir = True Then
-                lvTweets.Items.Add(TweetXaml.Añadir(tweet, cosas.MegaUsuario, Color))
+                lvTweets.Items.Add(TweetXaml.Añadir(tweet, cosas.MegaUsuario, color))
             End If
         Next
 
@@ -280,6 +281,17 @@ Module FichaUsuarioXaml
         AddHandler botonReportarUsuario.Click, AddressOf BotonReportarUsuarioClick
         menu.Items.Add(botonReportarUsuario)
 
+        Dim separador As New MenuFlyoutSeparator
+        menu.Items.Add(separador)
+
+        Dim botonAbrirNavegadorUsuario As New MenuFlyoutItem With {
+            .Text = recursos.GetString("OpenWebBrowserUser"),
+            .Tag = cosas
+        }
+
+        AddHandler botonAbrirNavegadorUsuario.Click, AddressOf BotonAbrirNavegadorUsuarioClick
+        menu.Items.Add(botonAbrirNavegadorUsuario)
+
         FlyoutBase.SetAttachedFlyout(boton, menu)
         menu.ShowAt(boton)
 
@@ -330,6 +342,19 @@ Module FichaUsuarioXaml
 
         TwitterTimeLineInicio.CargarTweets(cosas.MegaUsuario, Nothing, True)
         TwitterTimeLineMenciones.CargarTweets(cosas.MegaUsuario, Nothing, True)
+
+    End Sub
+
+    Private Async Sub BotonAbrirNavegadorUsuarioClick(sender As Object, e As RoutedEventArgs)
+
+        Dim boton As MenuFlyoutItem = sender
+        Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = boton.Tag
+
+        Try
+            Await Launcher.LaunchUriAsync(New Uri("https://twitter.com/" + cosas.Usuario.ScreenNombre))
+        Catch ex As Exception
+
+        End Try
 
     End Sub
 
