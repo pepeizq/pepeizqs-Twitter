@@ -3,6 +3,8 @@ Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports pepeizq.Twitter
 Imports pepeizq.Twitter.Banner
 Imports pepeizq.Twitter.Tweet
+Imports Windows.ApplicationModel.DataTransfer
+Imports Windows.Storage
 Imports Windows.System
 Imports Windows.UI
 Imports Windows.UI.Text
@@ -284,6 +286,14 @@ Module FichaUsuarioXaml
         Dim separador As New MenuFlyoutSeparator
         menu.Items.Add(separador)
 
+        Dim botonCompartirUsuario As New MenuFlyoutItem With {
+            .Text = recursos.GetString("ShareUser"),
+            .Tag = cosas
+        }
+
+        AddHandler botonCompartirUsuario.Click, AddressOf BotonCompartirUsuarioClick
+        menu.Items.Add(botonCompartirUsuario)
+
         Dim botonAbrirNavegadorUsuario As New MenuFlyoutItem With {
             .Text = recursos.GetString("OpenWebBrowserUser"),
             .Tag = cosas
@@ -355,6 +365,32 @@ Module FichaUsuarioXaml
         Catch ex As Exception
 
         End Try
+
+    End Sub
+
+    Private Sub BotonCompartirUsuarioClick(sender As Object, e As RoutedEventArgs)
+
+        Dim boton As MenuFlyoutItem = sender
+        Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = boton.Tag
+
+        ApplicationData.Current.LocalSettings.Values("UsuarioCompartirTitulo") = "@" + cosas.Usuario.ScreenNombre
+        ApplicationData.Current.LocalSettings.Values("UsuarioCompartirDescripcion") = cosas.Usuario.Nombre
+        ApplicationData.Current.LocalSettings.Values("UsuarioCompartirEnlace") = "https://twitter.com/" + cosas.Usuario.ScreenNombre
+
+        Dim datos As DataTransferManager = DataTransferManager.GetForCurrentView()
+        AddHandler datos.DataRequested, AddressOf DatosCompartirClick
+
+        DataTransferManager.ShowShareUI()
+
+    End Sub
+
+    Private Sub DatosCompartirClick(sender As Object, e As DataRequestedEventArgs)
+
+        Dim request As DataRequest = e.Request
+
+        request.Data.Properties.Title = ApplicationData.Current.LocalSettings.Values("UsuarioCompartirTitulo")
+        request.Data.Properties.Description = ApplicationData.Current.LocalSettings.Values("UsuarioCompartirDescripcion")
+        request.Data.SetWebLink(New Uri(ApplicationData.Current.LocalSettings.Values("UsuarioCompartirEnlace")))
 
     End Sub
 

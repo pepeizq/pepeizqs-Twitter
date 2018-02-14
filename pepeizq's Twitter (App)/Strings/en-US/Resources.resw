@@ -270,4 +270,7 @@
   <data name="ShareTweet" xml:space="preserve">
     <value>Share Tweet</value>
   </data>
+  <data name="ShareUser" xml:space="preserve">
+    <value>Share User</value>
+  </data>
 </root>

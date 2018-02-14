@@ -378,11 +378,11 @@ Public NotInheritable Class MainPage
 
         ElseIf sp.Tag.ToString = 5 Then
 
-            NavegarMasCosas(lvMasCosasTraduccion, "https://poeditor.com/join/project/aKmScyB4QT")
+            NavegarMasCosas(lvMasCosasTraduccion, "https://poeditor.com/join/project/kZm2NYjV5a")
 
         ElseIf sp.Tag.ToString = 6 Then
 
-            NavegarMasCosas(lvMasCosasCodigoFuente, "https://github.com/pepeizq/Steam-Tiles")
+            NavegarMasCosas(lvMasCosasCodigoFuente, "https://github.com/pepeizq/pepeizq-s-Twitter-App-")
 
         ElseIf sp.Tag.ToString = 7 Then
 
