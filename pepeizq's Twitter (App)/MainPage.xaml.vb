@@ -78,9 +78,21 @@ Public NotInheritable Class MainPage
         '--------------------------------------------------------
 
         Dim transpariencia As New UISettings
-        Dim boolTranspariencia As Boolean = transpariencia.AdvancedEffectsEnabled
+        AddHandler transpariencia.AdvancedEffectsEnabledChanged, AddressOf TransparienciaEfectosCambia
 
-        If boolTranspariencia = False Then
+    End Sub
+
+    Private Sub TransparienciaEfectosCambia(sender As UISettings, e As Object)
+
+        If sender.AdvancedEffectsEnabled = True Then
+            gridConfig.Background = New SolidColorBrush(App.Current.Resources("GridAcrilico"))
+            gridConfigCuentas.Background = New SolidColorBrush(App.Current.Resources("GridTituloBackground"))
+            gridConfigNotificaciones.Background = New SolidColorBrush(App.Current.Resources("GridTituloBackground"))
+            gridImagenAmpliada.Background = New SolidColorBrush(App.Current.Resources("GridAcrilico"))
+            gridVideoAmpliado.Background = New SolidColorBrush(App.Current.Resources("GridAcrilico"))
+            gridOEmbedAmpliado.Background = New SolidColorBrush(App.Current.Resources("GridAcrilico"))
+            gridMasCosas.Background = New SolidColorBrush(App.Current.Resources("GridAcrilico"))
+        Else
             gridConfig.Background = New SolidColorBrush(Colors.LightGray)
             gridConfigCuentas.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
             gridConfigNotificaciones.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))

@@ -215,16 +215,20 @@ Namespace Notificaciones
                     .Audio = tostadaAudio
                 }
 
-                Dim notificacion As ToastNotification = New ToastNotification(tostada.GetXml)
+                Try
+                    Dim notificacion As ToastNotification = New ToastNotification(tostada.GetXml)
 
-                If Not ApplicationData.Current.LocalSettings.Values("notificacionTiempo") Is Nothing Then
-                    If ApplicationData.Current.LocalSettings.Values("notificacionTiempo") = True Then
-                        notificacion.ExpirationTime = DateTime.Now.AddSeconds(ApplicationData.Current.LocalSettings.Values("notificacionTiempoSegundos"))
+                    If Not ApplicationData.Current.LocalSettings.Values("notificacionTiempo") Is Nothing Then
+                        If ApplicationData.Current.LocalSettings.Values("notificacionTiempo") = True Then
+                            notificacion.ExpirationTime = DateTime.Now.AddSeconds(ApplicationData.Current.LocalSettings.Values("notificacionTiempoSegundos"))
+                        End If
                     End If
-                End If
 
-                Dim notificador As ToastNotifier = ToastNotificationManager.CreateToastNotifier()
-                notificador.Show(notificacion)
+                    Dim notificador As ToastNotifier = ToastNotificationManager.CreateToastNotifier()
+                    notificador.Show(notificacion)
+                Catch ex As Exception
+
+                End Try
             End If
 
         End Sub

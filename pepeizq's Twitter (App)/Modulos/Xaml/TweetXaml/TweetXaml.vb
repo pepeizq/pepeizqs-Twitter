@@ -1,6 +1,8 @@
 ﻿Imports System.Globalization
 Imports Microsoft.Toolkit.Uwp.Helpers
 Imports pepeizq.Twitter.Tweet
+Imports Windows.ApplicationModel.Core
+Imports Windows.System.Threading
 Imports Windows.UI.Core
 
 Module TweetXaml
@@ -157,26 +159,24 @@ Module TweetXaml
 
         DateTime.TryParseExact(fecha, "ddd MMM dd HH:mm:ss zzzz yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, fechaTweet)
 
-        Dim fechaFinal As TimeSpan = DateTime.Now - fechaTweet
-        Dim totalSegundos As Integer = fechaFinal.TotalSeconds
-
-        MostrarTiempo(tb, fechaFinal)
-
         Dim periodo As TimeSpan = TimeSpan.FromSeconds(1)
 
-        Dim contador As Windows.System.Threading.ThreadPoolTimer = Nothing
-        contador = Windows.System.Threading.ThreadPoolTimer.CreatePeriodicTimer(Async Sub(tiempo)
-                                                                                    Try
-                                                                                        Await Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (Sub()
-                                                                                                                                                                                               If Not tb.Text Is Nothing Then
-                                                                                                                                                                                                   fechaFinal = fechaFinal.Add(periodo)
-                                                                                                                                                                                                   MostrarTiempo(tb, fechaFinal)
-                                                                                                                                                                                               End If
-                                                                                                                                                                                           End Sub))
-                                                                                    Catch ex As Exception
+        Dim contador As ThreadPoolTimer = Nothing
+        contador = ThreadPoolTimer.CreatePeriodicTimer(Async Sub(tiempo)
+                                                           Try
+                                                               Await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (Sub()
+                                                                                                                                                                 If Not tb.Text Is Nothing Then
+                                                                                                                                                                     Dim fechaFinal As TimeSpan = DateTime.Now - fechaTweet
+                                                                                                                                                                     Dim totalSegundos As Integer = fechaFinal.TotalSeconds
 
-                                                                                    End Try
-                                                                                End Sub, periodo)
+                                                                                                                                                                     fechaFinal = fechaFinal.Add(periodo)
+                                                                                                                                                                     MostrarTiempo(tb, fechaFinal)
+                                                                                                                                                                 End If
+                                                                                                                                                             End Sub))
+                                                           Catch ex As Exception
+
+                                                           End Try
+                                                       End Sub, periodo)
 
     End Sub
 

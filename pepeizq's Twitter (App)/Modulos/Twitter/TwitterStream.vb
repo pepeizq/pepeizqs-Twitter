@@ -50,8 +50,8 @@ Module TwitterStream
 
         '------------------
 
-        Try
-            Await megaUsuario.Servicio.ArrancarStreamUsuario(megaUsuario.Usuario.Tokens, Async Sub(tweet_)
+
+        Await megaUsuario.Servicio.ArrancarStreamUsuario(megaUsuario.Usuario.Tokens, Async Sub(tweet_)
                                                                                              Await Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Low, Async Sub()
 
                                                                                                                                                                                                 'If TypeOf tweet_ Is TwitterStreamEvento Then
@@ -137,10 +137,11 @@ Module TwitterStream
                                                                                                                                                                                                 End If
                                                                                                                                                                                             End Sub)
                                                                                          End Sub)
-        Catch ex As Exception
-            megaUsuario.Servicio.PararStreamUsuario()
-            Iniciar(megaUsuario)
-        End Try
+        'Try
+        'Catch ex As Exception
+        '    megaUsuario.Servicio.PararStreamUsuario()
+        '    Iniciar(megaUsuario)
+        'End Try
 
     End Sub
 
