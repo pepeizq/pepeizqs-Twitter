@@ -5,6 +5,8 @@ Imports Windows.UI.Notifications
 Imports Windows.UI.Popups
 Imports pepeizq.Twitter
 Imports pepeizq.Twitter.Tweet
+Imports System.Xml
+Imports System.Text
 
 Namespace Notificaciones
 
@@ -208,8 +210,11 @@ Namespace Notificaciones
                     End If
                 End If
 
+                Dim bytesTexto() As Byte = Encoding.Default.GetBytes(tweet.Texto)
+                Dim textoFinal As String = Encoding.UTF8.GetString(bytesTexto)
+
                 Dim tostada As New ToastContent With {
-                    .Launch = tweet.Texto,
+                    .Launch = textoFinal,
                     .Visual = tostadaVisual,
                     .Actions = tostadaAcciones,
                     .Audio = tostadaAudio
