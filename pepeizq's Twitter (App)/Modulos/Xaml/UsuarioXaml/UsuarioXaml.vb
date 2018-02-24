@@ -2,6 +2,7 @@
 Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports pepeizq.Twitter
 Imports Windows.UI
+Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Shapes
 
 Module UsuarioXaml
@@ -92,6 +93,8 @@ Module UsuarioXaml
             }
 
             AddHandler subCuenta.Click, AddressOf BotonCambiarCuentaClick
+            AddHandler subCuenta.PointerEntered, AddressOf BotonUsuarioEntra2
+            AddHandler subCuenta.PointerExited, AddressOf BotonUsuarioSale2
             menuItemCuentas.Items.Add(subCuenta)
         Next
 
@@ -104,6 +107,8 @@ Module UsuarioXaml
         }
 
         AddHandler menuItemConfig.Click, AddressOf BotonConfigClick
+        AddHandler menuItemConfig.PointerEntered, AddressOf BotonUsuarioEntra2
+        AddHandler menuItemConfig.PointerExited, AddressOf BotonUsuarioSale2
         menuItem.Items.Add(menuItemConfig)
 
         Dim menuItemCosas As New MenuFlyoutItem With {
@@ -111,9 +116,13 @@ Module UsuarioXaml
         }
 
         AddHandler menuItemCosas.Click, AddressOf BotonCosasClick
+        AddHandler menuItemCosas.PointerEntered, AddressOf BotonUsuarioEntra2
+        AddHandler menuItemCosas.PointerExited, AddressOf BotonUsuarioSale2
         menuItem.Items.Add(menuItemCosas)
 
         menu.Items.Add(menuItem)
+        AddHandler menu.PointerEntered, AddressOf BotonUsuarioEntra2
+        AddHandler menu.PointerExited, AddressOf BotonUsuarioSale2
 
         spBotonesSuperior.Children.Add(menu)
 
@@ -245,6 +254,14 @@ Module UsuarioXaml
             Next
         End If
 
+        Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
+
+    End Sub
+
+    Private Sub BotonUsuarioEntra2(sender As Object, e As PointerRoutedEventArgs)
+
+        Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
+
     End Sub
 
     Private Sub BotonUsuarioSale(sender As Object, e As PointerRoutedEventArgs)
@@ -265,6 +282,14 @@ Module UsuarioXaml
                 End If
             Next
         End If
+
+        Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
+
+    End Sub
+
+    Private Sub BotonUsuarioSale2(sender As Object, e As PointerRoutedEventArgs)
+
+        Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
 
     End Sub
 
@@ -435,16 +460,17 @@ Module UsuarioXaml
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
-        Dim gridConfig As Grid = pagina.FindName("gridMasCosas")
+        Dim gridMasCosas As Grid = pagina.FindName("gridMasCosas")
 
         Dim paginaPrincipal As New MainPage
-        paginaPrincipal.GridVisibilidad(gridConfig, recursos.GetString("MoreThings"))
+        paginaPrincipal.GridVisibilidad(gridMasCosas, recursos.GetString("MoreThings"))
 
-        Dim lvItem As ListViewItem = pagina.FindName("lvMasCosasMasApps")
-        paginaPrincipal.NavegarMasCosas(lvItem, "https://pepeizqapps.com/")
+        Dim sv As ScrollViewer = gridMasCosas.Children(0)
+        Dim gridRelleno As Grid = sv.Content
+        Dim sp As StackPanel = gridRelleno.Children(0)
+        Dim lv As ListView = sp.Children(0)
 
-        Dim wv As WebView = pagina.FindName("wvMasCosas")
-        wv.Navigate(New Uri("https://pepeizqapps.com/"))
+        MasCosas.Navegar(lv, "2", "https://pepeizqapps.com/")
 
     End Sub
 

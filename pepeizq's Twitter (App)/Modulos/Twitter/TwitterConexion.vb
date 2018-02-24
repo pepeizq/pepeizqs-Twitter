@@ -3,6 +3,7 @@ Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports pepeizq.Twitter
 Imports Windows.Storage
 Imports Windows.UI
+Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Shapes
 
 Module TwitterConexion
@@ -147,6 +148,8 @@ Module TwitterConexion
         }
 
         AddHandler botonQuitar.Click, AddressOf BotonQuitarCuenta
+        AddHandler botonQuitar.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler botonQuitar.PointerExited, AddressOf UsuarioSaleBoton
 
         botonQuitar.SetValue(Grid.ColumnProperty, 2)
         gridUsuario.Children.Add(botonQuitar)
@@ -261,6 +264,18 @@ Module TwitterConexion
             End If
 
         End If
+
+    End Sub
+
+    Private Sub UsuarioEntraBoton(sender As Object, e As PointerRoutedEventArgs)
+
+        Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
+
+    End Sub
+
+    Private Sub UsuarioSaleBoton(sender As Object, e As PointerRoutedEventArgs)
+
+        Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
 
     End Sub
 

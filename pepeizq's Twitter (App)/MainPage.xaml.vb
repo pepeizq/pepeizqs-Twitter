@@ -8,6 +8,7 @@ Imports Windows.Media.Playback
 Imports Windows.Storage
 Imports Windows.System
 Imports Windows.UI
+Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Media.Animation
 
 Public NotInheritable Class MainPage
@@ -33,6 +34,8 @@ Public NotInheritable Class MainPage
         '--------------------------------------------------------
 
         tbTitulo.Text = Package.Current.DisplayName
+
+        MasCosas.Generar()
 
         Dim recursos As New Resources.ResourceLoader
 
@@ -77,30 +80,56 @@ Public NotInheritable Class MainPage
 
         '--------------------------------------------------------
 
+        AddHandler botonConfigVolver.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler botonConfigVolver.PointerExited, AddressOf UsuarioSaleBoton
+        AddHandler botonAñadirCuenta.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler botonAñadirCuenta.PointerExited, AddressOf UsuarioSaleBoton
+        AddHandler cbConfigNotificaciones.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler cbConfigNotificaciones.PointerExited, AddressOf UsuarioSaleBoton
+        AddHandler cbConfigNotificacionesTiempo.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler cbConfigNotificacionesTiempo.PointerExited, AddressOf UsuarioSaleBoton
+        AddHandler cbConfigNotificacionesSonido.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler cbConfigNotificacionesSonido.PointerExited, AddressOf UsuarioSaleBoton
+        AddHandler cbConfigNotificacionesImagen.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler cbConfigNotificacionesImagen.PointerExited, AddressOf UsuarioSaleBoton
+
+        '--------------------------------------------------------
+
         Dim transpariencia As New UISettings
+        TransparienciaEfectosFinal(transpariencia.AdvancedEffectsEnabled)
         AddHandler transpariencia.AdvancedEffectsEnabledChanged, AddressOf TransparienciaEfectosCambia
 
     End Sub
 
     Private Sub TransparienciaEfectosCambia(sender As UISettings, e As Object)
 
-        If sender.AdvancedEffectsEnabled = True Then
-            gridConfig.Background = New SolidColorBrush(App.Current.Resources("GridAcrilico"))
-            gridConfigCuentas.Background = New SolidColorBrush(App.Current.Resources("GridTituloBackground"))
-            gridConfigNotificaciones.Background = New SolidColorBrush(App.Current.Resources("GridTituloBackground"))
-            gridImagenAmpliada.Background = New SolidColorBrush(App.Current.Resources("GridAcrilico"))
-            gridVideoAmpliado.Background = New SolidColorBrush(App.Current.Resources("GridAcrilico"))
-            gridOEmbedAmpliado.Background = New SolidColorBrush(App.Current.Resources("GridAcrilico"))
-            gridMasCosas.Background = New SolidColorBrush(App.Current.Resources("GridAcrilico"))
-        Else
-            gridConfig.Background = New SolidColorBrush(Colors.LightGray)
-            gridConfigCuentas.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
-            gridConfigNotificaciones.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
-            gridImagenAmpliada.Background = New SolidColorBrush(Colors.LightGray)
-            gridVideoAmpliado.Background = New SolidColorBrush(Colors.LightGray)
-            gridOEmbedAmpliado.Background = New SolidColorBrush(Colors.LightGray)
-            gridMasCosas.Background = New SolidColorBrush(Colors.LightGray)
-        End If
+        TransparienciaEfectosFinal(sender.AdvancedEffectsEnabled)
+
+    End Sub
+
+    Private Async Sub TransparienciaEfectosFinal(estado As Boolean)
+
+        Await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, Sub()
+                                                                     If estado = True Then
+                                                                         gridPrincipal.Background = App.Current.Resources("GridTituloBackground")
+                                                                         gridConfig.Background = App.Current.Resources("GridAcrilico")
+                                                                         gridConfigCuentas.Background = App.Current.Resources("GridTituloBackground")
+                                                                         gridConfigNotificaciones.Background = App.Current.Resources("GridTituloBackground")
+                                                                         gridImagenAmpliada.Background = App.Current.Resources("GridAcrilico")
+                                                                         gridVideoAmpliado.Background = App.Current.Resources("GridAcrilico")
+                                                                         gridOEmbedAmpliado.Background = App.Current.Resources("GridAcrilico")
+                                                                         gridMasCosas.Background = App.Current.Resources("GridAcrilico")
+                                                                     Else
+                                                                         gridPrincipal.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
+                                                                         gridConfig.Background = New SolidColorBrush(Colors.LightGray)
+                                                                         gridConfigCuentas.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
+                                                                         gridConfigNotificaciones.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
+                                                                         gridImagenAmpliada.Background = New SolidColorBrush(Colors.LightGray)
+                                                                         gridVideoAmpliado.Background = New SolidColorBrush(Colors.LightGray)
+                                                                         gridOEmbedAmpliado.Background = New SolidColorBrush(Colors.LightGray)
+                                                                         gridMasCosas.Background = New SolidColorBrush(Colors.LightGray)
+                                                                     End If
+                                                                 End Sub)
 
     End Sub
 
@@ -120,6 +149,18 @@ Public NotInheritable Class MainPage
         gridMasCosas.Visibility = Visibility.Collapsed
 
         grid.Visibility = Visibility.Visible
+
+    End Sub
+
+    Private Sub UsuarioEntraBoton(sender As Object, e As PointerRoutedEventArgs)
+
+        Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
+
+    End Sub
+
+    Private Sub UsuarioSaleBoton(sender As Object, e As PointerRoutedEventArgs)
+
+        Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
 
     End Sub
 
@@ -203,6 +244,8 @@ Public NotInheritable Class MainPage
                                     }
 
                                     AddHandler subCuenta.Click, AddressOf BotonCambiarCuentaClick
+                                    AddHandler subCuenta.PointerEntered, AddressOf UsuarioEntraBoton
+                                    AddHandler subCuenta.PointerExited, AddressOf UsuarioSaleBoton
                                     menuItemCuentas.Items.Add(subCuenta)
                                 Next
 
@@ -358,71 +401,6 @@ Public NotInheritable Class MainPage
     Private Sub BotonCerrarOEmbed_Click(sender As Object, e As RoutedEventArgs) Handles botonCerrarOEmbed.Click
 
         gridOEmbedAmpliado.Visibility = Visibility.Collapsed
-
-    End Sub
-
-    'MASCOSAS-----------------------------------------
-
-    Private Async Sub LvMasCosasItemClick(sender As Object, args As ItemClickEventArgs)
-
-        Dim sp As StackPanel = args.ClickedItem
-
-        If sp.Tag.ToString = 0 Then
-
-            Await Launcher.LaunchUriAsync(New Uri("ms-windows-store:REVIEW?PFN=" + Package.Current.Id.FamilyName))
-
-        ElseIf sp.Tag.ToString = 1 Then
-
-            NavegarMasCosas(lvMasCosasMasApps, "https://pepeizqapps.com/")
-
-        ElseIf sp.Tag.ToString = 3 Then
-
-            NavegarMasCosas(lvMasCosasContacto, "https://pepeizqapps.com/contact/")
-
-        ElseIf sp.Tag.ToString = 4 Then
-
-            If StoreServicesFeedbackLauncher.IsSupported = True Then
-                Dim ejecutador As StoreServicesFeedbackLauncher = StoreServicesFeedbackLauncher.GetDefault()
-                Await ejecutador.LaunchAsync()
-            Else
-                NavegarMasCosas(lvMasCosasReportarFallo, "https://pepeizqapps.com/contact/")
-            End If
-
-        ElseIf sp.Tag.ToString = 5 Then
-
-            NavegarMasCosas(lvMasCosasTraduccion, "https://poeditor.com/join/project/kZm2NYjV5a")
-
-        ElseIf sp.Tag.ToString = 6 Then
-
-            NavegarMasCosas(lvMasCosasCodigoFuente, "https://github.com/pepeizq/pepeizq-s-Twitter-App-")
-
-        ElseIf sp.Tag.ToString = 7 Then
-
-            GridVisibilidad(gridPrincipal, Nothing)
-
-        End If
-
-    End Sub
-
-    Public Sub NavegarMasCosas(lvItem As ListViewItem, url As String)
-
-        lvMasCosasMasApps.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
-        lvMasCosasContacto.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
-        lvMasCosasReportarFallo.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
-        lvMasCosasTraduccion.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
-        lvMasCosasCodigoFuente.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
-
-        lvItem.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
-
-        pbMasCosas.Visibility = Visibility.Visible
-
-        wvMasCosas.Navigate(New Uri(url))
-
-    End Sub
-
-    Private Sub WvMasCosas_NavigationCompleted(sender As WebView, args As WebViewNavigationCompletedEventArgs) Handles wvMasCosas.NavigationCompleted
-
-        pbMasCosas.Visibility = Visibility.Collapsed
 
     End Sub
 

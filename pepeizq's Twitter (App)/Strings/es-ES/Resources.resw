@@ -162,25 +162,25 @@
   <data name="SendTweet" xml:space="preserve">
     <value>Enviar Tweet</value>
   </data>
-  <data name="Contact.Text" xml:space="preserve">
+  <data name="MoreThings_Contact" xml:space="preserve">
     <value>Contactar</value>
   </data>
-  <data name="HelpTranslate.Text" xml:space="preserve">
+  <data name="MoreThings_HelpTranslate" xml:space="preserve">
     <value>Ayuda a Traducir</value>
   </data>
-  <data name="MoreApps.Text" xml:space="preserve">
+  <data name="MoreThings_MoreApps" xml:space="preserve">
     <value>Más Apps</value>
   </data>
-  <data name="ReportBug.Text" xml:space="preserve">
+  <data name="MoreThings_ReportBug" xml:space="preserve">
     <value>Informa de un Fallo</value>
   </data>
-  <data name="SourceCode.Text" xml:space="preserve">
+  <data name="MoreThings_SourceCode" xml:space="preserve">
     <value>Código Fuente</value>
   </data>
   <data name="TweetSent" xml:space="preserve">
     <value>Tweet enviado</value>
   </data>
-  <data name="VoteApp.Text" xml:space="preserve">
+  <data name="MoreThings_VoteApp" xml:space="preserve">
     <value>Vota la App</value>
   </data>
   <data name="Retweeted" xml:space="preserve">
@@ -192,7 +192,7 @@
   <data name="Accounts" xml:space="preserve">
     <value>Cuentas</value>
   </data>
-  <data name="buttonBack.Text" xml:space="preserve">
+  <data name="MoreThings_Back" xml:space="preserve">
     <value>Volver</value>
   </data>
   <data name="buttonAddAccount.Text" xml:space="preserve">
@@ -272,5 +272,8 @@
   </data>
   <data name="ShareUser" xml:space="preserve">
     <value>Compartir Usuario</value>
+  </data>
+  <data name="buttonBack.Text" xml:space="preserve">
+    <value>Volver</value>
   </data>
 </root>

@@ -35,7 +35,7 @@ Namespace Notificaciones
             }
 
             Dim logo As New ToastGenericAppLogo With {
-               .Source = "ms-appx:///Assets/StoreLogo.png"
+               .Source = "ms-appx:///Assets/logo2.png"
             }
 
             Dim contenido As New ToastBindingGeneric With {
