@@ -461,9 +461,7 @@ Module UsuarioXaml
         Dim pagina As Page = frame.Content
 
         Dim gridMasCosas As Grid = pagina.FindName("gridMasCosas")
-
-        Dim paginaPrincipal As New MainPage
-        paginaPrincipal.GridVisibilidad(gridMasCosas, recursos.GetString("MoreThings"))
+        gridMasCosas.Visibility = Visibility.Visible
 
         Dim sv As ScrollViewer = gridMasCosas.Children(0)
         Dim gridRelleno As Grid = sv.Content

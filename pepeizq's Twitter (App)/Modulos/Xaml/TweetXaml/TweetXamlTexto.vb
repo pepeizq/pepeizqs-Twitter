@@ -34,6 +34,8 @@ Namespace pepeTwitterXaml
             End If
 
             If Not textoTweet = String.Empty Then
+                textoTweet = WebUtility.HtmlDecode(textoTweet)
+
                 Dim entidades As New TweetEntidad
 
                 If tweet.Retweet Is Nothing Then
