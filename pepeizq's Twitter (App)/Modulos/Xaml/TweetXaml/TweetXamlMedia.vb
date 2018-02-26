@@ -112,9 +112,18 @@ Namespace pepeTwitterXaml
                         AddHandler gridMedia.PointerEntered, AddressOf UsuarioEntraMedia
                         AddHandler gridMedia.PointerExited, AddressOf UsuarioSaleMedia
 
+                        Dim frame As Frame = Window.Current.Content
+                        Dim pagina As Page = frame.Content
+
                         If itemMedia.Tipo = "photo" Then
+                            Dim botonCerrar As Button = pagina.FindName("botonCerrarImagen")
+                            botonCerrar.Tag = color
+
                             AddHandler gridMedia.PointerPressed, AddressOf UsuarioClickeaImagen
                         ElseIf itemMedia.Tipo = "video" Then
+                            Dim botonCerrar As Button = pagina.FindName("botonCerrarVideo")
+                            botonCerrar.Tag = color
+
                             Dim listaVideos As TweetVideoVariante() = itemMedia.Video.Variantes
 
                             Dim listaOrdenada As New List(Of TweetVideoVariante)
@@ -180,8 +189,11 @@ Namespace pepeTwitterXaml
             Dim frame As Frame = Window.Current.Content
             Dim pagina As Page = frame.Content
 
-            'Dim gridUsuario As Grid = pagina.FindName("gridUsuarioAmpliado")
-            'gridUsuario.Visibility = Visibility.Collapsed
+            Dim botonCerrar As Button = pagina.FindName("botonCerrarImagen")
+            botonCerrar.Background = New SolidColorBrush(botonCerrar.Tag)
+
+            Dim bordeImagen As Border = pagina.FindName("bordeImagenAmpliada")
+            bordeImagen.BorderBrush = New SolidColorBrush(botonCerrar.Tag)
 
             Dim gridImagen As Grid = pagina.FindName("gridImagenAmpliada")
             gridImagen.Visibility = Visibility.Visible
@@ -213,6 +225,12 @@ Namespace pepeTwitterXaml
 
             Dim frame As Frame = Window.Current.Content
             Dim pagina As Page = frame.Content
+
+            Dim botonCerrar As Button = pagina.FindName("botonCerrarVideo")
+            botonCerrar.Background = New SolidColorBrush(botonCerrar.Tag)
+
+            Dim bordeVideo As Border = pagina.FindName("bordeVideoAmpliado")
+            bordeVideo.BorderBrush = New SolidColorBrush(botonCerrar.Tag)
 
             Dim gridImagen As Grid = pagina.FindName("gridVideoAmpliado")
             gridImagen.Visibility = Visibility.Visible

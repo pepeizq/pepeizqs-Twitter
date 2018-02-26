@@ -1,12 +1,10 @@
-﻿Imports Microsoft.Services.Store.Engagement
-Imports Microsoft.Toolkit.Uwp.Helpers
+﻿Imports Microsoft.Toolkit.Uwp.Helpers
 Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports pepeizq.Twitter
 Imports Windows.ApplicationModel.Core
 Imports Windows.Media.Core
 Imports Windows.Media.Playback
 Imports Windows.Storage
-Imports Windows.System
 Imports Windows.UI
 Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Media.Animation
@@ -52,30 +50,36 @@ Public NotInheritable Class MainPage
         Dim i As Integer = 0
 
         For Each usuario In listaUsuarios
-            Dim megaUsuario As pepeizq.Twitter.MegaUsuario = Await TwitterConexion.Iniciar(usuario)
+            Dim megaUsuario As pepeizq.Twitter.MegaUsuario = Nothing
 
-            Dim visibilidad As New Visibility
+            Try
+                megaUsuario = Await TwitterConexion.Iniciar(usuario)
+            Catch ex As Exception
 
-            If i = 0 Then
-                visibilidad = Visibility.Visible
-            Else
-                visibilidad = Visibility.Collapsed
-            End If
+            End Try
 
             If Not megaUsuario Is Nothing Then
-                UsuarioXaml.Generar(megaUsuario, visibilidad)
-            End If
+                Dim visibilidad As New Visibility
 
-            i += 1
+                If i = 0 Then
+                    visibilidad = Visibility.Visible
+                Else
+                    visibilidad = Visibility.Collapsed
+                End If
+
+                If Not megaUsuario Is Nothing Then
+                    UsuarioXaml.Generar(megaUsuario, visibilidad)
+                End If
+
+                i += 1
+            End If
         Next
 
-        If listaUsuarios.Count = 0 Then
+        If i = 0 Then
             botonConfigVolver.Visibility = Visibility.Collapsed
-            'botonAñadirCuenta.Visibility = Visibility.Visible
             GridVisibilidad(gridConfig, recursos.GetString("Config"))
         Else
             botonConfigVolver.Visibility = Visibility.Visible
-            'botonAñadirCuenta.Visibility = Visibility.Collapsed
         End If
 
         '--------------------------------------------------------
@@ -93,6 +97,23 @@ Public NotInheritable Class MainPage
         AddHandler cbConfigNotificacionesImagen.PointerEntered, AddressOf UsuarioEntraBoton
         AddHandler cbConfigNotificacionesImagen.PointerExited, AddressOf UsuarioSaleBoton
 
+        AddHandler botonCerrarUsuario.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler botonCerrarUsuario.PointerExited, AddressOf UsuarioSaleBoton
+        AddHandler botonSeguirUsuario.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler botonSeguirUsuario.PointerExited, AddressOf UsuarioSaleBoton
+        AddHandler botonMasOpcionesUsuario.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler botonMasOpcionesUsuario.PointerExited, AddressOf UsuarioSaleBoton
+
+        AddHandler botonCerrarTweet.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler botonCerrarTweet.PointerExited, AddressOf UsuarioSaleBoton
+
+        AddHandler botonCerrarImagen.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler botonCerrarImagen.PointerExited, AddressOf UsuarioSaleBoton
+        AddHandler botonCerrarVideo.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler botonCerrarVideo.PointerExited, AddressOf UsuarioSaleBoton
+        AddHandler botonCerrarOEmbed.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler botonCerrarOEmbed.PointerExited, AddressOf UsuarioSaleBoton
+
         '--------------------------------------------------------
 
         Dim transpariencia As New UISettings
@@ -109,27 +130,27 @@ Public NotInheritable Class MainPage
 
     Private Async Sub TransparienciaEfectosFinal(estado As Boolean)
 
-        Await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, Sub()
-                                                                     If estado = True Then
-                                                                         gridPrincipal.Background = App.Current.Resources("GridTituloBackground")
-                                                                         gridConfig.Background = App.Current.Resources("GridAcrilico")
-                                                                         gridConfigCuentas.Background = App.Current.Resources("GridTituloBackground")
-                                                                         gridConfigNotificaciones.Background = App.Current.Resources("GridTituloBackground")
-                                                                         gridImagenAmpliada.Background = App.Current.Resources("GridAcrilico")
-                                                                         gridVideoAmpliado.Background = App.Current.Resources("GridAcrilico")
-                                                                         gridOEmbedAmpliado.Background = App.Current.Resources("GridAcrilico")
-                                                                         gridMasCosas.Background = App.Current.Resources("GridAcrilico")
-                                                                     Else
-                                                                         gridPrincipal.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
-                                                                         gridConfig.Background = New SolidColorBrush(Colors.LightGray)
-                                                                         gridConfigCuentas.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
-                                                                         gridConfigNotificaciones.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
-                                                                         gridImagenAmpliada.Background = New SolidColorBrush(Colors.LightGray)
-                                                                         gridVideoAmpliado.Background = New SolidColorBrush(Colors.LightGray)
-                                                                         gridOEmbedAmpliado.Background = New SolidColorBrush(Colors.LightGray)
-                                                                         gridMasCosas.Background = New SolidColorBrush(Colors.LightGray)
-                                                                     End If
-                                                                 End Sub)
+        Await Dispatcher.RunAsync(CoreDispatcherPriority.High, Sub()
+                                                                   If estado = True Then
+                                                                       gridPrincipal.Background = App.Current.Resources("GridTituloBackground")
+                                                                       gridConfig.Background = App.Current.Resources("GridAcrilico")
+                                                                       gridConfigCuentas.Background = App.Current.Resources("GridTituloBackground")
+                                                                       gridConfigNotificaciones.Background = App.Current.Resources("GridTituloBackground")
+                                                                       gridImagenAmpliada.Background = App.Current.Resources("GridAcrilico")
+                                                                       gridVideoAmpliado.Background = App.Current.Resources("GridAcrilico")
+                                                                       gridOEmbedAmpliado.Background = App.Current.Resources("GridAcrilico")
+                                                                       gridMasCosas.Background = App.Current.Resources("GridAcrilico")
+                                                                   Else
+                                                                       gridPrincipal.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
+                                                                       gridConfig.Background = New SolidColorBrush(Colors.LightGray)
+                                                                       gridConfigCuentas.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
+                                                                       gridConfigNotificaciones.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
+                                                                       gridImagenAmpliada.Background = New SolidColorBrush(Colors.LightGray)
+                                                                       gridVideoAmpliado.Background = New SolidColorBrush(Colors.LightGray)
+                                                                       gridOEmbedAmpliado.Background = New SolidColorBrush(Colors.LightGray)
+                                                                       gridMasCosas.Background = New SolidColorBrush(Colors.LightGray)
+                                                                   End If
+                                                               End Sub)
 
     End Sub
 
@@ -348,6 +369,7 @@ Public NotInheritable Class MainPage
 
     Private Sub BotonCerrarImagen_Click(sender As Object, e As RoutedEventArgs) Handles botonCerrarImagen.Click
 
+        botonCerrarImagen.Tag = Nothing
         gridImagenAmpliada.Visibility = Visibility.Collapsed
 
         Dim imagenOrigen As ImageEx = imagenAmpliada.Tag
@@ -364,6 +386,7 @@ Public NotInheritable Class MainPage
 
     Private Sub BotonCerrarVideo_Click(sender As Object, e As RoutedEventArgs) Handles botonCerrarVideo.Click
 
+        botonCerrarVideo.Tag = Nothing
         videoAmpliado.MediaPlayer.Pause()
 
         gridVideoAmpliado.Visibility = Visibility.Collapsed
