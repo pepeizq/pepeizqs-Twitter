@@ -3,6 +3,7 @@ Imports NeoSmart.Unicode
 Imports pepeizq.Twitter
 Imports pepeizq.Twitter.Tweet
 Imports Windows.UI
+Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Documents
 
 Namespace pepeTwitterXaml
@@ -199,6 +200,8 @@ Namespace pepeTwitterXaml
             botonEnviarTweet.Content = spBoton
             botonEnviarTweet.Tag = New pepeizq.Twitter.Objetos.EnviarTweetBoton(tbMensaje, megaUsuario, tweet, listaMenciones)
             AddHandler botonEnviarTweet.Click, AddressOf BotonEnviarTweetClick
+            AddHandler botonEnviarTweet.PointerEntered, AddressOf UsuarioEntraBoton
+            AddHandler botonEnviarTweet.PointerExited, AddressOf UsuarioSaleBoton
 
             gridInferior.Children.Add(botonEnviarTweet)
 
@@ -231,6 +234,8 @@ Namespace pepeTwitterXaml
             botonEmojis.Margin = New Thickness(15, 0, 0, 0)
             botonEmojis.Background = New SolidColorBrush(colorBoton)
             AddHandler botonEmojis.Click, AddressOf BotonEmojisClick
+            AddHandler botonEmojis.PointerEntered, AddressOf UsuarioEntraBoton
+            AddHandler botonEmojis.PointerExited, AddressOf UsuarioSaleBoton
 
             Dim tbEmojis As New TextBlock With {
                 .Text = "😃"
@@ -395,6 +400,18 @@ Namespace pepeTwitterXaml
             cosas.ScreenNombre = usuario.Replace("@", Nothing)
 
             FichaUsuarioXaml.Generar(cosas, enlace)
+
+        End Sub
+
+        Private Sub UsuarioEntraBoton(sender As Object, e As PointerRoutedEventArgs)
+
+            Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
+
+        End Sub
+
+        Private Sub UsuarioSaleBoton(sender As Object, e As PointerRoutedEventArgs)
+
+            Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
 
         End Sub
 

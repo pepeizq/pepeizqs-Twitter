@@ -5,6 +5,7 @@ Imports Windows.ApplicationModel.Core
 Imports Windows.Media.Core
 Imports Windows.Media.Playback
 Imports Windows.Storage
+Imports Windows.System.Display
 Imports Windows.UI
 Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Media.Animation
@@ -81,6 +82,9 @@ Public NotInheritable Class MainPage
         Else
             botonConfigVolver.Visibility = Visibility.Visible
         End If
+
+        Dim ausente As New DisplayRequest
+        ausente.RequestActive()
 
         '--------------------------------------------------------
 

@@ -380,6 +380,8 @@ Namespace pepeTwitterXaml
             }
 
             AddHandler botonCompartirTweet.Click, AddressOf BotonCompartirTweetClick
+            AddHandler botonCompartirTweet.PointerEntered, AddressOf BotonMasOpcionesUsuarioEntra
+            AddHandler botonCompartirTweet.PointerExited, AddressOf BotonMasOpcionesUsuarioSale
             menu.Items.Add(botonCompartirTweet)
 
             Dim botonCopiarEnlaceTweet As New MenuFlyoutItem With {
@@ -388,6 +390,8 @@ Namespace pepeTwitterXaml
             }
 
             AddHandler botonCopiarEnlaceTweet.Click, AddressOf BotonCopiarEnlaceTweetClick
+            AddHandler botonCopiarEnlaceTweet.PointerEntered, AddressOf BotonMasOpcionesUsuarioEntra
+            AddHandler botonCopiarEnlaceTweet.PointerExited, AddressOf BotonMasOpcionesUsuarioSale
             menu.Items.Add(botonCopiarEnlaceTweet)
 
             Dim separador As New MenuFlyoutSeparator
@@ -399,6 +403,8 @@ Namespace pepeTwitterXaml
             }
 
             AddHandler botonAbrirNavegadorTweet.Click, AddressOf BotonAbrirNavegadorTweetClick
+            AddHandler botonAbrirNavegadorTweet.PointerEntered, AddressOf BotonMasOpcionesUsuarioEntra
+            AddHandler botonAbrirNavegadorTweet.PointerExited, AddressOf BotonMasOpcionesUsuarioSale
             menu.Items.Add(botonAbrirNavegadorTweet)
 
             Dim botonOEmbedTweet As New MenuFlyoutItem With {
@@ -407,6 +413,8 @@ Namespace pepeTwitterXaml
             }
 
             AddHandler botonOEmbedTweet.Click, AddressOf BotonOEmbedTweetClick
+            AddHandler botonOEmbedTweet.PointerEntered, AddressOf BotonMasOpcionesUsuarioEntra
+            AddHandler botonOEmbedTweet.PointerExited, AddressOf BotonMasOpcionesUsuarioSale
             menu.Items.Add(botonOEmbedTweet)
 
             FlyoutBase.SetAttachedFlyout(boton, menu)
