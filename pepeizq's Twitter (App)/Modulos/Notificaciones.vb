@@ -5,7 +5,6 @@ Imports Windows.UI.Notifications
 Imports Windows.UI.Popups
 Imports pepeizq.Twitter
 Imports pepeizq.Twitter.Tweet
-Imports System.Xml
 Imports System.Text
 
 Namespace Notificaciones

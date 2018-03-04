@@ -7,6 +7,7 @@ Imports Windows.ApplicationModel.DataTransfer
 Imports Windows.Storage
 Imports Windows.System
 Imports Windows.UI
+Imports Windows.UI.Core
 Imports Windows.UI.Text
 Imports Windows.UI.Xaml.Media.Animation
 Imports Windows.UI.Xaml.Shapes
@@ -265,6 +266,8 @@ Module FichaUsuarioXaml
         }
 
         AddHandler botonBloquearUsuario.Click, AddressOf BotonBloquearUsuarioClick
+        AddHandler botonBloquearUsuario.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler botonBloquearUsuario.PointerExited, AddressOf UsuarioSaleBoton
         menu.Items.Add(botonBloquearUsuario)
 
         Dim botonMutearUsuario As New MenuFlyoutItem With {
@@ -273,6 +276,8 @@ Module FichaUsuarioXaml
         }
 
         AddHandler botonMutearUsuario.Click, AddressOf BotonMutearUsuarioClick
+        AddHandler botonMutearUsuario.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler botonMutearUsuario.PointerExited, AddressOf UsuarioSaleBoton
         menu.Items.Add(botonMutearUsuario)
 
         Dim botonReportarUsuario As New MenuFlyoutItem With {
@@ -281,6 +286,8 @@ Module FichaUsuarioXaml
         }
 
         AddHandler botonReportarUsuario.Click, AddressOf BotonReportarUsuarioClick
+        AddHandler botonReportarUsuario.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler botonReportarUsuario.PointerExited, AddressOf UsuarioSaleBoton
         menu.Items.Add(botonReportarUsuario)
 
         Dim separador As New MenuFlyoutSeparator
@@ -292,6 +299,8 @@ Module FichaUsuarioXaml
         }
 
         AddHandler botonCompartirUsuario.Click, AddressOf BotonCompartirUsuarioClick
+        AddHandler botonCompartirUsuario.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler botonCompartirUsuario.PointerExited, AddressOf UsuarioSaleBoton
         menu.Items.Add(botonCompartirUsuario)
 
         Dim botonAbrirNavegadorUsuario As New MenuFlyoutItem With {
@@ -300,6 +309,8 @@ Module FichaUsuarioXaml
         }
 
         AddHandler botonAbrirNavegadorUsuario.Click, AddressOf BotonAbrirNavegadorUsuarioClick
+        AddHandler botonAbrirNavegadorUsuario.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler botonAbrirNavegadorUsuario.PointerExited, AddressOf UsuarioSaleBoton
         menu.Items.Add(botonAbrirNavegadorUsuario)
 
         FlyoutBase.SetAttachedFlyout(boton, menu)
@@ -391,6 +402,18 @@ Module FichaUsuarioXaml
         request.Data.Properties.Title = ApplicationData.Current.LocalSettings.Values("UsuarioCompartirTitulo")
         request.Data.Properties.Description = ApplicationData.Current.LocalSettings.Values("UsuarioCompartirDescripcion")
         request.Data.SetWebLink(New Uri(ApplicationData.Current.LocalSettings.Values("UsuarioCompartirEnlace")))
+
+    End Sub
+
+    Private Sub UsuarioEntraBoton(sender As Object, e As PointerRoutedEventArgs)
+
+        Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
+
+    End Sub
+
+    Private Sub UsuarioSaleBoton(sender As Object, e As PointerRoutedEventArgs)
+
+        Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
 
     End Sub
 

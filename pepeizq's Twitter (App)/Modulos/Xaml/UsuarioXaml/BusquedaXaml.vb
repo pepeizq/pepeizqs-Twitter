@@ -2,6 +2,7 @@
 Imports pepeizq.Twitter.Busqueda
 Imports Windows.Storage
 Imports Windows.UI
+Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Shapes
 
 Module BusquedaXaml
@@ -85,11 +86,13 @@ Module BusquedaXaml
             .Foreground = New SolidColorBrush(Colors.White),
             .Background = New SolidColorBrush(App.Current.Resources("ColorSecundario")),
             .Margin = New Thickness(0, 10, 0, 10),
-            .Padding = New Thickness(5, 5, 5, 5),
+            .Padding = New Thickness(10, 10, 10, 10),
             .Style = App.Current.Resources("ButtonRevealStyle")
         }
 
         AddHandler botonUsuariosBusqueda.Click, AddressOf BotonUsuariosBusquedaClick
+        AddHandler botonUsuariosBusqueda.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler botonUsuariosBusqueda.PointerExited, AddressOf UsuarioSaleBoton
 
         spUsuariosBusqueda.Children.Add(botonUsuariosBusqueda)
 
@@ -168,7 +171,8 @@ Module BusquedaXaml
             }
 
             Dim tbNombre As New TextBlock With {
-                .Text = usuario.Nombre
+                .Text = usuario.Nombre,
+                .TextWrapping = TextWrapping.Wrap
             }
 
             sp2.Children.Add(tbNombre)
@@ -194,6 +198,8 @@ Module BusquedaXaml
             }
 
             AddHandler botonUsuario.PointerPressed, AddressOf UsuarioPulsaUsuario
+            AddHandler botonUsuario.PointerEntered, AddressOf UsuarioEntraBoton
+            AddHandler botonUsuario.PointerExited, AddressOf UsuarioSaleBoton
 
             gv.Items.Add(botonUsuario)
         Next
@@ -215,6 +221,18 @@ Module BusquedaXaml
         Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = sp.Tag
 
         FichaUsuarioXaml.Generar(cosas, sp)
+
+    End Sub
+
+    Private Sub UsuarioEntraBoton(sender As Object, e As PointerRoutedEventArgs)
+
+        Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
+
+    End Sub
+
+    Private Sub UsuarioSaleBoton(sender As Object, e As PointerRoutedEventArgs)
+
+        Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
 
     End Sub
 
