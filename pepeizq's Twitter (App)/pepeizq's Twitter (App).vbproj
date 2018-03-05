@@ -216,6 +216,7 @@
     <Content Include="Assets\Sonidos\Twitter.Default.mp3" />
     <Content Include="Assets\Verificado.png" />
     <Content Include="My Project\Default.rd.xml" />
+    <None Include="Package.xml" />
     <None Include="Package.StoreAssociation.xml" />
   </ItemGroup>
   <ItemGroup>

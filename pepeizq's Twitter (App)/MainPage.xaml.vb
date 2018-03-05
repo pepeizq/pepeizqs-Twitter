@@ -83,9 +83,6 @@ Public NotInheritable Class MainPage
             botonConfigVolver.Visibility = Visibility.Visible
         End If
 
-        Dim ausente As New DisplayRequest
-        ausente.RequestActive()
-
         '--------------------------------------------------------
 
         AddHandler botonConfigVolver.PointerEntered, AddressOf UsuarioEntraBoton

@@ -53,11 +53,11 @@ Module TwitterStream
         Await megaUsuario.Servicio.ArrancarStreamUsuario(megaUsuario.Usuario.Tokens, Async Sub(tweet_)
                                                                                          Await Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, Async Sub()
 
-                                                                                                                                                                                               If TypeOf tweet_ Is TwitterStreamEvento Then
-                                                                                                                                                                                                   Dim evento As TwitterStreamEvento = tweet_
+                                                                                                                                                                                               'If TypeOf tweet_ Is TwitterStreamEvento Then
+                                                                                                                                                                                               '    Dim evento As TwitterStreamEvento = tweet_
 
-                                                                                                                                                                                                   Notificaciones.Toast.Enseñar(evento.EventoTipo.ToString)
-                                                                                                                                                                                               End If
+                                                                                                                                                                                               '    Notificaciones.Toast.Enseñar(evento.EventoTipo.ToString)
+                                                                                                                                                                                               'End If
 
                                                                                                                                                                                                If TypeOf tweet_ Is TwitterStreamEventoBorrar Then
                                                                                                                                                                                                    Dim borrar As TwitterStreamEventoBorrar = tweet_

@@ -321,20 +321,27 @@ Namespace pepeTwitterXaml
             Dim tb As TextBox = cosas.CajaTexto
             Dim mensaje As String = Nothing
 
-            mensaje = mensaje + "@" + cosas.Tweet.Usuario.ScreenNombre + " "
+            If Not cosas.Tweet Is Nothing Then
+                mensaje = mensaje + "@" + cosas.Tweet.Usuario.ScreenNombre + " "
+            End If
 
-            For Each mencion In cosas.ListaMenciones
-                If Not mencion.ScreenNombre = cosas.MegaUsuario.Usuario.ScreenNombre Then
-                    mensaje = mensaje + "@" + mencion.ScreenNombre + " "
-                End If
-            Next
+            If Not cosas.ListaMenciones Is Nothing Then
+                For Each mencion In cosas.ListaMenciones
+                    If Not mencion.ScreenNombre = cosas.MegaUsuario.Usuario.ScreenNombre Then
+                        mensaje = mensaje + "@" + mencion.ScreenNombre + " "
+                    End If
+                Next
+            End If
 
             mensaje = mensaje + tb.Text
 
             Dim status As New TwitterStatus With {
-                .InReplyToStatusId = cosas.Tweet.ID,
                 .Mensaje = mensaje
             }
+
+            If Not cosas.Tweet Is Nothing Then
+                status.InReplyToStatusId = cosas.Tweet.ID
+            End If
 
             Await cosas.MegaUsuario.Servicio.EnviarTweet(cosas.MegaUsuario.Usuario.Tokens, status)
 

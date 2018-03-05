@@ -147,7 +147,7 @@
                 </ScrollViewer>
             </Grid>
 
-            <Grid x:Name="gridUsuarioAmpliado">
+            <Grid x:Name="gridUsuarioAmpliado" Visibility="Collapsed">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
