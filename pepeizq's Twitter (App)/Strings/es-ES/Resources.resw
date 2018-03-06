@@ -276,4 +276,10 @@
   <data name="buttonBack.Text" xml:space="preserve">
     <value>Volver</value>
   </data>
+  <data name="tbConfigApp.Text" xml:space="preserve">
+    <value>Aplicación</value>
+  </data>
+  <data name="tbConfigAppTweetCard.Text" xml:space="preserve">
+    <value>Cargar información de la "Tweet Card" si el tweet dispone de ello</value>
+  </data>
 </root>

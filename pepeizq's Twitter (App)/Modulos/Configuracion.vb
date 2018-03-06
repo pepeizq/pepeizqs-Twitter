@@ -4,6 +4,12 @@ Module Configuracion
 
     Public Sub Iniciar()
 
+        If ApplicationData.Current.LocalSettings.Values("tweetcard") Is Nothing Then
+            ConfigTweetCard(False)
+        Else
+            ConfigTweetCard(ApplicationData.Current.LocalSettings.Values("tweetcard"))
+        End If
+
         If ApplicationData.Current.LocalSettings.Values("notificacion") Is Nothing Then
             ConfigNotificacion(True)
         Else
@@ -27,6 +33,18 @@ Module Configuracion
         Else
             ConfigNotificacionImagen(ApplicationData.Current.LocalSettings.Values("notificacionImagen"))
         End If
+
+    End Sub
+
+    Public Sub ConfigTweetCard(estado As Boolean)
+
+        Dim frame As Frame = Window.Current.Content
+        Dim pagina As Page = frame.Content
+
+        ApplicationData.Current.LocalSettings.Values("tweetcard") = estado
+
+        Dim cb As CheckBox = pagina.FindName("cbConfigAppTweetCard")
+        cb.IsChecked = estado
 
     End Sub
 

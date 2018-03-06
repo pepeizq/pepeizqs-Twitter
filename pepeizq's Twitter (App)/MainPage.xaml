@@ -30,7 +30,7 @@
             <Grid x:Name="gridConfig" Visibility="Collapsed">
                 <ScrollViewer>
                     <StackPanel Orientation="Vertical" Width="700" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Button x:Name="botonConfigVolver" Margin="40,20" Padding="10" Background="{StaticResource BrushSecundario}" HorizontalAlignment="Center" BorderBrush="{StaticResource BrushPrimario}" BorderThickness="1">
+                        <Button x:Name="botonConfigVolver" Margin="40,20" Padding="10" Background="{StaticResource BrushSecundario}" HorizontalAlignment="Center" BorderBrush="{StaticResource BrushPrimario}" BorderThickness="1" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                             <Button.Content>
                                 <StackPanel Orientation="Horizontal">
                                     <SymbolIcon Symbol="Back" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="White"/>
@@ -54,7 +54,7 @@
                             <StackPanel Orientation="Vertical" Padding="15">
                                 <ListView x:Name="lvConfigUsuarios" ItemContainerStyle="{StaticResource ListViewEstilo1}"/>
 
-                                <Button x:Name="botonAñadirCuenta" Padding="10" Margin="0,15,0,0" Background="{StaticResource BrushSecundario}">
+                                <Button x:Name="botonAñadirCuenta" Padding="10" Margin="0,15,0,0" Background="{StaticResource BrushSecundario}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                                     <StackPanel Orientation="Horizontal">
                                         <SymbolIcon Symbol="Add" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="White"/>
                                         <TextBlock x:Uid="buttonAddAccount" Foreground="White"/>
@@ -62,6 +62,29 @@
                                 </Button>
                             </StackPanel>
                         </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Margin="40,20" BorderBrush="{StaticResource BrushSecundario}" BorderThickness="1">
+                            <StackPanel.Background>
+                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                    <GradientStop Color="#FFE4E4E4" Offset="0.5" />
+                                    <GradientStop Color="#FFBFBFBF" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </StackPanel.Background>
+
+                            <Grid x:Name="gridConfigApp" HorizontalAlignment="Stretch" Padding="10" Background="{StaticResource GridTituloBackground}">
+                                <TextBlock x:Uid="tbConfigApp" FontSize="16" Foreground="White" Margin="5,0,0,0"/>
+                            </Grid>
+
+                            <StackPanel Orientation="Vertical" Padding="15">
+                                <CheckBox x:Name="cbConfigAppTweetCard" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                    <CheckBox.Content>
+                                        <Grid>
+                                            <TextBlock x:Uid="tbConfigAppTweetCard"/>
+                                        </Grid>
+                                    </CheckBox.Content>
+                                </CheckBox>
+                            </StackPanel> 
+                        </StackPanel> 
 
                         <StackPanel Orientation="Vertical" Margin="40,20" BorderBrush="{StaticResource BrushSecundario}" BorderThickness="1">
                             <StackPanel.Background>
@@ -79,11 +102,11 @@
 
                                 <TextBlock x:Uid="tbConfigNotifications" Grid.Column="0" FontSize="16" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0"/>
 
-                                <CheckBox x:Name="cbConfigNotificaciones" Grid.Column="1" MinWidth="0"/>
+                                <CheckBox x:Name="cbConfigNotificaciones" Grid.Column="1" MinWidth="0" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton"/>
                             </Grid>
 
                             <StackPanel x:Name="spConfigNotificaciones" Orientation="Vertical" Padding="15,5,15,15">
-                                <CheckBox x:Name="cbConfigNotificacionesTiempo">
+                                <CheckBox x:Name="cbConfigNotificacionesTiempo" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                                     <CheckBox.Content>
                                         <Grid>
                                             <Grid.RowDefinitions>
@@ -101,7 +124,7 @@
                                     </CheckBox.Content>
                                 </CheckBox>
 
-                                <CheckBox x:Name="cbConfigNotificacionesSonido" Margin="0,15">
+                                <CheckBox x:Name="cbConfigNotificacionesSonido" Margin="0,15" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                                     <CheckBox.Content>
                                         <Grid>
                                             <Grid.RowDefinitions>
@@ -134,7 +157,7 @@
                                     </CheckBox.Content>
                                 </CheckBox>
 
-                                <CheckBox x:Name="cbConfigNotificacionesImagen">
+                                <CheckBox x:Name="cbConfigNotificacionesImagen" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                                     <CheckBox.Content>
                                         <Grid>
                                             <TextBlock x:Uid="tbConfigNotificationsImage"/>
@@ -167,7 +190,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <Button x:Name="botonCerrarUsuario" Grid.Column="0" Margin="20" Padding="10" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White">
+                            <Button x:Name="botonCerrarUsuario" Grid.Column="0" Margin="20" Padding="10" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                                 <SymbolIcon Symbol="Cancel" Foreground="White"/>
                             </Button>
 
@@ -234,9 +257,9 @@
                             </Grid>
 
                             <StackPanel Grid.Column="2" Orientation="Vertical" Width="150">
-                                <Button x:Name="botonSeguirUsuario" Padding="10" Margin="20" BorderThickness="1" BorderBrush="White" Foreground="White" HorizontalAlignment="Stretch"/>
+                                <Button x:Name="botonSeguirUsuario" Padding="10" Margin="20" BorderThickness="1" BorderBrush="White" Foreground="White" HorizontalAlignment="Stretch" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton"/>
 
-                                <Button x:Name="botonMasOpcionesUsuario" Padding="10" Margin="20,0" BorderThickness="1" BorderBrush="White" Foreground="White" HorizontalAlignment="Stretch" FontFamily="Segoe MDL2 Assets"/>
+                                <Button x:Name="botonMasOpcionesUsuario" Padding="10" Margin="20,0" BorderThickness="1" BorderBrush="White" Foreground="White" HorizontalAlignment="Stretch" FontFamily="Segoe MDL2 Assets" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton"/>
                             </StackPanel>
                         </Grid>
 
@@ -252,8 +275,8 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                
-                <Button x:Name="botonCerrarTweet" Grid.Column="0" Margin="20" Padding="10" Background="{StaticResource BrushSecundario}" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White">
+
+                <Button x:Name="botonCerrarTweet" Grid.Column="0" Margin="20" Padding="10" Background="{StaticResource BrushSecundario}" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                     <SymbolIcon Symbol="Cancel" Foreground="White"/>
                 </Button>
 
@@ -316,7 +339,7 @@
                     </Border>
                 </ScrollViewer>
 
-                <Button x:Name="botonCerrarImagen" Margin="10" Padding="10" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White">
+                <Button x:Name="botonCerrarImagen" Margin="10" Padding="10" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                     <SymbolIcon Symbol="Cancel" Foreground="White"/>
                 </Button>
             </Grid>
@@ -327,7 +350,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Button x:Name="botonCerrarVideo" Grid.Row="0" Margin="10,10,10,0" Padding="10" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White">
+                <Button x:Name="botonCerrarVideo" Grid.Row="0" Margin="10,10,10,0" Padding="10" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                     <SymbolIcon Symbol="Cancel" Foreground="White"/>
                 </Button>
 
@@ -342,7 +365,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Button x:Name="botonCerrarOEmbed" Grid.Row="0" Margin="20" Padding="10" Background="{StaticResource BrushSecundario}" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="{StaticResource BrushCuarto}">
+                <Button x:Name="botonCerrarOEmbed" Grid.Row="0" Margin="20" Padding="10" Background="{StaticResource BrushSecundario}" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="{StaticResource BrushCuarto}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                     <SymbolIcon Symbol="Cancel" Foreground="White"/>
                 </Button>
 

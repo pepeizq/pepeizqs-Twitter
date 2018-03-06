@@ -5,7 +5,6 @@ Imports Windows.ApplicationModel.Core
 Imports Windows.Media.Core
 Imports Windows.Media.Playback
 Imports Windows.Storage
-Imports Windows.System.Display
 Imports Windows.UI
 Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Media.Animation
@@ -82,38 +81,6 @@ Public NotInheritable Class MainPage
         Else
             botonConfigVolver.Visibility = Visibility.Visible
         End If
-
-        '--------------------------------------------------------
-
-        AddHandler botonConfigVolver.PointerEntered, AddressOf UsuarioEntraBoton
-        AddHandler botonConfigVolver.PointerExited, AddressOf UsuarioSaleBoton
-        AddHandler botonAñadirCuenta.PointerEntered, AddressOf UsuarioEntraBoton
-        AddHandler botonAñadirCuenta.PointerExited, AddressOf UsuarioSaleBoton
-        AddHandler cbConfigNotificaciones.PointerEntered, AddressOf UsuarioEntraBoton
-        AddHandler cbConfigNotificaciones.PointerExited, AddressOf UsuarioSaleBoton
-        AddHandler cbConfigNotificacionesTiempo.PointerEntered, AddressOf UsuarioEntraBoton
-        AddHandler cbConfigNotificacionesTiempo.PointerExited, AddressOf UsuarioSaleBoton
-        AddHandler cbConfigNotificacionesSonido.PointerEntered, AddressOf UsuarioEntraBoton
-        AddHandler cbConfigNotificacionesSonido.PointerExited, AddressOf UsuarioSaleBoton
-        AddHandler cbConfigNotificacionesImagen.PointerEntered, AddressOf UsuarioEntraBoton
-        AddHandler cbConfigNotificacionesImagen.PointerExited, AddressOf UsuarioSaleBoton
-
-        AddHandler botonCerrarUsuario.PointerEntered, AddressOf UsuarioEntraBoton
-        AddHandler botonCerrarUsuario.PointerExited, AddressOf UsuarioSaleBoton
-        AddHandler botonSeguirUsuario.PointerEntered, AddressOf UsuarioEntraBoton
-        AddHandler botonSeguirUsuario.PointerExited, AddressOf UsuarioSaleBoton
-        AddHandler botonMasOpcionesUsuario.PointerEntered, AddressOf UsuarioEntraBoton
-        AddHandler botonMasOpcionesUsuario.PointerExited, AddressOf UsuarioSaleBoton
-
-        AddHandler botonCerrarTweet.PointerEntered, AddressOf UsuarioEntraBoton
-        AddHandler botonCerrarTweet.PointerExited, AddressOf UsuarioSaleBoton
-
-        AddHandler botonCerrarImagen.PointerEntered, AddressOf UsuarioEntraBoton
-        AddHandler botonCerrarImagen.PointerExited, AddressOf UsuarioSaleBoton
-        AddHandler botonCerrarVideo.PointerEntered, AddressOf UsuarioEntraBoton
-        AddHandler botonCerrarVideo.PointerExited, AddressOf UsuarioSaleBoton
-        AddHandler botonCerrarOEmbed.PointerEntered, AddressOf UsuarioEntraBoton
-        AddHandler botonCerrarOEmbed.PointerExited, AddressOf UsuarioSaleBoton
 
         '--------------------------------------------------------
 
@@ -278,6 +245,18 @@ Public NotInheritable Class MainPage
                 End If
             Next
         End If
+
+    End Sub
+
+    Private Sub CbConfigAppTweetCard_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppTweetCard.Checked
+
+        ConfigTweetCard(True)
+
+    End Sub
+
+    Private Sub CbConfigAppTweetCard_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppTweetCard.Unchecked
+
+        ConfigTweetCard(False)
 
     End Sub
 
