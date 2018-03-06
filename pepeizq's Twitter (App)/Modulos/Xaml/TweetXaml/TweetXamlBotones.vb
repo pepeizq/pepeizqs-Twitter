@@ -237,37 +237,33 @@ Namespace pepeTwitterXaml
             Dim boton As Button = sender
             Dim cosas As pepeizq.Twitter.Objetos.TweetXamlBoton = boton.Tag
 
-            Dim grid As Grid = cosas.Grid
-            Dim grid2 As Grid = grid.Children(1)
-            Dim sp As StackPanel = Nothing
+            Dim frame As Frame = Window.Current.Content
+            Dim pagina As Page = frame.Content
 
-            If TypeOf grid2.Children(1) Is StackPanel Then
-                sp = grid2.Children(1)
+            Dim nombreGrid As String = Nothing
+
+            If cosas.Tweet Is Nothing Then
+                nombreGrid = "gridTweetEscribir"
+            Else
+                nombreGrid = "gridTweetEscribir" + cosas.Tweet.ID
             End If
 
-            If TypeOf grid2.Children(0) Is Grid Then
-                Dim grid3 As Grid = grid2.Children(0)
-                sp = grid3.Children(1)
-            End If
+            Dim gridResponder As Grid = pagina.FindName(nombreGrid)
 
-            If Not sp Is Nothing Then
-                Dim gridResponder As Grid = sp.Children(sp.Children.Count - 1)
+            If gridResponder.Visibility = Visibility.Visible Then
+                gridResponder.Visibility = Visibility.Collapsed
+                boton.Background = New SolidColorBrush(Colors.Transparent)
+                boton.Foreground = New SolidColorBrush(Colors.Black)
+            Else
+                Dim color As Color = Nothing
 
-                If gridResponder.Visibility = Visibility.Visible Then
-                    gridResponder.Visibility = Visibility.Collapsed
-                    boton.Background = New SolidColorBrush(Colors.Transparent)
-                    boton.Foreground = New SolidColorBrush(Colors.Black)
-                Else
-                    Dim color As Color = Nothing
-
-                    If cosas.Color = Nothing Then
-                        color = App.Current.Resources("ColorSecundario")
-                    End If
-
-                    gridResponder.Visibility = Visibility.Visible
-                    boton.Background = New SolidColorBrush(cosas.Color)
-                    boton.Foreground = New SolidColorBrush(Colors.White)
+                If cosas.Color = Nothing Then
+                    color = App.Current.Resources("ColorSecundario")
                 End If
+
+                gridResponder.Visibility = Visibility.Visible
+                boton.Background = New SolidColorBrush(cosas.Color)
+                boton.Foreground = New SolidColorBrush(Colors.White)
             End If
 
         End Sub
@@ -456,13 +452,21 @@ Namespace pepeTwitterXaml
 
             Dim boton As Button = sender
             Dim cosas As pepeizq.Twitter.Objetos.TweetXamlBoton = boton.Tag
-            Dim grid As Grid = cosas.Grid
-            Dim grid2 As Grid = grid.Children(1)
 
-            If TypeOf grid2.Children(1) Is StackPanel Then
-                Dim sp As StackPanel = grid2.Children(1)
-                Dim gridResponder As Grid = sp.Children(sp.Children.Count - 1)
+            Dim frame As Frame = Window.Current.Content
+            Dim pagina As Page = frame.Content
 
+            Dim nombreGrid As String = Nothing
+
+            If cosas.Tweet Is Nothing Then
+                nombreGrid = "gridTweetEscribir"
+            Else
+                nombreGrid = "gridTweetEscribir" + cosas.Tweet.ID
+            End If
+
+            Dim gridResponder As Grid = pagina.FindName(nombreGrid)
+
+            If Not gridResponder Is Nothing Then
                 Dim spBoton As StackPanel = boton.Content
 
                 Dim tb As TextBlock = spBoton.Children(0)
@@ -492,13 +496,21 @@ Namespace pepeTwitterXaml
 
             Dim boton As Button = sender
             Dim cosas As pepeizq.Twitter.Objetos.TweetXamlBoton = boton.Tag
-            Dim grid As Grid = cosas.Grid
-            Dim grid2 As Grid = grid.Children(1)
 
-            If TypeOf grid2.Children(1) Is StackPanel Then
-                Dim sp As StackPanel = grid2.Children(1)
-                Dim gridResponder As Grid = sp.Children(sp.Children.Count - 1)
+            Dim frame As Frame = Window.Current.Content
+            Dim pagina As Page = frame.Content
 
+            Dim nombreGrid As String = Nothing
+
+            If cosas.Tweet Is Nothing Then
+                nombreGrid = "gridTweetEscribir"
+            Else
+                nombreGrid = "gridTweetEscribir" + cosas.Tweet.ID
+            End If
+
+            Dim gridResponder As Grid = pagina.FindName(nombreGrid)
+
+            If Not gridResponder Is Nothing Then
                 Dim spBoton As StackPanel = boton.Content
 
                 Dim tb As TextBlock = spBoton.Children(0)
