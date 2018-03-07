@@ -111,15 +111,6 @@ Module UsuarioXaml
         AddHandler menuItemConfig.PointerExited, AddressOf BotonUsuarioSale2
         menuItem.Items.Add(menuItemConfig)
 
-        Dim menuItemCosas As New MenuFlyoutItem With {
-            .Text = recursos.GetString("MoreThings")
-        }
-
-        AddHandler menuItemCosas.Click, AddressOf BotonCosasClick
-        AddHandler menuItemCosas.PointerEntered, AddressOf BotonUsuarioEntra2
-        AddHandler menuItemCosas.PointerExited, AddressOf BotonUsuarioSale2
-        menuItem.Items.Add(menuItemCosas)
-
         menu.Items.Add(menuItem)
         AddHandler menu.PointerEntered, AddressOf BotonUsuarioEntra2
         AddHandler menu.PointerExited, AddressOf BotonUsuarioSale2
@@ -450,25 +441,6 @@ Module UsuarioXaml
 
         Dim paginaPrincipal As New MainPage
         paginaPrincipal.GridVisibilidad(gridConfig, recursos.GetString("Config"))
-
-    End Sub
-
-    Private Sub BotonCosasClick(sender As Object, e As RoutedEventArgs)
-
-        Dim recursos As New Resources.ResourceLoader
-
-        Dim frame As Frame = Window.Current.Content
-        Dim pagina As Page = frame.Content
-
-        Dim gridMasCosas As Grid = pagina.FindName("gridMasCosas")
-        gridMasCosas.Visibility = Visibility.Visible
-
-        Dim sv As ScrollViewer = gridMasCosas.Children(0)
-        Dim gridRelleno As Grid = sv.Content
-        Dim sp As StackPanel = gridRelleno.Children(0)
-        Dim lv As ListView = sp.Children(0)
-
-        MasCosas.Navegar(lv, "2", "https://pepeizqapps.com/")
 
     End Sub
 

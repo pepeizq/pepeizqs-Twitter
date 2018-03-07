@@ -209,11 +209,6 @@
     <Content Include="Assets\Logos\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Logos\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Logos\Wide310x150Logo.scale-400.png" />
-    <Content Include="Assets\MasCosas\contacto.png" />
-    <Content Include="Assets\MasCosas\feedback.png" />
-    <Content Include="Assets\MasCosas\github.png" />
-    <Content Include="Assets\MasCosas\pepeizq.png" />
-    <Content Include="Assets\MasCosas\poeditor.png" />
     <Content Include="Assets\Sonidos\Twitter.Default.mp3" />
     <Content Include="Assets\Verificado.png" />
     <Content Include="My Project\Default.rd.xml" />
@@ -261,6 +256,9 @@
     <Import Include="Windows.UI.Xaml.Navigation" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="FontAwesome.UWP">
+      <Version>4.7.0.9</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory">
       <Version>2.29.0</Version>
     </PackageReference>

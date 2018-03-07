@@ -1,7 +1,6 @@
 ﻿Imports Microsoft.Toolkit.Uwp.Helpers
 Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports pepeizq.Twitter
-Imports Windows.ApplicationModel.Core
 Imports Windows.Media.Core
 Imports Windows.Media.Playback
 Imports Windows.Storage
@@ -20,18 +19,6 @@ Public NotInheritable Class MainPage
 
         'Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = "es-ES"
         'Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = "en-US"
-
-        Dim coreBarra As CoreApplicationViewTitleBar = CoreApplication.GetCurrentView.TitleBar
-        coreBarra.ExtendViewIntoTitleBar = True
-
-        Dim barra As ApplicationViewTitleBar = ApplicationView.GetForCurrentView().TitleBar
-        barra.ButtonBackgroundColor = Colors.Transparent
-        barra.ButtonForegroundColor = Colors.White
-        barra.ButtonInactiveBackgroundColor = Colors.Transparent
-
-        '--------------------------------------------------------
-
-        tbTitulo.Text = Package.Current.DisplayName
 
         MasCosas.Generar()
 
@@ -116,7 +103,7 @@ Public NotInheritable Class MainPage
                                                                        gridImagenAmpliada.Background = New SolidColorBrush(Colors.LightGray)
                                                                        gridVideoAmpliado.Background = New SolidColorBrush(Colors.LightGray)
                                                                        gridOEmbedAmpliado.Background = New SolidColorBrush(Colors.LightGray)
-                                                                       gridMasCosas.Background = New SolidColorBrush(Colors.LightGray)
+                                                                       gridMasCosas.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
                                                                    End If
                                                                End Sub)
 
