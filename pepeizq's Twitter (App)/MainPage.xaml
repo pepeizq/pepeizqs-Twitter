@@ -24,7 +24,7 @@
             
             <TextBlock x:Name="tbTitulo" Grid.Column="0" Margin="20,0,0,0" FontSize="13" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
 
-            <Button x:Name="botonMasCosas" Grid.Column="1" BorderThickness="0" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+            <Button x:Name="botonMasCosas" Grid.Column="1" BorderThickness="0" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{StaticResource ButtonRevealStyle}">
                 <Button.Content>
                     <FontIcon Glyph="&#57361;" FontFamily="Segoe MDL2 Assets" Foreground="White" Margin="10,5" FontSize="15"/>
                 </Button.Content>
@@ -91,6 +91,13 @@
                             </Grid>
 
                             <StackPanel Orientation="Vertical" Padding="15">
+                                <CheckBox x:Name="cbConfigAppCargarMedia" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                    <CheckBox.Content>
+                                        <Grid>
+                                            <TextBlock x:Uid="tbConfigAppLoadMedia"/>
+                                        </Grid>
+                                    </CheckBox.Content>
+                                </CheckBox>
                                 <CheckBox x:Name="cbConfigAppTweetCard" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                                     <CheckBox.Content>
                                         <Grid>

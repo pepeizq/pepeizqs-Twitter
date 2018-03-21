@@ -282,4 +282,7 @@
   <data name="tbConfigAppTweetCard.Text" xml:space="preserve">
     <value>Cargar información de la "Tweet Card" si el tweet dispone de ello</value>
   </data>
+  <data name="tbConfigAppLoadMedia.Text" xml:space="preserve">
+    <value>Cargar y mostrar achivos multimedia de los tweets (imagenes, gifs y videos)</value>
+  </data>
 </root>

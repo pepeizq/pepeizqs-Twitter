@@ -4,39 +4,57 @@ Module Configuracion
 
     Public Sub Iniciar()
 
-        If ApplicationData.Current.LocalSettings.Values("tweetcard") Is Nothing Then
-            ConfigTweetCard(False)
+        If ApplicationData.Current.LocalSettings.Values("media") Is Nothing Then
+            CargarMedia(True)
         Else
-            ConfigTweetCard(ApplicationData.Current.LocalSettings.Values("tweetcard"))
+            CargarMedia(ApplicationData.Current.LocalSettings.Values("media"))
+        End If
+
+        If ApplicationData.Current.LocalSettings.Values("tweetcard") Is Nothing Then
+            CargarTweetCard(False)
+        Else
+            CargarTweetCard(ApplicationData.Current.LocalSettings.Values("tweetcard"))
         End If
 
         If ApplicationData.Current.LocalSettings.Values("notificacion") Is Nothing Then
-            ConfigNotificacion(True)
+            NotificacionesEnseñar(True)
         Else
-            ConfigNotificacion(ApplicationData.Current.LocalSettings.Values("notificacion"))
+            NotificacionesEnseñar(ApplicationData.Current.LocalSettings.Values("notificacion"))
         End If
 
         If ApplicationData.Current.LocalSettings.Values("notificacionTiempo") Is Nothing Then
-            ConfigNotificacionTiempo(False)
+            NotificacionesTiempo(False)
         Else
-            ConfigNotificacionTiempo(ApplicationData.Current.LocalSettings.Values("notificacionTiempo"))
+            NotificacionesTiempo(ApplicationData.Current.LocalSettings.Values("notificacionTiempo"))
         End If
 
         If ApplicationData.Current.LocalSettings.Values("notificacionSonido") Is Nothing Then
-            ConfigNotificacionSonido(True)
+            NotificacionesSonido(True)
         Else
-            ConfigNotificacionSonido(ApplicationData.Current.LocalSettings.Values("notificacionSonido"))
+            NotificacionesSonido(ApplicationData.Current.LocalSettings.Values("notificacionSonido"))
         End If
 
         If ApplicationData.Current.LocalSettings.Values("notificacionImagen") Is Nothing Then
-            ConfigNotificacionImagen(True)
+            NotificacionesImagen(True)
         Else
-            ConfigNotificacionImagen(ApplicationData.Current.LocalSettings.Values("notificacionImagen"))
+            NotificacionesImagen(ApplicationData.Current.LocalSettings.Values("notificacionImagen"))
         End If
 
     End Sub
 
-    Public Sub ConfigTweetCard(estado As Boolean)
+    Public Sub CargarMedia(estado As Boolean)
+
+        Dim frame As Frame = Window.Current.Content
+        Dim pagina As Page = frame.Content
+
+        ApplicationData.Current.LocalSettings.Values("media") = estado
+
+        Dim cb As CheckBox = pagina.FindName("cbConfigAppCargarMedia")
+        cb.IsChecked = estado
+
+    End Sub
+
+    Public Sub CargarTweetCard(estado As Boolean)
 
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
@@ -48,7 +66,7 @@ Module Configuracion
 
     End Sub
 
-    Public Sub ConfigNotificacion(estado As Boolean)
+    Public Sub NotificacionesEnseñar(estado As Boolean)
 
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
@@ -69,7 +87,7 @@ Module Configuracion
 
     End Sub
 
-    Public Sub ConfigNotificacionTiempo(estado As Boolean)
+    Public Sub NotificacionesTiempo(estado As Boolean)
 
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
@@ -97,7 +115,7 @@ Module Configuracion
 
     End Sub
 
-    Public Sub ConfigNotificacionSonido(estado As Boolean)
+    Public Sub NotificacionesSonido(estado As Boolean)
 
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
@@ -130,7 +148,7 @@ Module Configuracion
 
     End Sub
 
-    Public Sub ConfigNotificacionImagen(estado As Boolean)
+    Public Sub NotificacionesImagen(estado As Boolean)
 
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content

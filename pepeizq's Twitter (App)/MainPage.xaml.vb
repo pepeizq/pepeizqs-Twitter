@@ -235,39 +235,51 @@ Public NotInheritable Class MainPage
 
     End Sub
 
+    Private Sub CbConfigAppCargarMedia_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppCargarMedia.Checked
+
+        Configuracion.CargarMedia(True)
+
+    End Sub
+
+    Private Sub CbConfigAppCargarMedia_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppCargarMedia.Unchecked
+
+        Configuracion.CargarMedia(False)
+
+    End Sub
+
     Private Sub CbConfigAppTweetCard_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppTweetCard.Checked
 
-        ConfigTweetCard(True)
+        Configuracion.CargarTweetCard(True)
 
     End Sub
 
     Private Sub CbConfigAppTweetCard_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppTweetCard.Unchecked
 
-        ConfigTweetCard(False)
+        Configuracion.CargarTweetCard(False)
 
     End Sub
 
     Private Sub CbConfigNotificaciones_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificaciones.Checked
 
-        ConfigNotificacion(True)
+        Configuracion.NotificacionesEnseñar(True)
 
     End Sub
 
     Private Sub CbConfigNotificaciones_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificaciones.Unchecked
 
-        ConfigNotificacion(False)
+        Configuracion.NotificacionesEnseñar(False)
 
     End Sub
 
     Private Sub CbConfigNotificacionesTiempo_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesTiempo.Checked
 
-        ConfigNotificacionTiempo(True)
+        Configuracion.NotificacionesTiempo(True)
 
     End Sub
 
     Private Sub CbConfigNotificacionesTiempo_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesTiempo.Unchecked
 
-        ConfigNotificacionTiempo(False)
+        Configuracion.NotificacionesTiempo(False)
 
     End Sub
 
@@ -291,13 +303,13 @@ Public NotInheritable Class MainPage
 
     Private Sub CbConfigNotificacionesSonido_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesSonido.Checked
 
-        ConfigNotificacionSonido(True)
+        Configuracion.NotificacionesSonido(True)
 
     End Sub
 
     Private Sub CbConfigNotificacionesSonido_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesSonido.Unchecked
 
-        ConfigNotificacionSonido(False)
+        Configuracion.NotificacionesSonido(False)
 
     End Sub
 
@@ -322,13 +334,13 @@ Public NotInheritable Class MainPage
 
     Private Sub CbConfigNotificacionesImagen_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesImagen.Checked
 
-        ConfigNotificacionImagen(True)
+        Configuracion.NotificacionesImagen(True)
 
     End Sub
 
     Private Sub CbConfigNotificacionesImagen_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesImagen.Unchecked
 
-        ConfigNotificacionImagen(False)
+        Configuracion.NotificacionesImagen(False)
 
     End Sub
 

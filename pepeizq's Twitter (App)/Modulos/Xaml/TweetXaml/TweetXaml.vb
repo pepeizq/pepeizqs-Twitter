@@ -2,6 +2,7 @@
 Imports Microsoft.Toolkit.Uwp.Helpers
 Imports pepeizq.Twitter.Tweet
 Imports Windows.ApplicationModel.Core
+Imports Windows.Storage
 Imports Windows.System.Threading
 Imports Windows.UI.Core
 
@@ -107,7 +108,10 @@ Module TweetXaml
                 End If
             End If
 
-            spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlMedia.Generar(tweet, color))
+            If ApplicationData.Current.LocalSettings.Values("media") = True Then
+                spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlMedia.Generar(tweet, color))
+            End If
+
             spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlBotones.Generar(tweet, grid, megaUsuario, 0, color))
             spInferiorCentro.Children.Add(pepeTwitterXaml.TweetXamlEnviarTweet.Generar(tweet, megaUsuario, Visibility.Collapsed, color))
 

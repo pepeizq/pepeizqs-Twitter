@@ -280,6 +280,9 @@
     <value>Application</value>
   </data>
   <data name="tbConfigAppTweetCard.Text" xml:space="preserve">
-    <value>Upload information from the "Tweet Card" if the tweet has it</value>
+    <value>Load information from the "Tweet Card" if the tweet has it</value>
+  </data>
+  <data name="tbConfigAppLoadMedia.Text" xml:space="preserve">
+    <value>Load and show media from Tweets (images, gifs and videos)</value>
   </data>
 </root>
