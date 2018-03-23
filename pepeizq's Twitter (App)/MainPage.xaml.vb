@@ -13,13 +13,10 @@ Public NotInheritable Class MainPage
 
     Private Async Sub Page_Loaded(sender As FrameworkElement, args As Object)
 
-        Configuracion.Iniciar()
-
-        '--------------------------------------------------------
-
         'Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = "es-ES"
         'Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = "en-US"
 
+        Configuracion.Iniciar()
         MasCosas.Generar()
 
         Dim recursos As New Resources.ResourceLoader
@@ -232,6 +229,12 @@ Public NotInheritable Class MainPage
                 End If
             Next
         End If
+
+    End Sub
+
+    Private Sub BotonConfigAppAutoArranque_Checked(sender As Object, e As RoutedEventArgs) Handles botonConfigAppAutoArranque.Click
+
+        Configuracion.AutoArranque()
 
     End Sub
 

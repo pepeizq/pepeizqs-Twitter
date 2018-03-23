@@ -4,6 +4,17 @@ Module Configuracion
 
     Public Sub Iniciar()
 
+        Dim frame As Frame = Window.Current.Content
+        Dim pagina As Page = frame.Content
+
+        Dim botonArranque As Button = pagina.FindName("botonConfigAppAutoArranque")
+
+        If Not ApplicationData.Current.LocalSettings.Values("autoarranque") Is Nothing Then
+            If ApplicationData.Current.LocalSettings.Values("autoarranque") = False Then
+                botonArranque.IsEnabled = False
+            End If
+        End If
+
         If ApplicationData.Current.LocalSettings.Values("media") Is Nothing Then
             CargarMedia(True)
         Else
@@ -38,6 +49,23 @@ Module Configuracion
             NotificacionesImagen(True)
         Else
             NotificacionesImagen(ApplicationData.Current.LocalSettings.Values("notificacionImagen"))
+        End If
+
+    End Sub
+
+    Public Async Sub AutoArranque()
+
+        Dim frame As Frame = Window.Current.Content
+        Dim pagina As Page = frame.Content
+
+        Dim botonArranque As Button = pagina.FindName("botonConfigAppAutoArranque")
+
+        Dim startupTarea As StartupTask = Await StartupTask.GetAsync("arranque")
+        Dim resultado As StartupTaskState = Await startupTarea.RequestEnableAsync()
+
+        If resultado = StartupTaskState.Enabled Then
+            botonArranque.IsEnabled = False
+            ApplicationData.Current.LocalSettings.Values("autoarranque") = False
         End If
 
     End Sub

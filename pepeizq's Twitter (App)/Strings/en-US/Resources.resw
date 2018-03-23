@@ -285,4 +285,7 @@
   <data name="tbConfigAppLoadMedia.Text" xml:space="preserve">
     <value>Load and show media from Tweets (images, gifs and videos)</value>
   </data>
+  <data name="tbConfigAppAutoStart.Text" xml:space="preserve">
+    <value>Automatically start the app at each Windows startup</value>
+  </data>
 </root>

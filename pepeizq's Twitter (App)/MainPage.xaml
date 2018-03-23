@@ -91,7 +91,14 @@
                             </Grid>
 
                             <StackPanel Orientation="Vertical" Padding="15">
-                                <CheckBox x:Name="cbConfigAppCargarMedia" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                <Button x:Name="botonConfigAppAutoArranque" Padding="10" Background="{StaticResource BrushSecundario}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                    <Button.Content>
+                                        <Grid>
+                                            <TextBlock x:Uid="tbConfigAppAutoStart" Foreground="White"/>
+                                        </Grid>
+                                    </Button.Content>
+                                </Button>
+                                <CheckBox x:Name="cbConfigAppCargarMedia" Margin="0,15" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                                     <CheckBox.Content>
                                         <Grid>
                                             <TextBlock x:Uid="tbConfigAppLoadMedia"/>
