@@ -1,4 +1,5 @@
-﻿Imports Microsoft.Toolkit.Uwp.Helpers
+﻿Imports System.Net.NetworkInformation
+Imports Microsoft.Toolkit.Uwp.Helpers
 Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports pepeizq.Twitter
 Imports Windows.Media.Core
@@ -23,47 +24,49 @@ Public NotInheritable Class MainPage
 
         GridVisibilidad(gridPrincipal, Nothing)
 
-        Dim helper As New LocalObjectStorageHelper
+        If NetworkInterface.GetIsNetworkAvailable = True Then
+            Dim helper As New LocalObjectStorageHelper
 
-        Dim listaUsuarios As New List(Of TwitterUsuario)
+            Dim listaUsuarios As New List(Of TwitterUsuario)
 
-        If helper.KeyExists("listaUsuarios2") Then
-            listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios2")
-        End If
+            If helper.KeyExists("listaUsuarios2") Then
+                listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios2")
+            End If
 
-        Dim i As Integer = 0
+            Dim i As Integer = 0
 
-        For Each usuario In listaUsuarios
-            Dim megaUsuario As pepeizq.Twitter.MegaUsuario = Nothing
+            For Each usuario In listaUsuarios
+                Dim megaUsuario As pepeizq.Twitter.MegaUsuario = Nothing
 
-            Try
-                megaUsuario = Await TwitterConexion.Iniciar(usuario)
-            Catch ex As Exception
+                Try
+                    megaUsuario = Await TwitterConexion.Iniciar(usuario)
+                Catch ex As Exception
 
-            End Try
-
-            If Not megaUsuario Is Nothing Then
-                Dim visibilidad As New Visibility
-
-                If i = 0 Then
-                    visibilidad = Visibility.Visible
-                Else
-                    visibilidad = Visibility.Collapsed
-                End If
+                End Try
 
                 If Not megaUsuario Is Nothing Then
-                    UsuarioXaml.Generar(megaUsuario, visibilidad)
+                    Dim visibilidad As New Visibility
+
+                    If i = 0 Then
+                        visibilidad = Visibility.Visible
+                    Else
+                        visibilidad = Visibility.Collapsed
+                    End If
+
+                    If Not megaUsuario Is Nothing Then
+                        UsuarioXaml.Generar(megaUsuario, visibilidad)
+                    End If
+
+                    i += 1
                 End If
+            Next
 
-                i += 1
+            If i = 0 Then
+                botonConfigVolver.Visibility = Visibility.Collapsed
+                GridVisibilidad(gridConfig, recursos.GetString("Config"))
+            Else
+                botonConfigVolver.Visibility = Visibility.Visible
             End If
-        Next
-
-        If i = 0 Then
-            botonConfigVolver.Visibility = Visibility.Collapsed
-            GridVisibilidad(gridConfig, recursos.GetString("Config"))
-        Else
-            botonConfigVolver.Visibility = Visibility.Visible
         End If
 
         '--------------------------------------------------------
