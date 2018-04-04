@@ -7,14 +7,15 @@ Imports Windows.UI.Xaml.Shapes
 
 Module BusquedaXaml
 
-    Public Function Generar(megaUsuario As pepeizq.Twitter.MegaUsuario)
+    Public Function Generar(megaUsuario As pepeizq.Twitter.MegaUsuario, visibilidad As Visibility)
 
         Dim recursos As New Resources.ResourceLoader
 
         Dim usuario As TwitterUsuario = megaUsuario.Usuario
 
         Dim gridBusqueda As New Grid With {
-            .Name = "gridBusqueda" + usuario.ScreenNombre
+            .Name = "gridBusqueda" + usuario.ScreenNombre,
+            .Visibility = visibilidad
         }
         gridBusqueda.SetValue(Grid.RowProperty, 1)
 

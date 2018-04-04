@@ -65,10 +65,6 @@ Module TwitterConexion
 
                 lvUsuarios.Items.Add(ConfigAñadirUsuarioXaml(megaUsuario))
 
-                Dim botonVolver As Button = pagina.FindName("botonConfigVolver")
-
-                botonVolver.Visibility = Visibility.Visible
-
                 Return megaUsuario
             Else
                 Return Nothing
@@ -183,10 +179,33 @@ Module TwitterConexion
 
                 If megaUsuarioGrid.Usuario.Id = megaUsuario.Usuario.Id Then
                     lvConfigUsuarios.Items.RemoveAt(i)
+                    Exit For
                 End If
 
                 i += 1
             Next
+
+            Dim menu As MenuFlyout = pagina.FindName("botonUsuariosMenu")
+
+            i = 0
+            For Each item As MenuFlyoutItem In menu.Items
+                Dim usuarioItem As TwitterUsuario = item.Tag
+
+                If usuarioItem.Id = megaUsuario.Usuario.Id Then
+                    menu.Items.RemoveAt(i)
+
+                    Exit For
+                End If
+
+                i += 1
+            Next
+
+            If menu.Items.Count > 0 Then
+                If i = 0 Then
+                    Dim nuevoUsuario As TwitterUsuario = menu.Items(0).Tag
+                    UsuarioXaml.CambiarCuenta(nuevoUsuario)
+                End If
+            End If
 
             Dim gridUsuario As Grid = pagina.FindName("gridUsuario" + megaUsuario.Usuario.ScreenNombre)
             gridUsuario.Children.Clear()
@@ -211,56 +230,35 @@ Module TwitterConexion
 
             helper.Save(Of List(Of TwitterUsuario))("listaUsuarios2", listaUsuarios)
 
-            If listaUsuarios.Count > 0 Then
-                Dim gridPrincipal As Grid = pagina.FindName("gridPrincipal")
-                For Each grid As Grid In gridPrincipal.Children
-                    If grid.Name.Contains("gridUsuario") Then
-                        If Not grid.Name = "gridUsuarioAmpliado" Then
-                            If Not grid.Name = "gridUsuario" + megaUsuario.Usuario.ScreenNombre Then
-                                Dim subGrid As Grid = grid.Children(0)
-                                Dim subGrid_ As Grid = subGrid.Children(0)
-                                Dim spBotonesSuperior As StackPanel = subGrid_.Children(0)
-                                Dim menu As Menu = spBotonesSuperior.Children(0)
-                                Dim menuItem As MenuItem = menu.Items(0)
-                                menuItem.Items.RemoveAt(0)
-
-                                Dim menuItemCuentas As New MenuFlyoutSubItem With {
-                                    .Text = recursos.GetString("Accounts")
-                                }
-
-                                Dim listaUsuarios2 As New List(Of TwitterUsuario)
-
-                                If helper.KeyExists("listaUsuarios2") Then
-                                    listaUsuarios2 = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios2")
-                                End If
-
-                                For Each item In listaUsuarios2
-                                    Dim subCuenta As New MenuFlyoutItem With {
-                                        .Text = item.Nombre + " (@" + item.ScreenNombre + ")",
-                                        .Tag = item
-                                    }
-
-                                    AddHandler subCuenta.Click, AddressOf BotonCambiarCuentaClick
-                                    menuItemCuentas.Items.Add(subCuenta)
-                                Next
-
-                                menuItem.Items.Insert(0, menuItemCuentas)
-                            End If
-                        End If
-                    End If
-                Next
-            End If
-
-            'Dim botonAñadirCuenta As Button = pagina.FindName("botonAñadirCuenta")
+            Dim nvPrincipal As NavigationView = pagina.FindName("nvPrincipal")
+            Dim itemUsuarios As NavigationViewItem = pagina.FindName("itemUsuarios")
+            Dim spCuentaSeleccionada As StackPanel = pagina.FindName("spCuentaSeleccionada")
 
             If lvConfigUsuarios.Items.Count = 0 Then
-                Dim botonVolver As Button = pagina.FindName("botonConfigVolver")
-                botonVolver.Visibility = Visibility.Collapsed
+                For Each item In nvPrincipal.MenuItems
+                    If TypeOf item Is NavigationViewItem Then
+                        Dim nvItem As NavigationViewItem = item
+                        nvItem.Visibility = Visibility.Collapsed
+                    End If
+                Next
 
-                'botonAñadirCuenta.Visibility = Visibility.Visible
+                itemUsuarios.Visibility = Visibility.Collapsed
+                spCuentaSeleccionada.Visibility = Visibility.Collapsed
             Else
-                Dim botonInicio As Button = pagina.FindName("botonInicio" + listaUsuarios(0).ScreenNombre)
-                BotonClick(botonInicio, New RoutedEventArgs)
+                For Each item In nvPrincipal.MenuItems
+                    If TypeOf item Is NavigationViewItem Then
+                        Dim nvItem As NavigationViewItem = item
+                        nvItem.Visibility = Visibility.Visible
+                    End If
+                Next
+
+                If lvConfigUsuarios.Items.Count = 1 Then
+                    itemUsuarios.Visibility = Visibility.Collapsed
+                Else
+                    itemUsuarios.Visibility = Visibility.Visible
+                End If
+
+                spCuentaSeleccionada.Visibility = Visibility.Visible
             End If
 
         End If

@@ -124,6 +124,7 @@
     <Compile Include="Modulos\Configuracion.vb" />
     <Compile Include="Modulos\Decompiladores.vb" />
     <Compile Include="Modulos\MasCosas.vb" />
+    <Compile Include="Modulos\NavigationViewItems.vb" />
     <Compile Include="Modulos\Notificaciones.vb" />
     <Compile Include="Modulos\Twitter\TwitterConexion.vb" />
     <Compile Include="Modulos\Twitter\TwitterStream.vb" />

@@ -5,6 +5,7 @@
     
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
+    xmlns:fa="using:FontAwesome.UWP"
   
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -17,391 +18,404 @@
         </Grid.RowDefinitions>
 
         <Grid x:Name="gridTitulo" Grid.Row="0" Background="{StaticResource GridTituloBackground}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            
-            <TextBlock x:Name="tbTitulo" Grid.Column="0" Margin="20,0,0,0" FontSize="13" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
-
-            <Button x:Name="botonMasCosas" Grid.Column="1" BorderThickness="0" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{StaticResource ButtonRevealStyle}">
-                <Button.Content>
-                    <FontIcon Glyph="&#57361;" FontFamily="Segoe MDL2 Assets" Foreground="White" Margin="10,5" FontSize="15"/>
-                </Button.Content>
-
-                <Button.Flyout>
-                    <MenuFlyout x:Name="botonMasCosasMenu"/>
-                </Button.Flyout>
-            </Button> 
+            <TextBlock x:Name="tbTitulo" Margin="50,0,0,0" FontSize="13" Foreground="White" VerticalAlignment="Center"/>
         </Grid>
 
-        <Grid x:Name="gridPrincipal" Grid.Row="1">
-            <Grid.Transitions>
-                <TransitionCollection>
-                    <EdgeUIThemeTransition Edge="Bottom"/>
-                </TransitionCollection>
-            </Grid.Transitions>
+        <NavigationView x:Name="nvPrincipal" Grid.Row="1" Loaded="Nv_Loaded" ItemInvoked="Nv_ItemInvoked"
+                        OpenPaneLength="200" AlwaysShowHeader="False" IsSettingsVisible="False">
+            <NavigationView.PaneFooter>
+                <StackPanel Orientation="Vertical">
+                    <StackPanel x:Name="spCuentaSeleccionada" Orientation="Horizontal">
+                        <Ellipse Width="36" Height="36" HorizontalAlignment="Left" Margin="6">
+                            <Ellipse.Fill>
+                                <ImageBrush x:Name="imagenCuentaSeleccionada"/>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <TextBlock x:Name="tbCuentaSeleccionada" VerticalAlignment="Center" Foreground="White"/>
+                    </StackPanel>
 
-            <Grid x:Name="gridConfig" Visibility="Collapsed">
-                <ScrollViewer>
-                    <StackPanel Orientation="Vertical" Width="700" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <Button x:Name="botonConfigVolver" Margin="40,20" Padding="10" Background="{StaticResource BrushSecundario}" HorizontalAlignment="Center" BorderBrush="{StaticResource BrushPrimario}" BorderThickness="1" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                            <Button.Content>
-                                <StackPanel Orientation="Horizontal">
-                                    <SymbolIcon Symbol="Back" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="White"/>
-                                    <TextBlock x:Uid="buttonBack" Foreground="White"/>
+                    <NavigationViewItemSeparator/>
+                    <NavigationViewItem x:Name="itemUsuarios" Tapped="Nv_ItemFlyout" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Visibility="Collapsed">
+                        <NavigationViewItem.Icon>
+                            <fa:FontAwesome Icon="User"/>
+                        </NavigationViewItem.Icon>
+                        <FlyoutBase.AttachedFlyout>
+                            <MenuFlyout x:Name="botonUsuariosMenu" Placement="Top"/>
+                        </FlyoutBase.AttachedFlyout>
+                    </NavigationViewItem>
+                    <NavigationViewItem x:Name="itemMasCosas" Tapped="Nv_ItemFlyout" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                        <FlyoutBase.AttachedFlyout>
+                            <MenuFlyout x:Name="botonMasCosasMenu"/>
+                        </FlyoutBase.AttachedFlyout>
+                    </NavigationViewItem>
+                </StackPanel>
+            </NavigationView.PaneFooter>
+
+            <Grid x:Name="gridPrincipal" Grid.Row="1">
+                <Grid.Transitions>
+                    <TransitionCollection>
+                        <EdgeUIThemeTransition Edge="Bottom"/>
+                    </TransitionCollection>
+                </Grid.Transitions>
+
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                        <GradientStop Color="#FFE4E4E4" Offset="0.5" />
+                        <GradientStop Color="#FFBFBFBF" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Grid.Background>
+
+                <Grid x:Name="gridConfig" Visibility="Collapsed">
+                    <ScrollViewer>
+                        <StackPanel Orientation="Vertical" Width="700" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <StackPanel Orientation="Vertical" Margin="40,20" BorderBrush="{StaticResource BrushSecundario}" BorderThickness="1">
+                                <StackPanel.Background>
+                                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                        <GradientStop Color="#FFE4E4E4" Offset="0.5" />
+                                        <GradientStop Color="#FFBFBFBF" Offset="1.0" />
+                                    </LinearGradientBrush>
+                                </StackPanel.Background>
+
+                                <Grid x:Name="gridConfigCuentas" HorizontalAlignment="Stretch" Padding="10" Background="{StaticResource GridTituloBackground}">
+                                    <TextBlock x:Uid="tbConfigAccounts" FontSize="16" Foreground="White" Margin="5,0,0,0"/>
+                                </Grid>
+
+                                <StackPanel Orientation="Vertical" Padding="15">
+                                    <ListView x:Name="lvConfigUsuarios" ItemContainerStyle="{StaticResource ListViewEstilo1}"/>
+
+                                    <Button x:Name="botonAñadirCuenta" Padding="10" Margin="0,15,0,0" Background="{StaticResource BrushSecundario}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                        <StackPanel Orientation="Horizontal">
+                                            <fa:FontAwesome Icon="UserPlus" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="White"/>
+                                            <TextBlock x:Uid="buttonAddAccount" Foreground="White"/>
+                                        </StackPanel>
+                                    </Button>
                                 </StackPanel>
-                            </Button.Content>
-                        </Button>
+                            </StackPanel>
 
-                        <StackPanel Orientation="Vertical" Margin="40,20" BorderBrush="{StaticResource BrushSecundario}" BorderThickness="1">
-                            <StackPanel.Background>
-                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                    <GradientStop Color="#FFE4E4E4" Offset="0.5" />
-                                    <GradientStop Color="#FFBFBFBF" Offset="1.0" />
-                                </LinearGradientBrush>
-                            </StackPanel.Background>
+                            <StackPanel Orientation="Vertical" Margin="40,20" BorderBrush="{StaticResource BrushSecundario}" BorderThickness="1">
+                                <StackPanel.Background>
+                                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                        <GradientStop Color="#FFE4E4E4" Offset="0.5" />
+                                        <GradientStop Color="#FFBFBFBF" Offset="1.0" />
+                                    </LinearGradientBrush>
+                                </StackPanel.Background>
 
-                            <Grid x:Name="gridConfigCuentas" HorizontalAlignment="Stretch" Padding="10" Background="{StaticResource GridTituloBackground}">
-                                <TextBlock x:Uid="tbConfigAccounts" FontSize="16" Foreground="White" Margin="5,0,0,0"/>
-                            </Grid>
+                                <Grid x:Name="gridConfigApp" HorizontalAlignment="Stretch" Padding="10" Background="{StaticResource GridTituloBackground}">
+                                    <TextBlock x:Uid="tbConfigApp" FontSize="16" Foreground="White" Margin="5,0,0,0"/>
+                                </Grid>
 
-                            <StackPanel Orientation="Vertical" Padding="15">
-                                <ListView x:Name="lvConfigUsuarios" ItemContainerStyle="{StaticResource ListViewEstilo1}"/>
+                                <StackPanel Orientation="Vertical" Padding="15">
+                                    <Button x:Name="botonConfigAppAutoArranque" Padding="10" Background="{StaticResource BrushSecundario}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                        <Button.Content>
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:FontAwesome Icon="Windows" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="White"/>
+                                                <TextBlock x:Uid="tbConfigAppAutoStart" Foreground="White"/>
+                                            </StackPanel>
+                                        </Button.Content>
+                                    </Button>
+                                    <CheckBox x:Name="cbConfigAppCargarMedia" Margin="0,15" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                        <CheckBox.Content>
+                                            <Grid>
+                                                <TextBlock x:Uid="tbConfigAppLoadMedia"/>
+                                            </Grid>
+                                        </CheckBox.Content>
+                                    </CheckBox>
+                                    <CheckBox x:Name="cbConfigAppTweetCard" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                        <CheckBox.Content>
+                                            <Grid>
+                                                <TextBlock x:Uid="tbConfigAppTweetCard"/>
+                                            </Grid>
+                                        </CheckBox.Content>
+                                    </CheckBox>
+                                </StackPanel>
+                            </StackPanel>
 
-                                <Button x:Name="botonAñadirCuenta" Padding="10" Margin="0,15,0,0" Background="{StaticResource BrushSecundario}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                                    <StackPanel Orientation="Horizontal">
-                                        <SymbolIcon Symbol="Add" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="White"/>
-                                        <TextBlock x:Uid="buttonAddAccount" Foreground="White"/>
-                                    </StackPanel>
-                                </Button>
+                            <StackPanel Orientation="Vertical" Margin="40,20" BorderBrush="{StaticResource BrushSecundario}" BorderThickness="1">
+                                <StackPanel.Background>
+                                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                        <GradientStop Color="#FFE4E4E4" Offset="0.5" />
+                                        <GradientStop Color="#FFBFBFBF" Offset="1.0" />
+                                    </LinearGradientBrush>
+                                </StackPanel.Background>
+
+                                <Grid x:Name="gridConfigNotificaciones" HorizontalAlignment="Stretch" Padding="10" Background="{StaticResource GridTituloBackground}" Margin="0,0,0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock x:Uid="tbConfigNotifications" Grid.Column="0" FontSize="16" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0"/>
+
+                                    <CheckBox x:Name="cbConfigNotificaciones" Grid.Column="1" MinWidth="0" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton"/>
+                                </Grid>
+
+                                <StackPanel x:Name="spConfigNotificaciones" Orientation="Vertical" Padding="15,5,15,15">
+                                    <CheckBox x:Name="cbConfigNotificacionesTiempo" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                        <CheckBox.Content>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+
+                                                <TextBlock x:Uid="tbConfigNotificationsTime" Grid.Row="0"/>
+
+                                                <StackPanel x:Name="spConfigNotificacionesTiempo" Grid.Row="1" Orientation="Horizontal" Visibility="Collapsed" Margin="0,10,0,0">
+                                                    <TextBox x:Name="tbConfigNotificacionesSegundos" MinWidth="40" Width="40" TextAlignment="Justify"/>
+                                                    <TextBlock x:Uid="tbConfigNotificationsSeconds" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="14"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </CheckBox.Content>
+                                    </CheckBox>
+
+                                    <CheckBox x:Name="cbConfigNotificacionesSonido" Margin="0,15" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                        <CheckBox.Content>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+
+                                                <TextBlock x:Uid="tbConfigNotificationsSound" Grid.Row="0"/>
+
+                                                <StackPanel x:Name="spConfigNotificacionesSonido" Grid.Row="1" Orientation="Horizontal" Visibility="Collapsed" Margin="0,10,0,0">
+                                                    <ComboBox x:Name="cbConfigNotificacionesSonidoElegido">
+                                                        <ComboBoxItem Content="Twitter.Default" Tag="ms-appx:///Assets/Sonidos/Twitter.Default.mp3"/>
+                                                        <ComboBoxItem Content="Windows.Default" Tag="ms-winsoundevent:Notification.Default"/>
+                                                        <ComboBoxItem Content="Windows.IM" Tag="ms-winsoundevent:Notification.IM"/>
+                                                        <ComboBoxItem Content="Windows.Mail" Tag="ms-winsoundevent:Notification.Mail"/>
+                                                        <ComboBoxItem Content="Windows.Reminder" Tag="ms-winsoundevent:Notification.Reminder"/>
+                                                        <ComboBoxItem Content="Windows.SMS" Tag="ms-winsoundevent:Notification.SMS"/>
+                                                    </ComboBox>
+
+                                                    <Button x:Name="botonConfigNotificacionesSonido" Padding="4" Background="{StaticResource BrushSecundario}" Margin="15,0,0,0">
+                                                        <Button.Content>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <fa:FontAwesome Icon="PlayCircle" Margin="0,0,5,0" VerticalAlignment="Center" Foreground="White"/>
+                                                                <TextBlock x:Uid="buttonConfigNotificationsSound" Foreground="White"/>
+                                                            </StackPanel>
+                                                        </Button.Content>
+                                                    </Button>
+                                                </StackPanel>
+                                            </Grid>
+                                        </CheckBox.Content>
+                                    </CheckBox>
+
+                                    <CheckBox x:Name="cbConfigNotificacionesImagen" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                        <CheckBox.Content>
+                                            <Grid>
+                                                <TextBlock x:Uid="tbConfigNotificationsImage"/>
+                                            </Grid>
+                                        </CheckBox.Content>
+                                    </CheckBox>
+                                </StackPanel>
                             </StackPanel>
                         </StackPanel>
+                    </ScrollViewer>
+                </Grid>
 
-                        <StackPanel Orientation="Vertical" Margin="40,20" BorderBrush="{StaticResource BrushSecundario}" BorderThickness="1">
-                            <StackPanel.Background>
-                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                    <GradientStop Color="#FFE4E4E4" Offset="0.5" />
-                                    <GradientStop Color="#FFBFBFBF" Offset="1.0" />
-                                </LinearGradientBrush>
-                            </StackPanel.Background>
+                <Grid x:Name="gridUsuarioAmpliado" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-                            <Grid x:Name="gridConfigApp" HorizontalAlignment="Stretch" Padding="10" Background="{StaticResource GridTituloBackground}">
-                                <TextBlock x:Uid="tbConfigApp" FontSize="16" Foreground="White" Margin="5,0,0,0"/>
-                            </Grid>
+                    <ScrollViewer x:Name="svTweetsUsuario" Grid.Row="0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
 
-                            <StackPanel Orientation="Vertical" Padding="15">
-                                <Button x:Name="botonConfigAppAutoArranque" Padding="10" Background="{StaticResource BrushSecundario}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                                    <Button.Content>
-                                        <Grid>
-                                            <TextBlock x:Uid="tbConfigAppAutoStart" Foreground="White"/>
-                                        </Grid>
-                                    </Button.Content>
-                                </Button>
-                                <CheckBox x:Name="cbConfigAppCargarMedia" Margin="0,15" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                                    <CheckBox.Content>
-                                        <Grid>
-                                            <TextBlock x:Uid="tbConfigAppLoadMedia"/>
-                                        </Grid>
-                                    </CheckBox.Content>
-                                </CheckBox>
-                                <CheckBox x:Name="cbConfigAppTweetCard" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                                    <CheckBox.Content>
-                                        <Grid>
-                                            <TextBlock x:Uid="tbConfigAppTweetCard"/>
-                                        </Grid>
-                                    </CheckBox.Content>
-                                </CheckBox>
-                            </StackPanel> 
-                        </StackPanel> 
-
-                        <StackPanel Orientation="Vertical" Margin="40,20" BorderBrush="{StaticResource BrushSecundario}" BorderThickness="1">
-                            <StackPanel.Background>
-                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                    <GradientStop Color="#FFE4E4E4" Offset="0.5" />
-                                    <GradientStop Color="#FFBFBFBF" Offset="1.0" />
-                                </LinearGradientBrush>
-                            </StackPanel.Background>
-
-                            <Grid x:Name="gridConfigNotificaciones" HorizontalAlignment="Stretch" Padding="10" Background="{StaticResource GridTituloBackground}" Margin="0,0,0,10">
+                            <Grid Grid.Row="0">
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBlock x:Uid="tbConfigNotifications" Grid.Column="0" FontSize="16" Foreground="White" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                                <Button x:Name="botonCerrarUsuario" Grid.Column="0" Margin="20" Padding="10" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                    <SymbolIcon Symbol="Cancel" Foreground="White"/>
+                                </Button>
 
-                                <CheckBox x:Name="cbConfigNotificaciones" Grid.Column="1" MinWidth="0" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton"/>
-                            </Grid>
+                                <Grid Grid.Column="1">
+                                    <Grid Background="Black">
+                                        <controls:ImageEx x:Name="imagenFondoUsuario" IsCacheEnabled="True" Opacity="0.3" Stretch="Uniform"/>
+                                    </Grid>
 
-                            <StackPanel x:Name="spConfigNotificaciones" Orientation="Vertical" Padding="15,5,15,15">
-                                <CheckBox x:Name="cbConfigNotificacionesTiempo" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                                    <CheckBox.Content>
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="Auto"/>
-                                            </Grid.RowDefinitions>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
 
-                                            <TextBlock x:Uid="tbConfigNotificationsTime" Grid.Row="0"/>
+                                        <StackPanel x:Name="gridImagenFondoUsuario" Grid.Row="0" Orientation="Horizontal" Padding="25" VerticalAlignment="Top" HorizontalAlignment="Left">
 
-                                            <StackPanel x:Name="spConfigNotificacionesTiempo" Grid.Row="1" Orientation="Horizontal" Visibility="Collapsed" Margin="0,10,0,0">
-                                                <TextBox x:Name="tbConfigNotificacionesSegundos" MinWidth="40" Width="40" TextAlignment="Justify"/>
-                                                <TextBlock x:Uid="tbConfigNotificationsSeconds" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="14"/>
-                                            </StackPanel>
-                                        </Grid>
-                                    </CheckBox.Content>
-                                </CheckBox>
+                                            <Ellipse x:Name="ellipseAvatar" Width="60" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-                                <CheckBox x:Name="cbConfigNotificacionesSonido" Margin="0,15" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                                    <CheckBox.Content>
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="Auto"/>
-                                            </Grid.RowDefinitions>
+                                            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="15,0">
+                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                                                    <TextBlock x:Name="tbNombreUsuario" Foreground="White" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+                                                    <controls:ImageEx x:Name="imagenUsuarioVerificado" Source="Assets/Verificado.png" IsCacheEnabled="True" Height="20" Width="20" Margin="15,0,0,0" VerticalAlignment="Center" Visibility="Collapsed"/>
+                                                </StackPanel>
 
-                                            <TextBlock x:Uid="tbConfigNotificationsSound" Grid.Row="0"/>
-
-                                            <StackPanel x:Name="spConfigNotificacionesSonido" Grid.Row="1" Orientation="Horizontal" Visibility="Collapsed" Margin="0,10,0,0">
-                                                <ComboBox x:Name="cbConfigNotificacionesSonidoElegido">
-                                                    <ComboBoxItem Content="Twitter.Default" Tag="ms-appx:///Assets/Sonidos/Twitter.Default.mp3"/>
-                                                    <ComboBoxItem Content="Windows.Default" Tag="ms-winsoundevent:Notification.Default"/>
-                                                    <ComboBoxItem Content="Windows.IM" Tag="ms-winsoundevent:Notification.IM"/>
-                                                    <ComboBoxItem Content="Windows.Mail" Tag="ms-winsoundevent:Notification.Mail"/>
-                                                    <ComboBoxItem Content="Windows.Reminder" Tag="ms-winsoundevent:Notification.Reminder"/>
-                                                    <ComboBoxItem Content="Windows.SMS" Tag="ms-winsoundevent:Notification.SMS"/>
-                                                </ComboBox>
-
-                                                <Button x:Name="botonConfigNotificacionesSonido" Padding="4" Background="{StaticResource BrushSecundario}" Margin="15,0,0,0">
-                                                    <Button.Content>
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <SymbolIcon Symbol="Play" Margin="0,0,5,0" VerticalAlignment="Center" Foreground="White"/>
-                                                            <TextBlock x:Uid="buttonConfigNotificationsSound" Foreground="White"/>
-                                                        </StackPanel>
-                                                    </Button.Content>
-                                                </Button>
-                                            </StackPanel>
-                                        </Grid>
-                                    </CheckBox.Content>
-                                </CheckBox>
-
-                                <CheckBox x:Name="cbConfigNotificacionesImagen" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                                    <CheckBox.Content>
-                                        <Grid>
-                                            <TextBlock x:Uid="tbConfigNotificationsImage"/>
-                                        </Grid>
-                                    </CheckBox.Content>
-                                </CheckBox>
-                            </StackPanel>
-                        </StackPanel>
-                    </StackPanel>
-                </ScrollViewer>
-            </Grid>
-
-            <Grid x:Name="gridUsuarioAmpliado" Visibility="Collapsed">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-            
-                <ScrollViewer x:Name="svTweetsUsuario" Grid.Row="0">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-
-                        <Grid Grid.Row="0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-
-                            <Button x:Name="botonCerrarUsuario" Grid.Column="0" Margin="20" Padding="10" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                                <SymbolIcon Symbol="Cancel" Foreground="White"/>
-                            </Button>
-
-                            <Grid Grid.Column="1">
-                                <Grid Background="Black">
-                                    <controls:ImageEx x:Name="imagenFondoUsuario" IsCacheEnabled="True" Opacity="0.3" Stretch="Uniform"/>
-                                </Grid>
-
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-
-                                    <StackPanel x:Name="gridImagenFondoUsuario" Grid.Row="0" Orientation="Horizontal" Padding="25" VerticalAlignment="Top" HorizontalAlignment="Left">
-
-                                        <Ellipse x:Name="ellipseAvatar" Width="60" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-                                        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="15,0">
-                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                                                <TextBlock x:Name="tbNombreUsuario" Foreground="White" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
-                                                <controls:ImageEx x:Name="imagenUsuarioVerificado" Source="Assets/Verificado.png" IsCacheEnabled="True" Height="20" Width="20" Margin="15,0,0,0" VerticalAlignment="Center" Visibility="Collapsed"/>
+                                                <TextBlock x:Name="tbScreenNombreUsuario" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left"/>
                                             </StackPanel>
 
-                                            <TextBlock x:Name="tbScreenNombreUsuario" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left"/>
                                         </StackPanel>
 
-                                    </StackPanel>
+                                        <Grid Grid.Row="1" Padding="25,0">
+                                            <HyperlinkButton x:Name="hlEnlaceUsuario" Foreground="White" HorizontalAlignment="Left"/>
+                                        </Grid>
 
-                                    <Grid Grid.Row="1" Padding="25,0">
-                                        <HyperlinkButton x:Name="hlEnlaceUsuario" Foreground="White" HorizontalAlignment="Left"/>
-                                    </Grid>
+                                        <Grid Grid.Row="2" Padding="25,20" VerticalAlignment="Bottom">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
 
-                                    <Grid Grid.Row="2" Padding="25,20" VerticalAlignment="Bottom">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
+                                            <HyperlinkButton x:Name="hlNumTweetsUsuario" Grid.Column="0" HorizontalAlignment="Center">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock x:Uid="tbNumTweetsUser" Margin="0,0,5,0" HorizontalAlignment="Center" Foreground="White"/>
+                                                    <TextBlock x:Name="tbNumTweetsUsuario" HorizontalAlignment="Center" Foreground="White"/>
+                                                </StackPanel>
+                                            </HyperlinkButton>
 
-                                        <HyperlinkButton x:Name="hlNumTweetsUsuario" Grid.Column="0" HorizontalAlignment="Center">
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock x:Uid="tbNumTweetsUser" Margin="0,0,5,0" HorizontalAlignment="Center" Foreground="White"/>
-                                                <TextBlock x:Name="tbNumTweetsUsuario" HorizontalAlignment="Center" Foreground="White"/>
-                                            </StackPanel>
-                                        </HyperlinkButton>
+                                            <HyperlinkButton x:Name="hlSeguidoresUsuario" Grid.Column="1" Padding="35,0" HorizontalAlignment="Center">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock x:Uid="tbNumFollowersUser" Margin="0,0,5,0" HorizontalAlignment="Center" Foreground="White"/>
+                                                    <TextBlock x:Name="tbNumSeguidoresUsuario" HorizontalAlignment="Center" Foreground="White"/>
+                                                </StackPanel>
+                                            </HyperlinkButton>
 
-                                        <HyperlinkButton x:Name="hlSeguidoresUsuario" Grid.Column="1" Padding="35,0" HorizontalAlignment="Center">
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock x:Uid="tbNumFollowersUser" Margin="0,0,5,0" HorizontalAlignment="Center" Foreground="White"/>
-                                                <TextBlock x:Name="tbNumSeguidoresUsuario" HorizontalAlignment="Center" Foreground="White"/>
-                                            </StackPanel>
-                                        </HyperlinkButton>
-
-                                        <HyperlinkButton x:Name="hlFavoritosUsuario" Grid.Column="2" HorizontalAlignment="Center">
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock x:Uid="tbNumFavoritesUser" Margin="0,0,5,0" HorizontalAlignment="Center" Foreground="White"/>
-                                                <TextBlock x:Name="tbNumFavoritosUsuario" HorizontalAlignment="Center" Foreground="White"/>
-                                            </StackPanel>
-                                        </HyperlinkButton>
+                                            <HyperlinkButton x:Name="hlFavoritosUsuario" Grid.Column="2" HorizontalAlignment="Center">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock x:Uid="tbNumFavoritesUser" Margin="0,0,5,0" HorizontalAlignment="Center" Foreground="White"/>
+                                                    <TextBlock x:Name="tbNumFavoritosUsuario" HorizontalAlignment="Center" Foreground="White"/>
+                                                </StackPanel>
+                                            </HyperlinkButton>
+                                        </Grid>
                                     </Grid>
                                 </Grid>
+
+                                <StackPanel Grid.Column="2" Orientation="Vertical" Width="150">
+                                    <Button x:Name="botonSeguirUsuario" Padding="10" Margin="20" BorderThickness="1" BorderBrush="White" Foreground="White" HorizontalAlignment="Stretch" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton"/>
+
+                                    <Button x:Name="botonMasOpcionesUsuario" Padding="10" Margin="20,0" BorderThickness="1" BorderBrush="White" Foreground="White" HorizontalAlignment="Stretch" FontFamily="Segoe MDL2 Assets" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton"/>
+                                </StackPanel>
                             </Grid>
 
-                            <StackPanel Grid.Column="2" Orientation="Vertical" Width="150">
-                                <Button x:Name="botonSeguirUsuario" Padding="10" Margin="20" BorderThickness="1" BorderBrush="White" Foreground="White" HorizontalAlignment="Stretch" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton"/>
-
-                                <Button x:Name="botonMasOpcionesUsuario" Padding="10" Margin="20,0" BorderThickness="1" BorderBrush="White" Foreground="White" HorizontalAlignment="Stretch" FontFamily="Segoe MDL2 Assets" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton"/>
-                            </StackPanel>
+                            <ListView x:Name="lvTweetsUsuario" Grid.Row="1" ItemContainerStyle="{StaticResource ListViewEstilo1}" Margin="0,30,0,0"/>
                         </Grid>
+                    </ScrollViewer>
 
-                        <ListView x:Name="lvTweetsUsuario" Grid.Row="1" ItemContainerStyle="{StaticResource ListViewEstilo1}" Margin="0,30,0,0"/>
-                    </Grid>
-                </ScrollViewer>
+                    <ProgressBar x:Name="pbTweetsUsuario" Grid.Row="1" IsIndeterminate="True" Margin="10" Padding="10" Visibility="Collapsed"/>
+                </Grid>
 
-                <ProgressBar x:Name="pbTweetsUsuario" Grid.Row="1" IsIndeterminate="True" Margin="10" Padding="10" Visibility="Collapsed"/>
-            </Grid>
+                <Grid x:Name="gridTweetAmpliado" Visibility="Collapsed">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-            <Grid x:Name="gridTweetAmpliado" Visibility="Collapsed">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                    <Button x:Name="botonCerrarTweet" Grid.Column="0" Margin="20" Padding="10" Background="{StaticResource BrushSecundario}" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                        <SymbolIcon Symbol="Cancel" Foreground="White"/>
+                    </Button>
 
-                <Button x:Name="botonCerrarTweet" Grid.Column="0" Margin="20" Padding="10" Background="{StaticResource BrushSecundario}" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                    <SymbolIcon Symbol="Cancel" Foreground="White"/>
-                </Button>
-
-                <ScrollViewer Grid.Column="1">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-
-                        <Grid Grid.Row="0" Padding="0,15">
-                            <Grid.Background>
-                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                    <GradientStop Color="#FFE4E4E4" Offset="0.5" />
-                                    <GradientStop Color="#FFBFBFBF" Offset="1.0" />
-                                </LinearGradientBrush>
-                            </Grid.Background>
-
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <StackPanel x:Name="spTweetIzquierda" Grid.Column="0"/>
-
-                            <StackPanel x:Name="spTweetDerecha" Grid.Column="1"/>
-                        </Grid>
-
-                        <Grid x:Name="gridTweetCard" Grid.Row="1" Margin="0,30,0,0" Padding="20" Visibility="Collapsed">
-                            <Grid.Background>
-                                <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                    <GradientStop Color="#FFE4E4E4" Offset="0.5" />
-                                    <GradientStop Color="#FFBFBFBF" Offset="1.0" />
-                                </LinearGradientBrush>
-                            </Grid.Background>
-
+                    <ScrollViewer Grid.Column="1">
+                        <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock x:Name="tbTweetCardDescripcion" Grid.Row="0" Margin="0,0,0,15" TextWrapping="Wrap"/>
+                            <Grid Grid.Row="0" Padding="0,15">
+                                <Grid.Background>
+                                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                        <GradientStop Color="#FFE4E4E4" Offset="0.5" />
+                                        <GradientStop Color="#FFBFBFBF" Offset="1.0" />
+                                    </LinearGradientBrush>
+                                </Grid.Background>
 
-                            <Border x:Name="bordeImagenTweetCard" Grid.Row="1" BorderThickness="1" HorizontalAlignment="Left">
-                                <controls:ImageEx x:Name="imagenTweetCard" IsCacheEnabled="True" Stretch="None"/>
-                            </Border>                                 
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel x:Name="spTweetIzquierda" Grid.Column="0"/>
+
+                                <StackPanel x:Name="spTweetDerecha" Grid.Column="1"/>
+                            </Grid>
+
+                            <Grid x:Name="gridTweetCard" Grid.Row="1" Margin="0,30,0,0" Padding="20" Visibility="Collapsed">
+                                <Grid.Background>
+                                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                        <GradientStop Color="#FFE4E4E4" Offset="0.5" />
+                                        <GradientStop Color="#FFBFBFBF" Offset="1.0" />
+                                    </LinearGradientBrush>
+                                </Grid.Background>
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock x:Name="tbTweetCardDescripcion" Grid.Row="0" Margin="0,0,0,15" TextWrapping="Wrap"/>
+
+                                <Border x:Name="bordeImagenTweetCard" Grid.Row="1" BorderThickness="1" HorizontalAlignment="Left">
+                                    <controls:ImageEx x:Name="imagenTweetCard" IsCacheEnabled="True" Stretch="None"/>
+                                </Border>
+                            </Grid>
+
+                            <ListView x:Name="lvTweetRespuestas" Grid.Row="2" Margin="0,30,0,0" ItemContainerStyle="{StaticResource ListViewEstilo1}"/>
                         </Grid>
+                    </ScrollViewer>
 
-                        <ListView x:Name="lvTweetRespuestas" Grid.Row="2" Margin="0,30,0,0" ItemContainerStyle="{StaticResource ListViewEstilo1}"/>
-                    </Grid>
-                </ScrollViewer>
+                </Grid>
 
-            </Grid> 
+                <Grid x:Name="gridImagenAmpliada" Visibility="Collapsed">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="10">
+                        <Border x:Name="bordeImagenAmpliada" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
+                            <controls:ImageEx x:Name="imagenAmpliada" Stretch="None" IsCacheEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ScrollViewer>
 
-            <Grid x:Name="gridImagenAmpliada" Visibility="Collapsed">
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="10">
-                    <Border x:Name="bordeImagenAmpliada" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
-                        <controls:ImageEx x:Name="imagenAmpliada" Stretch="None" IsCacheEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Button x:Name="botonCerrarImagen" Margin="10" Padding="10" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                        <SymbolIcon Symbol="Cancel" Foreground="White"/>
+                    </Button>
+                </Grid>
+
+                <Grid x:Name="gridVideoAmpliado" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Button x:Name="botonCerrarVideo" Grid.Row="0" Margin="10,10,10,0" Padding="10" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                        <SymbolIcon Symbol="Cancel" Foreground="White"/>
+                    </Button>
+
+                    <Border x:Name="bordeVideoAmpliado" Grid.Row="1" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
+                        <MediaPlayerElement x:Name="videoAmpliado" AreTransportControlsEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
-                </ScrollViewer>
+                </Grid>
 
-                <Button x:Name="botonCerrarImagen" Margin="10" Padding="10" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                    <SymbolIcon Symbol="Cancel" Foreground="White"/>
-                </Button>
+                <Grid x:Name="gridOEmbedAmpliado" Visibility="Collapsed">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Button x:Name="botonCerrarOEmbed" Grid.Row="0" Margin="20" Padding="10" Background="{StaticResource BrushSecundario}" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="{StaticResource BrushCuarto}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                        <SymbolIcon Symbol="Cancel" Foreground="White"/>
+                    </Button>
+
+                    <TextBox x:Name="tbOEmbed" Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" Margin="20"/>
+                </Grid>
             </Grid>
-
-            <Grid x:Name="gridVideoAmpliado" Visibility="Collapsed">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <Button x:Name="botonCerrarVideo" Grid.Row="0" Margin="10,10,10,0" Padding="10" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                    <SymbolIcon Symbol="Cancel" Foreground="White"/>
-                </Button>
-
-                <Border x:Name="bordeVideoAmpliado" Grid.Row="1" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
-                    <MediaPlayerElement x:Name="videoAmpliado" AreTransportControlsEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Border>
-            </Grid>
-
-            <Grid x:Name="gridOEmbedAmpliado" Visibility="Collapsed">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <Button x:Name="botonCerrarOEmbed" Grid.Row="0" Margin="20" Padding="10" Background="{StaticResource BrushSecundario}" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="{StaticResource BrushCuarto}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                    <SymbolIcon Symbol="Cancel" Foreground="White"/>
-                </Button>
-
-                <TextBox x:Name="tbOEmbed" Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" Margin="20"/>
-            </Grid>
-
-            <Grid x:Name="gridMasCosas" Visibility="Collapsed"/>
-        </Grid>
+        </NavigationView>         
     </Grid>
 </Page>

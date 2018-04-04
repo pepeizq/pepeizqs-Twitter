@@ -288,4 +288,10 @@
   <data name="tbConfigAppAutoStart.Text" xml:space="preserve">
     <value>Iniciar automáticamente la app en cada arranque de Windows</value>
   </data>
+  <data name="StoreDescription" xml:space="preserve">
+    <value />
+  </data>
+  <data name="StoreTags" xml:space="preserve">
+    <value />
+  </data>
 </root>

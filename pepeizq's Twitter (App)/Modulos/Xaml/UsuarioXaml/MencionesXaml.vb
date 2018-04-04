@@ -2,12 +2,13 @@
 
 Module MencionesXaml
 
-    Public Function Generar(megaUsuario As pepeizq.Twitter.MegaUsuario)
+    Public Function Generar(megaUsuario As pepeizq.Twitter.MegaUsuario, visibilidad As Visibility)
 
         Dim usuario As TwitterUsuario = megaUsuario.Usuario
 
         Dim gridMenciones As New Grid With {
-            .Name = "gridMenciones" + usuario.ScreenNombre
+            .Name = "gridMenciones" + usuario.ScreenNombre,
+            .Visibility = visibilidad
         }
         gridMenciones.SetValue(Grid.RowProperty, 1)
 

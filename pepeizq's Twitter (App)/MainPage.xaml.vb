@@ -1,4 +1,5 @@
 ﻿Imports System.Net.NetworkInformation
+Imports FontAwesome.UWP
 Imports Microsoft.Toolkit.Uwp.Helpers
 Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports pepeizq.Twitter
@@ -12,6 +13,68 @@ Imports Windows.UI.Xaml.Media.Animation
 Public NotInheritable Class MainPage
     Inherits Page
 
+    Private Sub Nv_Loaded(sender As Object, e As RoutedEventArgs)
+
+        Dim recursos As New Resources.ResourceLoader()
+
+        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Home"), FontAwesomeIcon.Home, 0))
+        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Mentions"), FontAwesomeIcon.Bell, 1))
+        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("WriteTweet"), FontAwesomeIcon.Pencil, 2))
+        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Search"), FontAwesomeIcon.Search, 3))
+        nvPrincipal.MenuItems.Add(New NavigationViewItemSeparator)
+        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Config"), FontAwesomeIcon.Cog, 4))
+
+    End Sub
+
+    Private Sub Nv_ItemInvoked(sender As NavigationView, args As NavigationViewItemInvokedEventArgs)
+
+        Dim usuario As TwitterUsuario = itemUsuarios.Tag
+
+        Dim frame As Frame = Window.Current.Content
+        Dim pagina As Page = frame.Content
+
+        gridConfig.Visibility = Visibility.Collapsed
+
+        Dim recursos As New Resources.ResourceLoader()
+
+        Dim item As TextBlock = args.InvokedItem
+
+        If Not item Is Nothing Then
+            If item.Text = recursos.GetString("Home") Then
+
+                Dim grid As Grid = pagina.FindName("gridTweets" + usuario.ScreenNombre)
+                UsuarioXaml.GridVisibilidad(grid, usuario)
+
+            ElseIf item.Text = recursos.GetString("Mentions") Then
+
+                Dim grid As Grid = pagina.FindName("gridMenciones" + usuario.ScreenNombre)
+                UsuarioXaml.GridVisibilidad(grid, usuario)
+
+            ElseIf item.Text = recursos.GetString("WriteTweet") Then
+
+                Dim grid As Grid = pagina.FindName("gridEscribir" + usuario.ScreenNombre)
+                UsuarioXaml.GridVisibilidad(grid, usuario)
+
+            ElseIf item.Text = recursos.GetString("Search") Then
+
+                Dim grid As Grid = pagina.FindName("gridBusqueda" + usuario.ScreenNombre)
+                UsuarioXaml.GridVisibilidad(grid, usuario)
+
+            ElseIf item.Text = recursos.GetString("Config") Then
+
+                GridVisibilidad(gridConfig, Nothing)
+
+            End If
+        End If
+
+    End Sub
+
+    Private Sub Nv_ItemFlyout(sender As NavigationViewItem, args As TappedRoutedEventArgs)
+
+        FlyoutBase.ShowAttachedFlyout(sender)
+
+    End Sub
+
     Private Async Sub Page_Loaded(sender As FrameworkElement, args As Object)
 
         'Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = "es-ES"
@@ -23,6 +86,7 @@ Public NotInheritable Class MainPage
         Dim recursos As New Resources.ResourceLoader
 
         GridVisibilidad(gridPrincipal, Nothing)
+        nvPrincipal.IsPaneOpen = False
 
         If NetworkInterface.GetIsNetworkAvailable = True Then
             Dim helper As New LocalObjectStorageHelper
@@ -35,38 +99,51 @@ Public NotInheritable Class MainPage
 
             Dim i As Integer = 0
 
-            For Each usuario In listaUsuarios
-                Dim megaUsuario As pepeizq.Twitter.MegaUsuario = Nothing
+            If listaUsuarios.Count > 0 Then
+                UsuarioXaml.GenerarListaUsuarios(listaUsuarios)
 
-                Try
-                    megaUsuario = Await TwitterConexion.Iniciar(usuario)
-                Catch ex As Exception
+                For Each usuario In listaUsuarios
+                    Dim megaUsuario As pepeizq.Twitter.MegaUsuario = Nothing
 
-                End Try
+                    Try
+                        megaUsuario = Await TwitterConexion.Iniciar(usuario)
+                    Catch ex As Exception
 
-                If Not megaUsuario Is Nothing Then
-                    Dim visibilidad As New Visibility
-
-                    If i = 0 Then
-                        visibilidad = Visibility.Visible
-                    Else
-                        visibilidad = Visibility.Collapsed
-                    End If
+                    End Try
 
                     If Not megaUsuario Is Nothing Then
-                        UsuarioXaml.Generar(megaUsuario, visibilidad)
-                    End If
+                        Dim visibilidad As New Visibility
 
-                    i += 1
+                        If i = 0 Then
+                            visibilidad = Visibility.Visible
+                        Else
+                            visibilidad = Visibility.Collapsed
+                        End If
+
+                        UsuarioXaml.GenerarCadaUsuario(megaUsuario, visibilidad)
+
+                        i += 1
+                    End If
+                Next
+            ElseIf listaUsuarios.Count = 0 Then
+                For Each item In nvPrincipal.MenuItems
+                    If TypeOf item Is NavigationViewItem Then
+                        Dim nvItem As NavigationViewItem = item
+                        nvItem.Visibility = Visibility.Collapsed
+                    End If
+                Next
+
+                GridVisibilidad(gridConfig, recursos.GetString("Config"))
+            End If
+        Else
+            For Each item In nvPrincipal.MenuItems
+                If TypeOf item Is NavigationViewItem Then
+                    Dim nvItem As NavigationViewItem = item
+                    nvItem.Visibility = Visibility.Collapsed
                 End If
             Next
 
-            If i = 0 Then
-                botonConfigVolver.Visibility = Visibility.Collapsed
-                GridVisibilidad(gridConfig, recursos.GetString("Config"))
-            Else
-                botonConfigVolver.Visibility = Visibility.Visible
-            End If
+            GridVisibilidad(gridConfig, recursos.GetString("Config"))
         End If
 
         '--------------------------------------------------------
@@ -87,23 +164,19 @@ Public NotInheritable Class MainPage
 
         Await Dispatcher.RunAsync(CoreDispatcherPriority.High, Sub()
                                                                    If estado = True Then
-                                                                       gridPrincipal.Background = App.Current.Resources("GridTituloBackground")
                                                                        gridConfig.Background = App.Current.Resources("GridAcrilico")
                                                                        gridConfigCuentas.Background = App.Current.Resources("GridTituloBackground")
                                                                        gridConfigNotificaciones.Background = App.Current.Resources("GridTituloBackground")
                                                                        gridImagenAmpliada.Background = App.Current.Resources("GridAcrilico")
                                                                        gridVideoAmpliado.Background = App.Current.Resources("GridAcrilico")
                                                                        gridOEmbedAmpliado.Background = App.Current.Resources("GridAcrilico")
-                                                                       gridMasCosas.Background = App.Current.Resources("GridAcrilico")
                                                                    Else
-                                                                       gridPrincipal.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
                                                                        gridConfig.Background = New SolidColorBrush(Colors.LightGray)
                                                                        gridConfigCuentas.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
                                                                        gridConfigNotificaciones.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
                                                                        gridImagenAmpliada.Background = New SolidColorBrush(Colors.LightGray)
                                                                        gridVideoAmpliado.Background = New SolidColorBrush(Colors.LightGray)
                                                                        gridOEmbedAmpliado.Background = New SolidColorBrush(Colors.LightGray)
-                                                                       gridMasCosas.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
                                                                    End If
                                                                End Sub)
 
@@ -111,9 +184,8 @@ Public NotInheritable Class MainPage
 
     Public Sub GridVisibilidad(grid As Grid, tag As String)
 
-        tbTitulo.Text = Package.Current.DisplayName + " (" + Package.Current.Id.Version.Major.ToString + "." + Package.Current.Id.Version.Minor.ToString + "." + Package.Current.Id.Version.Build.ToString + "." + Package.Current.Id.Version.Revision.ToString + ")"
-
         If Not tag = String.Empty Then
+            tbTitulo.Text = Package.Current.DisplayName + " (" + Package.Current.Id.Version.Major.ToString + "." + Package.Current.Id.Version.Minor.ToString + "." + Package.Current.Id.Version.Build.ToString + "." + Package.Current.Id.Version.Revision.ToString + ")"
             tbTitulo.Text = tbTitulo.Text + " - " + tag
         End If
 
@@ -122,7 +194,6 @@ Public NotInheritable Class MainPage
         gridUsuarioAmpliado.Visibility = Visibility.Collapsed
         gridTweetAmpliado.Visibility = Visibility.Collapsed
         gridConfig.Visibility = Visibility.Collapsed
-        gridMasCosas.Visibility = Visibility.Collapsed
 
         grid.Visibility = Visibility.Visible
 
@@ -142,30 +213,6 @@ Public NotInheritable Class MainPage
 
     'CONFIG-----------------------------------------------------------------------------
 
-    Private Sub BotonConfigVolver_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigVolver.Click
-
-        Dim recursos As New Resources.ResourceLoader
-        GridVisibilidad(gridPrincipal, Nothing)
-
-        Dim helper As New LocalObjectStorageHelper
-
-        Dim listaUsuarios As New List(Of TwitterUsuario)
-
-        If helper.KeyExists("listaUsuarios2") Then
-            listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios2")
-        End If
-
-        If listaUsuarios.Count > 0 Then
-            Dim frame As Frame = Window.Current.Content
-            Dim pagina As Page = frame.Content
-
-            Dim grid As Grid = pagina.FindName("gridUsuario" + listaUsuarios(0).ScreenNombre)
-
-            grid.Visibility = Visibility.Visible
-        End If
-
-    End Sub
-
     Private Async Sub BotonAñadirCuenta_Click(sender As Object, e As RoutedEventArgs) Handles botonAñadirCuenta.Click
 
         Dim recursos As New Resources.ResourceLoader
@@ -179,56 +226,41 @@ Public NotInheritable Class MainPage
 
         Dim visibilidad As New Visibility
 
-        'If listaUsuarios.Count = 0 Then
-        '    visibilidad = Visibility.Visible
-        'Else
-        '    visibilidad = Visibility.Collapsed
-        'End If
+        If listaUsuarios.Count = 0 Then
+            visibilidad = Visibility.Visible
+        Else
+            visibilidad = Visibility.Collapsed
+        End If
 
-        Dim usuario As pepeizq.Twitter.MegaUsuario = Await TwitterConexion.Iniciar(Nothing)
+        Dim megaUsuario As pepeizq.Twitter.MegaUsuario = Await TwitterConexion.Iniciar(Nothing)
 
-        If Not usuario Is Nothing Then
-            UsuarioXaml.Generar(usuario, visibilidad)
+        If Not megaUsuario Is Nothing Then
+            UsuarioXaml.GenerarCadaUsuario(megaUsuario, visibilidad)
+        End If
 
-            For Each grid As Grid In gridPrincipal.Children
-                If grid.Name.Contains("gridUsuario") Then
-                    If Not grid.Name = "gridUsuarioAmpliado" Then
-                        If Not grid.Name = "gridUsuario" + usuario.Usuario.ScreenNombre Then
-                            Dim subGrid As Grid = grid.Children(0)
+        If lvConfigUsuarios.Items.Count > 0 Then
+            If lvConfigUsuarios.Items.Count > 1 Then
+                itemUsuarios.Visibility = Visibility.Visible
+            Else
+                itemUsuarios.Visibility = Visibility.Collapsed
+            End If
 
-                            If Not subGrid Is Nothing Then
-                                Dim subGrid_ As Grid = subGrid.Children(0)
-                                Dim spBotonesSuperior As StackPanel = subGrid_.Children(0)
-                                Dim menu As Menu = spBotonesSuperior.Children(0)
-                                Dim menuItem As MenuItem = menu.Items(0)
-                                menuItem.Items.RemoveAt(0)
+            spCuentaSeleccionada.Visibility = Visibility.Visible
 
-                                Dim menuItemCuentas As New MenuFlyoutSubItem With {
-                                    .Text = recursos.GetString("Accounts")
-                                }
+            For Each item In nvPrincipal.MenuItems
+                If TypeOf item Is NavigationViewItem Then
+                    Dim nvItem As NavigationViewItem = item
+                    nvItem.Visibility = Visibility.Visible
+                End If
+            Next
+        Else
+            itemUsuarios.Visibility = Visibility.Collapsed
+            spCuentaSeleccionada.Visibility = Visibility.Collapsed
 
-                                Dim listaUsuarios2 As New List(Of TwitterUsuario)
-
-                                If helper.KeyExists("listaUsuarios2") Then
-                                    listaUsuarios2 = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios2")
-                                End If
-
-                                For Each item In listaUsuarios2
-                                    Dim subCuenta As New MenuFlyoutItem With {
-                                        .Text = item.Nombre + " (@" + item.ScreenNombre + ")",
-                                        .Tag = item
-                                    }
-
-                                    AddHandler subCuenta.Click, AddressOf BotonCambiarCuentaClick
-                                    AddHandler subCuenta.PointerEntered, AddressOf UsuarioEntraBoton
-                                    AddHandler subCuenta.PointerExited, AddressOf UsuarioSaleBoton
-                                    menuItemCuentas.Items.Add(subCuenta)
-                                Next
-
-                                menuItem.Items.Insert(0, menuItemCuentas)
-                            End If
-                        End If
-                    End If
+            For Each item In nvPrincipal.MenuItems
+                If TypeOf item Is NavigationViewItem Then
+                    Dim nvItem As NavigationViewItem = item
+                    nvItem.Visibility = Visibility.Collapsed
                 End If
             Next
         End If

@@ -13,20 +13,9 @@ Module TwitterStream
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
-        Dim gridPrincipal As Grid = pagina.FindName("gridPrincipal")
-        Dim gridUsuario As New Grid
-
-        For Each item In gridPrincipal.Children
-            Dim grid As Grid = item
-
-            If grid.Name = "gridUsuario" + usuario.ScreenNombre Then
-                gridUsuario = grid
-            End If
-        Next
-
         '------------------
 
-        Dim gridInicio As Grid = gridUsuario.Children(1)
+        Dim gridInicio As Grid = pagina.FindName("gridTweets" + usuario.ScreenNombre)
         Dim lvInicio As New ListView
 
         If Not gridInicio Is Nothing Then
@@ -38,7 +27,7 @@ Module TwitterStream
 
         '------------------
 
-        Dim gridMenciones As Grid = gridUsuario.Children(2)
+        Dim gridMenciones As Grid = pagina.FindName("gridMenciones" + usuario.ScreenNombre)
         Dim lvMenciones As New ListView
 
         If Not gridMenciones Is Nothing Then

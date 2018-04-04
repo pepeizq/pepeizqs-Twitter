@@ -13,15 +13,7 @@ Module TwitterTimeLineMenciones
         Dim gridPrincipal As Grid = pagina.FindName("gridPrincipal")
         Dim gridUsuario As New Grid
 
-        For Each item In gridPrincipal.Children
-            Dim grid As Grid = item
-
-            If grid.Name = "gridUsuario" + usuario.ScreenNombre Then
-                gridUsuario = grid
-            End If
-        Next
-
-        Dim gridTweets As Grid = gridUsuario.Children(2)
+        Dim gridTweets As Grid = pagina.FindName("gridMenciones" + usuario.ScreenNombre)
 
         If Not gridTweets Is Nothing Then
             Dim sv As ScrollViewer = gridTweets.Children(0)
