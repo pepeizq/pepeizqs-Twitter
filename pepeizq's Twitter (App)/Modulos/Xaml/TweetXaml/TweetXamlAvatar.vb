@@ -15,8 +15,8 @@ Namespace pepeTwitterXaml
                 .VerticalAlignment = VerticalAlignment.Top,
                 .Margin = New Thickness(15, 0, 10, 0),
                 .Padding = New Thickness(0, 0, 0, 0),
-                .Height = 48,
-                .Width = 48
+                .Height = 50,
+                .Width = 50
             }
 
             Dim imagenAvatar As New ImageBrush With {
@@ -40,7 +40,8 @@ Namespace pepeTwitterXaml
             Dim circulo As New Ellipse With {
                 .Fill = imagenAvatar,
                 .Height = 48,
-                .Width = 48
+                .Width = 48,
+                .Margin = New Thickness(1, 1, 1, 1)
             }
 
             botonAvatar.Tag = New pepeizq.Twitter.Objetos.UsuarioAmpliado(megaUsuario, tweet.Usuario, Nothing)

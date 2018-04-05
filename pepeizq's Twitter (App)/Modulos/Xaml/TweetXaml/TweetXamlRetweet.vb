@@ -1,4 +1,5 @@
-﻿Imports pepeizq.Twitter.Tweet
+﻿Imports FontAwesome.UWP
+Imports pepeizq.Twitter.Tweet
 Imports Windows.UI
 
 Namespace pepeTwitterXaml
@@ -13,10 +14,8 @@ Namespace pepeTwitterXaml
                 .Margin = New Thickness(75, 0, 0, 10)
             }
 
-            Dim iconoRetweet As New SymbolIcon With {
-                .Symbol = Symbol.ReShare,
-                .Width = 20,
-                .Height = 20,
+            Dim iconoRetweet As New FontAwesome.UWP.FontAwesome With {
+                .Icon = FontAwesomeIcon.Retweet,
                 .Foreground = New SolidColorBrush(Colors.Green)
             }
 

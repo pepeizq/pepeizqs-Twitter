@@ -132,9 +132,9 @@ Module TwitterConexion
         tbUsuario.SetValue(Grid.ColumnProperty, 1)
         gridUsuario.Children.Add(tbUsuario)
 
-        Dim simbolo As New SymbolIcon With {
+        Dim simbolo As New FontAwesome.UWP.FontAwesome With {
             .Foreground = New SolidColorBrush(Colors.White),
-            .Symbol = Symbol.Clear
+            .Icon = FontAwesome.UWP.FontAwesomeIcon.Times
         }
 
         Dim botonQuitar As New Button With {

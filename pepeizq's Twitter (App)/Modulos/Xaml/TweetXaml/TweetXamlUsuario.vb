@@ -29,7 +29,8 @@ Namespace pepeTwitterXaml
                 .Orientation = Orientation.Horizontal,
                 .Padding = New Thickness(5, 5, 5, 5),
                 .CornerRadius = New CornerRadius(5),
-                .Background = New SolidColorBrush(color)
+                .Background = New SolidColorBrush(color),
+                .Margin = New Thickness(1, 1, 1, 1)
             }
 
             Dim tb1 As New TextBlock With {

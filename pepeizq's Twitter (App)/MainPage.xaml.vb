@@ -6,6 +6,7 @@ Imports pepeizq.Twitter
 Imports Windows.Media.Core
 Imports Windows.Media.Playback
 Imports Windows.Storage
+Imports Windows.System
 Imports Windows.UI
 Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Media.Animation
@@ -30,12 +31,19 @@ Public NotInheritable Class MainPage
 
         Dim usuario As TwitterUsuario = itemUsuarios.Tag
 
-        Dim frame As Frame = Window.Current.Content
-        Dim pagina As Page = frame.Content
-
         gridConfig.Visibility = Visibility.Collapsed
+        gridImagenAmpliada.Visibility = Visibility.Collapsed
+        gridVideoAmpliado.Visibility = Visibility.Collapsed
+        gridUsuarioAmpliado.Visibility = Visibility.Collapsed
+        gridTweetAmpliado.Visibility = Visibility.Collapsed
+        gridOEmbedAmpliado.Visibility = Visibility.Collapsed
+
+        App.Current.Resources("ButtonBackgroundPointerOver") = App.Current.Resources("ColorPrimario")
 
         Dim recursos As New Resources.ResourceLoader()
+
+        Dim frame As Frame = Window.Current.Content
+        Dim pagina As Page = frame.Content
 
         Dim item As TextBlock = args.InvokedItem
 
@@ -189,11 +197,12 @@ Public NotInheritable Class MainPage
             tbTitulo.Text = tbTitulo.Text + " - " + tag
         End If
 
+        gridConfig.Visibility = Visibility.Collapsed
         gridImagenAmpliada.Visibility = Visibility.Collapsed
         gridVideoAmpliado.Visibility = Visibility.Collapsed
         gridUsuarioAmpliado.Visibility = Visibility.Collapsed
         gridTweetAmpliado.Visibility = Visibility.Collapsed
-        gridConfig.Visibility = Visibility.Collapsed
+        gridOEmbedAmpliado.Visibility = Visibility.Collapsed
 
         grid.Visibility = Visibility.Visible
 
@@ -420,20 +429,10 @@ Public NotInheritable Class MainPage
 
     End Sub
 
-    Private Sub BotonCerrarUsuario_Click(sender As Object, e As RoutedEventArgs) Handles botonCerrarUsuario.Click
-
-        App.Current.Resources("ButtonBackgroundPointerOver") = App.Current.Resources("ColorPrimario")
-
-        gridTitulo.Background = App.Current.Resources("GridTituloBackground")
-        gridUsuarioAmpliado.Visibility = Visibility.Collapsed
-
-    End Sub
-
     Private Sub BotonCerrarTweet_Click(sender As Object, e As RoutedEventArgs) Handles botonCerrarTweet.Click
 
         App.Current.Resources("ButtonBackgroundPointerOver") = App.Current.Resources("ColorPrimario")
 
-        gridTitulo.Background = App.Current.Resources("GridTituloBackground")
         gridTweetAmpliado.Visibility = Visibility.Collapsed
 
     End Sub
@@ -441,6 +440,32 @@ Public NotInheritable Class MainPage
     Private Sub BotonCerrarOEmbed_Click(sender As Object, e As RoutedEventArgs) Handles botonCerrarOEmbed.Click
 
         gridOEmbedAmpliado.Visibility = Visibility.Collapsed
+
+    End Sub
+
+    'USUARIO-----------------------------------------------------------------------------
+
+    Private Async Sub BotonEnlaceUsuario_Click(sender As Object, e As RoutedEventArgs) Handles botonEnlaceUsuario.Click
+
+        Await Launcher.LaunchUriAsync(botonEnlaceUsuario.Tag)
+
+    End Sub
+
+    Private Async Sub BotonNumTweetsUsuario_Click(sender As Object, e As RoutedEventArgs) Handles botonNumTweetsUsuario.Click
+
+        Await Launcher.LaunchUriAsync(botonNumTweetsUsuario.Tag)
+
+    End Sub
+
+    Private Async Sub BotonSeguidoresUsuario_Click(sender As Object, e As RoutedEventArgs) Handles botonSeguidoresUsuario.Click
+
+        Await Launcher.LaunchUriAsync(botonSeguidoresUsuario.Tag)
+
+    End Sub
+
+    Private Async Sub BotonFavoritosUsuario_Click(sender As Object, e As RoutedEventArgs) Handles botonFavoritosUsuario.Click
+
+        Await Launcher.LaunchUriAsync(botonFavoritosUsuario.Tag)
 
     End Sub
 

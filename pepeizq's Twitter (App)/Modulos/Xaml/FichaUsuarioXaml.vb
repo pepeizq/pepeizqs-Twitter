@@ -51,7 +51,6 @@ Module FichaUsuarioXaml
         Dim boolTranspariencia As Boolean = transpariencia.AdvancedEffectsEnabled
 
         If boolTranspariencia = False Then
-            gridTitulo.Background = New SolidColorBrush(color)
             gridUsuario.Background = New SolidColorBrush(color)
         Else
             Dim acrilico As New AcrylicBrush With {
@@ -60,7 +59,6 @@ Module FichaUsuarioXaml
                 .TintColor = color
             }
 
-            gridTitulo.Background = acrilico
             gridUsuario.Background = acrilico
         End If
 
@@ -95,28 +93,6 @@ Module FichaUsuarioXaml
 
         '------------------------------------
 
-        Dim botonCerrar As Button = pagina.FindName("botonCerrarUsuario")
-        botonCerrar.Background = New SolidColorBrush(color)
-
-        Dim banner As Banner = Nothing
-
-        Try
-            banner = Await provider.CogerBannerUsuario(usuario.ScreenNombre, New BannerParser)
-        Catch ex As Exception
-
-        End Try
-
-        Dim spFondo As StackPanel = pagina.FindName("gridImagenFondoUsuario")
-        Dim imagenFondo As ImageEx = pagina.FindName("imagenFondoUsuario")
-
-        If Not banner Is Nothing Then
-            imagenFondo.Source = New Uri(banner.Tamaños.I1500x500.Enlace)
-            spFondo.Background = New SolidColorBrush(Colors.Transparent)
-        Else
-            imagenFondo.Source = Nothing
-            spFondo.Background = New SolidColorBrush(Colors.Black)
-        End If
-
         Dim circuloAvatar As Ellipse = pagina.FindName("ellipseAvatar")
 
         Dim imagenAvatar As New ImageBrush With {
@@ -140,11 +116,11 @@ Module FichaUsuarioXaml
         Dim tbScreenNombre As TextBlock = pagina.FindName("tbScreenNombreUsuario")
         tbScreenNombre.Text = "@" + usuario.ScreenNombre
 
-        Dim hlEnlace As HyperlinkButton = pagina.FindName("hlEnlaceUsuario")
+        Dim botonEnlace As Button = pagina.FindName("botonEnlaceUsuario")
 
         If Not usuario.Entidades.Enlace Is Nothing Then
             Try
-                hlEnlace.NavigateUri = New Uri(usuario.Entidades.Enlace.Enlaces(0).Expandida)
+                botonEnlace.Tag = New Uri(usuario.Entidades.Enlace.Enlaces(0).Expandida)
 
                 Dim tbEnlace As New TextBlock With {
                     .Text = usuario.Entidades.Enlace.Enlaces(0).Mostrar,
@@ -152,40 +128,44 @@ Module FichaUsuarioXaml
                     .FontWeight = FontWeights.SemiBold
                 }
 
-                hlEnlace.Content = tbEnlace
+                botonEnlace.Content = tbEnlace
+                botonEnlace.Visibility = Visibility.Visible
             Catch ex As Exception
-                hlEnlace.Content = Nothing
+                botonEnlace.Content = Nothing
+                botonEnlace.Visibility = Visibility.Collapsed
             End Try
         Else
-            hlEnlace.Content = Nothing
+            botonEnlace.Content = Nothing
+            botonEnlace.Visibility = Visibility.Collapsed
         End If
 
         Dim tbNumTweets As TextBlock = pagina.FindName("tbNumTweetsUsuario")
         tbNumTweets.Text = String.Format("{0:n0}", Integer.Parse(usuario.NumTweets))
 
-        Dim hlNumTweets As HyperlinkButton = pagina.FindName("hlNumTweetsUsuario")
-        hlNumTweets.NavigateUri = New Uri("https://twitter.com/" + usuario.ScreenNombre)
+        Dim botonNumTweets As Button = pagina.FindName("botonNumTweetsUsuario")
+        botonNumTweets.Tag = New Uri("https://twitter.com/" + usuario.ScreenNombre)
 
         Dim tbNumSeguidores As TextBlock = pagina.FindName("tbNumSeguidoresUsuario")
         tbNumSeguidores.Text = String.Format("{0:n0}", Integer.Parse(usuario.Followers))
 
-        Dim hlSeguidores As HyperlinkButton = pagina.FindName("hlSeguidoresUsuario")
-        hlSeguidores.NavigateUri = New Uri("https://twitter.com/" + usuario.ScreenNombre + "/followers")
+        Dim botonSeguidores As Button = pagina.FindName("botonSeguidoresUsuario")
+        botonSeguidores.Tag = New Uri("https://twitter.com/" + usuario.ScreenNombre + "/followers")
 
         Dim tbNumFavoritos As TextBlock = pagina.FindName("tbNumFavoritosUsuario")
         tbNumFavoritos.Text = String.Format("{0:n0}", Integer.Parse(usuario.Favoritos))
 
-        Dim hlFavoritos As HyperlinkButton = pagina.FindName("hlFavoritosUsuario")
-        hlFavoritos.NavigateUri = New Uri("https://twitter.com/" + usuario.ScreenNombre + "/likes")
+        Dim botonFavoritos As Button = pagina.FindName("botonFavoritosUsuario")
+        botonFavoritos.Tag = New Uri("https://twitter.com/" + usuario.ScreenNombre + "/likes")
 
         '------------------------------------
 
         Dim botonSeguir As Button = pagina.FindName("botonSeguirUsuario")
+        Dim tbSeguir As TextBlock = pagina.FindName("tbSeguirUsuario")
 
         If usuario.Siguiendo = True Then
-            botonSeguir.Content = recursos.GetString("Following")
+            tbSeguir.Text = recursos.GetString("Following")
         Else
-            botonSeguir.Content = recursos.GetString("Follow")
+            tbSeguir.Text = recursos.GetString("Follow")
         End If
 
         botonSeguir.Background = New SolidColorBrush(color)
@@ -193,7 +173,6 @@ Module FichaUsuarioXaml
         AddHandler botonSeguir.Click, AddressOf BotonSeguirClick
 
         Dim botonMasOpciones As Button = pagina.FindName("botonMasOpcionesUsuario")
-        botonMasOpciones.Content = Char.ConvertFromUtf32(57361)
         botonMasOpciones.Background = New SolidColorBrush(color)
         botonMasOpciones.Tag = cosas
 
@@ -235,14 +214,15 @@ Module FichaUsuarioXaml
         Dim recursos As New Resources.ResourceLoader
 
         Dim boton As Button = sender
+        Dim tbSeguir As TextBlock = boton.Content
         Dim cosas As pepeizq.Twitter.Objetos.SeguirUsuarioBoton = boton.Tag
 
         If boton.Content = recursos.GetString("Following") Then
             Await cosas.MegaUsuario.Servicio.DeshacerSeguirUsuario(cosas.MegaUsuario.Usuario.Tokens, cosas.Usuario.Id)
-            boton.Content = recursos.GetString("Follow")
+            tbSeguir.Text = recursos.GetString("Follow")
         Else
             Await cosas.MegaUsuario.Servicio.SeguirUsuario(cosas.MegaUsuario.Usuario.Tokens, cosas.Usuario.Id)
-            boton.Content = recursos.GetString("Following")
+            tbSeguir.Text = recursos.GetString("Following")
         End If
 
         TwitterTimeLineInicio.CargarTweets(cosas.MegaUsuario, Nothing, True)

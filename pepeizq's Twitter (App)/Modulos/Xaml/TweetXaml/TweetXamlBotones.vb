@@ -1,5 +1,6 @@
 ﻿Imports System.Globalization
 Imports System.Net
+Imports FontAwesome.UWP
 Imports pepeizq.Twitter
 Imports pepeizq.Twitter.Tweet
 Imports Windows.ApplicationModel.DataTransfer
@@ -32,7 +33,7 @@ Namespace pepeTwitterXaml
             '------------------------------------------
 
             Dim botonResponder As New Button With {
-                .Content = ConstructorBotones(57862, recursos.GetString("ReplyTweet")),
+                .Content = ConstructorBotones(FontAwesomeIcon.Reply, recursos.GetString("ReplyTweet"), colorBoton),
                 .Padding = New Thickness(5, 5, 5, 5),
                 .Margin = New Thickness(0, 0, 0, 0),
                 .Background = New SolidColorBrush(Colors.Transparent),
@@ -66,13 +67,13 @@ Namespace pepeTwitterXaml
 
             If estilo = 0 Then
                 botonRetweet.Visibility = Visibility.Collapsed
-                botonRetweet.Content = ConstructorBotones(59627, recursos.GetString("Retweet"))
+                botonRetweet.Content = ConstructorBotones(FontAwesomeIcon.Retweet, recursos.GetString("Retweet"), colorBoton)
             ElseIf estilo = 1 Then
                 Dim spBoton As New StackPanel With {
                     .Orientation = Orientation.Horizontal
                 }
 
-                spBoton.Children.Add(ConstructorBotones(59627, recursos.GetString("Retweet")))
+                spBoton.Children.Add(ConstructorBotones(FontAwesomeIcon.Retweet, recursos.GetString("Retweet"), colorBoton))
 
                 Dim tbBoton As New TextBlock With {
                     .Text = tweet.NumRetweets,
@@ -115,13 +116,13 @@ Namespace pepeTwitterXaml
 
             If estilo = 0 Then
                 botonFavorito.Visibility = Visibility.Collapsed
-                botonFavorito.Content = ConstructorBotones(57350, recursos.GetString("Favorite"))
+                botonFavorito.Content = ConstructorBotones(FontAwesomeIcon.Heart, recursos.GetString("Favorite"), colorBoton)
             ElseIf estilo = 1 Then
                 Dim spBoton As New StackPanel With {
                     .Orientation = Orientation.Horizontal
                 }
 
-                spBoton.Children.Add(ConstructorBotones(57350, recursos.GetString("Favorite")))
+                spBoton.Children.Add(ConstructorBotones(FontAwesomeIcon.Heart, recursos.GetString("Favorite"), colorBoton))
 
                 Dim tbBoton As New TextBlock With {
                     .Text = tweet.NumFavoritos,
@@ -144,7 +145,7 @@ Namespace pepeTwitterXaml
             '------------------------------------------
 
             Dim botonMasOpciones As New Button With {
-                .Content = ConstructorBotones(59154, recursos.GetString("MoreOptions")),
+                .Content = ConstructorBotones(FontAwesomeIcon.EllipsisH, recursos.GetString("MoreOptions"), colorBoton),
                 .Padding = New Thickness(5, 5, 5, 5),
                 .Margin = New Thickness(15, 0, 0, 0),
                 .Background = New SolidColorBrush(Colors.Transparent),
@@ -420,13 +421,14 @@ Namespace pepeTwitterXaml
 
         '------------------------------------------
 
-        Private Function ConstructorBotones(icono As Integer, texto As String)
+        Private Function ConstructorBotones(icono As FontAwesomeIcon, texto As String, color As Color)
 
-            Dim tbSimbolo As New TextBlock With {
-                .Text = Char.ConvertFromUtf32(icono),
-                .FontFamily = New FontFamily("Segoe MDL2 Assets"),
+            Dim simbolo As New FontAwesome.UWP.FontAwesome With {
+                .Icon = icono,
                 .FontSize = 20,
-                .VerticalAlignment = VerticalAlignment.Center
+                .VerticalAlignment = VerticalAlignment.Center,
+                .Foreground = New SolidColorBrush(color),
+                .Tag = color
             }
 
             Dim sp As New StackPanel With {
@@ -442,7 +444,7 @@ Namespace pepeTwitterXaml
             ToolTipService.SetToolTip(sp, tbToolTip)
             ToolTipService.SetPlacement(sp, PlacementMode.Mouse)
 
-            sp.Children.Add(tbSimbolo)
+            sp.Children.Add(simbolo)
 
             Return sp
 
@@ -469,7 +471,7 @@ Namespace pepeTwitterXaml
             If Not gridResponder Is Nothing Then
                 Dim spBoton As StackPanel = boton.Content
 
-                Dim tb As TextBlock = spBoton.Children(0)
+                Dim icono As FontAwesome.UWP.FontAwesome = spBoton.Children(0)
 
                 Dim color As Color = Nothing
 
@@ -480,10 +482,10 @@ Namespace pepeTwitterXaml
                 End If
 
                 If gridResponder.Visibility = Visibility.Collapsed Then
-                    tb.Foreground = New SolidColorBrush(App.Current.Resources("ColorCuarto"))
+                    icono.Foreground = New SolidColorBrush(Colors.Black)
                     boton.Background = New SolidColorBrush(Colors.Transparent)
                 Else
-                    tb.Foreground = New SolidColorBrush(Colors.White)
+                    icono.Foreground = New SolidColorBrush(Colors.White)
                     boton.Background = New SolidColorBrush(color)
                 End If
             End If
@@ -513,7 +515,7 @@ Namespace pepeTwitterXaml
             If Not gridResponder Is Nothing Then
                 Dim spBoton As StackPanel = boton.Content
 
-                Dim tb As TextBlock = spBoton.Children(0)
+                Dim icono As FontAwesome.UWP.FontAwesome = spBoton.Children(0)
 
                 Dim color As Color = Nothing
 
@@ -524,10 +526,10 @@ Namespace pepeTwitterXaml
                 End If
 
                 If gridResponder.Visibility = Visibility.Collapsed Then
-                    tb.Foreground = New SolidColorBrush(Colors.Black)
+                    icono.Foreground = New SolidColorBrush(icono.Tag)
                     boton.Background = New SolidColorBrush(Colors.Transparent)
                 Else
-                    tb.Foreground = New SolidColorBrush(Colors.White)
+                    icono.Foreground = New SolidColorBrush(Colors.White)
                     boton.Background = New SolidColorBrush(color)
                 End If
             End If
@@ -541,9 +543,9 @@ Namespace pepeTwitterXaml
             Dim boton As Button = sender
             Dim spBoton As StackPanel = boton.Content
 
-            If TypeOf spBoton.Children(0) Is TextBlock Then
-                Dim tb As TextBlock = spBoton.Children(0)
-                tb.Foreground = New SolidColorBrush(Colors.Green)
+            If TypeOf spBoton.Children(0) Is FontAwesome.UWP.FontAwesome Then
+                Dim icono As FontAwesome.UWP.FontAwesome = spBoton.Children(0)
+                icono.Foreground = New SolidColorBrush(Colors.Green)
             End If
 
             Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
@@ -556,13 +558,13 @@ Namespace pepeTwitterXaml
             Dim cosas As pepeizq.Twitter.Objetos.TweetXamlBoton = boton.Tag
             Dim spBoton As StackPanel = boton.Content
 
-            If TypeOf spBoton.Children(0) Is TextBlock Then
-                Dim tb As TextBlock = spBoton.Children(0)
+            If TypeOf spBoton.Children(0) Is FontAwesome.UWP.FontAwesome Then
+                Dim icono As FontAwesome.UWP.FontAwesome = spBoton.Children(0)
 
                 If cosas.Tweet.Retwitteado = True Then
-                    tb.Foreground = New SolidColorBrush(Colors.White)
+                    icono.Foreground = New SolidColorBrush(Colors.White)
                 Else
-                    tb.Foreground = New SolidColorBrush(Colors.Black)
+                    icono.Foreground = New SolidColorBrush(icono.Tag)
                 End If
             End If
 
@@ -575,9 +577,9 @@ Namespace pepeTwitterXaml
             Dim boton As Button = sender
             Dim spBoton As StackPanel = boton.Content
 
-            If TypeOf spBoton.Children(0) Is TextBlock Then
-                Dim tb As TextBlock = spBoton.Children(0)
-                tb.Foreground = New SolidColorBrush(Colors.Red)
+            If TypeOf spBoton.Children(0) Is FontAwesome.UWP.FontAwesome Then
+                Dim icono As FontAwesome.UWP.FontAwesome = spBoton.Children(0)
+                icono.Foreground = New SolidColorBrush(Colors.Red)
             End If
 
             Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
@@ -590,13 +592,13 @@ Namespace pepeTwitterXaml
             Dim cosas As pepeizq.Twitter.Objetos.TweetXamlBoton = boton.Tag
             Dim spBoton As StackPanel = boton.Content
 
-            If TypeOf spBoton.Children(0) Is TextBlock Then
-                Dim tb As TextBlock = spBoton.Children(0)
+            If TypeOf spBoton.Children(0) Is FontAwesome.UWP.FontAwesome Then
+                Dim icono As FontAwesome.UWP.FontAwesome = spBoton.Children(0)
 
                 If cosas.Tweet.Favoriteado = True Then
-                    tb.Foreground = New SolidColorBrush(Colors.White)
+                    icono.Foreground = New SolidColorBrush(Colors.White)
                 Else
-                    tb.Foreground = New SolidColorBrush(Colors.Black)
+                    icono.Foreground = New SolidColorBrush(icono.Tag)
                 End If
             End If
 

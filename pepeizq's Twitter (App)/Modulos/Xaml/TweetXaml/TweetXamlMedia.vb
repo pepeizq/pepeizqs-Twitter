@@ -1,4 +1,6 @@
-﻿Imports Microsoft.Toolkit.Uwp.UI.Controls
+﻿Imports FontAwesome.UWP
+Imports Microsoft.Toolkit.Uwp.UI.Animations
+Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports pepeizq.Twitter.Tweet
 Imports Windows.Media.Core
 Imports Windows.UI
@@ -64,8 +66,8 @@ Namespace pepeTwitterXaml
                             gridPlay.MinWidth = 50
                             gridPlay.CornerRadius = New CornerRadius(30)
 
-                            Dim simboloPlay As New SymbolIcon With {
-                                .Symbol = Symbol.Play,
+                            Dim simboloPlay As New FontAwesome.UWP.FontAwesome With {
+                                .Icon = FontAwesomeIcon.Play,
                                 .Foreground = New SolidColorBrush(Colors.White)
                             }
 
@@ -171,11 +173,25 @@ Namespace pepeTwitterXaml
 
         Private Sub UsuarioEntraMedia(sender As Object, e As PointerRoutedEventArgs)
 
+            Dim grid As Grid = sender
+
+            If TypeOf grid.Children(0) Is ImageEx Then
+                Dim imagen As ImageEx = grid.Children(0)
+                imagen.Saturation(0).Start()
+            End If
+
             Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
 
         End Sub
 
         Private Sub UsuarioSaleMedia(sender As Object, e As PointerRoutedEventArgs)
+
+            Dim grid As Grid = sender
+
+            If TypeOf grid.Children(0) Is ImageEx Then
+                Dim imagen As ImageEx = grid.Children(0)
+                imagen.Saturation(1).Start()
+            End If
 
             Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
 
@@ -190,10 +206,17 @@ Namespace pepeTwitterXaml
             Dim pagina As Page = frame.Content
 
             Dim botonCerrar As Button = pagina.FindName("botonCerrarImagen")
-            botonCerrar.Background = New SolidColorBrush(botonCerrar.Tag)
+
+            Dim color As Color = botonCerrar.Tag
+
+            If color = Nothing Then
+                color = App.Current.Resources("ColorSecundario")
+            End If
+
+            botonCerrar.Background = New SolidColorBrush(color)
 
             Dim bordeImagen As Border = pagina.FindName("bordeImagenAmpliada")
-            bordeImagen.BorderBrush = New SolidColorBrush(botonCerrar.Tag)
+            bordeImagen.BorderBrush = New SolidColorBrush(color)
 
             Dim gridImagen As Grid = pagina.FindName("gridImagenAmpliada")
             gridImagen.Visibility = Visibility.Visible
@@ -227,10 +250,17 @@ Namespace pepeTwitterXaml
             Dim pagina As Page = frame.Content
 
             Dim botonCerrar As Button = pagina.FindName("botonCerrarVideo")
-            botonCerrar.Background = New SolidColorBrush(botonCerrar.Tag)
+
+            Dim color As Color = botonCerrar.Tag
+
+            If color = Nothing Then
+                color = App.Current.Resources("ColorSecundario")
+            End If
+
+            botonCerrar.Background = New SolidColorBrush(color)
 
             Dim bordeVideo As Border = pagina.FindName("bordeVideoAmpliado")
-            bordeVideo.BorderBrush = New SolidColorBrush(botonCerrar.Tag)
+            bordeVideo.BorderBrush = New SolidColorBrush(color)
 
             Dim gridImagen As Grid = pagina.FindName("gridVideoAmpliado")
             gridImagen.Visibility = Visibility.Visible

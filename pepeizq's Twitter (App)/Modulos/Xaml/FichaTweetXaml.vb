@@ -21,7 +21,6 @@ Module FichaTweetXaml
         Dim gridUsuario As Grid = pagina.FindName("gridUsuarioAmpliado")
         gridUsuario.Visibility = Visibility.Collapsed
 
-        Dim gridTitulo As Grid = pagina.FindName("gridTitulo")
         Dim gridTweet As Grid = pagina.FindName("gridTweetAmpliado")
 
         Dim provider As TwitterDataProvider = cosas.MegaUsuario.Servicio.Provider
@@ -42,7 +41,6 @@ Module FichaTweetXaml
         Dim boolTranspariencia As Boolean = transpariencia.AdvancedEffectsEnabled
 
         If boolTranspariencia = False Then
-            gridTitulo.Background = New SolidColorBrush(color)
             gridTweet.Background = New SolidColorBrush(color)
         Else
             Dim acrilico As New AcrylicBrush With {
@@ -51,7 +49,6 @@ Module FichaTweetXaml
                 .TintColor = color
             }
 
-            gridTitulo.Background = acrilico
             gridTweet.Background = acrilico
         End If
 

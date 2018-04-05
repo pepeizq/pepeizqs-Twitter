@@ -289,9 +289,9 @@
     <value>Iniciar automáticamente la app en cada arranque de Windows</value>
   </data>
   <data name="StoreDescription" xml:space="preserve">
-    <value />
+    <value>Cliente no oficial de Twitter con soporte multicuenta</value>
   </data>
   <data name="StoreTags" xml:space="preserve">
-    <value />
+    <value>Twitter;Tweet;Retwittear;Hashtag</value>
   </data>
 </root>

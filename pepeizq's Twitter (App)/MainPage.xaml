@@ -214,114 +214,103 @@
                     </ScrollViewer>
                 </Grid>
 
-                <Grid x:Name="gridUsuarioAmpliado" Visibility="Collapsed">
+                <Grid x:Name="gridUsuarioAmpliado" Visibility="Collapsed" Padding="10">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <ScrollViewer x:Name="svTweetsUsuario" Grid.Row="0">
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                        <StackPanel Orientation="Horizontal" Padding="15">
+                            <StackPanel.Background>
+                                <SolidColorBrush Color="Black" Opacity="0.5"/>
+                            </StackPanel.Background>
+
+                            <Ellipse x:Name="ellipseAvatar" Width="40" Height="40" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                            <StackPanel Orientation="Vertical" Margin="15,0">
+                                <TextBlock x:Name="tbNombreUsuario" FontSize="18" FontWeight="Bold" Foreground="White"/>
+                                <TextBlock x:Name="tbScreenNombreUsuario" FontWeight="SemiBold" Foreground="White"/>
+                            </StackPanel>
+
+                            <controls:ImageEx x:Name="imagenUsuarioVerificado" Source="Assets/Verificado.png" IsCacheEnabled="True" Height="20" Width="20" VerticalAlignment="Center" Visibility="Collapsed"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="botonSeguirUsuario" Padding="10" BorderThickness="1" BorderBrush="White" MinWidth="100" Margin="15,0" Foreground="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
+                                <Button.Content>
+                                    <TextBlock x:Name="tbSeguirUsuario" Foreground="White"/>
+                                </Button.Content> 
+                            </Button> 
+
+                            <Button x:Name="botonMasOpcionesUsuario" Padding="10" BorderThickness="1" BorderBrush="White" MinWidth="50" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
+                                <Button.Content>
+                                    <fa:FontAwesome Icon="ChevronDown" Foreground="White"/>
+                                </Button.Content>    
+                            </Button> 
+                        </StackPanel>
+                    </StackPanel>
+
+                    <ScrollViewer x:Name="svTweetsUsuario" Grid.Row="1" Margin="0,5,0,0">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <Grid Grid.Row="0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Padding="15,10">
+                                <StackPanel.Background>
+                                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                                </StackPanel.Background>
 
-                                <Button x:Name="botonCerrarUsuario" Grid.Column="0" Margin="20" Padding="10" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                                    <SymbolIcon Symbol="Cancel" Foreground="White"/>
+                                <Button x:Name="botonEnlaceUsuario" Background="Transparent" Style="{ThemeResource ButtonRevealStyle}" BorderThickness="0" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Visibility="Collapsed"/>
+
+                                <Button x:Name="botonNumTweetsUsuario" Background="Transparent" Style="{ThemeResource ButtonRevealStyle}" BorderThickness="0" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Margin="40,0">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock x:Uid="tbNumTweetsUser" Margin="0,0,5,0" Foreground="White"/>
+                                            <TextBlock x:Name="tbNumTweetsUsuario" Foreground="White"/>
+                                        </StackPanel>
+                                    </Button.Content>    
                                 </Button>
 
-                                <Grid Grid.Column="1">
-                                    <Grid Background="Black">
-                                        <controls:ImageEx x:Name="imagenFondoUsuario" IsCacheEnabled="True" Opacity="0.3" Stretch="Uniform"/>
-                                    </Grid>
-
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-
-                                        <StackPanel x:Name="gridImagenFondoUsuario" Grid.Row="0" Orientation="Horizontal" Padding="25" VerticalAlignment="Top" HorizontalAlignment="Left">
-
-                                            <Ellipse x:Name="ellipseAvatar" Width="60" Height="60" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-                                            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="15,0">
-                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                                                    <TextBlock x:Name="tbNombreUsuario" Foreground="White" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
-                                                    <controls:ImageEx x:Name="imagenUsuarioVerificado" Source="Assets/Verificado.png" IsCacheEnabled="True" Height="20" Width="20" Margin="15,0,0,0" VerticalAlignment="Center" Visibility="Collapsed"/>
-                                                </StackPanel>
-
-                                                <TextBlock x:Name="tbScreenNombreUsuario" Foreground="White" FontWeight="SemiBold" HorizontalAlignment="Left"/>
-                                            </StackPanel>
-
+                                <Button x:Name="botonSeguidoresUsuario" Background="Transparent" Style="{ThemeResource ButtonRevealStyle}" BorderThickness="0" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock x:Uid="tbNumFollowersUser" Margin="0,0,5,0" Foreground="White"/>
+                                            <TextBlock x:Name="tbNumSeguidoresUsuario" Foreground="White"/>
                                         </StackPanel>
+                                    </Button.Content>
+                                </Button>
 
-                                        <Grid Grid.Row="1" Padding="25,0">
-                                            <HyperlinkButton x:Name="hlEnlaceUsuario" Foreground="White" HorizontalAlignment="Left"/>
-                                        </Grid>
+                                <Button x:Name="botonFavoritosUsuario" Background="Transparent" Style="{ThemeResource ButtonRevealStyle}" BorderThickness="0" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Margin="40,0,0,0">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock x:Uid="tbNumFavoritesUser" Margin="0,0,5,0" Foreground="White"/>
+                                            <TextBlock x:Name="tbNumFavoritosUsuario" Foreground="White"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                            </StackPanel>
 
-                                        <Grid Grid.Row="2" Padding="25,20" VerticalAlignment="Bottom">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                            </Grid.ColumnDefinitions>
-
-                                            <HyperlinkButton x:Name="hlNumTweetsUsuario" Grid.Column="0" HorizontalAlignment="Center">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock x:Uid="tbNumTweetsUser" Margin="0,0,5,0" HorizontalAlignment="Center" Foreground="White"/>
-                                                    <TextBlock x:Name="tbNumTweetsUsuario" HorizontalAlignment="Center" Foreground="White"/>
-                                                </StackPanel>
-                                            </HyperlinkButton>
-
-                                            <HyperlinkButton x:Name="hlSeguidoresUsuario" Grid.Column="1" Padding="35,0" HorizontalAlignment="Center">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock x:Uid="tbNumFollowersUser" Margin="0,0,5,0" HorizontalAlignment="Center" Foreground="White"/>
-                                                    <TextBlock x:Name="tbNumSeguidoresUsuario" HorizontalAlignment="Center" Foreground="White"/>
-                                                </StackPanel>
-                                            </HyperlinkButton>
-
-                                            <HyperlinkButton x:Name="hlFavoritosUsuario" Grid.Column="2" HorizontalAlignment="Center">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock x:Uid="tbNumFavoritesUser" Margin="0,0,5,0" HorizontalAlignment="Center" Foreground="White"/>
-                                                    <TextBlock x:Name="tbNumFavoritosUsuario" HorizontalAlignment="Center" Foreground="White"/>
-                                                </StackPanel>
-                                            </HyperlinkButton>
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-
-                                <StackPanel Grid.Column="2" Orientation="Vertical" Width="150">
-                                    <Button x:Name="botonSeguirUsuario" Padding="10" Margin="20" BorderThickness="1" BorderBrush="White" Foreground="White" HorizontalAlignment="Stretch" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton"/>
-
-                                    <Button x:Name="botonMasOpcionesUsuario" Padding="10" Margin="20,0" BorderThickness="1" BorderBrush="White" Foreground="White" HorizontalAlignment="Stretch" FontFamily="Segoe MDL2 Assets" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton"/>
-                                </StackPanel>
-                            </Grid>
-
-                            <ListView x:Name="lvTweetsUsuario" Grid.Row="1" ItemContainerStyle="{StaticResource ListViewEstilo1}" Margin="0,30,0,0"/>
+                            <ListView x:Name="lvTweetsUsuario" Grid.Row="1" ItemContainerStyle="{StaticResource ListViewEstilo1}" Margin="0,10,0,0"/>
                         </Grid>
                     </ScrollViewer>
 
-                    <ProgressBar x:Name="pbTweetsUsuario" Grid.Row="1" IsIndeterminate="True" Margin="10" Padding="10" Visibility="Collapsed"/>
+                    <ProgressBar x:Name="pbTweetsUsuario" Grid.Row="2" IsIndeterminate="True" Margin="10" Padding="10" Visibility="Collapsed"/>
                 </Grid>
 
-                <Grid x:Name="gridTweetAmpliado" Visibility="Collapsed">
+                <Grid x:Name="gridTweetAmpliado" Visibility="Collapsed" Padding="10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Button x:Name="botonCerrarTweet" Grid.Column="0" Margin="20" Padding="10" Background="{StaticResource BrushSecundario}" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                        <SymbolIcon Symbol="Cancel" Foreground="White"/>
+                    <Button x:Name="botonCerrarTweet" Grid.Column="0" Margin="10,20,20,20" Padding="12,10" MinWidth="0" Background="{StaticResource BrushSecundario}" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
+                        <Button.Content>
+                            <fa:FontAwesome Icon="ArrowCircleLeft" Foreground="White"/>
+                        </Button.Content>
                     </Button>
 
                     <ScrollViewer Grid.Column="1">
@@ -373,19 +362,25 @@
                             <ListView x:Name="lvTweetRespuestas" Grid.Row="2" Margin="0,30,0,0" ItemContainerStyle="{StaticResource ListViewEstilo1}"/>
                         </Grid>
                     </ScrollViewer>
-
                 </Grid>
 
                 <Grid x:Name="gridImagenAmpliada" Visibility="Collapsed">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Button x:Name="botonCerrarImagen" Grid.Row="0" Margin="10" Padding="10" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
+                        <Button.Content>
+                            <fa:FontAwesome Icon="ArrowCircleLeft" Foreground="White"/>
+                        </Button.Content>
+                    </Button>
+
+                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="10">
                         <Border x:Name="bordeImagenAmpliada" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
                             <controls:ImageEx x:Name="imagenAmpliada" Stretch="None" IsCacheEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </ScrollViewer>
-
-                    <Button x:Name="botonCerrarImagen" Margin="10" Padding="10" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                        <SymbolIcon Symbol="Cancel" Foreground="White"/>
-                    </Button>
                 </Grid>
 
                 <Grid x:Name="gridVideoAmpliado" Visibility="Collapsed">
@@ -394,8 +389,10 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Button x:Name="botonCerrarVideo" Grid.Row="0" Margin="10,10,10,0" Padding="10" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                        <SymbolIcon Symbol="Cancel" Foreground="White"/>
+                    <Button x:Name="botonCerrarVideo" Grid.Row="0" Margin="10,10,10,0" Padding="10" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
+                        <Button.Content>
+                            <fa:FontAwesome Icon="ArrowCircleLeft" Foreground="White"/>
+                        </Button.Content>
                     </Button>
 
                     <Border x:Name="bordeVideoAmpliado" Grid.Row="1" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
@@ -409,11 +406,13 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Button x:Name="botonCerrarOEmbed" Grid.Row="0" Margin="20" Padding="10" Background="{StaticResource BrushSecundario}" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="{StaticResource BrushCuarto}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                        <SymbolIcon Symbol="Cancel" Foreground="White"/>
+                    <Button x:Name="botonCerrarOEmbed" Grid.Row="0" Margin="20" Padding="10" Background="{StaticResource BrushSecundario}" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="{StaticResource BrushCuarto}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
+                        <Button.Content>
+                            <fa:FontAwesome Icon="ArrowCircleLeft" Foreground="White"/>
+                        </Button.Content>
                     </Button>
 
-                    <TextBox x:Name="tbOEmbed" Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" Margin="20"/>
+                    <TextBox x:Name="tbOEmbed" Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" Margin="20,0,20,20"/>
                 </Grid>
             </Grid>
         </NavigationView>         

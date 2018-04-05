@@ -185,6 +185,7 @@ Module InicioXaml
                 End If
             End If
         End If
+
     End Sub
 
     Public Sub LvTweets_ItemClick(sender As Object, e As ItemClickEventArgs)
