@@ -39,7 +39,7 @@ Module TwitterStream
 
         '------------------
 
-        Await megaUsuario.Servicio.ArrancarStreamUsuario(megaUsuario.Usuario.Tokens, Async Sub(tweet_)
+        Await megaUsuario.Servicio.ArrancarStreamUsuario(megaUsuario.Usuario.Tokens, Async Sub(cosa)
                                                                                          Await Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, Async Sub()
 
                                                                                                                                                                                                'If TypeOf tweet_ Is TwitterStreamEvento Then
@@ -48,8 +48,8 @@ Module TwitterStream
                                                                                                                                                                                                '    Notificaciones.Toast.Enseñar(evento.EventoTipo.ToString)
                                                                                                                                                                                                'End If
 
-                                                                                                                                                                                               If TypeOf tweet_ Is TwitterStreamEventoBorrar Then
-                                                                                                                                                                                                   Dim borrar As TwitterStreamEventoBorrar = tweet_
+                                                                                                                                                                                               If TypeOf cosa Is TwitterStreamEventoBorrar Then
+                                                                                                                                                                                                   Dim borrar As TwitterStreamEventoBorrar = cosa
 
                                                                                                                                                                                                    If Not borrar Is Nothing Then
                                                                                                                                                                                                        Dim i As Integer = 0
@@ -82,8 +82,8 @@ Module TwitterStream
                                                                                                                                                                                                    End If
                                                                                                                                                                                                End If
 
-                                                                                                                                                                                               If TypeOf tweet_ Is Tweet Then
-                                                                                                                                                                                                   Dim tweet As Tweet = tweet_
+                                                                                                                                                                                               If TypeOf cosa Is Tweet Then
+                                                                                                                                                                                                   Dim tweet As Tweet = cosa
 
                                                                                                                                                                                                    If Not tweet Is Nothing Then
                                                                                                                                                                                                        Dim mostrar As Boolean = True

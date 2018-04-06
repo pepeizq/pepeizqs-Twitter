@@ -149,6 +149,28 @@ Namespace pepeTwitterXaml
                         If itemMedia.Tipo = "video" Or itemMedia.Tipo = "animated_gif" Then
                             gridPlay.Width = gridMedia.ActualWidth / 2
                             gridPlay.Height = gridMedia.ActualHeight / 2
+
+                            Dim gridTipo As New Grid With {
+                                .HorizontalAlignment = HorizontalAlignment.Left,
+                                .VerticalAlignment = VerticalAlignment.Bottom,
+                                .Padding = New Thickness(3, 3, 3, 3),
+                                .Background = New SolidColorBrush(color)
+                            }
+
+                            Dim tbTipo As New TextBlock With {
+                                .Foreground = New SolidColorBrush(Colors.White),
+                                .FontSize = 13
+                            }
+
+                            If itemMedia.Tipo = "video" Then
+                                tbTipo.Text = "video"
+                            ElseIf itemMedia.Tipo = "animated_gif" Then
+                                tbTipo.Text = "gif"
+                            End If
+
+                            gridTipo.Children.Add(tbTipo)
+
+                            gridMedia.Children.Add(gridTipo)
                             gridMedia.Children.Add(gridPlay)
                         End If
 
@@ -213,6 +235,12 @@ Namespace pepeTwitterXaml
                 color = App.Current.Resources("ColorSecundario")
             End If
 
+            Dim gridUsuario As Grid = pagina.FindName("gridUsuarioAmpliado")
+
+            If gridUsuario.Visibility = Visibility.Collapsed Then
+                color = App.Current.Resources("ColorSecundario")
+            End If
+
             botonCerrar.Background = New SolidColorBrush(color)
 
             Dim bordeImagen As Border = pagina.FindName("bordeImagenAmpliada")
@@ -254,6 +282,12 @@ Namespace pepeTwitterXaml
             Dim color As Color = botonCerrar.Tag
 
             If color = Nothing Then
+                color = App.Current.Resources("ColorSecundario")
+            End If
+
+            Dim gridUsuario As Grid = pagina.FindName("gridUsuarioAmpliado")
+
+            If gridUsuario.Visibility = Visibility.Collapsed Then
                 color = App.Current.Resources("ColorSecundario")
             End If
 

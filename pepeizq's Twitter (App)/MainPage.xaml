@@ -370,7 +370,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Button x:Name="botonCerrarImagen" Grid.Row="0" Margin="10" Padding="10" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
+                    <Button x:Name="botonCerrarImagen" Grid.Row="0" Margin="10,10,10,0" Padding="10" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
                         <Button.Content>
                             <fa:FontAwesome Icon="ArrowCircleLeft" Foreground="White"/>
                         </Button.Content>

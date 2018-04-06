@@ -365,15 +365,29 @@ Namespace pepeTwitterXaml
             cosas.Mostrar = True
             cosas.Boton = boton
 
+            Dim color As New Color
+
+            If Not cosas.Color = Nothing Then
+                color = cosas.Color
+            Else
+                color = App.Current.Resources("ColorSecundario")
+            End If
+
             Dim menu As New MenuFlyout With {
                 .Placement = FlyoutPlacementMode.Bottom
             }
 
             AddHandler menu.Closed, AddressOf MenuMasOpcionesCerrar
 
+            Dim iconoCompartirTweet As New FontAwesome.UWP.FontAwesome With {
+                .Icon = FontAwesomeIcon.ShareAlt,
+                .Foreground = New SolidColorBrush(color)
+            }
+
             Dim botonCompartirTweet As New MenuFlyoutItem With {
                 .Text = recursos.GetString("ShareTweet"),
-                .Tag = cosas
+                .Tag = cosas,
+                .Icon = iconoCompartirTweet
             }
 
             AddHandler botonCompartirTweet.Click, AddressOf BotonCompartirTweetClick
@@ -381,9 +395,15 @@ Namespace pepeTwitterXaml
             AddHandler botonCompartirTweet.PointerExited, AddressOf BotonMasOpcionesUsuarioSale
             menu.Items.Add(botonCompartirTweet)
 
+            Dim iconoCopiarEnlaceTweet As New FontAwesome.UWP.FontAwesome With {
+                .Icon = FontAwesomeIcon.Copy,
+                .Foreground = New SolidColorBrush(color)
+            }
+
             Dim botonCopiarEnlaceTweet As New MenuFlyoutItem With {
                 .Text = recursos.GetString("CopyUrlTweet"),
-                .Tag = cosas
+                .Tag = cosas,
+                .Icon = iconoCopiarEnlaceTweet
             }
 
             AddHandler botonCopiarEnlaceTweet.Click, AddressOf BotonCopiarEnlaceTweetClick
@@ -394,9 +414,15 @@ Namespace pepeTwitterXaml
             Dim separador As New MenuFlyoutSeparator
             menu.Items.Add(separador)
 
+            Dim iconoAbrirNavegadorTweet As New FontAwesome.UWP.FontAwesome With {
+                .Icon = FontAwesomeIcon.Edge,
+                .Foreground = New SolidColorBrush(color)
+            }
+
             Dim botonAbrirNavegadorTweet As New MenuFlyoutItem With {
                 .Text = recursos.GetString("OpenWebBrowserTweet"),
-                .Tag = cosas
+                .Tag = cosas,
+                .Icon = iconoAbrirNavegadorTweet
             }
 
             AddHandler botonAbrirNavegadorTweet.Click, AddressOf BotonAbrirNavegadorTweetClick
@@ -404,9 +430,15 @@ Namespace pepeTwitterXaml
             AddHandler botonAbrirNavegadorTweet.PointerExited, AddressOf BotonMasOpcionesUsuarioSale
             menu.Items.Add(botonAbrirNavegadorTweet)
 
+            Dim iconoOEmbedTweet As New FontAwesome.UWP.FontAwesome With {
+                .Icon = FontAwesomeIcon.Code,
+                .Foreground = New SolidColorBrush(color)
+            }
+
             Dim botonOEmbedTweet As New MenuFlyoutItem With {
                 .Text = recursos.GetString("OEmbedTweet"),
-                .Tag = cosas
+                .Tag = cosas,
+                .Icon = iconoOEmbedTweet
             }
 
             AddHandler botonOEmbedTweet.Click, AddressOf BotonOEmbedTweetClick
