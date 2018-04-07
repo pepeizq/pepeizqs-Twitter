@@ -17,23 +17,27 @@ Namespace pepeTwitterXaml
             Dim textoSpan As New Span
             Dim textoTweet As String = Nothing
 
+            Dim coordenadas1 As Integer = 0
+            Dim coordenadas2 As Integer = 0
+
             If tweet.Retweet Is Nothing Then
                 textoTweet = tweet.Texto
 
-                If Not tweet.TextoRango(0) = tweet.TextoRango(1) Then
-                    textoTweet = textoTweet.Remove(tweet.TextoRango(1), textoTweet.Length - tweet.TextoRango(1))
-                    textoTweet = textoTweet.Remove(0, tweet.TextoRango(0))
-                End If
+                coordenadas1 = tweet.TextoRango(0)
+                coordenadas2 = tweet.TextoRango(1)
             Else
                 textoTweet = tweet.Retweet.Texto
 
-                If Not tweet.Retweet.TextoRango(0) = tweet.Retweet.TextoRango(1) Then
-                    textoTweet = textoTweet.Remove(tweet.Retweet.TextoRango(1), textoTweet.Length - tweet.Retweet.TextoRango(1))
-                    textoTweet = textoTweet.Remove(0, tweet.Retweet.TextoRango(0))
-                End If
+                coordenadas1 = tweet.Retweet.TextoRango(0)
+                coordenadas2 = tweet.Retweet.TextoRango(1)
             End If
 
             If Not textoTweet = String.Empty Then
+                If Not coordenadas1 = coordenadas2 Then
+                    'textoTweet = textoTweet.Remove(coordenadas2, textoTweet.Length - coordenadas2)
+                    textoTweet = textoTweet.Remove(0, coordenadas1)
+                End If
+
                 textoTweet = WebUtility.HtmlDecode(textoTweet)
 
                 Dim entidades As New TweetEntidad
