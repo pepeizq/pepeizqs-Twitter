@@ -109,11 +109,6 @@ Namespace pepeTwitterXaml
                 .Style = App.Current.Resources("ButtonRevealStyle")
             }
 
-            If tweet.Favoriteado = True Then
-                botonFavorito.Background = New SolidColorBrush(colorBoton)
-                botonFavorito.Foreground = New SolidColorBrush(Colors.White)
-            End If
-
             If estilo = 0 Then
                 botonFavorito.Visibility = Visibility.Collapsed
                 botonFavorito.Content = ConstructorBotones(FontAwesomeIcon.Heart, recursos.GetString("Favorite"), colorBoton)
@@ -134,6 +129,23 @@ Namespace pepeTwitterXaml
 
                 botonFavorito.Content = spBoton
                 botonFavorito.Visibility = Visibility.Visible
+            End If
+
+            If tweet.Favoriteado = True Then
+                botonFavorito.Background = New SolidColorBrush(colorBoton)
+
+                Dim sp As StackPanel = botonFavorito.Content
+
+                If TypeOf sp.Children(0) Is FontAwesome.UWP.FontAwesome Then
+                    Dim icono As FontAwesome.UWP.FontAwesome = sp.Children(0)
+                    icono.Foreground = New SolidColorBrush(Colors.White)
+                End If
+
+                If TypeOf sp.Children(0) Is StackPanel Then
+                    Dim subsp As StackPanel = sp.Children(0)
+                    Dim icono As FontAwesome.UWP.FontAwesome = subsp.Children(0)
+                    icono.Foreground = New SolidColorBrush(Colors.White)
+                End If
             End If
 
             AddHandler botonFavorito.Click, AddressOf BotonFavoritoClick
@@ -323,6 +335,10 @@ Namespace pepeTwitterXaml
             Dim boton As Button = sender
             Dim cosas As pepeizq.Twitter.Objetos.TweetXamlBoton = boton.Tag
 
+            If cosas.Color = Nothing Then
+                cosas.Color = App.Current.Resources("ColorSecundario")
+            End If
+
             Dim status As New TwitterStatus With {
                 .TweetID = cosas.Tweet.ID
             }
@@ -334,11 +350,20 @@ Namespace pepeTwitterXaml
 
                 Notificaciones.Toast.Enseñar(recursos.GetString("FavoriteSent"))
 
-                boton.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+                boton.Background = New SolidColorBrush(cosas.Color)
 
                 Dim spBoton As StackPanel = boton.Content
-                Dim tb As TextBlock = spBoton.Children(0)
-                tb.Foreground = New SolidColorBrush(Colors.White)
+
+                If TypeOf spBoton.Children(0) Is FontAwesome.UWP.FontAwesome Then
+                    Dim icono As FontAwesome.UWP.FontAwesome = spBoton.Children(0)
+                    icono.Foreground = New SolidColorBrush(Colors.White)
+                End If
+
+                If TypeOf spBoton.Children(0) Is StackPanel Then
+                    Dim subsp As StackPanel = spBoton.Children(0)
+                    Dim icono As FontAwesome.UWP.FontAwesome = subsp.Children(0)
+                    icono.Foreground = New SolidColorBrush(Colors.White)
+                End If
 
                 cosas.Tweet.Favoriteado = True
             Else
@@ -347,8 +372,17 @@ Namespace pepeTwitterXaml
                 boton.Background = New SolidColorBrush(Colors.Transparent)
 
                 Dim spBoton As StackPanel = boton.Content
-                Dim tb As TextBlock = spBoton.Children(0)
-                tb.Foreground = New SolidColorBrush(Colors.Black)
+
+                If TypeOf spBoton.Children(0) Is FontAwesome.UWP.FontAwesome Then
+                    Dim icono As FontAwesome.UWP.FontAwesome = spBoton.Children(0)
+                    icono.Foreground = New SolidColorBrush(cosas.Color)
+                End If
+
+                If TypeOf spBoton.Children(0) Is StackPanel Then
+                    Dim subsp As StackPanel = spBoton.Children(0)
+                    Dim icono As FontAwesome.UWP.FontAwesome = subsp.Children(0)
+                    icono.Foreground = New SolidColorBrush(cosas.Color)
+                End If
 
                 cosas.Tweet.Favoriteado = False
             End If
