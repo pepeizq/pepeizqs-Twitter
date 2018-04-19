@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AccountChange" xml:space="preserve">
+    <value>切换账号</value>
+  </data>
+  <data name="AccountNew" xml:space="preserve">
+    <value>登录</value>
+  </data>
+  <data name="buttonConfigNotificationsSound.Text" xml:space="preserve">
+    <value>测试</value>
+  </data>
+  <data name="Config" xml:space="preserve">
+    <value>配置</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>主页</value>
+  </data>
+  <data name="MoreThings" xml:space="preserve">
+    <value>更多</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>打开</value>
+  </data>
+  <data name="tbAccountConnected.Text" xml:space="preserve">
+    <value>您已使用以下账号登录：</value>
+  </data>
+  <data name="tbConfigAccounts.Text" xml:space="preserve">
+    <value>用户中心</value>
+  </data>
+  <data name="tbConfigNotifications.Text" xml:space="preserve">
+    <value>通知</value>
+  </data>
+  <data name="tbConfigNotificationsSeconds.Text" xml:space="preserve">
+    <value>秒钟（最长99秒）</value>
+  </data>
+  <data name="tbConfigNotificationsSound.Text" xml:space="preserve">
+    <value>提示音设置</value>
+  </data>
+  <data name="tbConfigNotificationsTime.Text" xml:space="preserve">
+    <value>到期时间设置</value>
+  </data>
+  <data name="tbConfigNotificationsImage.Text" xml:space="preserve">
+    <value>添加图片标题（如果推特有）</value>
+  </data>
+  <data name="SendTweet" xml:space="preserve">
+    <value>发送</value>
+  </data>
+  <data name="TweetSent" xml:space="preserve">
+    <value>已发送</value>
+  </data>
+  <data name="Retweeted" xml:space="preserve">
+    <value>转发</value>
+  </data>
+  <data name="WriteTweet" xml:space="preserve">
+    <value>写推文</value>
+  </data>
+  <data name="Accounts" xml:space="preserve">
+    <value>账号</value>
+  </data>
+  <data name="buttonBack.Text" xml:space="preserve">
+    <value>返回</value>
+  </data>
+  <data name="buttonAddAccount.Text" xml:space="preserve">
+    <value>添加账号</value>
+  </data>
+  <data name="ReplyingTo" xml:space="preserve">
+    <value>正在回复</value>
+  </data>
+  <data name="Mentions" xml:space="preserve">
+    <value>提及</value>
+  </data>
+  <data name="ReplyTweet" xml:space="preserve">
+    <value>回复</value>
+  </data>
+  <data name="Retweet" xml:space="preserve">
+    <value>转发</value>
+  </data>
+  <data name="RetweetSent" xml:space="preserve">
+    <value>转发成功</value>
+  </data>
+  <data name="Favorite" xml:space="preserve">
+    <value>特别关注</value>
+  </data>
+  <data name="FavoriteSent" xml:space="preserve">
+    <value>特别关注成功</value>
+  </data>
+  <data name="MoreOptions" xml:space="preserve">
+    <value>更多选项</value>
+  </data>
+  <data name="CopyUrlTweet" xml:space="preserve">
+    <value>复制推文链接</value>
+  </data>
+  <data name="tbNumTweetsUser.Text" xml:space="preserve">
+    <value>推特用户数</value>
+  </data>
+  <data name="tbNumFollowersUser.Text" xml:space="preserve">
+    <value>关注者</value>
+  </data>
+  <data name="Follow" xml:space="preserve">
+    <value>关注</value>
+  </data>
+  <data name="Following" xml:space="preserve">
+    <value>正在关注</value>
+  </data>
+  <data name="tbNumFavoritesUser.Text" xml:space="preserve">
+    <value>特别关注用户数</value>
+  </data>
+  <data name="Block" xml:space="preserve">
+    <value>阻塞</value>
+    <comment>Fuzzy</comment>
+  </data>
+  <data name="Report" xml:space="preserve">
+    <value>通知</value>
+  </data>
+  <data name="Mute" xml:space="preserve">
+    <value>静音</value>
+  </data>
+  <data name="OEmbedTweet" xml:space="preserve">
+    <value>插入到推文</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>搜索</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>用户</value>
+  </data>
+  <data name="Search2" xml:space="preserve">
+    <value>搜索</value>
+  </data>
+  <data name="OpenWebBrowserTweet" xml:space="preserve">
+    <value>从浏览器中打开推文</value>
+  </data>
+  <data name="OpenWebBrowserUser" xml:space="preserve">
+    <value>从浏览器中打开用户</value>
+  </data>
+  <data name="ShareTweet" xml:space="preserve">
+    <value>分享推文</value>
+  </data>
+  <data name="ShareUser" xml:space="preserve">
+    <value>分享用户</value>
+  </data>
+  <data name="MoreThings_Contact" xml:space="preserve">
+    <value>聊天</value>
+  </data>
+  <data name="MoreThings_HelpTranslate" xml:space="preserve">
+    <value>帮助翻译</value>
+  </data>
+  <data name="MoreThings_MoreApps" xml:space="preserve">
+    <value>更多应用</value>
+  </data>
+  <data name="MoreThings_ReportBug" xml:space="preserve">
+    <value>反馈</value>
+  </data>
+  <data name="MoreThings_SourceCode" xml:space="preserve">
+    <value>源码</value>
+  </data>
+  <data name="MoreThings_VoteApp" xml:space="preserve">
+    <value>给个好评</value>
+  </data>
+  <data name="MoreThings_Back" xml:space="preserve">
+    <value>返回</value>
+  </data>
+  <data name="tbConfigApp.Text" xml:space="preserve">
+    <value>应用设置</value>
+  </data>
+  <data name="tbConfigAppTweetCard.Text" xml:space="preserve">
+    <value>Load information from the &quot;Tweet Card&quot; if the tweet has it</value>
+  </data>
+  <data name="tbConfigAppLoadMedia.Text" xml:space="preserve">
+    <value>加载多媒体数据（图片、视频等）</value>
+  </data>
+  <data name="tbConfigAppAutoStart.Text" xml:space="preserve">
+    <value>开机启动</value>
+  </data>
+  <data name="StoreDescription" xml:space="preserve">
+    <value>推特非官方客户端，支持多账号</value>
+  </data>
+  <data name="StoreTags" xml:space="preserve">
+    <value>Twitter;Tweet;Retweet;Hashtag</value>
+  </data>
+</root>
