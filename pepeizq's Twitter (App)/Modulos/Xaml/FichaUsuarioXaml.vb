@@ -217,7 +217,7 @@ Module FichaUsuarioXaml
         Dim tbSeguir As TextBlock = boton.Content
         Dim cosas As pepeizq.Twitter.Objetos.SeguirUsuarioBoton = boton.Tag
 
-        If boton.Content = recursos.GetString("Following") Then
+        If tbSeguir.Text = recursos.GetString("Following") Then
             Await cosas.MegaUsuario.Servicio.DeshacerSeguirUsuario(cosas.MegaUsuario.Usuario.Tokens, cosas.Usuario.Id)
             tbSeguir.Text = recursos.GetString("Follow")
         Else
