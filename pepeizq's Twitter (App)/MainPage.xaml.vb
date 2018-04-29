@@ -1,8 +1,10 @@
 ﻿Imports System.Net.NetworkInformation
 Imports FontAwesome.UWP
 Imports Microsoft.Toolkit.Uwp.Helpers
+Imports Microsoft.Toolkit.Uwp.UI.Animations
 Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports pepeizq.Twitter
+Imports Windows.ApplicationModel.DataTransfer
 Imports Windows.Media.Core
 Imports Windows.Media.Playback
 Imports Windows.Storage
@@ -407,6 +409,27 @@ Public NotInheritable Class MainPage
         If Not animacion Is Nothing Then
             animacion.TryStart(imagenOrigen)
         End If
+
+    End Sub
+
+    Private Sub BotonImagenAmpliadaOpciones_Click(sender As Object, e As RoutedEventArgs) Handles botonImagenAmpliadaOpciones.Click
+
+        botonImagenAmpliadaOpciones.Rotate(180).Start()
+
+        If spImagenAmpliadaOpciones.Visibility = Visibility.Visible Then
+            spImagenAmpliadaOpciones.Visibility = Visibility.Collapsed
+        Else
+            spImagenAmpliadaOpciones.Visibility = Visibility.Visible
+        End If
+
+    End Sub
+
+    Private Sub BotonCopiarImagen_Click(sender As Object, e As RoutedEventArgs) Handles botonCopiarImagen.Click
+
+        Dim paquete As New DataPackage
+        paquete.SetText(tbImagenAmpliada.Text)
+
+        Clipboard.SetContent(paquete)
 
     End Sub
 

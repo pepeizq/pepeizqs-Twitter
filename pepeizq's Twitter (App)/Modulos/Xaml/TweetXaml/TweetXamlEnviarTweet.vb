@@ -6,12 +6,12 @@ Imports Windows.UI
 Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Documents
 
-Namespace pepeTwitterXaml
-    Module TweetXamlEnviarTweet
+Namespace pepeizq.Twitter.Xaml
+    Module TweetEnviarTweet
 
-        Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = Nothing
+        Dim cosas As Objetos.UsuarioAmpliado = Nothing
 
-        Public Function Generar(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario, visibilidad As Visibility, color As Color)
+        Public Function Generar(tweet As Tweet, megaUsuario As MegaUsuario, visibilidad As Visibility, color As Color)
 
             If color = Nothing Then
                 color = App.Current.Resources("ColorCuarto")
@@ -69,7 +69,7 @@ Namespace pepeTwitterXaml
 
                 tbRespondiendoSpan.Inlines.Add(fragmento1)
 
-                cosas = New pepeizq.Twitter.Objetos.UsuarioAmpliado(megaUsuario, Nothing, Nothing)
+                cosas = New Objetos.UsuarioAmpliado(megaUsuario, Nothing, Nothing)
 
                 If Not tweet.Usuario.ScreenNombre = megaUsuario.Usuario.ScreenNombre Then
                     Dim fragmento2 As New Run With {
@@ -198,7 +198,7 @@ Namespace pepeTwitterXaml
             spBoton.Children.Add(tbBoton)
 
             botonEnviarTweet.Content = spBoton
-            botonEnviarTweet.Tag = New pepeizq.Twitter.Objetos.EnviarTweetBoton(tbMensaje, megaUsuario, tweet, listaMenciones)
+            botonEnviarTweet.Tag = New Objetos.EnviarTweetBoton(tbMensaje, megaUsuario, tweet, listaMenciones)
             AddHandler botonEnviarTweet.Click, AddressOf BotonEnviarTweetClick
             AddHandler botonEnviarTweet.PointerEntered, AddressOf UsuarioEntraBoton
             AddHandler botonEnviarTweet.PointerExited, AddressOf UsuarioSaleBoton
@@ -223,7 +223,7 @@ Namespace pepeTwitterXaml
 
             gridInferior.Children.Add(tbContadorCaracteres)
 
-            tbMensaje.Tag = New pepeizq.Twitter.Objetos.EnviarTweetTextoCambia(botonEnviarTweet, tbContadorCaracteres, prContadorCaracteres)
+            tbMensaje.Tag = New Objetos.EnviarTweetTextoCambia(botonEnviarTweet, tbContadorCaracteres, prContadorCaracteres)
 
             '---------------------------------
 
@@ -285,7 +285,7 @@ Namespace pepeTwitterXaml
         Private Sub TbTweetEscribirTextChanged(sender As Object, e As TextChangedEventArgs)
 
             Dim tb As TextBox = sender
-            Dim objeto As pepeizq.Twitter.Objetos.EnviarTweetTextoCambia = tb.Tag
+            Dim objeto As Objetos.EnviarTweetTextoCambia = tb.Tag
 
             Dim boton As Button = objeto.Boton
 
@@ -304,10 +304,10 @@ Namespace pepeTwitterXaml
                 anillo.Foreground = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
                 contador.Text = String.Empty
             ElseIf tb.Text.Length > 140 And tb.Text.Length < 201 Then
-                anillo.Foreground = New SolidColorBrush(Windows.UI.Colors.Goldenrod)
+                anillo.Foreground = New SolidColorBrush(Colors.Goldenrod)
                 contador.Text = tb.Text.Length.ToString
             ElseIf tb.Text.Length > 200 Then
-                anillo.Foreground = New SolidColorBrush(Windows.UI.Colors.Red)
+                anillo.Foreground = New SolidColorBrush(Colors.Red)
                 contador.Text = tb.Text.Length.ToString
             End If
 
@@ -316,7 +316,7 @@ Namespace pepeTwitterXaml
         Private Async Sub BotonEnviarTweetClick(sender As Object, e As RoutedEventArgs)
 
             Dim boton As Button = sender
-            Dim cosas As pepeizq.Twitter.Objetos.EnviarTweetBoton = boton.Tag
+            Dim cosas As Objetos.EnviarTweetBoton = boton.Tag
 
             Dim tb As TextBox = cosas.CajaTexto
             Dim mensaje As String = Nothing
@@ -373,7 +373,7 @@ Namespace pepeTwitterXaml
                     Dim i As Integer = 0
                     While i < 100
                         Dim item As New GridViewItem With {
-                            .Background = New SolidColorBrush(Windows.UI.Colors.Transparent),
+                            .Background = New SolidColorBrush(Colors.Transparent),
                             .Content = listaEmojis(i).Sequence.AsString,
                             .Padding = New Thickness(0, 0, 0, 0)
                         }

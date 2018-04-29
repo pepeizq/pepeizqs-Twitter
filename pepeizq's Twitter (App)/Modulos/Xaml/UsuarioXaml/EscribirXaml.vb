@@ -35,7 +35,7 @@ Module EscribirXaml
 
         gridEscribir.Background = brush
 
-        gridEscribir.Children.Add(pepeTwitterXaml.TweetXamlEnviarTweet.Generar(Nothing, megaUsuario, Visibility.Visible, Nothing))
+        gridEscribir.Children.Add(pepeizq.Twitter.Xaml.TweetEnviarTweet.Generar(Nothing, megaUsuario, Visibility.Visible, Nothing))
 
         Return gridEscribir
 

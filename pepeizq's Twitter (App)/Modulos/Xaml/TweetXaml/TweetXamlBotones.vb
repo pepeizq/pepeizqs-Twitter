@@ -9,10 +9,10 @@ Imports Windows.System
 Imports Windows.UI
 Imports Windows.UI.Core
 
-Namespace pepeTwitterXaml
-    Module TweetXamlBotones
+Namespace pepeizq.Twitter.Xaml
+    Module TweetBotones
 
-        Public Function Generar(tweet As Tweet, gridTweet As Grid, megaUsuario As pepeizq.Twitter.MegaUsuario, estilo As Integer, color As Color)
+        Public Function Generar(tweet As Tweet, gridTweet As Grid, megaUsuario As MegaUsuario, estilo As Integer, color As Color)
 
             Dim colorBoton As Color = Nothing
 
@@ -38,7 +38,7 @@ Namespace pepeTwitterXaml
                 .Margin = New Thickness(0, 0, 0, 0),
                 .Background = New SolidColorBrush(Colors.Transparent),
                 .BorderThickness = New Thickness(0, 0, 0, 0),
-                .Tag = New pepeizq.Twitter.Objetos.TweetXamlBoton(tweet, megaUsuario, gridTweet, False, Nothing, color),
+                .Tag = New Objetos.TweetXamlBoton(tweet, megaUsuario, gridTweet, False, Nothing, color),
                 .Style = App.Current.Resources("ButtonRevealStyle")
             }
 
@@ -61,7 +61,7 @@ Namespace pepeTwitterXaml
                 .Margin = New Thickness(15, 0, 0, 0),
                 .Background = New SolidColorBrush(Colors.Transparent),
                 .BorderThickness = New Thickness(0, 0, 0, 0),
-                .Tag = New pepeizq.Twitter.Objetos.TweetXamlBoton(tweet, megaUsuario, gridTweet, False, Nothing, color),
+                .Tag = New Objetos.TweetXamlBoton(tweet, megaUsuario, gridTweet, False, Nothing, color),
                 .Style = App.Current.Resources("ButtonRevealStyle")
             }
 
@@ -105,7 +105,7 @@ Namespace pepeTwitterXaml
                 .Margin = New Thickness(15, 0, 0, 0),
                 .Background = New SolidColorBrush(Colors.Transparent),
                 .BorderThickness = New Thickness(0, 0, 0, 0),
-                .Tag = New pepeizq.Twitter.Objetos.TweetXamlBoton(tweet, megaUsuario, gridTweet, False, Nothing, color),
+                .Tag = New Objetos.TweetXamlBoton(tweet, megaUsuario, gridTweet, False, Nothing, color),
                 .Style = App.Current.Resources("ButtonRevealStyle")
             }
 
@@ -162,7 +162,7 @@ Namespace pepeTwitterXaml
                 .Margin = New Thickness(15, 0, 0, 0),
                 .Background = New SolidColorBrush(Colors.Transparent),
                 .BorderThickness = New Thickness(0, 0, 0, 0),
-                .Tag = New pepeizq.Twitter.Objetos.TweetXamlBoton(tweet, megaUsuario, gridTweet, False, Nothing, color),
+                .Tag = New Objetos.TweetXamlBoton(tweet, megaUsuario, gridTweet, False, Nothing, color),
                 .Style = App.Current.Resources("ButtonRevealStyle")
             }
 
@@ -248,7 +248,7 @@ Namespace pepeTwitterXaml
         Private Sub BotonResponderClick(sender As Object, e As RoutedEventArgs)
 
             Dim boton As Button = sender
-            Dim cosas As pepeizq.Twitter.Objetos.TweetXamlBoton = boton.Tag
+            Dim cosas As Objetos.TweetXamlBoton = boton.Tag
 
             Dim frame As Frame = Window.Current.Content
             Dim pagina As Page = frame.Content
@@ -284,7 +284,7 @@ Namespace pepeTwitterXaml
         Private Async Sub BotonRetweetClick(sender As Object, e As RoutedEventArgs)
 
             Dim boton As Button = sender
-            Dim cosas As pepeizq.Twitter.Objetos.TweetXamlBoton = boton.Tag
+            Dim cosas As Objetos.TweetXamlBoton = boton.Tag
 
             Dim status As New TwitterStatus With {
                 .TweetID = cosas.Tweet.ID
@@ -333,7 +333,7 @@ Namespace pepeTwitterXaml
         Private Async Sub BotonFavoritoClick(sender As Object, e As RoutedEventArgs)
 
             Dim boton As Button = sender
-            Dim cosas As pepeizq.Twitter.Objetos.TweetXamlBoton = boton.Tag
+            Dim cosas As Objetos.TweetXamlBoton = boton.Tag
 
             If cosas.Color = Nothing Then
                 cosas.Color = App.Current.Resources("ColorSecundario")
@@ -394,7 +394,7 @@ Namespace pepeTwitterXaml
             Dim recursos As New Resources.ResourceLoader
 
             Dim boton As Button = sender
-            Dim cosas As pepeizq.Twitter.Objetos.TweetXamlBoton = boton.Tag
+            Dim cosas As Objetos.TweetXamlBoton = boton.Tag
 
             cosas.Mostrar = True
             cosas.Boton = boton
@@ -519,7 +519,7 @@ Namespace pepeTwitterXaml
         Private Sub BotonResponderUsuarioEntra(sender As Object, e As PointerRoutedEventArgs)
 
             Dim boton As Button = sender
-            Dim cosas As pepeizq.Twitter.Objetos.TweetXamlBoton = boton.Tag
+            Dim cosas As Objetos.TweetXamlBoton = boton.Tag
 
             Dim frame As Frame = Window.Current.Content
             Dim pagina As Page = frame.Content
@@ -563,7 +563,7 @@ Namespace pepeTwitterXaml
         Private Sub BotonResponderUsuarioSale(sender As Object, e As PointerRoutedEventArgs)
 
             Dim boton As Button = sender
-            Dim cosas As pepeizq.Twitter.Objetos.TweetXamlBoton = boton.Tag
+            Dim cosas As Objetos.TweetXamlBoton = boton.Tag
 
             Dim frame As Frame = Window.Current.Content
             Dim pagina As Page = frame.Content
@@ -621,7 +621,7 @@ Namespace pepeTwitterXaml
         Private Sub BotonRetweetUsuarioSale(sender As Object, e As PointerRoutedEventArgs)
 
             Dim boton As Button = sender
-            Dim cosas As pepeizq.Twitter.Objetos.TweetXamlBoton = boton.Tag
+            Dim cosas As Objetos.TweetXamlBoton = boton.Tag
             Dim spBoton As StackPanel = boton.Content
 
             If TypeOf spBoton.Children(0) Is FontAwesome.UWP.FontAwesome Then
@@ -655,7 +655,7 @@ Namespace pepeTwitterXaml
         Private Sub BotonFavoritoUsuarioSale(sender As Object, e As PointerRoutedEventArgs)
 
             Dim boton As Button = sender
-            Dim cosas As pepeizq.Twitter.Objetos.TweetXamlBoton = boton.Tag
+            Dim cosas As Objetos.TweetXamlBoton = boton.Tag
             Dim spBoton As StackPanel = boton.Content
 
             If TypeOf spBoton.Children(0) Is FontAwesome.UWP.FontAwesome Then
@@ -690,7 +690,7 @@ Namespace pepeTwitterXaml
 
             Dim menu As MenuFlyout = sender
             Dim boton As MenuFlyoutItem = menu.Items(0)
-            Dim cosas As pepeizq.Twitter.Objetos.TweetXamlBoton = boton.Tag
+            Dim cosas As Objetos.TweetXamlBoton = boton.Tag
 
             cosas.Mostrar = False
 
@@ -699,7 +699,7 @@ Namespace pepeTwitterXaml
         Private Sub BotonCompartirTweetClick(sender As Object, e As RoutedEventArgs)
 
             Dim boton As MenuFlyoutItem = sender
-            Dim cosas As pepeizq.Twitter.Objetos.TweetXamlBoton = boton.Tag
+            Dim cosas As Objetos.TweetXamlBoton = boton.Tag
 
             ApplicationData.Current.LocalSettings.Values("TweetCompartirTitulo") = "@" + cosas.Tweet.Usuario.ScreenNombre
             ApplicationData.Current.LocalSettings.Values("TweetCompartirDescripcion") = WebUtility.HtmlDecode(cosas.Tweet.Texto)
@@ -725,7 +725,7 @@ Namespace pepeTwitterXaml
         Private Sub BotonCopiarEnlaceTweetClick(sender As Object, e As RoutedEventArgs)
 
             Dim boton As MenuFlyoutItem = sender
-            Dim cosas As pepeizq.Twitter.Objetos.TweetXamlBoton = boton.Tag
+            Dim cosas As Objetos.TweetXamlBoton = boton.Tag
 
             Dim texto As New DataPackage
             texto.SetText("https://twitter.com/" + cosas.Tweet.Usuario.ScreenNombre + "/status/" + cosas.Tweet.ID)
@@ -737,7 +737,7 @@ Namespace pepeTwitterXaml
         Private Async Sub BotonAbrirNavegadorTweetClick(sender As Object, e As RoutedEventArgs)
 
             Dim boton As MenuFlyoutItem = sender
-            Dim cosas As pepeizq.Twitter.Objetos.TweetXamlBoton = boton.Tag
+            Dim cosas As Objetos.TweetXamlBoton = boton.Tag
 
             Try
                 Await Launcher.LaunchUriAsync(New Uri("https://twitter.com/" + cosas.Tweet.Usuario.ScreenNombre + "/status/" + cosas.Tweet.ID))
@@ -750,7 +750,7 @@ Namespace pepeTwitterXaml
         Private Sub BotonOEmbedTweetClick(sender As Object, e As RoutedEventArgs)
 
             Dim boton As MenuFlyoutItem = sender
-            Dim cosas As pepeizq.Twitter.Objetos.TweetXamlBoton = boton.Tag
+            Dim cosas As Objetos.TweetXamlBoton = boton.Tag
 
             FichaOEmbedXaml.Generar(cosas.MegaUsuario.Servicio.Provider, cosas.Tweet)
 

@@ -2,8 +2,8 @@
 Imports pepeizq.Twitter.Tweet
 Imports Windows.UI
 
-Namespace pepeTwitterXaml
-    Module TweetXamlRetweet
+Namespace pepeizq.Twitter.Xaml
+    Module TweetRetweet
 
         Public Function Generar(tweet As Tweet)
 

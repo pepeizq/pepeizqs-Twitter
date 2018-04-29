@@ -1,5 +1,4 @@
 ﻿Imports Microsoft.Toolkit.Uwp.Helpers
-Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports pepeizq.Twitter
 Imports Windows.Storage
 Imports Windows.UI

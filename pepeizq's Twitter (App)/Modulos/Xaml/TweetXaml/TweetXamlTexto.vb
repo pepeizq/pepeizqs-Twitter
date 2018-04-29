@@ -3,12 +3,12 @@ Imports pepeizq.Twitter.Tweet
 Imports Windows.UI
 Imports Windows.UI.Xaml.Documents
 
-Namespace pepeTwitterXaml
-    Module TweetXamlTexto
+Namespace pepeizq.Twitter.Xaml
+    Module TweetTexto
 
-        Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = Nothing
+        Dim cosas As Objetos.UsuarioAmpliado = Nothing
 
-        Public Function Generar(tweet As Tweet, citaOrigen As Tweet, color As Color, megaUsuario As pepeizq.Twitter.MegaUsuario)
+        Public Function Generar(tweet As Tweet, citaOrigen As Tweet, color As Color, megaUsuario As MegaUsuario)
 
             If color = Nothing Then
                 color = App.Current.Resources("ColorCuarto")
@@ -48,7 +48,7 @@ Namespace pepeTwitterXaml
                     entidades = tweet.Retweet.Entidades
                 End If
 
-                Dim listaEntidades As New List(Of pepeizq.Twitter.Objetos.TextoTweetEntidad)
+                Dim listaEntidades As New List(Of Objetos.TextoTweetEntidad)
 
                 If entidades.Enlaces.Count > 0 Then
                     For Each url In entidades.Enlaces
@@ -57,7 +57,7 @@ Namespace pepeTwitterXaml
                            url.Rango(1)
                         }
 
-                        listaEntidades.Add(New pepeizq.Twitter.Objetos.TextoTweetEntidad(url.Mostrar, url.Expandida, coordenadas, 0))
+                        listaEntidades.Add(New Objetos.TextoTweetEntidad(url.Mostrar, url.Expandida, coordenadas, 0))
                     Next
                 End If
 
@@ -68,7 +68,7 @@ Namespace pepeTwitterXaml
                             mencion.Rango(1)
                         }
 
-                        listaEntidades.Add(New pepeizq.Twitter.Objetos.TextoTweetEntidad("@" + mencion.ScreenNombre, "https://twitter.com/@" + mencion.ScreenNombre, coordenadas, 1))
+                        listaEntidades.Add(New Objetos.TextoTweetEntidad("@" + mencion.ScreenNombre, "https://twitter.com/@" + mencion.ScreenNombre, coordenadas, 1))
                     Next
                 End If
 
@@ -79,7 +79,7 @@ Namespace pepeTwitterXaml
                             tag.Rango(1)
                         }
 
-                        listaEntidades.Add(New pepeizq.Twitter.Objetos.TextoTweetEntidad("#" + tag.Nombre, "https://twitter.com/#" + tag.Nombre, coordenadas, 2))
+                        listaEntidades.Add(New Objetos.TextoTweetEntidad("#" + tag.Nombre, "https://twitter.com/#" + tag.Nombre, coordenadas, 2))
                     Next
                 End If
 
@@ -160,7 +160,7 @@ Namespace pepeTwitterXaml
                                 }
 
                                 If entidad.Tipo = 1 Then
-                                    cosas = New pepeizq.Twitter.Objetos.UsuarioAmpliado(megaUsuario, Nothing, Nothing)
+                                    cosas = New Objetos.UsuarioAmpliado(megaUsuario, Nothing, Nothing)
 
                                     Dim enlace As New Hyperlink With {
                                         .TextDecorations = Nothing,

@@ -7,8 +7,8 @@ Imports Windows.UI
 Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Media.Animation
 
-Namespace pepeTwitterXaml
-    Module TweetXamlMedia
+Namespace pepeizq.Twitter.Xaml
+    Module TweetMediaXaml
 
         Public Function Generar(tweet As Tweet, color As Color)
 
@@ -143,7 +143,7 @@ Namespace pepeTwitterXaml
                             AddHandler gridMedia.PointerPressed, AddressOf UsuarioClickeaGif
                         End If
 
-                        gridMedia.Tag = imagenMedia
+                        gridMedia.Tag = itemMedia.EnlaceHttps
                         gridMedia.Children.Add(imagenMedia)
 
                         If itemMedia.Tipo = "video" Or itemMedia.Tipo = "animated_gif" Then
@@ -222,7 +222,10 @@ Namespace pepeTwitterXaml
         Public Sub UsuarioClickeaImagen(sender As Object, e As PointerRoutedEventArgs)
 
             Dim gridRecibido As Grid = sender
-            Dim imagenRecibida As ImageEx = gridRecibido.Tag
+
+            Dim imagenRecibida As New ImageEx With {
+                .Source = New BitmapImage(New Uri(gridRecibido.Tag))
+            }
 
             Dim frame As Frame = Window.Current.Content
             Dim pagina As Page = frame.Content
@@ -243,11 +246,20 @@ Namespace pepeTwitterXaml
 
             botonCerrar.Background = New SolidColorBrush(color)
 
+            Dim botonOpciones As Button = pagina.FindName("botonImagenAmpliadaOpciones")
+            botonOpciones.Background = New SolidColorBrush(color)
+
+            Dim botonCopiar As Button = pagina.FindName("botonCopiarImagen")
+            botonCopiar.Background = New SolidColorBrush(color)
+
             Dim bordeImagen As Border = pagina.FindName("bordeImagenAmpliada")
             bordeImagen.BorderBrush = New SolidColorBrush(color)
 
             Dim gridImagen As Grid = pagina.FindName("gridImagenAmpliada")
             gridImagen.Visibility = Visibility.Visible
+
+            Dim tbImagenAmpliada As TextBox = pagina.FindName("tbImagenAmpliada")
+            tbImagenAmpliada.Text = gridRecibido.Tag
 
             Dim imagenAmpliada As ImageEx = pagina.FindName("imagenAmpliada")
 

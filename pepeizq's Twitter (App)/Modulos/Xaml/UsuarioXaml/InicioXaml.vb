@@ -174,7 +174,7 @@ Module InicioXaml
                                     Next
 
                                     If boolAñadir = True Then
-                                        lv.Items.Add(TweetXaml.Añadir(tweet, cosas.MegaUsuario, cosas.Color))
+                                        lv.Items.Add(pepeizq.Twitter.Xaml.TweetXaml.Añadir(tweet, cosas.MegaUsuario, cosas.Color))
                                     End If
                                 Next
                             End If
@@ -192,7 +192,7 @@ Module InicioXaml
 
         Dim grid As Grid = e.ClickedItem
 
-        FichaTweetXaml.Generar(grid.Tag, grid)
+        pepeizq.Twitter.Xaml.FichaTweet.Generar(grid.Tag, grid)
 
     End Sub
 

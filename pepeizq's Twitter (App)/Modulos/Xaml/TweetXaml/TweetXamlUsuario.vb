@@ -4,12 +4,12 @@ Imports Windows.UI
 Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Documents
 
-Namespace pepeTwitterXaml
-    Module TweetXamlUsuario
+Namespace pepeizq.Twitter.Xaml
+    Module TweetUsuario
 
-        Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = Nothing
+        Dim cosas As Objetos.UsuarioAmpliado = Nothing
 
-        Public Function Generar(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario, color As Color)
+        Public Function Generar(tweet As Tweet, megaUsuario As MegaUsuario, color As Color)
 
             If color = Nothing Then
                 color = App.Current.Resources("ColorSecundario")
@@ -48,11 +48,11 @@ Namespace pepeTwitterXaml
             If tweet.Retweet Is Nothing Then
                 tb1.Text = tweet.Usuario.Nombre
                 tb2.Text = "@" + tweet.Usuario.ScreenNombre
-                botonUsuario.Tag = New pepeizq.Twitter.Objetos.UsuarioAmpliado(megaUsuario, tweet.Usuario, Nothing)
+                botonUsuario.Tag = New Objetos.UsuarioAmpliado(megaUsuario, tweet.Usuario, Nothing)
             Else
                 tb1.Text = tweet.Retweet.Usuario.Nombre
                 tb2.Text = "@" + tweet.Retweet.Usuario.ScreenNombre
-                botonUsuario.Tag = New pepeizq.Twitter.Objetos.UsuarioAmpliado(megaUsuario, tweet.Retweet.Usuario, Nothing)
+                botonUsuario.Tag = New Objetos.UsuarioAmpliado(megaUsuario, tweet.Retweet.Usuario, Nothing)
             End If
 
             spUsuario.Children.Add(tb1)
@@ -81,7 +81,7 @@ Namespace pepeTwitterXaml
             End If
 
             If Not respuestaUsuarioScreenNombre = Nothing Then
-                cosas = New pepeizq.Twitter.Objetos.UsuarioAmpliado(megaUsuario, Nothing, Nothing)
+                cosas = New Objetos.UsuarioAmpliado(megaUsuario, Nothing, Nothing)
 
                 Dim recursos As New Resources.ResourceLoader
 
@@ -133,7 +133,7 @@ Namespace pepeTwitterXaml
         Private Sub UsuarioPulsaBoton(sender As Object, e As RoutedEventArgs)
 
             Dim boton As Button = sender
-            Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = boton.Tag
+            Dim cosas As Objetos.UsuarioAmpliado = boton.Tag
 
             FichaUsuarioXaml.Generar(cosas, boton)
 

@@ -370,12 +370,31 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Button x:Name="botonCerrarImagen" Grid.Row="0" Margin="10,10,10,0" Padding="10" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
-                        <Button.Content>
-                            <fa:FontAwesome Icon="ArrowCircleLeft" Foreground="White"/>
-                        </Button.Content>
-                    </Button>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10,10,10,0">
+                        <Button x:Name="botonCerrarImagen" Margin="0,0,10,0" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
+                            <Button.Content>
+                                <fa:FontAwesome Icon="ArrowCircleLeft" Foreground="White"/>
+                            </Button.Content>
+                        </Button>
 
+                        <Button x:Name="botonImagenAmpliadaOpciones" Margin="10,0" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
+                            <Button.Content>
+                                <fa:FontAwesome x:Name="iconoImagenAmpliadaOpciones" Icon="AngleDoubleRight" Foreground="White"/>
+                            </Button.Content>
+                        </Button>
+
+                        <StackPanel x:Name="spImagenAmpliadaOpciones" Orientation="Horizontal" Visibility="Collapsed">
+                            <TextBox x:Name="tbImagenAmpliada" IsReadOnly="True" BorderBrush="White" BorderThickness="1" Padding="10"/>
+
+                            <Button x:Name="botonCopiarImagen" Margin="10,0" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
+                                <Button.Content>
+                                    <fa:FontAwesome Icon="Copy" Foreground="White"/>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+
+                    </StackPanel>
+                    
                     <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="10">
                         <Border x:Name="bordeImagenAmpliada" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
                             <controls:ImageEx x:Name="imagenAmpliada" Stretch="None" IsCacheEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>

@@ -78,7 +78,7 @@ Module TwitterTimeLineInicio
                     Next
 
                     If boolAñadir = True Then
-                        lv.Items.Add(TweetXaml.Añadir(tweet, megaUsuario, Nothing))
+                        lv.Items.Add(pepeizq.Twitter.Xaml.TweetXaml.Añadir(tweet, megaUsuario, Nothing))
                     End If
                 Next
 

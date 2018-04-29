@@ -3,10 +3,10 @@ Imports Windows.UI
 Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Shapes
 
-Namespace pepeTwitterXaml
-    Module TweetXamlAvatar
+Namespace pepeizq.Twitter.Xaml
+    Module TweetAvatar
 
-        Public Function Generar(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario)
+        Public Function Generar(tweet As Tweet, megaUsuario As MegaUsuario)
 
             Dim botonAvatar As New Button With {
                 .Background = New SolidColorBrush(Colors.Transparent),
@@ -44,7 +44,7 @@ Namespace pepeTwitterXaml
                 .Margin = New Thickness(1, 1, 1, 1)
             }
 
-            botonAvatar.Tag = New pepeizq.Twitter.Objetos.UsuarioAmpliado(megaUsuario, tweet.Usuario, Nothing)
+            botonAvatar.Tag = New Objetos.UsuarioAmpliado(megaUsuario, tweet.Usuario, Nothing)
             botonAvatar.Content = circulo
 
             AddHandler botonAvatar.Click, AddressOf UsuarioPulsaBoton
@@ -58,7 +58,7 @@ Namespace pepeTwitterXaml
         Private Sub UsuarioPulsaBoton(sender As Object, e As RoutedEventArgs)
 
             Dim boton As Button = sender
-            Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = boton.Tag
+            Dim cosas As Objetos.UsuarioAmpliado = boton.Tag
 
             FichaUsuarioXaml.Generar(cosas, boton)
 

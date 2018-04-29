@@ -1,7 +1,6 @@
 ﻿Imports Microsoft.Toolkit.Uwp.Helpers
 Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports pepeizq.Twitter
-Imports pepeizq.Twitter.Banner
 Imports pepeizq.Twitter.Tweet
 Imports Windows.ApplicationModel.DataTransfer
 Imports Windows.Storage
@@ -203,7 +202,7 @@ Module FichaUsuarioXaml
             Next
 
             If boolAñadir = True Then
-                lvTweets.Items.Add(TweetXaml.Añadir(tweet, cosas.MegaUsuario, color))
+                lvTweets.Items.Add(pepeizq.Twitter.Xaml.TweetXaml.Añadir(tweet, cosas.MegaUsuario, color))
             End If
         Next
 

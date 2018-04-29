@@ -1,8 +1,8 @@
 ﻿Imports Microsoft.Toolkit.Uwp.Helpers
 Imports pepeizq.Twitter.Tweet
 
-Namespace pepeTwitterXaml
-    Module TweetXamlCita
+Namespace pepeizq.Twitter.Xaml
+    Module TweetCita
 
         Public Function Generar(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario, color As Windows.UI.Color)
 
@@ -40,9 +40,9 @@ Namespace pepeTwitterXaml
                 .CornerRadius = New CornerRadius(5)
             }
 
-            sp.Children.Add(TweetXamlUsuario.Generar(tweet.Cita, megaUsuario, color))
-            sp.Children.Add(TweetXamlTexto.Generar(tweet.Cita, tweet, color, megaUsuario))
-            sp.Children.Add(TweetXamlMedia.Generar(tweet.Cita, color))
+            sp.Children.Add(TweetUsuario.Generar(tweet.Cita, megaUsuario, color))
+            sp.Children.Add(TweetTexto.Generar(tweet.Cita, tweet, color, megaUsuario))
+            sp.Children.Add(TweetMediaXaml.Generar(tweet.Cita, color))
 
             Return sp
 

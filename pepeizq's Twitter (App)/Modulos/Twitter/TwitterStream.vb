@@ -121,13 +121,18 @@ Module TwitterStream
                                                                                                                                                                                                            End Try
 
                                                                                                                                                                                                            If Not tweetNuevo Is Nothing Then
-                                                                                                                                                                                                               If Not ApplicationData.Current.LocalSettings.Values("notificacion") Is Nothing Then
-                                                                                                                                                                                                                   If Not ApplicationData.Current.LocalSettings.Values("notificacion") = False Then
-                                                                                                                                                                                                                       Notificaciones.ToastTweet.Enseñar(tweetNuevo)
+                                                                                                                                                                                                               Dim itemTweet As ListViewItem = pepeizq.Twitter.Xaml.TweetXaml.Añadir(tweetNuevo, megaUsuario, Nothing)
+
+                                                                                                                                                                                                               If Not itemTweet Is Nothing Then
+                                                                                                                                                                                                                   lvInicio.Items.Insert(0, itemTweet)
+
+                                                                                                                                                                                                                   If Not ApplicationData.Current.LocalSettings.Values("notificacion") Is Nothing Then
+                                                                                                                                                                                                                       If Not ApplicationData.Current.LocalSettings.Values("notificacion") = False Then
+                                                                                                                                                                                                                           Notificaciones.ToastTweet.Enseñar(tweetNuevo)
+                                                                                                                                                                                                                       End If
                                                                                                                                                                                                                    End If
                                                                                                                                                                                                                End If
 
-                                                                                                                                                                                                               lvInicio.Items.Insert(0, TweetXaml.Añadir(tweetNuevo, megaUsuario, Nothing))
                                                                                                                                                                                                            End If
                                                                                                                                                                                                        End If
                                                                                                                                                                                                    End If
