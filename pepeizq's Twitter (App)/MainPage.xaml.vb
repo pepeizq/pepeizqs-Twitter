@@ -1,7 +1,6 @@
 ﻿Imports System.Net.NetworkInformation
 Imports FontAwesome.UWP
 Imports Microsoft.Toolkit.Uwp.Helpers
-Imports Microsoft.Toolkit.Uwp.UI.Animations
 Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports pepeizq.Twitter
 Imports Windows.ApplicationModel.DataTransfer
@@ -414,13 +413,19 @@ Public NotInheritable Class MainPage
 
     Private Sub BotonImagenAmpliadaOpciones_Click(sender As Object, e As RoutedEventArgs) Handles botonImagenAmpliadaOpciones.Click
 
-        botonImagenAmpliadaOpciones.Rotate(180).Start()
+        Dim icono As New FontAwesome.UWP.FontAwesome With {
+            .Foreground = New SolidColorBrush(Colors.White)
+        }
 
         If spImagenAmpliadaOpciones.Visibility = Visibility.Visible Then
+            icono.Icon = FontAwesomeIcon.AngleDoubleRight
             spImagenAmpliadaOpciones.Visibility = Visibility.Collapsed
         Else
+            icono.Icon = FontAwesomeIcon.AngleDoubleLeft
             spImagenAmpliadaOpciones.Visibility = Visibility.Visible
         End If
+
+        botonImagenAmpliadaOpciones.Content = icono
 
     End Sub
 

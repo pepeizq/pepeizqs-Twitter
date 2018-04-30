@@ -371,15 +371,15 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10,10,10,0">
-                        <Button x:Name="botonCerrarImagen" Margin="0,0,10,0" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
+                        <Button x:Name="botonCerrarImagen" Margin="0,0,10,0" Padding="10" Width="40" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
                             <Button.Content>
-                                <fa:FontAwesome Icon="ArrowCircleLeft" Foreground="White"/>
+                                <fa:FontAwesome Icon="AngleLeft" Foreground="White"/>
                             </Button.Content>
                         </Button>
 
-                        <Button x:Name="botonImagenAmpliadaOpciones" Margin="10,0" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
+                        <Button x:Name="botonImagenAmpliadaOpciones" Margin="10,0" Padding="10" Width="40" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
                             <Button.Content>
-                                <fa:FontAwesome x:Name="iconoImagenAmpliadaOpciones" Icon="AngleDoubleRight" Foreground="White"/>
+                                <fa:FontAwesome Icon="AngleDoubleRight" Foreground="White"/>
                             </Button.Content>
                         </Button>
 
