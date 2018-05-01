@@ -1,6 +1,9 @@
-﻿Imports Microsoft.Toolkit.Uwp.Helpers
+﻿Imports FontAwesome.UWP
+Imports Microsoft.Toolkit.Uwp.Helpers
 Imports pepeizq.Twitter
 Imports pepeizq.Twitter.Tweet
+Imports Windows.UI
+Imports Windows.UI.Core
 
 Module InicioXaml
 
@@ -14,12 +17,12 @@ Module InicioXaml
         gridTweets.Visibility = visibilidad
 
         Dim color1 As New GradientStop With {
-            .Color = ColorHelper.ToColor("#e0e0e0"),
+            .Color = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToColor("#e0e0e0"),
             .Offset = 0.5
         }
 
         Dim color2 As New GradientStop With {
-            .Color = ColorHelper.ToColor("#d6d6d6"),
+            .Color = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToColor("#d6d6d6"),
             .Offset = 1.0
         }
 
@@ -80,6 +83,33 @@ Module InicioXaml
 
         '---------------------------------
 
+        Dim iconoSubir As New FontAwesome.UWP.FontAwesome With {
+            .Foreground = New SolidColorBrush(Colors.White),
+            .Icon = FontAwesomeIcon.ArrowCircleUp
+        }
+
+        Dim botonSubir As New Button
+        botonSubir.SetValue(Grid.RowProperty, 0)
+        botonSubir.Name = "botonSubirArribaInicio" + usuario.ScreenNombre
+        botonSubir.Margin = New Thickness(20, 20, 20, 20)
+        botonSubir.HorizontalAlignment = HorizontalAlignment.Right
+        botonSubir.VerticalAlignment = VerticalAlignment.Bottom
+        botonSubir.Padding = New Thickness(10, 10, 10, 10)
+        botonSubir.BorderBrush = New SolidColorBrush(Colors.White)
+        botonSubir.BorderThickness = New Thickness(1, 1, 1, 1)
+        botonSubir.Content = iconoSubir
+        botonSubir.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+        botonSubir.Visibility = Visibility.Collapsed
+        botonSubir.Tag = svTweets
+
+        AddHandler botonSubir.Click, AddressOf BotonSubirClick
+        AddHandler botonSubir.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler botonSubir.PointerExited, AddressOf UsuarioSaleBoton
+
+        gridTweets.Children.Add(botonSubir)
+
+        '---------------------------------
+
         Dim pbTweets As New ProgressBar
         pbTweets.SetValue(Grid.RowProperty, 1)
         pbTweets.IsIndeterminate = True
@@ -121,8 +151,34 @@ Module InicioXaml
         lv.Tag = cosas.MegaUsuario
 
         If pb.Visibility = Visibility.Collapsed Then
-            If (sv.ScrollableHeight - 200) < sv.VerticalOffset Then
+            Dim frame As Frame = Window.Current.Content
+            Dim pagina As Page = frame.Content
 
+            If sv.VerticalOffset > 50 Then
+                If cosas.Query = 0 Then
+                    Dim botonSubir As Button = pagina.FindName("botonSubirArribaInicio" + cosas.MegaUsuario.Usuario.ScreenNombre)
+                    botonSubir.Visibility = Visibility.Visible
+                ElseIf cosas.Query = 1 Then
+                    Dim botonSubir As Button = pagina.FindName("botonSubirArribaMenciones" + cosas.MegaUsuario.Usuario.ScreenNombre)
+                    botonSubir.Visibility = Visibility.Visible
+                ElseIf cosas.Query = 2 Then
+                    Dim botonSubir As Button = pagina.FindName("botonSubirArribaUsuario")
+                    botonSubir.Visibility = Visibility.Visible
+                End If
+            Else
+                If cosas.Query = 0 Then
+                    Dim botonSubir As Button = pagina.FindName("botonSubirArribaInicio" + cosas.MegaUsuario.Usuario.ScreenNombre)
+                    botonSubir.Visibility = Visibility.Collapsed
+                ElseIf cosas.Query = 1 Then
+                    Dim botonSubir As Button = pagina.FindName("botonSubirArribaMenciones" + cosas.MegaUsuario.Usuario.ScreenNombre)
+                    botonSubir.Visibility = Visibility.Collapsed
+                ElseIf cosas.Query = 2 Then
+                    Dim botonSubir As Button = pagina.FindName("botonSubirArribaUsuario")
+                    botonSubir.Visibility = Visibility.Collapsed
+                End If
+            End If
+
+            If (sv.ScrollableHeight - 200) < sv.VerticalOffset Then
                 Dim mostrar As Boolean = False
 
                 If pr Is Nothing Then
@@ -196,5 +252,26 @@ Module InicioXaml
 
     End Sub
 
+    Private Sub BotonSubirClick(sender As Object, e As RoutedEventArgs)
+
+        Dim botonSubir As Button = sender
+        Dim svTweets As ScrollViewer = botonSubir.Tag
+
+        svTweets.ChangeView(Nothing, 0, Nothing)
+        botonSubir.Visibility = Visibility.Collapsed
+
+    End Sub
+
+    Private Sub UsuarioEntraBoton(sender As Object, e As PointerRoutedEventArgs)
+
+        Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
+
+    End Sub
+
+    Private Sub UsuarioSaleBoton(sender As Object, e As PointerRoutedEventArgs)
+
+        Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
+
+    End Sub
 
 End Module

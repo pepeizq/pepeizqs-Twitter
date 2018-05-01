@@ -16,7 +16,7 @@ Module TwitterTimeLineInicio
 
         If Not gridTweets Is Nothing Then
             Dim pr As ProgressRing = gridTweets.Children(0)
-            Dim pb As ProgressBar = gridTweets.Children(2)
+            Dim pb As ProgressBar = gridTweets.Children(3)
 
             If Not ultimoTweet = Nothing Then
                 pb.Visibility = Visibility.Visible

@@ -177,6 +177,9 @@ Module FichaUsuarioXaml
 
         AddHandler botonMasOpciones.Click, AddressOf BotonMasOpcionesClick
 
+        Dim botonSubir As Button = pagina.FindName("botonSubirArribaUsuario")
+        botonSubir.Background = New SolidColorBrush(color)
+
         '------------------------------------
 
         Dim listaTweets As New List(Of Tweet)

@@ -293,10 +293,16 @@
                                     </Button.Content>
                                 </Button>
                             </StackPanel>
-
+                           
                             <ListView x:Name="lvTweetsUsuario" Grid.Row="1" ItemContainerStyle="{StaticResource ListViewEstilo1}" Margin="0,10,0,0"/>
                         </Grid>
                     </ScrollViewer>
+
+                    <Button x:Name="botonSubirArribaUsuario" Grid.Row="1" Margin="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Visibility="Collapsed">
+                        <Button.Content>
+                            <fa:FontAwesome Icon="ArrowCircleUp" Foreground="White"/>
+                        </Button.Content>
+                    </Button>
 
                     <ProgressBar x:Name="pbTweetsUsuario" Grid.Row="2" IsIndeterminate="True" Margin="10" Padding="10" Visibility="Collapsed"/>
                 </Grid>

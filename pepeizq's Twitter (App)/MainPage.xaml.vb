@@ -479,5 +479,11 @@ Public NotInheritable Class MainPage
 
     End Sub
 
+    Private Sub BotonSubirArribaUsuario_Click(sender As Object, e As RoutedEventArgs) Handles botonSubirArribaUsuario.Click
+
+        svTweetsUsuario.ChangeView(Nothing, 0, Nothing)
+        botonSubirArribaUsuario.Visibility = Visibility.Collapsed
+
+    End Sub
 End Class
 
