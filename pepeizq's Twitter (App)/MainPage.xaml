@@ -371,28 +371,21 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10,10,10,0">
-                        <Button x:Name="botonCerrarImagen" Margin="0,0,10,0" Padding="10" Width="40" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
+                        <Button x:Name="botonCerrarImagen" Padding="10" Width="40" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
                             <Button.Content>
-                                <fa:FontAwesome Icon="AngleLeft" Foreground="White"/>
+                                <fa:FontAwesome Icon="ArrowCircleLeft" Foreground="White"/>
                             </Button.Content>
                         </Button>
 
-                        <Button x:Name="botonImagenAmpliadaOpciones" Margin="10,0" Padding="10" Width="40" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
+                        <AppBarSeparator Foreground="White"/>
+
+                        <Button x:Name="botonCopiarImagen" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
                             <Button.Content>
-                                <fa:FontAwesome Icon="AngleDoubleRight" Foreground="White"/>
+                                <fa:FontAwesome Icon="Copy" Foreground="White"/>
                             </Button.Content>
                         </Button>
 
-                        <StackPanel x:Name="spImagenAmpliadaOpciones" Orientation="Horizontal" Visibility="Collapsed">
-                            <TextBox x:Name="tbImagenAmpliada" IsReadOnly="True" BorderBrush="White" BorderThickness="1" Padding="10"/>
-
-                            <Button x:Name="botonCopiarImagen" Margin="10,0" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
-                                <Button.Content>
-                                    <fa:FontAwesome Icon="Copy" Foreground="White"/>
-                                </Button.Content>
-                            </Button>
-                        </StackPanel>
-
+                        <TextBox x:Name="tbImagenAmpliada" Margin="10,0" IsReadOnly="True" BorderBrush="White" BorderThickness="1" Padding="10"/>
                     </StackPanel>
                     
                     <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="10">
@@ -408,12 +401,24 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Button x:Name="botonCerrarVideo" Grid.Row="0" Margin="10,10,10,0" Padding="10" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
-                        <Button.Content>
-                            <fa:FontAwesome Icon="ArrowCircleLeft" Foreground="White"/>
-                        </Button.Content>
-                    </Button>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10,10,10,0">
+                        <Button x:Name="botonCerrarVideo" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
+                            <Button.Content>
+                                <fa:FontAwesome Icon="ArrowCircleLeft" Foreground="White"/>
+                            </Button.Content>
+                        </Button>
 
+                        <AppBarSeparator Foreground="White"/>
+
+                        <Button x:Name="botonCopiarVideo" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
+                            <Button.Content>
+                                <fa:FontAwesome Icon="Copy" Foreground="White"/>
+                            </Button.Content>
+                        </Button>
+
+                        <TextBox x:Name="tbVideoAmpliado" Margin="10,0" IsReadOnly="True" BorderBrush="White" BorderThickness="1" Padding="10"/>
+                    </StackPanel>
+                    
                     <Border x:Name="bordeVideoAmpliado" Grid.Row="1" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
                         <MediaPlayerElement x:Name="videoAmpliado" AreTransportControlsEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>

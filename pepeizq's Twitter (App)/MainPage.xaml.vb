@@ -411,24 +411,6 @@ Public NotInheritable Class MainPage
 
     End Sub
 
-    Private Sub BotonImagenAmpliadaOpciones_Click(sender As Object, e As RoutedEventArgs) Handles botonImagenAmpliadaOpciones.Click
-
-        Dim icono As New FontAwesome.UWP.FontAwesome With {
-            .Foreground = New SolidColorBrush(Colors.White)
-        }
-
-        If spImagenAmpliadaOpciones.Visibility = Visibility.Visible Then
-            icono.Icon = FontAwesomeIcon.AngleDoubleRight
-            spImagenAmpliadaOpciones.Visibility = Visibility.Collapsed
-        Else
-            icono.Icon = FontAwesomeIcon.AngleDoubleLeft
-            spImagenAmpliadaOpciones.Visibility = Visibility.Visible
-        End If
-
-        botonImagenAmpliadaOpciones.Content = icono
-
-    End Sub
-
     Private Sub BotonCopiarImagen_Click(sender As Object, e As RoutedEventArgs) Handles botonCopiarImagen.Click
 
         Dim paquete As New DataPackage

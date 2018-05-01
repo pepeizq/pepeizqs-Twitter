@@ -112,6 +112,7 @@
     <Compile Include="Clases\Objetos\BusquedaUsuario.vb" />
     <Compile Include="Clases\Objetos\EnviarTweetBoton.vb" />
     <Compile Include="Clases\Objetos\EnviarTweetTextoCambia.vb" />
+    <Compile Include="Clases\Objetos\MediaDatos.vb" />
     <Compile Include="Clases\Objetos\SeguirUsuarioBoton.vb" />
     <Compile Include="Clases\Objetos\TweetAmpliado.vb" />
     <Compile Include="Clases\Objetos\TweetXamlBoton.vb" />

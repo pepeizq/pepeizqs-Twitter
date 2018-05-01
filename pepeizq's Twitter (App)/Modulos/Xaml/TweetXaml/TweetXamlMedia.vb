@@ -114,20 +114,15 @@ Namespace pepeizq.Twitter.Xaml
                         AddHandler gridMedia.PointerEntered, AddressOf UsuarioEntraMedia
                         AddHandler gridMedia.PointerExited, AddressOf UsuarioSaleMedia
 
+                        Dim datos As New Objetos.MediaDatos(color, imagenUrl, imagenMedia)
+
                         Dim frame As Frame = Window.Current.Content
                         Dim pagina As Page = frame.Content
 
                         If itemMedia.Tipo = "photo" Then
-                            Dim botonCerrar As Button = pagina.FindName("botonCerrarImagen")
-                            botonCerrar.Tag = color
-
                             AddHandler gridMedia.PointerPressed, AddressOf UsuarioClickeaImagen
                         ElseIf itemMedia.Tipo = "video" Then
-                            Dim botonCerrar As Button = pagina.FindName("botonCerrarVideo")
-                            botonCerrar.Tag = color
-
                             Dim listaVideos As TweetVideoVariante() = itemMedia.Video.Variantes
-
                             Dim listaOrdenada As New List(Of TweetVideoVariante)
 
                             For Each item In listaVideos
@@ -135,7 +130,8 @@ Namespace pepeizq.Twitter.Xaml
                             Next
 
                             listaOrdenada.Sort(Function(x, y) y.Bitrate.CompareTo(x.Bitrate))
-                            imagenMedia.Tag = listaOrdenada(0).Enlace
+
+                            datos.Enlace = listaOrdenada(0).Enlace
 
                             AddHandler gridMedia.PointerPressed, AddressOf UsuarioClickeaVideo
                         ElseIf itemMedia.Tipo = "animated_gif" Then
@@ -143,7 +139,7 @@ Namespace pepeizq.Twitter.Xaml
                             AddHandler gridMedia.PointerPressed, AddressOf UsuarioClickeaGif
                         End If
 
-                        gridMedia.Tag = itemMedia.EnlaceHttps
+                        gridMedia.Tag = datos
                         gridMedia.Children.Add(imagenMedia)
 
                         If itemMedia.Tipo = "video" Or itemMedia.Tipo = "animated_gif" Then
@@ -221,18 +217,13 @@ Namespace pepeizq.Twitter.Xaml
 
         Public Sub UsuarioClickeaImagen(sender As Object, e As PointerRoutedEventArgs)
 
-            Dim gridRecibido As Grid = sender
-
-            Dim imagenRecibida As New ImageEx With {
-                .Source = New BitmapImage(New Uri(gridRecibido.Tag))
-            }
-
             Dim frame As Frame = Window.Current.Content
             Dim pagina As Page = frame.Content
 
-            Dim botonCerrar As Button = pagina.FindName("botonCerrarImagen")
+            Dim gridRecibido As Grid = sender
+            Dim datos As Objetos.MediaDatos = gridRecibido.Tag
 
-            Dim color As Color = botonCerrar.Tag
+            Dim color As Color = datos.Color
 
             If color = Nothing Then
                 color = App.Current.Resources("ColorSecundario")
@@ -244,10 +235,11 @@ Namespace pepeizq.Twitter.Xaml
                 color = App.Current.Resources("ColorSecundario")
             End If
 
+            Dim botonCerrar As Button = pagina.FindName("botonCerrarImagen")
             botonCerrar.Background = New SolidColorBrush(color)
 
-            Dim botonOpciones As Button = pagina.FindName("botonImagenAmpliadaOpciones")
-            botonOpciones.Background = New SolidColorBrush(color)
+            Dim tbImagenAmpliada As TextBox = pagina.FindName("tbImagenAmpliada")
+            tbImagenAmpliada.Text = datos.Enlace
 
             Dim botonCopiar As Button = pagina.FindName("botonCopiarImagen")
             botonCopiar.Background = New SolidColorBrush(color)
@@ -258,16 +250,14 @@ Namespace pepeizq.Twitter.Xaml
             Dim gridImagen As Grid = pagina.FindName("gridImagenAmpliada")
             gridImagen.Visibility = Visibility.Visible
 
-            Dim tbImagenAmpliada As TextBox = pagina.FindName("tbImagenAmpliada")
-            tbImagenAmpliada.Text = gridRecibido.Tag
-
             Dim imagenAmpliada As ImageEx = pagina.FindName("imagenAmpliada")
 
             Try
-                imagenAmpliada.Source = imagenRecibida.Source
-                imagenAmpliada.Tag = imagenRecibida
+                imagenAmpliada.Foreground = New SolidColorBrush(color)
+                imagenAmpliada.Source = datos.Enlace
+                imagenAmpliada.Tag = datos.Imagen
 
-                ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("imagenAmpliada", imagenRecibida)
+                ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("imagenAmpliada", datos.Imagen)
 
                 Dim animacion As ConnectedAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("imagenAmpliada")
 
@@ -282,16 +272,13 @@ Namespace pepeizq.Twitter.Xaml
 
         Public Sub UsuarioClickeaVideo(sender As Object, e As PointerRoutedEventArgs)
 
-            Dim gridRecibido As Grid = sender
-            Dim imagenRecibida As ImageEx = gridRecibido.Tag
-            Dim videoRecibido As String = imagenRecibida.Tag
-
             Dim frame As Frame = Window.Current.Content
             Dim pagina As Page = frame.Content
 
-            Dim botonCerrar As Button = pagina.FindName("botonCerrarVideo")
+            Dim gridRecibido As Grid = sender
+            Dim datos As Objetos.MediaDatos = gridRecibido.Tag
 
-            Dim color As Color = botonCerrar.Tag
+            Dim color As Color = datos.Color
 
             If color = Nothing Then
                 color = App.Current.Resources("ColorSecundario")
@@ -303,7 +290,14 @@ Namespace pepeizq.Twitter.Xaml
                 color = App.Current.Resources("ColorSecundario")
             End If
 
+            Dim botonCerrar As Button = pagina.FindName("botonCerrarVideo")
             botonCerrar.Background = New SolidColorBrush(color)
+
+            Dim tbVideoAmpliado As TextBox = pagina.FindName("tbVideoAmpliado")
+            tbVideoAmpliado.Text = datos.Enlace
+
+            Dim botonCopiar As Button = pagina.FindName("botonCopiarVideo")
+            botonCopiar.Background = New SolidColorBrush(color)
 
             Dim bordeVideo As Border = pagina.FindName("bordeVideoAmpliado")
             bordeVideo.BorderBrush = New SolidColorBrush(color)
@@ -314,9 +308,9 @@ Namespace pepeizq.Twitter.Xaml
             Dim reproductor As MediaPlayerElement = pagina.FindName("videoAmpliado")
 
             Try
-                reproductor.Source = MediaSource.CreateFromUri(New Uri(videoRecibido))
+                reproductor.Source = MediaSource.CreateFromUri(New Uri(datos.Enlace))
                 reproductor.MediaPlayer.Play()
-                reproductor.Tag = imagenRecibida
+                reproductor.Tag = datos.Imagen
             Catch ex As Exception
 
             End Try
