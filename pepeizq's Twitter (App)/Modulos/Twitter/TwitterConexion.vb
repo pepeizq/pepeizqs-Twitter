@@ -202,7 +202,7 @@ Module TwitterConexion
             If menu.Items.Count > 0 Then
                 If i = 0 Then
                     Dim nuevoUsuario As TwitterUsuario = menu.Items(0).Tag
-                    UsuarioXaml.CambiarCuenta(nuevoUsuario)
+                    UsuarioXaml.CambiarCuenta(nuevoUsuario.ScreenNombre)
                 End If
             End If
 

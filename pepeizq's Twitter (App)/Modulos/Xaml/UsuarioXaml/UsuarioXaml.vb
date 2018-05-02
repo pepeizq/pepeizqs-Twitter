@@ -1,4 +1,5 @@
-﻿Imports pepeizq.Twitter
+﻿Imports Microsoft.Toolkit.Uwp.Helpers
+Imports pepeizq.Twitter
 Imports Windows.UI
 Imports Windows.UI.Core
 
@@ -120,54 +121,70 @@ Module UsuarioXaml
         Dim boton As MenuFlyoutItem = sender
         Dim usuario As TwitterUsuario = boton.Tag
 
-        CambiarCuenta(usuario)
+        CambiarCuenta(usuario.ScreenNombre)
 
     End Sub
 
-    Public Sub CambiarCuenta(usuario As TwitterUsuario)
+    Public Sub CambiarCuenta(usuarioRecibido As String)
 
-        Dim frame As Frame = Window.Current.Content
-        Dim pagina As Page = frame.Content
+        Dim helper As New LocalObjectStorageHelper
 
-        Dim tbTitulo As TextBlock = pagina.FindName("tbTitulo")
-        tbTitulo.Text = Package.Current.DisplayName + " (" + Package.Current.Id.Version.Major.ToString + "." + Package.Current.Id.Version.Minor.ToString + "." + Package.Current.Id.Version.Build.ToString + "." + Package.Current.Id.Version.Revision.ToString + ") - " + usuario.Nombre
+        Dim listaUsuarios As New List(Of TwitterUsuario)
 
-        Dim itemUsuarios As NavigationViewItem = pagina.FindName("itemUsuarios")
-        itemUsuarios.Tag = usuario
+        If helper.KeyExists("listaUsuarios2") Then
+            listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios2")
+        End If
 
-        Dim imagenCuenta As ImageBrush = pagina.FindName("imagenCuentaSeleccionada")
-        imagenCuenta.ImageSource = New BitmapImage(New Uri(usuario.ImagenAvatar))
+        Dim usuario As TwitterUsuario = Nothing
 
-        Dim tbCuenta As TextBlock = pagina.FindName("tbCuentaSeleccionada")
-        tbCuenta.Text = usuario.Nombre
-
-        Dim gridPrincipal As Grid = pagina.FindName("gridPrincipal")
-
-        For Each grid As Grid In gridPrincipal.Children
-            If grid.Name.Contains("gridUsuario") Then
-                If Not grid.Name = "gridUsuarioAmpliado" Then
-                    For Each subgrid As Grid In grid.Children
-                        subgrid.Visibility = Visibility.Collapsed
-                    Next
-
-                    grid.Visibility = Visibility.Collapsed
-                End If
-            End If
-
-            If grid.Name = "gridUsuario" + usuario.ScreenNombre Then
-                For Each subgrid As Grid In grid.Children
-                    If subgrid.Name.Contains("gridTweets" + usuario.ScreenNombre) Then
-                        subgrid.Visibility = Visibility.Visible
-                    Else
-                        subgrid.Visibility = Visibility.Collapsed
-                    End If
-                Next
-
-                grid.Visibility = Visibility.Visible
+        For Each usuarioTwitter As TwitterUsuario In listaUsuarios
+            If usuarioRecibido = usuarioTwitter.ScreenNombre Then
+                usuario = usuarioTwitter
             End If
         Next
 
-    End Sub
+        If Not usuario Is Nothing Then
+            Dim frame As Frame = Window.Current.Content
+            Dim pagina As Page = frame.Content
 
+            Dim tbTitulo As TextBlock = pagina.FindName("tbTitulo")
+            tbTitulo.Text = Package.Current.DisplayName + " (" + Package.Current.Id.Version.Major.ToString + "." + Package.Current.Id.Version.Minor.ToString + "." + Package.Current.Id.Version.Build.ToString + "." + Package.Current.Id.Version.Revision.ToString + ") - " + usuario.Nombre
+
+            Dim itemUsuarios As NavigationViewItem = pagina.FindName("itemUsuarios")
+            itemUsuarios.Tag = usuario
+
+            Dim imagenCuenta As ImageBrush = pagina.FindName("imagenCuentaSeleccionada")
+            imagenCuenta.ImageSource = New BitmapImage(New Uri(usuario.ImagenAvatar))
+
+            Dim tbCuenta As TextBlock = pagina.FindName("tbCuentaSeleccionada")
+            tbCuenta.Text = usuario.Nombre
+
+            Dim gridPrincipal As Grid = pagina.FindName("gridPrincipal")
+
+            For Each grid As Grid In gridPrincipal.Children
+                If grid.Name.Contains("gridUsuario") Then
+                    If Not grid.Name = "gridUsuarioAmpliado" Then
+                        For Each subgrid As Grid In grid.Children
+                            subgrid.Visibility = Visibility.Collapsed
+                        Next
+
+                        grid.Visibility = Visibility.Collapsed
+                    End If
+                End If
+
+                If grid.Name = "gridUsuario" + usuario.ScreenNombre Then
+                    For Each subgrid As Grid In grid.Children
+                        If subgrid.Name.Contains("gridTweets" + usuario.ScreenNombre) Then
+                            subgrid.Visibility = Visibility.Visible
+                        Else
+                            subgrid.Visibility = Visibility.Collapsed
+                        End If
+                    Next
+
+                    grid.Visibility = Visibility.Visible
+                End If
+            Next
+        End If
+    End Sub
 
 End Module

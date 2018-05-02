@@ -16,6 +16,10 @@
             Window.Current.Content = rootFrame
         End If
 
+        If e.Kind = ActivationKind.Launch Then
+            CambiarCuenta(e.Arguments)
+        End If
+
         If e.PrelaunchActivated = False Then
             If rootFrame.Content Is Nothing Then
                 rootFrame.Navigate(GetType(MainPage), e.Arguments)

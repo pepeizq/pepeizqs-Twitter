@@ -377,7 +377,7 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10,10,10,0">
-                        <Button x:Name="botonCerrarImagen" Padding="10" Width="40" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
+                        <Button x:Name="botonCerrarImagen" Padding="10" Width="40" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                             <Button.Content>
                                 <fa:FontAwesome Icon="ArrowCircleLeft" Foreground="White"/>
                             </Button.Content>
@@ -385,7 +385,7 @@
 
                         <AppBarSeparator Foreground="White"/>
 
-                        <Button x:Name="botonCopiarImagen" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
+                        <Button x:Name="botonCopiarImagen" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                             <Button.Content>
                                 <fa:FontAwesome Icon="Copy" Foreground="White"/>
                             </Button.Content>
@@ -408,7 +408,7 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10,10,10,0">
-                        <Button x:Name="botonCerrarVideo" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
+                        <Button x:Name="botonCerrarVideo" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                             <Button.Content>
                                 <fa:FontAwesome Icon="ArrowCircleLeft" Foreground="White"/>
                             </Button.Content>
@@ -416,7 +416,7 @@
 
                         <AppBarSeparator Foreground="White"/>
 
-                        <Button x:Name="botonCopiarVideo" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
+                        <Button x:Name="botonCopiarVideo" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                             <Button.Content>
                                 <fa:FontAwesome Icon="Copy" Foreground="White"/>
                             </Button.Content>

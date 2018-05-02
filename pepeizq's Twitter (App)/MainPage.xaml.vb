@@ -10,6 +10,7 @@ Imports Windows.Storage
 Imports Windows.System
 Imports Windows.UI
 Imports Windows.UI.Core
+Imports Windows.UI.StartScreen
 Imports Windows.UI.Xaml.Media.Animation
 
 Public NotInheritable Class MainPage
@@ -111,6 +112,9 @@ Public NotInheritable Class MainPage
             If listaUsuarios.Count > 0 Then
                 UsuarioXaml.GenerarListaUsuarios(listaUsuarios)
 
+                Dim listaSalto As JumpList = Await JumpList.LoadCurrentAsync
+                listaSalto.Items.Clear()
+
                 For Each usuario In listaUsuarios
                     Dim megaUsuario As pepeizq.Twitter.MegaUsuario = Nothing
 
@@ -131,9 +135,16 @@ Public NotInheritable Class MainPage
 
                         UsuarioXaml.GenerarCadaUsuario(megaUsuario, visibilidad)
 
+                        Dim itemSalto As JumpListItem = JumpListItem.CreateWithArguments(megaUsuario.Usuario.ScreenNombre, megaUsuario.Usuario.Nombre)
+                        itemSalto.Logo = New Uri("ms-appx:///Assets/logo2.png")
+                        listaSalto.Items.Add(itemSalto)
+
                         i += 1
                     End If
                 Next
+
+                Await listaSalto.SaveAsync
+
             ElseIf listaUsuarios.Count = 0 Then
                 For Each item In nvPrincipal.MenuItems
                     If TypeOf item Is NavigationViewItem Then
