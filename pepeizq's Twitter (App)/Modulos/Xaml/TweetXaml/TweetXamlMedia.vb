@@ -135,7 +135,7 @@ Namespace pepeizq.Twitter.Xaml
 
                             AddHandler gridMedia.PointerPressed, AddressOf UsuarioClickeaVideo
                         ElseIf itemMedia.Tipo = "animated_gif" Then
-                            imagenMedia.Tag = itemMedia.Video.Variantes(0).Enlace
+                            datos.Enlace = itemMedia.Video.Variantes(0).Enlace
                             AddHandler gridMedia.PointerPressed, AddressOf UsuarioClickeaGif
                         End If
 
@@ -319,18 +319,37 @@ Namespace pepeizq.Twitter.Xaml
 
         Public Sub UsuarioClickeaGif(sender As Object, e As PointerRoutedEventArgs)
 
-            Dim gridRecibido As Grid = sender
-            Dim imagenRecibida As ImageEx = gridRecibido.Tag
-            Dim gifRecibido As String = imagenRecibida.Tag
+            Dim frame As Frame = Window.Current.Content
+            Dim pagina As Page = frame.Content
 
-            gridRecibido.Children.Clear()
+            Dim gridRecibido As Grid = sender
+            Dim datos As Objetos.MediaDatos = gridRecibido.Tag
+
+            Dim boolPlay As Boolean = True
+
+            For Each hijo In gridRecibido.Children
+                If TypeOf hijo Is MediaPlayerElement Then
+                    Dim hijoReproductor As MediaPlayerElement = hijo
+
+                    If hijoReproductor.MediaPlayer.PlaybackSession.PlaybackState = Windows.Media.Playback.MediaPlaybackState.Playing Then
+                        boolPlay = False
+                    Else
+                        boolPlay = True
+                    End If
+                End If
+            Next
 
             Dim reproductor As New MediaPlayerElement
 
             Try
-                reproductor.Source = MediaSource.CreateFromUri(New Uri(gifRecibido))
-                reproductor.MediaPlayer.Play()
+                reproductor.Source = MediaSource.CreateFromUri(New Uri(datos.Enlace))
                 reproductor.MediaPlayer.IsLoopingEnabled = True
+
+                If boolPlay = True Then
+                    reproductor.MediaPlayer.Play()
+                Else
+                    reproductor.MediaPlayer.Pause()
+                End If
             Catch ex As Exception
 
             End Try

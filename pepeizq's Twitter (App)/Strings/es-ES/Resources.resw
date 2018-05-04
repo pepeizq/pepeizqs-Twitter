@@ -294,4 +294,10 @@
   <data name="StoreTags" xml:space="preserve">
     <value>Twitter;Tweet;Retwittear;Hashtag</value>
   </data>
+  <data name="tbConfigNotificationsUser.Text" xml:space="preserve">
+    <value>Incluir usuario a quien va dirigido el tweet</value>
+  </data>
+  <data name="ButtonDeleteAccount" xml:space="preserve">
+    <value>Borrar Cuenta</value>
+  </data>
 </root>

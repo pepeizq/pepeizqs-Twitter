@@ -11,7 +11,7 @@ Namespace Notificaciones
 
     Module MessageBox
 
-        Public Async Sub Enseñar(contenido As String)
+        Public Async Sub MessageBox(contenido As String)
 
             Try
                 Dim messageDialog = New MessageDialog(contenido)
@@ -62,7 +62,7 @@ Namespace Notificaciones
 
     Module ToastTweet
 
-        Public Sub Enseñar(tweet As Tweet)
+        Public Sub Enseñar(tweet As Tweet, usuario As TwitterUsuario)
 
             Dim texto As String = Nothing
 
@@ -154,9 +154,21 @@ Namespace Notificaciones
                     End If
                 End If
 
+                Dim atribucion As ToastGenericAttributionText = Nothing
+
+                If ApplicationData.Current.LocalSettings.Values("notificacionUsuario") = True Then
+                    atribucion = New ToastGenericAttributionText With {
+                        .Text = "@" + usuario.ScreenNombre
+                    }
+                End If
+
                 Dim contenido As New ToastBindingGeneric With {
                     .AppLogoOverride = logo
                 }
+
+                If Not atribucion Is Nothing Then
+                    contenido.Attribution = atribucion
+                End If
 
                 contenido.Children.Add(textoTweet)
                 contenido.Children.Add(textoCuenta)

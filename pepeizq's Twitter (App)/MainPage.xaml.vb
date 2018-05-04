@@ -73,6 +73,7 @@ Public NotInheritable Class MainPage
             ElseIf item.Text = recursos.GetString("Config") Then
 
                 GridVisibilidad(gridConfig, Nothing)
+                SpConfigVisibilidad(botonConfigCuentas, spConfigCuentas)
 
             End If
         End If
@@ -185,15 +186,11 @@ Public NotInheritable Class MainPage
         Await Dispatcher.RunAsync(CoreDispatcherPriority.High, Sub()
                                                                    If estado = True Then
                                                                        gridConfig.Background = App.Current.Resources("GridAcrilico")
-                                                                       gridConfigCuentas.Background = App.Current.Resources("GridTituloBackground")
-                                                                       gridConfigNotificaciones.Background = App.Current.Resources("GridTituloBackground")
                                                                        gridImagenAmpliada.Background = App.Current.Resources("GridAcrilico")
                                                                        gridVideoAmpliado.Background = App.Current.Resources("GridAcrilico")
                                                                        gridOEmbedAmpliado.Background = App.Current.Resources("GridAcrilico")
                                                                    Else
                                                                        gridConfig.Background = New SolidColorBrush(Colors.LightGray)
-                                                                       gridConfigCuentas.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
-                                                                       gridConfigNotificaciones.Background = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
                                                                        gridImagenAmpliada.Background = New SolidColorBrush(Colors.LightGray)
                                                                        gridVideoAmpliado.Background = New SolidColorBrush(Colors.LightGray)
                                                                        gridOEmbedAmpliado.Background = New SolidColorBrush(Colors.LightGray)
@@ -233,6 +230,39 @@ Public NotInheritable Class MainPage
     End Sub
 
     'CONFIG-----------------------------------------------------------------------------
+
+    Public Sub SpConfigVisibilidad(boton As Button, sp As StackPanel)
+
+        botonConfigCuentas.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+        botonConfigApp.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+        botonConfigNotificaciones.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+
+        spConfigCuentas.Visibility = Visibility.Collapsed
+        spConfigApp.Visibility = Visibility.Collapsed
+        spConfigNotificaciones.Visibility = Visibility.Collapsed
+
+        boton.Background = New SolidColorBrush(App.Current.Resources("ColorCuarto"))
+        sp.Visibility = Visibility.Visible
+
+    End Sub
+
+    Private Sub BotonConfigCuentas_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigCuentas.Click
+
+        SpConfigVisibilidad(botonConfigCuentas, spConfigCuentas)
+
+    End Sub
+
+    Private Sub BotonConfigApp_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigApp.Click
+
+        SpConfigVisibilidad(botonConfigApp, spConfigApp)
+
+    End Sub
+
+    Private Sub BotonConfigNotificaciones_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigNotificaciones.Click
+
+        SpConfigVisibilidad(botonConfigNotificaciones, spConfigNotificaciones)
+
+    End Sub
 
     Private Async Sub BotonAñadirCuenta_Click(sender As Object, e As RoutedEventArgs) Handles botonAñadirCuenta.Click
 
@@ -496,5 +526,6 @@ Public NotInheritable Class MainPage
         botonSubirArribaUsuario.Visibility = Visibility.Collapsed
 
     End Sub
+
 End Class
 

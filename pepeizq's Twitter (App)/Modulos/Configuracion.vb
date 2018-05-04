@@ -51,6 +51,12 @@ Module Configuracion
             NotificacionesImagen(ApplicationData.Current.LocalSettings.Values("notificacionImagen"))
         End If
 
+        If ApplicationData.Current.LocalSettings.Values("notificacionUsuario") Is Nothing Then
+            NotificacionesUsuario(True)
+        Else
+            NotificacionesUsuario(ApplicationData.Current.LocalSettings.Values("notificacionUsuario"))
+        End If
+
     End Sub
 
     Public Async Sub AutoArranque()
@@ -104,8 +110,7 @@ Module Configuracion
         Dim cb As CheckBox = pagina.FindName("cbConfigNotificaciones")
         cb.IsChecked = estado
 
-        Dim grid As Grid = pagina.FindName("gridConfigNotificaciones")
-        Dim sp As StackPanel = pagina.FindName("spConfigNotificaciones")
+        Dim sp As StackPanel = pagina.FindName("spConfigSubNotificaciones")
 
         If estado = True Then
             sp.Visibility = Visibility.Visible
@@ -184,6 +189,18 @@ Module Configuracion
         ApplicationData.Current.LocalSettings.Values("notificacionImagen") = estado
 
         Dim cb As CheckBox = pagina.FindName("cbConfigNotificacionesImagen")
+        cb.IsChecked = estado
+
+    End Sub
+
+    Public Sub NotificacionesUsuario(estado As Boolean)
+
+        Dim frame As Frame = Window.Current.Content
+        Dim pagina As Page = frame.Content
+
+        ApplicationData.Current.LocalSettings.Values("notificacionUsuario") = estado
+
+        Dim cb As CheckBox = pagina.FindName("cbConfigNotificacionesUsuario")
         cb.IsChecked = estado
 
     End Sub

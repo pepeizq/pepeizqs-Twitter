@@ -1,4 +1,5 @@
-﻿Imports Microsoft.Toolkit.Uwp.Helpers
+﻿Imports FontAwesome.UWP
+Imports Microsoft.Toolkit.Uwp.Helpers
 Imports pepeizq.Twitter
 Imports Windows.Storage
 Imports Windows.UI
@@ -88,6 +89,8 @@ Module TwitterConexion
 
     Private Function ConfigAñadirUsuarioXaml(megaUsuario As pepeizq.Twitter.MegaUsuario)
 
+        Dim recursos As New Resources.ResourceLoader
+
         Dim usuario As TwitterUsuario = megaUsuario.Usuario
 
         Dim gridUsuario As New Grid With {
@@ -98,14 +101,17 @@ Module TwitterConexion
         Dim col1 As New ColumnDefinition
         Dim col2 As New ColumnDefinition
         Dim col3 As New ColumnDefinition
+        Dim col4 As New ColumnDefinition
 
         col1.Width = New GridLength(1, GridUnitType.Auto)
         col2.Width = New GridLength(1, GridUnitType.Star)
         col3.Width = New GridLength(1, GridUnitType.Auto)
+        col4.Width = New GridLength(1, GridUnitType.Auto)
 
         gridUsuario.ColumnDefinitions.Add(col1)
         gridUsuario.ColumnDefinitions.Add(col2)
         gridUsuario.ColumnDefinitions.Add(col3)
+        gridUsuario.ColumnDefinitions.Add(col4)
 
         Dim imagenAvatar As New ImageBrush With {
             .Stretch = Stretch.Uniform,
@@ -131,27 +137,69 @@ Module TwitterConexion
         tbUsuario.SetValue(Grid.ColumnProperty, 1)
         gridUsuario.Children.Add(tbUsuario)
 
-        Dim simbolo As New FontAwesome.UWP.FontAwesome With {
+        Dim simboloNotificacion As New FontAwesome.UWP.FontAwesome With {
+            .Foreground = New SolidColorBrush(App.Current.Resources("ColorSecundario")),
+            .Icon = FontAwesomeIcon.Comment
+        }
+
+        Dim cbNotificacion As New CheckBox With {
+            .Content = simboloNotificacion,
+            .MinWidth = 0,
+            .Margin = New Thickness(20, 0, 20, 0),
+            .Tag = megaUsuario,
+            .IsChecked = True
+        }
+
+        AddHandler cbNotificacion.Checked, AddressOf CbNotificacion_Checked
+        AddHandler cbNotificacion.Unchecked, AddressOf CbNotificacion_Unchecked
+        AddHandler cbNotificacion.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler cbNotificacion.PointerExited, AddressOf UsuarioSaleBoton
+
+        cbNotificacion.SetValue(Grid.ColumnProperty, 2)
+        gridUsuario.Children.Add(cbNotificacion)
+
+        Dim simboloQuitar As New FontAwesome.UWP.FontAwesome With {
             .Foreground = New SolidColorBrush(Colors.White),
-            .Icon = FontAwesome.UWP.FontAwesomeIcon.Times
+            .Icon = FontAwesomeIcon.Times
         }
 
         Dim botonQuitar As New Button With {
             .Background = New SolidColorBrush(App.Current.Resources("ColorSecundario")),
-            .Content = simbolo,
+            .Content = simboloQuitar,
             .Tag = megaUsuario
         }
+
+        ToolTipService.SetToolTip(botonQuitar, recursos.GetString("ButtonDeleteAccount"))
+        ToolTipService.SetPlacement(botonQuitar, PlacementMode.Bottom)
 
         AddHandler botonQuitar.Click, AddressOf BotonQuitarCuenta
         AddHandler botonQuitar.PointerEntered, AddressOf UsuarioEntraBoton
         AddHandler botonQuitar.PointerExited, AddressOf UsuarioSaleBoton
 
-        botonQuitar.SetValue(Grid.ColumnProperty, 2)
+        botonQuitar.SetValue(Grid.ColumnProperty, 3)
         gridUsuario.Children.Add(botonQuitar)
 
         Return gridUsuario
 
     End Function
+
+    Private Sub CbNotificacion_Checked(sender As Object, e As RoutedEventArgs)
+
+        Dim cb As CheckBox = sender
+        Dim megaUsuario As pepeizq.Twitter.MegaUsuario = cb.Tag
+
+        ApplicationData.Current.LocalSettings.Values("notificacion" + megaUsuario.Usuario.ScreenNombre) = True
+
+    End Sub
+
+    Private Sub CbNotificacion_Unchecked(sender As Object, e As RoutedEventArgs)
+
+        Dim cb As CheckBox = sender
+        Dim megaUsuario As pepeizq.Twitter.MegaUsuario = cb.Tag
+
+        ApplicationData.Current.LocalSettings.Values("notificacion" + megaUsuario.Usuario.ScreenNombre) = False
+
+    End Sub
 
     Private Sub BotonQuitarCuenta(sender As Object, e As RoutedEventArgs)
 
