@@ -192,7 +192,7 @@ Namespace pepeizq.Twitter.Xaml
             Dim listaTweetRespuestas As New List(Of Tweet)
 
             Try
-                listaTweetRespuestas = Await provider.CogerRespuestasTweet(cosas.MegaUsuario.Usuario.Tokens, tweetNuevo.Usuario.ScreenNombre, tweetNuevo.ID, New TwitterBusquedaTweetsParser)
+                listaTweetRespuestas = Await provider.BuscarRespuestasTweet(cosas.MegaUsuario.Usuario.Tokens, tweetNuevo.Usuario.ScreenNombre, tweetNuevo.ID, New TwitterBusquedaTweetsParser)
             Catch ex As Exception
 
             End Try

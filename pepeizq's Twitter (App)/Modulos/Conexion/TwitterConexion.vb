@@ -8,7 +8,7 @@ Imports Windows.UI.Xaml.Shapes
 
 Module TwitterConexion
 
-    Public Async Function Iniciar(usuarioRecibido As TwitterUsuario) As Task(Of pepeizq.Twitter.MegaUsuario)
+    Public Async Function Iniciar(usuarioRecibido As pepeizq.Twitter.MegaUsuario) As Task(Of pepeizq.Twitter.MegaUsuario)
 
         Dim consumerKey As String = "poGVvY5De5zBqQ4ceqp7jw7cj"
         Dim consumerSecret As String = "f8PCcuwFZxYi0r5iG6UaysgxD0NoaCT2RgYG8I41mvjghy58rc"
@@ -17,7 +17,8 @@ Module TwitterConexion
         Dim servicio As New TwitterServicio
 
         If Not usuarioRecibido Is Nothing Then
-            ApplicationData.Current.LocalSettings.Values("TwitterScreenNombre") = usuarioRecibido.ScreenNombre
+            ApplicationData.Current.LocalSettings.Values("TwitterScreenNombre") = usuarioRecibido.Usuario.ScreenNombre
+            Notificaciones.Toast.Enseñar(usuarioRecibido.Usuario.ScreenNombre)
         Else
             ApplicationData.Current.LocalSettings.Values("TwitterScreenNombre") = Nothing
         End If
@@ -30,32 +31,38 @@ Module TwitterConexion
         End Try
 
         If estado = True Then
-            Dim usuario As TwitterUsuario = Await servicio.Provider.GenerarUsuario
+            Dim usuario As TwitterUsuario = Nothing
+
+            Try
+                usuario = Await servicio.Provider.GenerarUsuario
+            Catch ex As Exception
+
+            End Try
 
             If Not usuario Is Nothing Then
 
-                Dim megaUsuario As New pepeizq.Twitter.MegaUsuario(usuario, servicio)
+                Dim megaUsuario As New pepeizq.Twitter.MegaUsuario(usuario, servicio, True)
 
                 Dim helper As New LocalObjectStorageHelper
 
-                Dim listaUsuarios As New List(Of TwitterUsuario)
+                Dim listaUsuarios As New List(Of pepeizq.Twitter.MegaUsuario)
 
-                If helper.KeyExists("listaUsuarios2") Then
-                    listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios2")
+                If helper.KeyExists("listaUsuarios3") Then
+                    listaUsuarios = helper.Read(Of List(Of pepeizq.Twitter.MegaUsuario))("listaUsuarios3")
                 End If
 
                 Dim añadirLista As Boolean = True
 
                 For Each item In listaUsuarios
-                    If item.Id = usuario.Id Then
+                    If item.Usuario.Id = usuario.Id Then
                         añadirLista = False
                     End If
                 Next
 
                 If añadirLista = True Then
-                    listaUsuarios.Add(usuario)
+                    listaUsuarios.Add(megaUsuario)
 
-                    helper.Save(Of List(Of TwitterUsuario))("listaUsuarios2", listaUsuarios)
+                    helper.Save("listaUsuarios3", listaUsuarios)
                 End If
 
                 Dim frame As Frame = Window.Current.Content
@@ -147,7 +154,7 @@ Module TwitterConexion
             .MinWidth = 0,
             .Margin = New Thickness(20, 0, 20, 0),
             .Tag = megaUsuario,
-            .IsChecked = True
+            .IsChecked = megaUsuario.Notificacion
         }
 
         AddHandler cbNotificacion.Checked, AddressOf CbNotificacion_Checked
@@ -188,7 +195,7 @@ Module TwitterConexion
         Dim cb As CheckBox = sender
         Dim megaUsuario As pepeizq.Twitter.MegaUsuario = cb.Tag
 
-        ApplicationData.Current.LocalSettings.Values("notificacion" + megaUsuario.Usuario.ScreenNombre) = True
+        megaUsuario.Notificacion = True
 
     End Sub
 
@@ -197,7 +204,7 @@ Module TwitterConexion
         Dim cb As CheckBox = sender
         Dim megaUsuario As pepeizq.Twitter.MegaUsuario = cb.Tag
 
-        ApplicationData.Current.LocalSettings.Values("notificacion" + megaUsuario.Usuario.ScreenNombre) = False
+        megaUsuario.Notificacion = False
 
     End Sub
 
@@ -259,15 +266,15 @@ Module TwitterConexion
 
             Dim helper As New LocalObjectStorageHelper
 
-            Dim listaUsuarios As New List(Of TwitterUsuario)
+            Dim listaUsuarios As New List(Of pepeizq.Twitter.MegaUsuario)
 
-            If helper.KeyExists("listaUsuarios2") Then
-                listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios2")
+            If helper.KeyExists("listaUsuarios3") Then
+                listaUsuarios = helper.Read(Of List(Of pepeizq.Twitter.MegaUsuario))("listaUsuarios3")
             End If
 
             i = 0
             For Each item In listaUsuarios
-                If item.ScreenNombre = megaUsuario.Usuario.ScreenNombre Then
+                If item.Usuario.ScreenNombre = megaUsuario.Usuario.ScreenNombre Then
                     listaUsuarios.RemoveAt(i)
                     Exit For
                 End If
@@ -275,7 +282,7 @@ Module TwitterConexion
                 i += 1
             Next
 
-            helper.Save(Of List(Of TwitterUsuario))("listaUsuarios2", listaUsuarios)
+            helper.Save("listaUsuarios3", listaUsuarios)
 
             Dim nvPrincipal As NavigationView = pagina.FindName("nvPrincipal")
             Dim itemUsuarios As NavigationViewItem = pagina.FindName("itemUsuarios")

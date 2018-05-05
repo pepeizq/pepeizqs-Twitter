@@ -127,27 +127,27 @@
     <Compile Include="Modulos\MasCosas.vb" />
     <Compile Include="Modulos\NavigationViewItems.vb" />
     <Compile Include="Modulos\Notificaciones.vb" />
-    <Compile Include="Modulos\Twitter\TwitterConexion.vb" />
-    <Compile Include="Modulos\Twitter\TwitterStream.vb" />
-    <Compile Include="Modulos\Twitter\TwitterTimeLineInicio.vb" />
-    <Compile Include="Modulos\Twitter\TwitterTimeLineMenciones.vb" />
-    <Compile Include="Modulos\Xaml\FichaOEmbedXaml.vb" />
-    <Compile Include="Modulos\Xaml\FichaTweetXaml.vb" />
-    <Compile Include="Modulos\Xaml\FichaUsuarioXaml.vb" />
-    <Compile Include="Modulos\Xaml\TweetXaml\TweetXaml.vb" />
-    <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlAvatar.vb" />
-    <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlBotones.vb" />
-    <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlEnviarTweet.vb" />
-    <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlMedia.vb" />
-    <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlCita.vb" />
-    <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlRetweet.vb" />
-    <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlTexto.vb" />
-    <Compile Include="Modulos\Xaml\TweetXaml\TweetXamlUsuario.vb" />
-    <Compile Include="Modulos\Xaml\UsuarioXaml\BusquedaXaml.vb" />
-    <Compile Include="Modulos\Xaml\UsuarioXaml\UsuarioXaml.vb" />
-    <Compile Include="Modulos\Xaml\UsuarioXaml\EscribirXaml.vb" />
-    <Compile Include="Modulos\Xaml\UsuarioXaml\InicioXaml.vb" />
-    <Compile Include="Modulos\Xaml\UsuarioXaml\MencionesXaml.vb" />
+    <Compile Include="Modulos\Conexion\TwitterConexion.vb" />
+    <Compile Include="Modulos\Conexion\TwitterStream.vb" />
+    <Compile Include="Modulos\Conexion\TwitterTimeLineInicio.vb" />
+    <Compile Include="Modulos\Conexion\TwitterTimeLineMenciones.vb" />
+    <Compile Include="Modulos\Cliente\FichaOEmbedXaml.vb" />
+    <Compile Include="Modulos\Cliente\FichaTweetXaml.vb" />
+    <Compile Include="Modulos\Cliente\FichaUsuarioXaml.vb" />
+    <Compile Include="Modulos\Cliente\TweetXaml\TweetXaml.vb" />
+    <Compile Include="Modulos\Cliente\TweetXaml\TweetXamlAvatar.vb" />
+    <Compile Include="Modulos\Cliente\TweetXaml\TweetXamlBotones.vb" />
+    <Compile Include="Modulos\Cliente\TweetXaml\TweetXamlEnviarTweet.vb" />
+    <Compile Include="Modulos\Cliente\TweetXaml\TweetXamlMedia.vb" />
+    <Compile Include="Modulos\Cliente\TweetXaml\TweetXamlCita.vb" />
+    <Compile Include="Modulos\Cliente\TweetXaml\TweetXamlRetweet.vb" />
+    <Compile Include="Modulos\Cliente\TweetXaml\TweetXamlTexto.vb" />
+    <Compile Include="Modulos\Cliente\TweetXaml\TweetXamlUsuario.vb" />
+    <Compile Include="Modulos\Cliente\UsuarioXaml\BusquedaXaml.vb" />
+    <Compile Include="Modulos\Cliente\UsuarioXaml\UsuarioXaml.vb" />
+    <Compile Include="Modulos\Cliente\UsuarioXaml\EscribirXaml.vb" />
+    <Compile Include="Modulos\Cliente\UsuarioXaml\InicioXaml.vb" />
+    <Compile Include="Modulos\Cliente\UsuarioXaml\MencionesXaml.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -265,7 +265,7 @@
       <Version>4.7.0.9</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory">
-      <Version>2.29.0</Version>
+      <Version>3.19.4</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.6</Version>
@@ -280,7 +280,7 @@
       <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
-      <Version>2.2.0</Version>
+      <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Services">
       <Version>2.1.1</Version>
@@ -292,7 +292,7 @@
       <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="pepeizq.Twitter">
-      <Version>1.0.55</Version>
+      <Version>1.0.58</Version>
     </PackageReference>
     <PackageReference Include="Unicode.net">
       <Version>0.1.2</Version>

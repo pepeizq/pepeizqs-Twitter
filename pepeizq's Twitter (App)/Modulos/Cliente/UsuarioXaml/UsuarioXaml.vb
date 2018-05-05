@@ -5,7 +5,7 @@ Imports Windows.UI.Core
 
 Module UsuarioXaml
 
-    Public Sub GenerarListaUsuarios(listaUsuarios As List(Of TwitterUsuario))
+    Public Sub GenerarListaUsuarios(listaUsuarios As List(Of pepeizq.Twitter.MegaUsuario))
 
         Dim recursos As New Resources.ResourceLoader
 

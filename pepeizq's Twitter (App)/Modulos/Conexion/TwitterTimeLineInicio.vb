@@ -54,7 +54,7 @@ Module TwitterTimeLineInicio
                 Else
                     TwitterConexion.Desconectar(megaUsuario.Servicio)
 
-                    Dim megaUsuarioNuevo As pepeizq.Twitter.MegaUsuario = Await TwitterConexion.Iniciar(megaUsuario.Usuario)
+                    Dim megaUsuarioNuevo As pepeizq.Twitter.MegaUsuario = Await TwitterConexion.Iniciar(megaUsuario)
 
                     If Not megaUsuarioNuevo Is Nothing Then
                         TwitterTimeLineInicio.CargarTweets(megaUsuarioNuevo, Nothing, False)

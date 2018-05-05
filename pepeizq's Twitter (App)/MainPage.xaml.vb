@@ -102,10 +102,10 @@ Public NotInheritable Class MainPage
         If NetworkInterface.GetIsNetworkAvailable = True Then
             Dim helper As New LocalObjectStorageHelper
 
-            Dim listaUsuarios As New List(Of TwitterUsuario)
+            Dim listaUsuarios As New List(Of pepeizq.Twitter.MegaUsuario)
 
-            If helper.KeyExists("listaUsuarios2") Then
-                listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios2")
+            If helper.KeyExists("listaUsuarios3") Then
+                listaUsuarios = helper.Read(Of List(Of pepeizq.Twitter.MegaUsuario))("listaUsuarios3")
             End If
 
             Dim i As Integer = 0
@@ -155,6 +155,7 @@ Public NotInheritable Class MainPage
                 Next
 
                 GridVisibilidad(gridConfig, recursos.GetString("Config"))
+                SpConfigVisibilidad(botonConfigCuentas, spConfigCuentas)
             End If
         Else
             For Each item In nvPrincipal.MenuItems
@@ -165,6 +166,7 @@ Public NotInheritable Class MainPage
             Next
 
             GridVisibilidad(gridConfig, recursos.GetString("Config"))
+            SpConfigVisibilidad(botonConfigCuentas, spConfigCuentas)
         End If
 
         '--------------------------------------------------------
@@ -271,8 +273,8 @@ Public NotInheritable Class MainPage
 
         Dim listaUsuarios As New List(Of pepeizq.Twitter.MegaUsuario)
 
-        If helper.KeyExists("listaUsuarios2") Then
-            listaUsuarios = helper.Read(Of List(Of pepeizq.Twitter.MegaUsuario))("listaUsuarios2")
+        If helper.KeyExists("listaUsuarios3") Then
+            listaUsuarios = helper.Read(Of List(Of pepeizq.Twitter.MegaUsuario))("listaUsuarios3")
         End If
 
         Dim visibilidad As New Visibility
