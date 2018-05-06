@@ -4,7 +4,7 @@ Module EscribirXaml
 
     Public Function Generar(megaUsuario As pepeizq.Twitter.MegaUsuario, visibilidad As Visibility)
 
-        Dim usuario As TwitterUsuario = megaUsuario.Usuario
+        Dim usuario As TwitterUsuario = megaUsuario.Usuario2.Usuario
 
         Dim gridEscribir As New Grid
         gridEscribir.SetValue(Grid.RowProperty, 1)

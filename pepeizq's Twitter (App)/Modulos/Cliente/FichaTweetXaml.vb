@@ -26,7 +26,7 @@ Namespace pepeizq.Twitter.Xaml
 
             Dim provider As TwitterDataProvider = cosas.MegaUsuario.Servicio.Provider
 
-            Dim tweetNuevo As Tweet = Await provider.CogerTweet(cosas.MegaUsuario.Usuario.Tokens, tweet.ID, New TweetParserIndividual)
+            Dim tweetNuevo As Tweet = Await provider.CogerTweet(cosas.MegaUsuario.Usuario2.Usuario.Tokens, tweet.ID, New TweetParserIndividual)
 
             Dim color As Color = Nothing
 
@@ -192,7 +192,7 @@ Namespace pepeizq.Twitter.Xaml
             Dim listaTweetRespuestas As New List(Of Tweet)
 
             Try
-                listaTweetRespuestas = Await provider.BuscarRespuestasTweet(cosas.MegaUsuario.Usuario.Tokens, tweetNuevo.Usuario.ScreenNombre, tweetNuevo.ID, New TwitterBusquedaTweetsParser)
+                listaTweetRespuestas = Await provider.BuscarRespuestasTweet(cosas.MegaUsuario.Usuario2.Usuario.Tokens, tweetNuevo.Usuario.ScreenNombre, tweetNuevo.ID, New TwitterBusquedaTweetsParser)
             Catch ex As Exception
 
             End Try

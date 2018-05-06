@@ -8,7 +8,7 @@ Imports Windows.UI.Xaml.Shapes
 
 Module TwitterConexion
 
-    Public Async Function Iniciar(usuarioRecibido As pepeizq.Twitter.MegaUsuario) As Task(Of pepeizq.Twitter.MegaUsuario)
+    Public Async Function Iniciar(usuarioRecibido As pepeizq.Twitter.TwitterUsuario2) As Task(Of pepeizq.Twitter.MegaUsuario)
 
         Dim consumerKey As String = "poGVvY5De5zBqQ4ceqp7jw7cj"
         Dim consumerSecret As String = "f8PCcuwFZxYi0r5iG6UaysgxD0NoaCT2RgYG8I41mvjghy58rc"
@@ -18,7 +18,6 @@ Module TwitterConexion
 
         If Not usuarioRecibido Is Nothing Then
             ApplicationData.Current.LocalSettings.Values("TwitterScreenNombre") = usuarioRecibido.Usuario.ScreenNombre
-            Notificaciones.Toast.Enseñar(usuarioRecibido.Usuario.ScreenNombre)
         Else
             ApplicationData.Current.LocalSettings.Values("TwitterScreenNombre") = Nothing
         End If
@@ -40,15 +39,16 @@ Module TwitterConexion
             End Try
 
             If Not usuario Is Nothing Then
+                Dim usuario2 As New pepeizq.Twitter.TwitterUsuario2(usuario, True)
 
-                Dim megaUsuario As New pepeizq.Twitter.MegaUsuario(usuario, servicio, True)
+                Dim megaUsuario As New pepeizq.Twitter.MegaUsuario(usuario2, servicio)
 
                 Dim helper As New LocalObjectStorageHelper
 
-                Dim listaUsuarios As New List(Of pepeizq.Twitter.MegaUsuario)
+                Dim listaUsuarios As New List(Of pepeizq.Twitter.TwitterUsuario2)
 
                 If helper.KeyExists("listaUsuarios3") Then
-                    listaUsuarios = helper.Read(Of List(Of pepeizq.Twitter.MegaUsuario))("listaUsuarios3")
+                    listaUsuarios = helper.Read(Of List(Of pepeizq.Twitter.TwitterUsuario2))("listaUsuarios3")
                 End If
 
                 Dim añadirLista As Boolean = True
@@ -60,7 +60,7 @@ Module TwitterConexion
                 Next
 
                 If añadirLista = True Then
-                    listaUsuarios.Add(megaUsuario)
+                    listaUsuarios.Add(usuario2)
 
                     helper.Save("listaUsuarios3", listaUsuarios)
                 End If
@@ -98,7 +98,7 @@ Module TwitterConexion
 
         Dim recursos As New Resources.ResourceLoader
 
-        Dim usuario As TwitterUsuario = megaUsuario.Usuario
+        Dim usuario2 As pepeizq.Twitter.TwitterUsuario2 = megaUsuario.Usuario2
 
         Dim gridUsuario As New Grid With {
             .Padding = New Thickness(5, 5, 5, 5),
@@ -122,7 +122,7 @@ Module TwitterConexion
 
         Dim imagenAvatar As New ImageBrush With {
             .Stretch = Stretch.Uniform,
-            .ImageSource = New BitmapImage(New Uri(usuario.ImagenAvatar))
+            .ImageSource = New BitmapImage(New Uri(usuario2.Usuario.ImagenAvatar))
         }
 
         Dim circulo As New Ellipse With {
@@ -137,7 +137,7 @@ Module TwitterConexion
         gridUsuario.Children.Add(circulo)
 
         Dim tbUsuario As New TextBlock With {
-            .Text = usuario.Nombre + " (@" + usuario.ScreenNombre + ")",
+            .Text = usuario2.Usuario.Nombre + " (@" + usuario2.Usuario.ScreenNombre + ")",
             .VerticalAlignment = VerticalAlignment.Center
         }
 
@@ -149,13 +149,24 @@ Module TwitterConexion
             .Icon = FontAwesomeIcon.Comment
         }
 
+        Dim boolNotificacion As Boolean = True
+
+        If ApplicationData.Current.LocalSettings.Values("notificacion" + usuario2.Usuario.ScreenNombre) Is Nothing Then
+            boolNotificacion = usuario2.Notificacion
+        Else
+            boolNotificacion = ApplicationData.Current.LocalSettings.Values("notificacion" + usuario2.Usuario.ScreenNombre)
+        End If
+
         Dim cbNotificacion As New CheckBox With {
             .Content = simboloNotificacion,
             .MinWidth = 0,
             .Margin = New Thickness(20, 0, 20, 0),
             .Tag = megaUsuario,
-            .IsChecked = megaUsuario.Notificacion
+            .IsChecked = boolNotificacion
         }
+
+        ToolTipService.SetToolTip(cbNotificacion, recursos.GetString("CbNotification"))
+        ToolTipService.SetPlacement(cbNotificacion, PlacementMode.Bottom)
 
         AddHandler cbNotificacion.Checked, AddressOf CbNotificacion_Checked
         AddHandler cbNotificacion.Unchecked, AddressOf CbNotificacion_Unchecked
@@ -194,8 +205,9 @@ Module TwitterConexion
 
         Dim cb As CheckBox = sender
         Dim megaUsuario As pepeizq.Twitter.MegaUsuario = cb.Tag
+        Dim usuario2 As pepeizq.Twitter.TwitterUsuario2 = megaUsuario.Usuario2
 
-        megaUsuario.Notificacion = True
+        ApplicationData.Current.LocalSettings.Values("notificacion" + usuario2.Usuario.ScreenNombre) = True
 
     End Sub
 
@@ -203,8 +215,9 @@ Module TwitterConexion
 
         Dim cb As CheckBox = sender
         Dim megaUsuario As pepeizq.Twitter.MegaUsuario = cb.Tag
+        Dim usuario2 As pepeizq.Twitter.TwitterUsuario2 = megaUsuario.Usuario2
 
-        megaUsuario.Notificacion = False
+        ApplicationData.Current.LocalSettings.Values("notificacion" + usuario2.Usuario.ScreenNombre) = False
 
     End Sub
 
@@ -231,7 +244,7 @@ Module TwitterConexion
                 Dim grid As Grid = item
                 Dim megaUsuarioGrid As pepeizq.Twitter.MegaUsuario = grid.Tag
 
-                If megaUsuarioGrid.Usuario.Id = megaUsuario.Usuario.Id Then
+                If megaUsuarioGrid.Usuario2.Usuario.Id = megaUsuario.Usuario2.Usuario.Id Then
                     lvConfigUsuarios.Items.RemoveAt(i)
                     Exit For
                 End If
@@ -245,7 +258,7 @@ Module TwitterConexion
             For Each item As MenuFlyoutItem In menu.Items
                 Dim usuarioItem As TwitterUsuario = item.Tag
 
-                If usuarioItem.Id = megaUsuario.Usuario.Id Then
+                If usuarioItem.Id = megaUsuario.Usuario2.Usuario.Id Then
                     menu.Items.RemoveAt(i)
 
                     Exit For
@@ -261,20 +274,20 @@ Module TwitterConexion
                 End If
             End If
 
-            Dim gridUsuario As Grid = pagina.FindName("gridUsuario" + megaUsuario.Usuario.ScreenNombre)
+            Dim gridUsuario As Grid = pagina.FindName("gridUsuario" + megaUsuario.Usuario2.Usuario.ScreenNombre)
             gridUsuario.Children.Clear()
 
             Dim helper As New LocalObjectStorageHelper
 
-            Dim listaUsuarios As New List(Of pepeizq.Twitter.MegaUsuario)
+            Dim listaUsuarios As New List(Of pepeizq.Twitter.TwitterUsuario2)
 
             If helper.KeyExists("listaUsuarios3") Then
-                listaUsuarios = helper.Read(Of List(Of pepeizq.Twitter.MegaUsuario))("listaUsuarios3")
+                listaUsuarios = helper.Read(Of List(Of pepeizq.Twitter.TwitterUsuario2))("listaUsuarios3")
             End If
 
             i = 0
             For Each item In listaUsuarios
-                If item.Usuario.ScreenNombre = megaUsuario.Usuario.ScreenNombre Then
+                If item.Usuario.ScreenNombre = megaUsuario.Usuario2.Usuario.ScreenNombre Then
                     listaUsuarios.RemoveAt(i)
                     Exit For
                 End If

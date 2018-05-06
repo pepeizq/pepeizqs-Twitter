@@ -133,84 +133,72 @@
                                 </StackPanel>
 
                                 <StackPanel x:Name="spConfigNotificaciones" Orientation="Vertical" Visibility="Collapsed">
-                                    <CheckBox x:Name="cbConfigNotificaciones" MinWidth="0" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                    <CheckBox x:Name="cbConfigNotificacionesTiempo" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                                         <CheckBox.Content>
                                             <Grid>
-                                                <TextBlock x:Uid="tbConfigNotificationsActivate"/>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+
+                                                <TextBlock x:Uid="tbConfigNotificationsTime" Grid.Row="0"/>
+
+                                                <StackPanel x:Name="spConfigNotificacionesTiempo" Grid.Row="1" Orientation="Horizontal" Visibility="Collapsed" Margin="0,10,0,0">
+                                                    <TextBox x:Name="tbConfigNotificacionesSegundos" MinWidth="40" Width="40" TextAlignment="Justify"/>
+                                                    <TextBlock x:Uid="tbConfigNotificationsSeconds" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="14"/>
+                                                </StackPanel>
                                             </Grid>
                                         </CheckBox.Content>
                                     </CheckBox>
 
-                                    <StackPanel x:Name="spConfigSubNotificaciones" Orientation="Vertical">
-                                        <Border Margin="0,15" BorderBrush="{StaticResource BrushSecundario}" BorderThickness="1"/>
-                                        
-                                        <CheckBox x:Name="cbConfigNotificacionesTiempo" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                                            <CheckBox.Content>
-                                                <Grid>
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="Auto"/>
-                                                        <RowDefinition Height="Auto"/>
-                                                    </Grid.RowDefinitions>
+                                    <CheckBox x:Name="cbConfigNotificacionesSonido" Margin="0,15" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                        <CheckBox.Content>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
 
-                                                    <TextBlock x:Uid="tbConfigNotificationsTime" Grid.Row="0"/>
+                                                <TextBlock x:Uid="tbConfigNotificationsSound" Grid.Row="0"/>
 
-                                                    <StackPanel x:Name="spConfigNotificacionesTiempo" Grid.Row="1" Orientation="Horizontal" Visibility="Collapsed" Margin="0,10,0,0">
-                                                        <TextBox x:Name="tbConfigNotificacionesSegundos" MinWidth="40" Width="40" TextAlignment="Justify"/>
-                                                        <TextBlock x:Uid="tbConfigNotificationsSeconds" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="14"/>
-                                                    </StackPanel>
-                                                </Grid>
-                                            </CheckBox.Content>
-                                        </CheckBox>
+                                                <StackPanel x:Name="spConfigNotificacionesSonido" Grid.Row="1" Orientation="Horizontal" Visibility="Collapsed" Margin="0,10,0,0">
+                                                    <ComboBox x:Name="cbConfigNotificacionesSonidoElegido">
+                                                        <ComboBoxItem Content="Twitter.Default" Tag="ms-appx:///Assets/Sonidos/Twitter.Default.mp3"/>
+                                                        <ComboBoxItem Content="Windows.Default" Tag="ms-winsoundevent:Notification.Default"/>
+                                                        <ComboBoxItem Content="Windows.IM" Tag="ms-winsoundevent:Notification.IM"/>
+                                                        <ComboBoxItem Content="Windows.Mail" Tag="ms-winsoundevent:Notification.Mail"/>
+                                                        <ComboBoxItem Content="Windows.Reminder" Tag="ms-winsoundevent:Notification.Reminder"/>
+                                                        <ComboBoxItem Content="Windows.SMS" Tag="ms-winsoundevent:Notification.SMS"/>
+                                                    </ComboBox>
 
-                                        <CheckBox x:Name="cbConfigNotificacionesSonido" Margin="0,15" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                                            <CheckBox.Content>
-                                                <Grid>
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="Auto"/>
-                                                        <RowDefinition Height="Auto"/>
-                                                    </Grid.RowDefinitions>
+                                                    <Button x:Name="botonConfigNotificacionesSonido" Padding="4" Background="{StaticResource BrushSecundario}" Margin="15,0,0,0">
+                                                        <Button.Content>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <fa:FontAwesome Icon="PlayCircle" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="White"/>
+                                                                <TextBlock x:Uid="buttonConfigNotificationsSound" Foreground="White"/>
+                                                            </StackPanel>
+                                                        </Button.Content>
+                                                    </Button>
+                                                </StackPanel>
+                                            </Grid>
+                                        </CheckBox.Content>
+                                    </CheckBox>
 
-                                                    <TextBlock x:Uid="tbConfigNotificationsSound" Grid.Row="0"/>
+                                    <CheckBox x:Name="cbConfigNotificacionesImagen" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                        <CheckBox.Content>
+                                            <Grid>
+                                                <TextBlock x:Uid="tbConfigNotificationsImage"/>
+                                            </Grid>
+                                        </CheckBox.Content>
+                                    </CheckBox>
 
-                                                    <StackPanel x:Name="spConfigNotificacionesSonido" Grid.Row="1" Orientation="Horizontal" Visibility="Collapsed" Margin="0,10,0,0">
-                                                        <ComboBox x:Name="cbConfigNotificacionesSonidoElegido">
-                                                            <ComboBoxItem Content="Twitter.Default" Tag="ms-appx:///Assets/Sonidos/Twitter.Default.mp3"/>
-                                                            <ComboBoxItem Content="Windows.Default" Tag="ms-winsoundevent:Notification.Default"/>
-                                                            <ComboBoxItem Content="Windows.IM" Tag="ms-winsoundevent:Notification.IM"/>
-                                                            <ComboBoxItem Content="Windows.Mail" Tag="ms-winsoundevent:Notification.Mail"/>
-                                                            <ComboBoxItem Content="Windows.Reminder" Tag="ms-winsoundevent:Notification.Reminder"/>
-                                                            <ComboBoxItem Content="Windows.SMS" Tag="ms-winsoundevent:Notification.SMS"/>
-                                                        </ComboBox>
-
-                                                        <Button x:Name="botonConfigNotificacionesSonido" Padding="4" Background="{StaticResource BrushSecundario}" Margin="15,0,0,0">
-                                                            <Button.Content>
-                                                                <StackPanel Orientation="Horizontal">
-                                                                    <fa:FontAwesome Icon="PlayCircle" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="White"/>
-                                                                    <TextBlock x:Uid="buttonConfigNotificationsSound" Foreground="White"/>
-                                                                </StackPanel>
-                                                            </Button.Content>
-                                                        </Button>
-                                                    </StackPanel>
-                                                </Grid>
-                                            </CheckBox.Content>
-                                        </CheckBox>
-
-                                        <CheckBox x:Name="cbConfigNotificacionesImagen" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                                            <CheckBox.Content>
-                                                <Grid>
-                                                    <TextBlock x:Uid="tbConfigNotificationsImage"/>
-                                                </Grid>
-                                            </CheckBox.Content>
-                                        </CheckBox>
-
-                                        <CheckBox x:Name="cbConfigNotificacionesUsuario" Margin="0,15,0,0" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                                            <CheckBox.Content>
-                                                <Grid>
-                                                    <TextBlock x:Uid="tbConfigNotificationsUser"/>
-                                                </Grid>
-                                            </CheckBox.Content>
-                                        </CheckBox>
-                                    </StackPanel>
+                                    <CheckBox x:Name="cbConfigNotificacionesUsuario" Margin="0,15,0,0" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                        <CheckBox.Content>
+                                            <Grid>
+                                                <TextBlock x:Uid="tbConfigNotificationsUser"/>
+                                            </Grid>
+                                        </CheckBox.Content>
+                                    </CheckBox>
                                 </StackPanel>
                             </StackPanel>
                                                                       

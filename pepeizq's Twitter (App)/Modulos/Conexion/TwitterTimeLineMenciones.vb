@@ -5,7 +5,7 @@ Module TwitterTimeLineMenciones
 
     Public Async Sub CargarTweets(megaUsuario As pepeizq.Twitter.MegaUsuario, ultimoTweet As String, limpiar As Boolean)
 
-        Dim usuario As TwitterUsuario = megaUsuario.Usuario
+        Dim usuario As TwitterUsuario = megaUsuario.Usuario2.Usuario
 
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
@@ -27,7 +27,7 @@ Module TwitterTimeLineMenciones
             Dim listaTweets As New List(Of Tweet)
 
             Try
-                listaTweets = Await provider.CogerTweetsTimelineMenciones(Of Tweet)(megaUsuario.Usuario.Tokens, ultimoTweet, New TweetParser)
+                listaTweets = Await provider.CogerTweetsTimelineMenciones(Of Tweet)(megaUsuario.Usuario2.Usuario.Tokens, ultimoTweet, New TweetParser)
             Catch ex As Exception
 
             End Try

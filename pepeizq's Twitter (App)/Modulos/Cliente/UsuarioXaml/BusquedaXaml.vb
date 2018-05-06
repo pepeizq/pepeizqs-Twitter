@@ -11,7 +11,7 @@ Module BusquedaXaml
 
         Dim recursos As New Resources.ResourceLoader
 
-        Dim usuario As TwitterUsuario = megaUsuario.Usuario
+        Dim usuario As TwitterUsuario = megaUsuario.Usuario2.Usuario
 
         Dim gridBusqueda As New Grid With {
             .Name = "gridBusqueda" + usuario.ScreenNombre,
@@ -140,7 +140,7 @@ Module BusquedaXaml
 
         Dim usuarioBuscar As String = ApplicationData.Current.LocalSettings.Values("UsuarioBuscar")
 
-        Dim usuarios As List(Of TwitterUsuario) = Await provider.BuscarUsuarios(cosas.MegaUsuario.Usuario.Tokens, usuarioBuscar, New TwitterBusquedaUsuariosParser)
+        Dim usuarios As List(Of TwitterUsuario) = Await provider.BuscarUsuarios(cosas.MegaUsuario.Usuario2.Usuario.Tokens, usuarioBuscar, New TwitterBusquedaUsuariosParser)
 
         Dim gv As GridView = cosas.GridView
 

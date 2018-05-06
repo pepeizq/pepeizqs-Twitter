@@ -300,4 +300,7 @@
   <data name="ButtonDeleteAccount" xml:space="preserve">
     <value>Delete Account</value>
   </data>
+  <data name="CbNotification" xml:space="preserve">
+    <value>Show Notifications</value>
+  </data>
 </root>

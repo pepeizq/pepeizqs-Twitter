@@ -3,14 +3,12 @@
 Namespace pepeizq.Twitter
     Public Class MegaUsuario
 
-        Public Usuario As TwitterUsuario
+        Public Usuario2 As TwitterUsuario2
         Public Servicio As TwitterServicio
-        Public Notificacion As Boolean
 
-        Public Sub New(usuario As TwitterUsuario, servicio As TwitterServicio, notificacion As Boolean)
-            Me.Usuario = usuario
+        Public Sub New(usuario2 As TwitterUsuario2, servicio As TwitterServicio)
+            Me.Usuario2 = usuario2
             Me.Servicio = servicio
-            Me.Notificacion = notificacion
         End Sub
 
     End Class

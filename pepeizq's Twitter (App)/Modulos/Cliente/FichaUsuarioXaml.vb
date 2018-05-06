@@ -220,10 +220,10 @@ Module FichaUsuarioXaml
         Dim cosas As pepeizq.Twitter.Objetos.SeguirUsuarioBoton = boton.Tag
 
         If tbSeguir.Text = recursos.GetString("Following") Then
-            Await cosas.MegaUsuario.Servicio.DeshacerSeguirUsuario(cosas.MegaUsuario.Usuario.Tokens, cosas.Usuario.Id)
+            Await cosas.MegaUsuario.Servicio.DeshacerSeguirUsuario(cosas.MegaUsuario.Usuario2.Usuario.Tokens, cosas.Usuario.Id)
             tbSeguir.Text = recursos.GetString("Follow")
         Else
-            Await cosas.MegaUsuario.Servicio.SeguirUsuario(cosas.MegaUsuario.Usuario.Tokens, cosas.Usuario.Id)
+            Await cosas.MegaUsuario.Servicio.SeguirUsuario(cosas.MegaUsuario.Usuario2.Usuario.Tokens, cosas.Usuario.Id)
             tbSeguir.Text = recursos.GetString("Following")
         End If
 
@@ -306,7 +306,7 @@ Module FichaUsuarioXaml
         Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = boton.Tag
 
         Try
-            Await cosas.MegaUsuario.Servicio.BloquearUsuario(cosas.MegaUsuario.Usuario.Tokens, cosas.Usuario.ScreenNombre)
+            Await cosas.MegaUsuario.Servicio.BloquearUsuario(cosas.MegaUsuario.Usuario2.Usuario.Tokens, cosas.Usuario.ScreenNombre)
         Catch ex As Exception
 
         End Try
@@ -322,7 +322,7 @@ Module FichaUsuarioXaml
         Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = boton.Tag
 
         Try
-            Await cosas.MegaUsuario.Servicio.MutearUsuario(cosas.MegaUsuario.Usuario.Tokens, cosas.Usuario.ScreenNombre)
+            Await cosas.MegaUsuario.Servicio.MutearUsuario(cosas.MegaUsuario.Usuario2.Usuario.Tokens, cosas.Usuario.ScreenNombre)
         Catch ex As Exception
 
         End Try
@@ -338,7 +338,7 @@ Module FichaUsuarioXaml
         Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = boton.Tag
 
         Try
-            Await cosas.MegaUsuario.Servicio.ReportarUsuario(cosas.MegaUsuario.Usuario.Tokens, cosas.Usuario.ScreenNombre)
+            Await cosas.MegaUsuario.Servicio.ReportarUsuario(cosas.MegaUsuario.Usuario2.Usuario.Tokens, cosas.Usuario.ScreenNombre)
         Catch ex As Exception
 
         End Try

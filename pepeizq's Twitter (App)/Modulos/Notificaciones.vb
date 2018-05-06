@@ -1,5 +1,4 @@
-﻿Imports System.Net
-Imports Microsoft.Toolkit.Uwp.Notifications
+﻿Imports Microsoft.Toolkit.Uwp.Notifications
 Imports Windows.Storage
 Imports Windows.UI.Notifications
 Imports Windows.UI.Popups
@@ -62,53 +61,14 @@ Namespace Notificaciones
 
     Module ToastTweet
 
-        Public Sub Enseñar(tweet As Tweet, usuario As TwitterUsuario)
+        Public Sub Enseñar(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario)
 
-            Dim texto As String = Nothing
+            Dim tb As New TextBlock
+            tb = pepeizq.Twitter.Xaml.TweetTexto.Generar(tweet, Nothing, Nothing, megaUsuario)
 
-            Dim rango0 As Integer = 0
-
-            If tweet.Retweet Is Nothing Then
-                rango0 = tweet.TextoRango(0)
-
-                If Not tweet.Texto = String.Empty Then
-                    texto = tweet.Texto
-
-                    texto = texto.Remove(tweet.TextoRango(1), texto.Length - tweet.TextoRango(1))
-                    texto = texto.Remove(0, rango0)
-                End If
-            Else
-                rango0 = tweet.Retweet.TextoRango(0)
-
-                If Not tweet.Retweet.Texto = String.Empty Then
-                    texto = tweet.Retweet.Texto
-
-                    texto = texto.Remove(tweet.Retweet.TextoRango(1), texto.Length - tweet.Retweet.TextoRango(1))
-                    texto = texto.Remove(0, rango0)
-                End If
-            End If
-
-            texto = WebUtility.HtmlDecode(texto)
-
-            If Not texto = String.Empty Then
-                If texto.Contains("http") Then
-                    Dim temp As String
-                    Dim int, int2 As Integer
-
-                    int = texto.IndexOf("http")
-                    temp = texto.Remove(0, int)
-
-                    int2 = temp.IndexOf(" ")
-
-                    If int2 = -1 Then
-                        int2 = temp.Length
-                    End If
-
-                    texto = texto.Remove(int, int2)
-                End If
-
+            If Not tb.Text = String.Empty Then
                 Dim textoTweet As New AdaptiveText With {
-                    .Text = texto,
+                    .Text = tb.Text,
                     .HintMaxLines = 4
                 }
 
@@ -158,7 +118,7 @@ Namespace Notificaciones
 
                 If ApplicationData.Current.LocalSettings.Values("notificacionUsuario") = True Then
                     atribucion = New ToastGenericAttributionText With {
-                        .Text = "@" + usuario.ScreenNombre
+                        .Text = "@" + megaUsuario.Usuario2.Usuario.ScreenNombre
                     }
                 End If
 

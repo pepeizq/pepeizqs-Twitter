@@ -31,7 +31,14 @@ Public NotInheritable Class MainPage
 
     Private Sub Nv_ItemInvoked(sender As NavigationView, args As NavigationViewItemInvokedEventArgs)
 
-        Dim usuario As TwitterUsuario = itemUsuarios.Tag
+        Dim usuario As TwitterUsuario = Nothing
+
+        If TypeOf itemUsuarios.Tag Is pepeizq.Twitter.TwitterUsuario2 Then
+            Dim usuario2 As pepeizq.Twitter.TwitterUsuario2 = itemUsuarios.Tag
+            usuario = usuario2.Usuario
+        ElseIf TypeOf itemUsuarios.Tag Is TwitterUsuario Then
+            usuario = itemUsuarios.Tag
+        End If
 
         gridConfig.Visibility = Visibility.Collapsed
         gridImagenAmpliada.Visibility = Visibility.Collapsed
@@ -102,10 +109,10 @@ Public NotInheritable Class MainPage
         If NetworkInterface.GetIsNetworkAvailable = True Then
             Dim helper As New LocalObjectStorageHelper
 
-            Dim listaUsuarios As New List(Of pepeizq.Twitter.MegaUsuario)
+            Dim listaUsuarios As New List(Of pepeizq.Twitter.TwitterUsuario2)
 
             If helper.KeyExists("listaUsuarios3") Then
-                listaUsuarios = helper.Read(Of List(Of pepeizq.Twitter.MegaUsuario))("listaUsuarios3")
+                listaUsuarios = helper.Read(Of List(Of pepeizq.Twitter.TwitterUsuario2))("listaUsuarios3")
             End If
 
             Dim i As Integer = 0
@@ -136,7 +143,7 @@ Public NotInheritable Class MainPage
 
                         UsuarioXaml.GenerarCadaUsuario(megaUsuario, visibilidad)
 
-                        Dim itemSalto As JumpListItem = JumpListItem.CreateWithArguments(megaUsuario.Usuario.ScreenNombre, megaUsuario.Usuario.Nombre)
+                        Dim itemSalto As JumpListItem = JumpListItem.CreateWithArguments(megaUsuario.Usuario2.Usuario.ScreenNombre, megaUsuario.Usuario2.Usuario.Nombre)
                         itemSalto.Logo = New Uri("ms-appx:///Assets/logo2.png")
                         listaSalto.Items.Add(itemSalto)
 
@@ -271,10 +278,10 @@ Public NotInheritable Class MainPage
         Dim recursos As New Resources.ResourceLoader
         Dim helper As New LocalObjectStorageHelper
 
-        Dim listaUsuarios As New List(Of pepeizq.Twitter.MegaUsuario)
+        Dim listaUsuarios As New List(Of pepeizq.Twitter.TwitterUsuario2)
 
         If helper.KeyExists("listaUsuarios3") Then
-            listaUsuarios = helper.Read(Of List(Of pepeizq.Twitter.MegaUsuario))("listaUsuarios3")
+            listaUsuarios = helper.Read(Of List(Of pepeizq.Twitter.TwitterUsuario2))("listaUsuarios3")
         End If
 
         Dim visibilidad As New Visibility
@@ -347,18 +354,6 @@ Public NotInheritable Class MainPage
     Private Sub CbConfigAppTweetCard_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppTweetCard.Unchecked
 
         Configuracion.CargarTweetCard(False)
-
-    End Sub
-
-    Private Sub CbConfigNotificaciones_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificaciones.Checked
-
-        Configuracion.NotificacionesEnseñar(True)
-
-    End Sub
-
-    Private Sub CbConfigNotificaciones_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificaciones.Unchecked
-
-        Configuracion.NotificacionesEnseñar(False)
 
     End Sub
 

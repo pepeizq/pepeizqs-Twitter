@@ -27,12 +27,6 @@ Module Configuracion
             CargarTweetCard(ApplicationData.Current.LocalSettings.Values("tweetcard"))
         End If
 
-        If ApplicationData.Current.LocalSettings.Values("notificacion") Is Nothing Then
-            NotificacionesEnseñar(True)
-        Else
-            NotificacionesEnseñar(ApplicationData.Current.LocalSettings.Values("notificacion"))
-        End If
-
         If ApplicationData.Current.LocalSettings.Values("notificacionTiempo") Is Nothing Then
             NotificacionesTiempo(False)
         Else
@@ -97,26 +91,6 @@ Module Configuracion
 
         Dim cb As CheckBox = pagina.FindName("cbConfigAppTweetCard")
         cb.IsChecked = estado
-
-    End Sub
-
-    Public Sub NotificacionesEnseñar(estado As Boolean)
-
-        Dim frame As Frame = Window.Current.Content
-        Dim pagina As Page = frame.Content
-
-        ApplicationData.Current.LocalSettings.Values("notificacion") = estado
-
-        Dim cb As CheckBox = pagina.FindName("cbConfigNotificaciones")
-        cb.IsChecked = estado
-
-        Dim sp As StackPanel = pagina.FindName("spConfigSubNotificaciones")
-
-        If estado = True Then
-            sp.Visibility = Visibility.Visible
-        Else
-            sp.Visibility = Visibility.Collapsed
-        End If
 
     End Sub
 
