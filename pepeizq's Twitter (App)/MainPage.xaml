@@ -67,8 +67,13 @@
 
                 <Grid x:Name="gridConfig" Visibility="Collapsed">
                     <ScrollViewer>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <StackPanel Orientation="Vertical">
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="200,100">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <StackPanel Grid.Column="0" Orientation="Vertical">
                                 <Button x:Name="botonConfigCuentas" HorizontalAlignment="Right" Padding="15,10" Background="{StaticResource BrushSecundario}" BorderBrush="{StaticResource BrushCuarto}" BorderThickness="1,1,0,1" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                                     <Button.Content>
                                         <TextBlock x:Uid="tbConfigAccounts" FontSize="16" Foreground="White"/>
@@ -86,7 +91,7 @@
                                 </Button>
                             </StackPanel>
 
-                            <StackPanel Orientation="Vertical" BorderBrush="{StaticResource BrushCuarto}" BorderThickness="2" Padding="20" MinWidth="600" MinHeight="300">
+                            <StackPanel Grid.Column="1" Orientation="Vertical" BorderBrush="{StaticResource BrushCuarto}" BorderThickness="2" Padding="20">
                                 <StackPanel.Background>
                                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                         <GradientStop Color="#FFE4E4E4" Offset="0.5" />
@@ -95,14 +100,23 @@
                                 </StackPanel.Background>
 
                                 <StackPanel x:Name="spConfigCuentas" Orientation="Vertical" Visibility="Collapsed">
-                                    <Button x:Name="botonAñadirCuenta" Padding="10" Background="{StaticResource BrushSecundario}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                                        <StackPanel Orientation="Horizontal">
-                                            <fa:FontAwesome Icon="UserPlus" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="White"/>
-                                            <TextBlock x:Uid="buttonAddAccount" Foreground="White"/>
-                                        </StackPanel>
-                                    </Button>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
 
-                                    <Border Margin="0,15" BorderBrush="{StaticResource BrushSecundario}" BorderThickness="1"/>
+                                        <Button x:Name="botonAñadirCuenta" Grid.Column="0" Padding="10" Background="{StaticResource BrushSecundario}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:FontAwesome Icon="UserPlus" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="White"/>
+                                                <TextBlock x:Uid="buttonAddAccount" Foreground="White"/>
+                                            </StackPanel>
+                                        </Button>
+
+                                        <TextBlock x:Name="tbNumeroCuentas" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                                    </Grid>
+
+                                    <Border Margin="0,20" BorderBrush="{StaticResource BrushSecundario}" BorderThickness="1"/>
 
                                     <ListView x:Name="lvConfigUsuarios" ItemContainerStyle="{StaticResource ListViewEstilo1}"/>
                                 </StackPanel>
@@ -116,6 +130,7 @@
                                             </StackPanel>
                                         </Button.Content>
                                     </Button>
+                                    
                                     <CheckBox x:Name="cbConfigAppCargarMedia" Margin="0,15" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                                         <CheckBox.Content>
                                             <Grid>
@@ -123,6 +138,7 @@
                                             </Grid>
                                         </CheckBox.Content>
                                     </CheckBox>
+                                    
                                     <CheckBox x:Name="cbConfigAppTweetCard" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                                         <CheckBox.Content>
                                             <Grid>
@@ -130,6 +146,59 @@
                                             </Grid>
                                         </CheckBox.Content>
                                     </CheckBox>
+
+                                    <Border Margin="0,20" BorderBrush="{StaticResource BrushSecundario}" BorderThickness="1"/>
+
+                                    <Button x:Name="botonConfigAPIMostrar" Padding="10" Background="{StaticResource BrushSecundario}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                        <Button.Content>
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:FontAwesome Icon="CaretDown" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="White"/>
+                                                <TextBlock x:Uid="tbConfigAPIShow" Foreground="White"/>
+                                            </StackPanel>
+                                        </Button.Content>
+                                    </Button>
+
+                                    <StackPanel x:Name="spConfigAPI" Orientation="Vertical" Margin="0,15,0,0" Visibility="Collapsed">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <fa:FontAwesome Icon="InfoCircle" Grid.Column="0" Foreground="{StaticResource BrushSecundario}"/>
+
+                                            <TextBlock x:Uid="tbConfigAPIKeys" Grid.Column="1" Margin="15,0" TextWrapping="Wrap"/>
+
+                                            <Button x:Name="botonConfigAbrirNuevaApp" Grid.Column="2" Padding="10" Background="{StaticResource BrushSecundario}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                                <Button.Content>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock x:Uid="tbConfigCreateNewApp" Foreground="White"/>
+                                                    </StackPanel>
+                                                </Button.Content>
+                                            </Button>
+                                        </Grid>
+
+                                        <Grid Margin="0,15">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Grid.Column="0" Text="Consumer Key:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                            <TextBox x:Name="tbConfigConsumerKey" Grid.Column="1"/>
+                                        </Grid>
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Grid.Column="0" Text="Consumer Secret:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                            <TextBox x:Name="tbConfigConsumerSecret" Grid.Column="1"/>
+                                        </Grid>
+                                    </StackPanel>
                                 </StackPanel>
 
                                 <StackPanel x:Name="spConfigNotificaciones" Orientation="Vertical" Visibility="Collapsed">
@@ -192,7 +261,7 @@
                                         </CheckBox.Content>
                                     </CheckBox>
 
-                                    <CheckBox x:Name="cbConfigNotificacionesUsuario" Margin="0,15,0,0" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                    <CheckBox x:Name="cbConfigNotificacionesUsuario" Margin="0,15" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                                         <CheckBox.Content>
                                             <Grid>
                                                 <TextBlock x:Uid="tbConfigNotificationsUser"/>
@@ -201,8 +270,7 @@
                                     </CheckBox>
                                 </StackPanel>
                             </StackPanel>
-                                                                      
-                        </StackPanel>
+                        </Grid>
                     </ScrollViewer>
                 </Grid>
 

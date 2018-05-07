@@ -164,6 +164,8 @@ Public NotInheritable Class MainPage
                 GridVisibilidad(gridConfig, recursos.GetString("Config"))
                 SpConfigVisibilidad(botonConfigCuentas, spConfigCuentas)
             End If
+
+            tbNumeroCuentas.Text = listaUsuarios.Count.ToString + "/35"
         Else
             For Each item In nvPrincipal.MenuItems
                 If TypeOf item Is NavigationViewItem Then
@@ -298,11 +300,17 @@ Public NotInheritable Class MainPage
             UsuarioXaml.GenerarCadaUsuario(megaUsuario, visibilidad)
         End If
 
+        tbNumeroCuentas.Text = lvConfigUsuarios.Items.Count.ToString + "/35"
+
         If lvConfigUsuarios.Items.Count > 0 Then
             If lvConfigUsuarios.Items.Count > 1 Then
                 itemUsuarios.Visibility = Visibility.Visible
             Else
                 itemUsuarios.Visibility = Visibility.Collapsed
+            End If
+
+            If lvConfigUsuarios.Items.Count > 35 Then
+                botonAñadirCuenta.IsEnabled = False
             End If
 
             spCuentaSeleccionada.Visibility = Visibility.Visible
@@ -354,6 +362,38 @@ Public NotInheritable Class MainPage
     Private Sub CbConfigAppTweetCard_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppTweetCard.Unchecked
 
         Configuracion.CargarTweetCard(False)
+
+    End Sub
+
+    Private Sub BotonConfigAPIMostrar_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigAPIMostrar.Click
+
+        If spConfigAPI.Visibility = Visibility.Collapsed Then
+            spConfigAPI.Visibility = Visibility.Visible
+        Else
+            spConfigAPI.Visibility = Visibility.Collapsed
+        End If
+
+    End Sub
+
+    Private Async Sub BotonConfigAbrirNuevaApp_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigAbrirNuevaApp.Click
+
+        Await Launcher.LaunchUriAsync(New Uri("https://apps.twitter.com/"))
+
+    End Sub
+
+    Private Sub TbConfigConsumerKey_TextChanged(sender As Object, e As TextChangedEventArgs) Handles tbConfigConsumerKey.TextChanged
+
+        If tbConfigConsumerKey.Text.Trim.Length > 0 Then
+            ApplicationData.Current.LocalSettings.Values("consumerkey") = tbConfigConsumerKey.Text.Trim
+        End If
+
+    End Sub
+
+    Private Sub TbConfigConsumerSecret_TextChanged(sender As Object, e As TextChangedEventArgs) Handles tbConfigConsumerSecret.TextChanged
+
+        If tbConfigConsumerSecret.Text.Trim.Length > 0 Then
+            ApplicationData.Current.LocalSettings.Values("consumersecret") = tbConfigConsumerSecret.Text.Trim
+        End If
 
     End Sub
 

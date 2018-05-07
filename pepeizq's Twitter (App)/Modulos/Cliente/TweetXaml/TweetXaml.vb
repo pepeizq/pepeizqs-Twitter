@@ -99,7 +99,7 @@ Namespace pepeizq.Twitter.Xaml
                 spInferiorCentro.SetValue(Grid.ColumnProperty, 1)
 
                 spInferiorCentro.Children.Add(TweetUsuario.Generar(tweet, megaUsuario, color))
-                spInferiorCentro.Children.Add(TweetTexto.Generar(tweet, Nothing, color, megaUsuario))
+                spInferiorCentro.Children.Add(TweetTexto.Generar(tweet, Nothing, color, megaUsuario, False))
 
                 If Not tweet.Cita Is Nothing Then
                     If tweet.Retweet Is Nothing Then

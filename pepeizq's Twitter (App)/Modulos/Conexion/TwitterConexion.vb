@@ -10,8 +10,8 @@ Module TwitterConexion
 
     Public Async Function Iniciar(usuarioRecibido As pepeizq.Twitter.TwitterUsuario2) As Task(Of pepeizq.Twitter.MegaUsuario)
 
-        Dim consumerKey As String = "poGVvY5De5zBqQ4ceqp7jw7cj"
-        Dim consumerSecret As String = "f8PCcuwFZxYi0r5iG6UaysgxD0NoaCT2RgYG8I41mvjghy58rc"
+        Dim consumerKey As String = ApplicationData.Current.LocalSettings.Values("consumerkey")
+        Dim consumerSecret As String = ApplicationData.Current.LocalSettings.Values("consumersecret")
 
         Dim estado As Boolean = False
         Dim servicio As New TwitterServicio
@@ -296,6 +296,14 @@ Module TwitterConexion
             Next
 
             helper.Save("listaUsuarios3", listaUsuarios)
+
+            Dim tbNumeroCuentas As TextBlock = pagina.FindName("tbNumeroCuentas")
+            tbNumeroCuentas.Text = listaUsuarios.Count.ToString + "/35"
+
+            If listaUsuarios.Count < 36 Then
+                Dim botonAñadirCuenta As Button = pagina.FindName("botonAñadirCuenta")
+                botonAñadirCuenta.IsEnabled = True
+            End If
 
             Dim nvPrincipal As NavigationView = pagina.FindName("nvPrincipal")
             Dim itemUsuarios As NavigationViewItem = pagina.FindName("itemUsuarios")

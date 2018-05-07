@@ -1,5 +1,6 @@
 ﻿Imports System.Net
 Imports pepeizq.Twitter.Tweet
+Imports Windows.Storage
 Imports Windows.UI
 Imports Windows.UI.Xaml.Documents
 
@@ -8,7 +9,7 @@ Namespace pepeizq.Twitter.Xaml
 
         Dim cosas As Objetos.UsuarioAmpliado = Nothing
 
-        Public Function Generar(tweet As Tweet, citaOrigen As Tweet, color As Color, megaUsuario As MegaUsuario)
+        Public Function Generar(tweet As Tweet, citaOrigen As Tweet, color As Color, megaUsuario As MegaUsuario, notificacion As Boolean)
 
             If color = Nothing Then
                 color = App.Current.Resources("ColorCuarto")
@@ -50,15 +51,17 @@ Namespace pepeizq.Twitter.Xaml
 
                 Dim listaEntidades As New List(Of Objetos.TextoTweetEntidad)
 
-                If entidades.Enlaces.Count > 0 Then
-                    For Each url In entidades.Enlaces
-                        Dim coordenadas As New List(Of Integer) From {
-                           url.Rango(0),
-                           url.Rango(1)
-                        }
+                If notificacion = False Then
+                    If entidades.Enlaces.Count > 0 Then
+                        For Each url In entidades.Enlaces
+                            Dim coordenadas As New List(Of Integer) From {
+                               url.Rango(0),
+                               url.Rango(1)
+                            }
 
-                        listaEntidades.Add(New Objetos.TextoTweetEntidad(url.Mostrar, url.Expandida, coordenadas, 0))
-                    Next
+                            listaEntidades.Add(New Objetos.TextoTweetEntidad(url.Mostrar, url.Expandida, coordenadas, 0))
+                        Next
+                    End If
                 End If
 
                 If entidades.Menciones.Count > 0 Then

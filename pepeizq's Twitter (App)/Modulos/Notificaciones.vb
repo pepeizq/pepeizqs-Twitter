@@ -64,7 +64,7 @@ Namespace Notificaciones
         Public Sub Enseñar(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario)
 
             Dim tb As New TextBlock
-            tb = pepeizq.Twitter.Xaml.TweetTexto.Generar(tweet, Nothing, Nothing, megaUsuario)
+            tb = pepeizq.Twitter.Xaml.TweetTexto.Generar(tweet, Nothing, Nothing, megaUsuario, True)
 
             If Not tb.Text = String.Empty Then
                 Dim textoTweet As New AdaptiveText With {

@@ -303,4 +303,13 @@
   <data name="CbNotification" xml:space="preserve">
     <value>Show Notifications</value>
   </data>
+  <data name="tbConfigAPIKeys.Text" xml:space="preserve">
+    <value>You can change the keys so that it works as if it were another Twitter app (restart the app when you change the keys)</value>
+  </data>
+  <data name="tbConfigAPIShow.Text" xml:space="preserve">
+    <value>Change API Keys</value>
+  </data>
+  <data name="tbConfigCreateNewApp.Text" xml:space="preserve">
+    <value>Create New App</value>
+  </data>
 </root>

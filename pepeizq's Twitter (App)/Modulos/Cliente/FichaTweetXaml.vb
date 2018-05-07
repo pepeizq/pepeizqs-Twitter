@@ -79,7 +79,7 @@ Namespace pepeizq.Twitter.Xaml
             Dim spDerecha As StackPanel = pagina.FindName("spTweetDerecha")
             spDerecha.Children.Clear()
             spDerecha.Children.Add(TweetUsuario.Generar(tweetNuevo, cosas.MegaUsuario, color))
-            spDerecha.Children.Add(TweetTexto.Generar(tweetNuevo, Nothing, color, cosas.MegaUsuario))
+            spDerecha.Children.Add(TweetTexto.Generar(tweetNuevo, Nothing, color, cosas.MegaUsuario, False))
 
             If Not tweetNuevo.Cita Is Nothing Then
                 spDerecha.Children.Add(TweetCita.Generar(tweetNuevo, cosas.MegaUsuario, color))
