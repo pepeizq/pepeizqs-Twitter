@@ -100,8 +100,8 @@ Module UsuarioXaml
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
-        Dim gridTweets As Grid = pagina.FindName("gridTweets" + usuario.ScreenNombre)
-        gridTweets.Visibility = Visibility.Collapsed
+        'Dim gridTweets As Grid = pagina.FindName("gridTweets" + usuario.ScreenNombre)
+        'gridTweets.Visibility = Visibility.Collapsed
 
         Dim gridMenciones As Grid = pagina.FindName("gridMenciones" + usuario.ScreenNombre)
         gridMenciones.Visibility = Visibility.Collapsed

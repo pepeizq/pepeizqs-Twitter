@@ -3,12 +3,12 @@
 
         Public MegaUsuario As MegaUsuario
         Public Busqueda As String
-        Public GridView As GridView
+        Public ListView As ListView
 
-        Public Sub New(megaUsuario As MegaUsuario, busqueda As String, gridview As GridView)
+        Public Sub New(megaUsuario As MegaUsuario, busqueda As String, listview As ListView)
             Me.MegaUsuario = megaUsuario
             Me.Busqueda = busqueda
-            Me.GridView = gridview
+            Me.ListView = listview
         End Sub
 
     End Class

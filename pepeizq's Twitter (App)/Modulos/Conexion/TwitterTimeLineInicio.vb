@@ -1,4 +1,6 @@
-﻿Imports pepeizq.Twitter
+﻿Imports Microsoft.Advertising.WinRT.UI
+Imports Microsoft.Toolkit.Uwp.Helpers
+Imports pepeizq.Twitter
 Imports pepeizq.Twitter.Tweet
 
 Module TwitterTimeLineInicio
@@ -64,21 +66,45 @@ Module TwitterTimeLineInicio
                 End If
             Else
                 For Each tweet In listaTweets
-                    Dim boolAñadir As Boolean = True
+                    Dim boolAñadirTweet As Boolean = True
+                    Dim boolAñadirAnuncio1 As Boolean = True
+                    Dim boolAñadirAnuncio2 As Boolean = True
 
                     For Each item In lv.Items
-                        Dim lvItem As ListViewItem = item
-                        Dim gridTweet As Grid = lvItem.Content
-                        Dim tweetAmpliado As pepeizq.Twitter.Objetos.TweetAmpliado = gridTweet.Tag
-                        Dim lvTweet As Tweet = tweetAmpliado.Tweet
+                        If TypeOf item Is ListViewItem Then
+                            Dim lvItem As ListViewItem = item
+                            Dim gridTweet As Grid = lvItem.Content
+                            Dim tweetAmpliado As pepeizq.Twitter.Objetos.TweetAmpliado = gridTweet.Tag
+                            Dim lvTweet As Tweet = tweetAmpliado.Tweet
 
-                        If lvTweet.ID = tweet.ID Then
-                            boolAñadir = False
+                            If lvTweet.ID = tweet.ID Then
+                                boolAñadirTweet = False
+                            End If
+                        End If
+
+                        If TypeOf item Is Grid Then
+                            Dim gridAnuncio As Grid = item
+
+                            If gridAnuncio.Name = "gridAnuncio1100022916" Then
+                                boolAñadirAnuncio1 = False
+                            End If
+
+                            If gridAnuncio.Name = "gridAnuncio1100022920" Then
+                                boolAñadirAnuncio2 = False
+                            End If
                         End If
                     Next
 
-                    If boolAñadir = True Then
+                    If boolAñadirTweet = True Then
                         lv.Items.Add(pepeizq.Twitter.Xaml.TweetXaml.Añadir(tweet, megaUsuario, Nothing))
+                    End If
+
+                    If boolAñadirAnuncio1 = True Then
+                        lv.Items.Add(AñadirAnuncio("1100022916"))
+                    End If
+
+                    If boolAñadirAnuncio1 = False And boolAñadirAnuncio2 = True Then
+                        lv.Items.Add(AñadirAnuncio("1100022920"))
                     End If
                 Next
 
@@ -91,5 +117,47 @@ Module TwitterTimeLineInicio
         End If
 
     End Sub
+
+    Public Function AñadirAnuncio(id As String)
+
+        Dim gridAnuncio As New Grid With {
+            .Name = "gridAnuncio" + id,
+            .Padding = New Thickness(10, 10, 10, 10)
+        }
+
+        Dim anuncio As New AdControl With {
+            .AdUnitId = id,
+            .Width = 728,
+            .Height = 90,
+            .HorizontalAlignment = HorizontalAlignment.Center
+        }
+
+        Dim color1 As New GradientStop With {
+            .Color = ColorHelper.ToColor("#e0e0e0"),
+            .Offset = 0.5
+        }
+
+        Dim color2 As New GradientStop With {
+            .Color = ColorHelper.ToColor("#d6d6d6"),
+            .Offset = 1.0
+        }
+
+        Dim coleccion As New GradientStopCollection From {
+            color1,
+            color2
+        }
+
+        Dim brush As New LinearGradientBrush With {
+            .StartPoint = New Point(0.5, 0),
+            .EndPoint = New Point(0.5, 1),
+            .GradientStops = coleccion
+        }
+
+        gridAnuncio.Background = brush
+        gridAnuncio.Children.Add(anuncio)
+
+        Return gridAnuncio
+
+    End Function
 
 End Module

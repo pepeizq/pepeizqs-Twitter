@@ -219,13 +219,15 @@ Module InicioXaml
                                     Dim boolAñadir As Boolean = True
 
                                     For Each item In lv.Items
-                                        Dim lvItem2 As ListViewItem = item
-                                        Dim gridTweet2 As Grid = lvItem2.Content
-                                        Dim tweetAmpliado2 As pepeizq.Twitter.Objetos.TweetAmpliado = gridTweet2.Tag
-                                        Dim lvTweet As Tweet = tweetAmpliado2.Tweet
+                                        If TypeOf item Is ListViewItem Then
+                                            Dim lvItem2 As ListViewItem = item
+                                            Dim gridTweet2 As Grid = lvItem2.Content
+                                            Dim tweetAmpliado2 As pepeizq.Twitter.Objetos.TweetAmpliado = gridTweet2.Tag
+                                            Dim lvTweet As Tweet = tweetAmpliado2.Tweet
 
-                                        If lvTweet.ID = tweet.ID Then
-                                            boolAñadir = False
+                                            If lvTweet.ID = tweet.ID Then
+                                                boolAñadir = False
+                                            End If
                                         End If
                                     Next
 

@@ -89,25 +89,34 @@ Module TwitterStream
                                                                                                                                                                                                                 Dim mostrar As Boolean = True
 
                                                                                                                                                                                                                 For Each item In lvInicio.Items
-                                                                                                                                                                                                                    Dim lvitem As ListViewItem = item
-                                                                                                                                                                                                                    Dim grid As Grid = lvitem.Content
-                                                                                                                                                                                                                    Dim tweetAmpliado As pepeizq.Twitter.Objetos.TweetAmpliado = grid.Tag
-                                                                                                                                                                                                                    Dim itemTweet As Tweet = tweetAmpliado.Tweet
+                                                                                                                                                                                                                    If TypeOf item Is ListViewItem Then
+                                                                                                                                                                                                                        Dim lvitem As ListViewItem = item
+                                                                                                                                                                                                                        Dim grid As Grid = lvitem.Content
+                                                                                                                                                                                                                        Dim tweetAmpliado As pepeizq.Twitter.Objetos.TweetAmpliado = grid.Tag
+                                                                                                                                                                                                                        Dim itemTweet As Tweet = tweetAmpliado.Tweet
 
-                                                                                                                                                                                                                    If itemTweet.ID = tweet.ID Then
-                                                                                                                                                                                                                        mostrar = False
-                                                                                                                                                                                                                    End If
-
-                                                                                                                                                                                                                    If Not tweet.RespuestaUsuarioScreenNombre = Nothing Then
-                                                                                                                                                                                                                        mostrar = False
-                                                                                                                                                                                                                    End If
-
-                                                                                                                                                                                                                    If Not tweet.Retweet Is Nothing Then
-                                                                                                                                                                                                                        If tweet.Retweet.Usuario.ScreenNombre = megaUsuario.Usuario2.Usuario.ScreenNombre Then
+                                                                                                                                                                                                                        If itemTweet.ID = tweet.ID Then
                                                                                                                                                                                                                             mostrar = False
+                                                                                                                                                                                                                        End If
+
+                                                                                                                                                                                                                        If Not tweet.RespuestaUsuarioScreenNombre = Nothing Then
+                                                                                                                                                                                                                            mostrar = False
+                                                                                                                                                                                                                        End If
+
+                                                                                                                                                                                                                        If Not tweet.Retweet Is Nothing Then
+                                                                                                                                                                                                                            If tweet.Retweet.Usuario.ScreenNombre = megaUsuario.Usuario2.Usuario.ScreenNombre Then
+                                                                                                                                                                                                                                mostrar = False
+                                                                                                                                                                                                                            End If
                                                                                                                                                                                                                         End If
                                                                                                                                                                                                                     End If
 
+                                                                                                                                                                                                                    If TypeOf item Is Grid Then
+                                                                                                                                                                                                                        Dim grid As Grid = item
+
+                                                                                                                                                                                                                        If grid.Name.Contains("gridAnuncio") Then
+                                                                                                                                                                                                                            lvInicio.Items.Remove(item)
+                                                                                                                                                                                                                        End If
+                                                                                                                                                                                                                    End If
                                                                                                                                                                                                                 Next
 
                                                                                                                                                                                                                 If mostrar = True Then
@@ -127,6 +136,9 @@ Module TwitterStream
                                                                                                                                                                                                                         End If
                                                                                                                                                                                                                     End If
                                                                                                                                                                                                                 End If
+
+                                                                                                                                                                                                                lvInicio.Items.Insert(1, AñadirAnuncio("1100022916"))
+                                                                                                                                                                                                                lvInicio.Items.Insert(3, AñadirAnuncio("1100022920"))
                                                                                                                                                                                                             End If
                                                                                                                                                                                                         End If
                                                                                                                                                                                                     End Sub)

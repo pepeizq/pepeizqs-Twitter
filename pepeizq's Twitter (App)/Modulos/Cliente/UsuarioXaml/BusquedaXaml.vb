@@ -13,11 +13,44 @@ Module BusquedaXaml
 
         Dim usuario As TwitterUsuario = megaUsuario.Usuario2.Usuario
 
-        Dim gridBusqueda As New Grid With {
-            .Name = "gridBusqueda" + usuario.ScreenNombre,
-            .Visibility = visibilidad
+        Dim gridFondo As New Grid
+        gridFondo.SetValue(Grid.RowProperty, 1)
+        gridFondo.Name = "gridBusqueda" + usuario.ScreenNombre
+        gridFondo.Visibility = visibilidad
+        gridFondo.Padding = New Thickness(10, 10, 10, 10)
+
+        Dim transpariencia As New UISettings
+
+        If transpariencia.AdvancedEffectsEnabled = True Then
+            gridFondo.Background = App.Current.Resources("GridAcrilico")
+        Else
+            gridFondo.Background = New SolidColorBrush(Colors.LightGray)
+        End If
+
+        Dim spBusqueda As New StackPanel With {
+            .Orientation = Orientation.Horizontal,
+            .HorizontalAlignment = HorizontalAlignment.Center,
+            .VerticalAlignment = VerticalAlignment.Center
         }
-        gridBusqueda.SetValue(Grid.RowProperty, 1)
+
+        Dim tbFondo As New Border With {
+            .Background = New SolidColorBrush(App.Current.Resources("ColorCuarto")),
+            .VerticalAlignment = VerticalAlignment.Top
+        }
+
+        Dim tbBusqueda As New TextBlock With {
+            .Text = recursos.GetString("Users"),
+            .Padding = New Thickness(15, 10, 15, 10),
+            .Foreground = New SolidColorBrush(Colors.White)
+        }
+
+        tbFondo.Child = tbBusqueda
+        spBusqueda.Children.Add(tbFondo)
+
+        Dim gridBusqueda As New Grid With {
+            .BorderBrush = New SolidColorBrush(App.Current.Resources("ColorCuarto")),
+            .BorderThickness = New Thickness(1, 1, 1, 1)
+        }
 
         '---------------------------------
 
@@ -57,25 +90,17 @@ Module BusquedaXaml
 
         Dim spUsuarios As New StackPanel With {
             .Orientation = Orientation.Horizontal,
-            .Margin = New Thickness(25, 25, 25, 25)
+            .Margin = New Thickness(20, 20, 20, 20)
         }
 
         spUsuarios.SetValue(Grid.RowProperty, 0)
-
-        Dim tbUsuarios As New TextBlock With {
-            .Text = recursos.GetString("Users"),
-            .Margin = New Thickness(0, 5, 15, 0),
-            .VerticalAlignment = VerticalAlignment.Top
-        }
-
-        spUsuarios.Children.Add(tbUsuarios)
 
         Dim spUsuariosBusqueda As New StackPanel With {
             .Orientation = Orientation.Vertical
         }
 
         Dim tbUsuariosBusqueda As New TextBox With {
-            .MinWidth = 200
+            .MinWidth = 350
         }
 
         AddHandler tbUsuariosBusqueda.TextChanged, AddressOf TbUsuariosBusquedaTextoCambia
@@ -86,8 +111,8 @@ Module BusquedaXaml
             .Content = recursos.GetString("Search2"),
             .Foreground = New SolidColorBrush(Colors.White),
             .Background = New SolidColorBrush(App.Current.Resources("ColorSecundario")),
-            .Margin = New Thickness(0, 10, 0, 10),
-            .Padding = New Thickness(10, 10, 10, 10),
+            .Margin = New Thickness(0, 10, 0, 0),
+            .Padding = New Thickness(15, 10, 15, 10),
             .Style = App.Current.Resources("ButtonRevealStyle")
         }
 
@@ -103,21 +128,25 @@ Module BusquedaXaml
 
         '--------------------------
 
-        Dim gvResultados As New GridView With {
+        Dim lvResultados As New ListView With {
             .IsItemClickEnabled = True,
-            .ItemContainerStyle = App.Current.Resources("GridViewEstilo1"),
-            .Margin = New Thickness(10, 10, 10, 10)
+            .ItemContainerStyle = App.Current.Resources("ListViewEstilo1"),
+            .Margin = New Thickness(10, 10, 10, 10),
+            .Visibility = Visibility.Collapsed
         }
 
-        AddHandler gvResultados.ItemClick, AddressOf GvResultadosItemClick
+        AddHandler lvResultados.ItemClick, AddressOf LvResultadosItemClick
 
-        gvResultados.SetValue(Grid.RowProperty, 1)
+        lvResultados.SetValue(Grid.RowProperty, 1)
 
-        botonUsuariosBusqueda.Tag = New pepeizq.Twitter.Objetos.BusquedaUsuario(megaUsuario, Nothing, gvResultados)
+        botonUsuariosBusqueda.Tag = New pepeizq.Twitter.Objetos.BusquedaUsuario(megaUsuario, Nothing, lvResultados)
 
-        gridBusqueda.Children.Add(gvResultados)
+        gridBusqueda.Children.Add(lvResultados)
 
-        Return gridBusqueda
+        spBusqueda.Children.Add(gridBusqueda)
+        gridFondo.Children.Add(spBusqueda)
+
+        Return gridFondo
 
     End Function
 
@@ -141,10 +170,15 @@ Module BusquedaXaml
         Dim usuarioBuscar As String = ApplicationData.Current.LocalSettings.Values("UsuarioBuscar")
 
         Dim usuarios As List(Of TwitterUsuario) = Await provider.BuscarUsuarios(cosas.MegaUsuario.Usuario2.Usuario.Tokens, usuarioBuscar, New TwitterBusquedaUsuariosParser)
+        Dim visibilidad As Visibility = Visibility.Collapsed
 
-        Dim gv As GridView = cosas.GridView
+        If usuarios.Count > 0 Then
+            visibilidad = Visibility.Visible
+        End If
 
-        gv.Items.Clear()
+        Dim lv As ListView = cosas.ListView
+        lv.Items.Clear()
+        lv.Visibility = visibilidad
 
         For Each usuario In usuarios
             Dim imagenAvatar As New ImageBrush With {
@@ -187,7 +221,7 @@ Module BusquedaXaml
 
             sp1.Children.Add(sp2)
 
-            Dim botonUsuario As New GridViewItem With {
+            Dim botonUsuario As New ListViewItem With {
                 .Content = sp1,
                 .Background = New SolidColorBrush(Colors.Transparent),
                 .BorderBrush = New SolidColorBrush(Colors.Transparent),
@@ -202,7 +236,7 @@ Module BusquedaXaml
             AddHandler botonUsuario.PointerEntered, AddressOf UsuarioEntraBoton
             AddHandler botonUsuario.PointerExited, AddressOf UsuarioSaleBoton
 
-            gv.Items.Add(botonUsuario)
+            lv.Items.Add(botonUsuario)
         Next
 
     End Sub
@@ -216,7 +250,7 @@ Module BusquedaXaml
 
     End Sub
 
-    Private Sub GvResultadosItemClick(sender As Object, e As ItemClickEventArgs)
+    Private Sub LvResultadosItemClick(sender As Object, e As ItemClickEventArgs)
 
         Dim sp As StackPanel = e.ClickedItem
         Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = sp.Tag
