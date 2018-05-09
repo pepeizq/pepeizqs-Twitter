@@ -100,14 +100,14 @@ Module TwitterTimeLineInicio
 
                 If Not licencia Is Nothing Then
                     If Not licencia.ProductLicenses("NoAds").IsActive Then
-                        lv.Items.Insert(1, AñadirAnuncio("1100022916"))
-                        lv.Items.Insert(4, AñadirAnuncio("1100022920"))
-                        lv.Items.Insert(8, AñadirAnuncio("1100022962"))
+                        lv.Items.Insert(2, AñadirAnuncio("1100022916"))
+                        lv.Items.Insert(5, AñadirAnuncio("1100022920"))
+                        lv.Items.Insert(9, AñadirAnuncio("1100022962"))
                     End If
                 Else
-                    lv.Items.Insert(1, AñadirAnuncio("1100022916"))
-                    lv.Items.Insert(4, AñadirAnuncio("1100022920"))
-                    lv.Items.Insert(8, AñadirAnuncio("1100022962"))
+                    lv.Items.Insert(2, AñadirAnuncio("1100022916"))
+                    lv.Items.Insert(5, AñadirAnuncio("1100022920"))
+                    lv.Items.Insert(9, AñadirAnuncio("1100022962"))
                 End If
 
                 pr.IsActive = False
