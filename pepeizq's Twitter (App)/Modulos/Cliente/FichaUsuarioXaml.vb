@@ -84,9 +84,11 @@ Module FichaUsuarioXaml
 
         AddHandler lvTweets.ItemClick, AddressOf LvTweets_ItemClick
 
-        Dim pbTweets As ProgressBar = pagina.FindName("pbTweetsUsuario")
+        Dim prTweets As ProgressRing = pagina.FindName("prTweetsUsuario")
+        prTweets.Foreground = New SolidColorBrush(color)
+
         Dim svTweets As ScrollViewer = pagina.FindName("svTweetsUsuario")
-        svTweets.Tag = New pepeizq.Twitter.Objetos.ScrollViewerTweets(cosas.MegaUsuario, Nothing, pbTweets, 2, usuario.ScreenNombre, color)
+        svTweets.Tag = New pepeizq.Twitter.Objetos.ScrollViewerTweets(cosas.MegaUsuario, Nothing, prTweets, 2, usuario.ScreenNombre, color)
         svTweets.Foreground = New SolidColorBrush(("#" + usuario.ColorTexto).ToColor)
         AddHandler svTweets.ViewChanging, AddressOf SvTweets_ViewChanging
 

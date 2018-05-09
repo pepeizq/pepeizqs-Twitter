@@ -83,45 +83,50 @@ Module InicioXaml
 
         '---------------------------------
 
+        Dim spAbajo As New StackPanel With {
+            .Orientation = Orientation.Horizontal,
+            .Margin = New Thickness(20, 20, 20, 20),
+            .HorizontalAlignment = HorizontalAlignment.Right,
+            .VerticalAlignment = VerticalAlignment.Bottom
+        }
+        spAbajo.SetValue(Grid.RowProperty, 0)
+
+        Dim prTweetsAbajo As New ProgressRing With {
+            .IsActive = True,
+            .Foreground = New SolidColorBrush(App.Current.Resources("ColorPrimario")),
+            .Visibility = Visibility.Collapsed,
+            .Margin = New Thickness(0, 0, 15, 0),
+            .Padding = New Thickness(10, 10, 10, 10),
+            .Name = "prTweetsInicio" + usuario.ScreenNombre
+        }
+
+        svTweets.Tag = New pepeizq.Twitter.Objetos.ScrollViewerTweets(megaUsuario, prTweets, prTweetsAbajo, 0, Nothing, Nothing)
+
+        spAbajo.Children.Add(prTweetsAbajo)
+
         Dim iconoSubir As New FontAwesome.UWP.FontAwesome With {
             .Foreground = New SolidColorBrush(Colors.White),
             .Icon = FontAwesomeIcon.ArrowCircleUp
         }
 
-        Dim botonSubir As New Button
-        botonSubir.SetValue(Grid.RowProperty, 0)
-        botonSubir.Name = "botonSubirArribaInicio" + usuario.ScreenNombre
-        botonSubir.Margin = New Thickness(20, 20, 20, 20)
-        botonSubir.HorizontalAlignment = HorizontalAlignment.Right
-        botonSubir.VerticalAlignment = VerticalAlignment.Bottom
-        botonSubir.Padding = New Thickness(10, 10, 10, 10)
-        botonSubir.BorderBrush = New SolidColorBrush(Colors.White)
-        botonSubir.BorderThickness = New Thickness(1, 1, 1, 1)
-        botonSubir.Content = iconoSubir
-        botonSubir.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
-        botonSubir.Visibility = Visibility.Collapsed
-        botonSubir.Tag = svTweets
+        Dim botonSubir As New Button With {
+            .Name = "botonSubirArribaInicio" + usuario.ScreenNombre,
+            .Padding = New Thickness(10, 10, 10, 10),
+            .BorderBrush = New SolidColorBrush(Colors.White),
+            .BorderThickness = New Thickness(1, 1, 1, 1),
+            .Content = iconoSubir,
+            .Background = New SolidColorBrush(App.Current.Resources("ColorSecundario")),
+            .Visibility = Visibility.Collapsed,
+            .Tag = svTweets
+        }
 
         AddHandler botonSubir.Click, AddressOf BotonSubirClick
         AddHandler botonSubir.PointerEntered, AddressOf UsuarioEntraBoton
         AddHandler botonSubir.PointerExited, AddressOf UsuarioSaleBoton
 
-        gridTweets.Children.Add(botonSubir)
+        spAbajo.Children.Add(botonSubir)
 
-        '---------------------------------
-
-        Dim pbTweets As New ProgressBar
-        pbTweets.SetValue(Grid.RowProperty, 1)
-        pbTweets.IsIndeterminate = True
-        pbTweets.Foreground = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
-        pbTweets.Visibility = Visibility.Collapsed
-        pbTweets.Margin = New Thickness(10, 10, 10, 10)
-        pbTweets.Padding = New Thickness(10, 10, 10, 10)
-        pbTweets.Name = "pbTweets" + usuario.ScreenNombre
-
-        gridTweets.Children.Add(pbTweets)
-
-        svTweets.Tag = New pepeizq.Twitter.Objetos.ScrollViewerTweets(megaUsuario, prTweets, pbTweets, 0, Nothing, Nothing)
+        gridTweets.Children.Add(spAbajo)
 
         '---------------------------------
 
@@ -134,8 +139,8 @@ Module InicioXaml
         Dim sv As ScrollViewer = sender
         Dim cosas As pepeizq.Twitter.Objetos.ScrollViewerTweets = sv.Tag
 
-        Dim pr As ProgressRing = cosas.Anillo
-        Dim pb As ProgressBar = cosas.Barra
+        Dim pr1 As ProgressRing = cosas.Anillo1
+        Dim pr2 As ProgressRing = cosas.Anillo2
 
         Dim lv As ListView = Nothing
 
@@ -150,47 +155,47 @@ Module InicioXaml
 
         lv.Tag = cosas.MegaUsuario
 
-        If pb.Visibility = Visibility.Collapsed Then
-            Dim frame As Frame = Window.Current.Content
-            Dim pagina As Page = frame.Content
+        Dim frame As Frame = Window.Current.Content
+        Dim pagina As Page = frame.Content
 
-            If sv.VerticalOffset > 50 Then
-                If cosas.Query = 0 Then
-                    Dim botonSubir As Button = pagina.FindName("botonSubirArribaInicio" + cosas.MegaUsuario.Usuario2.Usuario.ScreenNombre)
-                    botonSubir.Visibility = Visibility.Visible
-                ElseIf cosas.Query = 1 Then
-                    Dim botonSubir As Button = pagina.FindName("botonSubirArribaMenciones" + cosas.MegaUsuario.Usuario2.Usuario.ScreenNombre)
-                    botonSubir.Visibility = Visibility.Visible
-                ElseIf cosas.Query = 2 Then
-                    Dim botonSubir As Button = pagina.FindName("botonSubirArribaUsuario")
-                    botonSubir.Visibility = Visibility.Visible
-                End If
-            Else
-                If cosas.Query = 0 Then
-                    Dim botonSubir As Button = pagina.FindName("botonSubirArribaInicio" + cosas.MegaUsuario.Usuario2.Usuario.ScreenNombre)
-                    botonSubir.Visibility = Visibility.Collapsed
-                ElseIf cosas.Query = 1 Then
-                    Dim botonSubir As Button = pagina.FindName("botonSubirArribaMenciones" + cosas.MegaUsuario.Usuario2.Usuario.ScreenNombre)
-                    botonSubir.Visibility = Visibility.Collapsed
-                ElseIf cosas.Query = 2 Then
-                    Dim botonSubir As Button = pagina.FindName("botonSubirArribaUsuario")
-                    botonSubir.Visibility = Visibility.Collapsed
-                End If
+        If sv.VerticalOffset > 50 Then
+            If cosas.Query = 0 Then
+                Dim botonSubir As Button = pagina.FindName("botonSubirArribaInicio" + cosas.MegaUsuario.Usuario2.Usuario.ScreenNombre)
+                botonSubir.Visibility = Visibility.Visible
+            ElseIf cosas.Query = 1 Then
+                Dim botonSubir As Button = pagina.FindName("botonSubirArribaMenciones" + cosas.MegaUsuario.Usuario2.Usuario.ScreenNombre)
+                botonSubir.Visibility = Visibility.Visible
+            ElseIf cosas.Query = 2 Then
+                Dim botonSubir As Button = pagina.FindName("botonSubirArribaUsuario")
+                botonSubir.Visibility = Visibility.Visible
             End If
+        Else
+            If cosas.Query = 0 Then
+                Dim botonSubir As Button = pagina.FindName("botonSubirArribaInicio" + cosas.MegaUsuario.Usuario2.Usuario.ScreenNombre)
+                botonSubir.Visibility = Visibility.Collapsed
+            ElseIf cosas.Query = 1 Then
+                Dim botonSubir As Button = pagina.FindName("botonSubirArribaMenciones" + cosas.MegaUsuario.Usuario2.Usuario.ScreenNombre)
+                botonSubir.Visibility = Visibility.Collapsed
+            ElseIf cosas.Query = 2 Then
+                Dim botonSubir As Button = pagina.FindName("botonSubirArribaUsuario")
+                botonSubir.Visibility = Visibility.Collapsed
+            End If
+        End If
 
+        If pr2.Visibility = Visibility.Collapsed Then
             If (sv.ScrollableHeight - 200) < sv.VerticalOffset Then
                 Dim mostrar As Boolean = False
 
-                If pr Is Nothing Then
+                If pr1 Is Nothing Then
                     mostrar = True
                 Else
-                    If pr.IsActive = False Then
+                    If pr1.IsActive = False Then
                         mostrar = True
                     End If
                 End If
 
                 If mostrar = True Then
-                    pb.Visibility = Visibility.Visible
+                    pr2.Visibility = Visibility.Visible
 
                     If lv.Items.Count > 0 And lv.Items.Count < 280 Then
                         Dim lvItem As ListViewItem = lv.Items(lv.Items.Count - 1)
@@ -239,7 +244,7 @@ Module InicioXaml
                         End If
                     End If
 
-                    pb.Visibility = Visibility.Collapsed
+                    pr2.Visibility = Visibility.Collapsed
                 End If
             End If
         End If

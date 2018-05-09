@@ -33,45 +33,50 @@ Module MencionesXaml
 
         '---------------------------------
 
+        Dim spAbajo As New StackPanel With {
+            .Orientation = Orientation.Horizontal,
+            .Margin = New Thickness(20, 20, 20, 20),
+            .HorizontalAlignment = HorizontalAlignment.Right,
+            .VerticalAlignment = VerticalAlignment.Bottom
+        }
+        spAbajo.SetValue(Grid.RowProperty, 0)
+
+        Dim prTweets As New ProgressRing With {
+            .IsActive = True,
+            .Foreground = New SolidColorBrush(App.Current.Resources("ColorPrimario")),
+            .Visibility = Visibility.Collapsed,
+            .Margin = New Thickness(0, 0, 15, 0),
+            .Padding = New Thickness(10, 10, 10, 10),
+            .Name = "prTweetsMenciones" + usuario.ScreenNombre
+        }
+
+        svTweets.Tag = New pepeizq.Twitter.Objetos.ScrollViewerTweets(megaUsuario, Nothing, prTweets, 1, Nothing, Nothing)
+
+        spAbajo.Children.Add(prTweets)
+
         Dim iconoSubir As New FontAwesome.UWP.FontAwesome With {
             .Foreground = New SolidColorBrush(Colors.White),
             .Icon = FontAwesomeIcon.ArrowCircleUp
         }
 
-        Dim botonSubir As New Button
-        botonSubir.SetValue(Grid.RowProperty, 0)
-        botonSubir.Name = "botonSubirArribaMenciones" + usuario.ScreenNombre
-        botonSubir.Margin = New Thickness(20, 20, 20, 20)
-        botonSubir.HorizontalAlignment = HorizontalAlignment.Right
-        botonSubir.VerticalAlignment = VerticalAlignment.Bottom
-        botonSubir.Padding = New Thickness(10, 10, 10, 10)
-        botonSubir.BorderBrush = New SolidColorBrush(Colors.White)
-        botonSubir.BorderThickness = New Thickness(1, 1, 1, 1)
-        botonSubir.Content = iconoSubir
-        botonSubir.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
-        botonSubir.Visibility = Visibility.Collapsed
-        botonSubir.Tag = svTweets
+        Dim botonSubir As New Button With {
+            .Name = "botonSubirArribaMenciones" + usuario.ScreenNombre,
+            .Padding = New Thickness(10, 10, 10, 10),
+            .BorderBrush = New SolidColorBrush(Colors.White),
+            .BorderThickness = New Thickness(1, 1, 1, 1),
+            .Content = iconoSubir,
+            .Background = New SolidColorBrush(App.Current.Resources("ColorSecundario")),
+            .Visibility = Visibility.Collapsed,
+            .Tag = svTweets
+        }
 
         AddHandler botonSubir.Click, AddressOf BotonSubirClick
         AddHandler botonSubir.PointerEntered, AddressOf UsuarioEntraBoton
         AddHandler botonSubir.PointerExited, AddressOf UsuarioSaleBoton
 
-        gridMenciones.Children.Add(botonSubir)
+        spAbajo.Children.Add(botonSubir)
 
-        '---------------------------------
-
-        Dim pbTweets As New ProgressBar
-        pbTweets.SetValue(Grid.RowProperty, 1)
-        pbTweets.IsIndeterminate = True
-        pbTweets.Foreground = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
-        pbTweets.Visibility = Visibility.Collapsed
-        pbTweets.Margin = New Thickness(10, 10, 10, 10)
-        pbTweets.Padding = New Thickness(10, 10, 10, 10)
-        pbTweets.Name = "pbTweets" + usuario.ScreenNombre
-
-        svTweets.Tag = New pepeizq.Twitter.Objetos.ScrollViewerTweets(megaUsuario, Nothing, pbTweets, 1, Nothing, Nothing)
-
-        gridMenciones.Children.Add(pbTweets)
+        gridMenciones.Children.Add(spAbajo)
 
         '---------------------------------
 

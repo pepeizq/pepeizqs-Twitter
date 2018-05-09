@@ -278,7 +278,6 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
@@ -358,13 +357,15 @@
                         </Grid>
                     </ScrollViewer>
 
-                    <Button x:Name="botonSubirArribaUsuario" Grid.Row="1" Margin="20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Visibility="Collapsed">
-                        <Button.Content>
-                            <fa:FontAwesome Icon="ArrowCircleUp" Foreground="White"/>
-                        </Button.Content>
-                    </Button>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="20" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                        <ProgressRing x:Name="prTweetsUsuario" IsActive="True" Padding="10" Margin="0,0,15,0" Visibility="Collapsed"/>
 
-                    <ProgressBar x:Name="pbTweetsUsuario" Grid.Row="2" IsIndeterminate="True" Margin="10" Padding="10" Visibility="Collapsed"/>
+                        <Button x:Name="botonSubirArribaUsuario" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Visibility="Collapsed">
+                            <Button.Content>
+                                <fa:FontAwesome Icon="ArrowCircleUp" Foreground="White"/>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
                 </Grid>
 
                 <Grid x:Name="gridTweetAmpliado" Visibility="Collapsed" Padding="10">
