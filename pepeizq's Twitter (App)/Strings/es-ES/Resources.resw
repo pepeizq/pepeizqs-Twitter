@@ -312,4 +312,7 @@
   <data name="tbConfigCreateNewApp.Text" xml:space="preserve">
     <value>Crear Nueva App</value>
   </data>
+  <data name="ButtonRemoveAds" xml:space="preserve">
+    <value>Quitar Anuncios</value>
+  </data>
 </root>

@@ -1,6 +1,7 @@
 ﻿Imports pepeizq.Twitter
 Imports pepeizq.Twitter.Stream
 Imports pepeizq.Twitter.Tweet
+Imports Windows.ApplicationModel.Store
 Imports Windows.Storage
 Imports Windows.UI.Core
 
@@ -55,17 +56,47 @@ Module TwitterStream
                                                                                                                                                                                                                 Dim i As Integer = 0
 
                                                                                                                                                                                                                 For Each item In lvInicio.Items
-                                                                                                                                                                                                                    Dim lvitem As ListViewItem = item
-                                                                                                                                                                                                                    Dim grid As Grid = lvitem.Content
-                                                                                                                                                                                                                    Dim tweetAmpliado As pepeizq.Twitter.Objetos.TweetAmpliado = grid.Tag
-                                                                                                                                                                                                                    Dim tweet As Tweet = tweetAmpliado.Tweet
+                                                                                                                                                                                                                    If TypeOf item Is ListViewItem Then
+                                                                                                                                                                                                                        Dim lvitem As ListViewItem = item
+                                                                                                                                                                                                                        Dim grid As Grid = lvitem.Content
+                                                                                                                                                                                                                        Dim tweetAmpliado As pepeizq.Twitter.Objetos.TweetAmpliado = grid.Tag
+                                                                                                                                                                                                                        Dim tweet As Tweet = tweetAmpliado.Tweet
 
-                                                                                                                                                                                                                    If borrar.Id = tweet.ID Then
-                                                                                                                                                                                                                        lvInicio.Items.RemoveAt(i)
+                                                                                                                                                                                                                        If borrar.Id = tweet.ID Then
+                                                                                                                                                                                                                            lvInicio.Items.RemoveAt(i)
+                                                                                                                                                                                                                        End If
+                                                                                                                                                                                                                    End If
+
+                                                                                                                                                                                                                    If TypeOf item Is Grid Then
+                                                                                                                                                                                                                        Dim grid As Grid = item
+
+                                                                                                                                                                                                                        If grid.Name.Contains("gridAnuncio") Then
+                                                                                                                                                                                                                            lvInicio.Items.Remove(item)
+                                                                                                                                                                                                                        End If
                                                                                                                                                                                                                     End If
 
                                                                                                                                                                                                                     i += 1
                                                                                                                                                                                                                 Next
+
+                                                                                                                                                                                                                Dim licencia As LicenseInformation = Nothing
+
+                                                                                                                                                                                                                Try
+                                                                                                                                                                                                                    licencia = CurrentApp.LicenseInformation
+                                                                                                                                                                                                                Catch ex As Exception
+
+                                                                                                                                                                                                                End Try
+
+                                                                                                                                                                                                                If Not licencia Is Nothing Then
+                                                                                                                                                                                                                    If Not licencia.ProductLicenses("NoAds").IsActive Then
+                                                                                                                                                                                                                        lvInicio.Items.Insert(1, AñadirAnuncio("1100022916"))
+                                                                                                                                                                                                                        lvInicio.Items.Insert(4, AñadirAnuncio("1100022920"))
+                                                                                                                                                                                                                        lvInicio.Items.Insert(8, AñadirAnuncio("1100022962"))
+                                                                                                                                                                                                                    End If
+                                                                                                                                                                                                                Else
+                                                                                                                                                                                                                    lvInicio.Items.Insert(1, AñadirAnuncio("1100022916"))
+                                                                                                                                                                                                                    lvInicio.Items.Insert(4, AñadirAnuncio("1100022920"))
+                                                                                                                                                                                                                    lvInicio.Items.Insert(8, AñadirAnuncio("1100022962"))
+                                                                                                                                                                                                                End If
 
                                                                                                                                                                                                                 For Each item In lvMenciones.Items
                                                                                                                                                                                                                     Dim lvitem As ListViewItem = item
@@ -109,14 +140,6 @@ Module TwitterStream
                                                                                                                                                                                                                             End If
                                                                                                                                                                                                                         End If
                                                                                                                                                                                                                     End If
-
-                                                                                                                                                                                                                    If TypeOf item Is Grid Then
-                                                                                                                                                                                                                        Dim grid As Grid = item
-
-                                                                                                                                                                                                                        If grid.Name.Contains("gridAnuncio") Then
-                                                                                                                                                                                                                            lvInicio.Items.Remove(item)
-                                                                                                                                                                                                                        End If
-                                                                                                                                                                                                                    End If
                                                                                                                                                                                                                 Next
 
                                                                                                                                                                                                                 If mostrar = True Then
@@ -134,11 +157,38 @@ Module TwitterStream
                                                                                                                                                                                                                         If ApplicationData.Current.LocalSettings.Values("notificacion" + megaUsuario.Usuario2.Usuario.ScreenNombre) = True Then
                                                                                                                                                                                                                             Notificaciones.ToastTweet.Enseñar(tweetNuevo, megaUsuario)
                                                                                                                                                                                                                         End If
+
+                                                                                                                                                                                                                        For Each item In lvInicio.Items
+                                                                                                                                                                                                                            If TypeOf item Is Grid Then
+                                                                                                                                                                                                                                Dim grid As Grid = item
+
+                                                                                                                                                                                                                                If grid.Name.Contains("gridAnuncio") Then
+                                                                                                                                                                                                                                    lvInicio.Items.Remove(item)
+                                                                                                                                                                                                                                End If
+                                                                                                                                                                                                                            End If
+                                                                                                                                                                                                                        Next
+
+                                                                                                                                                                                                                        Dim licencia As LicenseInformation = Nothing
+
+                                                                                                                                                                                                                        Try
+                                                                                                                                                                                                                            licencia = CurrentApp.LicenseInformation
+                                                                                                                                                                                                                        Catch ex As Exception
+
+                                                                                                                                                                                                                        End Try
+
+                                                                                                                                                                                                                        If Not licencia Is Nothing Then
+                                                                                                                                                                                                                            If Not licencia.ProductLicenses("NoAds").IsActive Then
+                                                                                                                                                                                                                                lvInicio.Items.Insert(1, AñadirAnuncio("1100022916"))
+                                                                                                                                                                                                                                lvInicio.Items.Insert(4, AñadirAnuncio("1100022920"))
+                                                                                                                                                                                                                                lvInicio.Items.Insert(8, AñadirAnuncio("1100022962"))
+                                                                                                                                                                                                                            End If
+                                                                                                                                                                                                                        Else
+                                                                                                                                                                                                                            lvInicio.Items.Insert(1, AñadirAnuncio("1100022916"))
+                                                                                                                                                                                                                            lvInicio.Items.Insert(4, AñadirAnuncio("1100022920"))
+                                                                                                                                                                                                                            lvInicio.Items.Insert(8, AñadirAnuncio("1100022962"))
+                                                                                                                                                                                                                        End If
                                                                                                                                                                                                                     End If
                                                                                                                                                                                                                 End If
-
-                                                                                                                                                                                                                lvInicio.Items.Insert(1, AñadirAnuncio("1100022916"))
-                                                                                                                                                                                                                lvInicio.Items.Insert(3, AñadirAnuncio("1100022920"))
                                                                                                                                                                                                             End If
                                                                                                                                                                                                         End If
                                                                                                                                                                                                     End Sub)
