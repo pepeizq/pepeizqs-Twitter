@@ -152,6 +152,7 @@
     <Compile Include="Modulos\Cliente\UsuarioXaml\EscribirXaml.vb" />
     <Compile Include="Modulos\Cliente\UsuarioXaml\InicioXaml.vb" />
     <Compile Include="Modulos\Cliente\UsuarioXaml\MencionesXaml.vb" />
+    <Compile Include="Modulos\Tiles.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -296,7 +297,7 @@
       <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="pepeizq.Twitter">
-      <Version>1.0.58</Version>
+      <Version>1.0.57</Version>
     </PackageReference>
     <PackageReference Include="Unicode.net">
       <Version>0.1.2</Version>

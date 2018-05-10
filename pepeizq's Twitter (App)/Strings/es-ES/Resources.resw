@@ -304,15 +304,18 @@
     <value>Enseñar Notificaciones</value>
   </data>
   <data name="tbConfigAPIKeys.Text" xml:space="preserve">
-    <value>Puedes cambiar las claves para que funcione como si fuera otra app de Twitter (reinicia la app cuando cambies las claves)</value>
+    <value>Cambia las claves para que funcione como si fuera otra app de Twitter (reinicia la app cuando cambies las claves)</value>
   </data>
   <data name="tbConfigAPIShow.Text" xml:space="preserve">
-    <value>Cambiar Claves de API</value>
+    <value>Claves de API</value>
   </data>
   <data name="tbConfigCreateNewApp.Text" xml:space="preserve">
     <value>Crear Nueva App</value>
   </data>
   <data name="ButtonRemoveAds" xml:space="preserve">
     <value>Quitar Anuncios</value>
+  </data>
+  <data name="ButtonAddTile" xml:space="preserve">
+    <value>Añadir Tile</value>
   </data>
 </root>

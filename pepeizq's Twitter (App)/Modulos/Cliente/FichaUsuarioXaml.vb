@@ -61,17 +61,19 @@ Module FichaUsuarioXaml
             gridUsuario.Background = acrilico
         End If
 
-        Try
-            ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("animacionUsuario", objetoAnimar)
+        If Not objetoAnimar Is Nothing Then
+            Try
+                ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("animacionUsuario", objetoAnimar)
 
-            Dim animacion As ConnectedAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("animacionUsuario")
+                Dim animacion As ConnectedAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("animacionUsuario")
 
-            If Not animacion Is Nothing Then
-                animacion.TryStart(gridUsuario)
-            End If
-        Catch ex As Exception
+                If Not animacion Is Nothing Then
+                    animacion.TryStart(gridUsuario)
+                End If
+            Catch ex As Exception
 
-        End Try
+            End Try
+        End If
 
         gridUsuario.Visibility = Visibility.Visible
 

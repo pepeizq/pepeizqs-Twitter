@@ -109,16 +109,22 @@ Module TwitterConexion
         Dim col2 As New ColumnDefinition
         Dim col3 As New ColumnDefinition
         Dim col4 As New ColumnDefinition
+        Dim col5 As New ColumnDefinition
+        Dim col6 As New ColumnDefinition
 
         col1.Width = New GridLength(1, GridUnitType.Auto)
         col2.Width = New GridLength(1, GridUnitType.Star)
         col3.Width = New GridLength(1, GridUnitType.Auto)
         col4.Width = New GridLength(1, GridUnitType.Auto)
+        col5.Width = New GridLength(1, GridUnitType.Auto)
+        col6.Width = New GridLength(1, GridUnitType.Auto)
 
         gridUsuario.ColumnDefinitions.Add(col1)
         gridUsuario.ColumnDefinitions.Add(col2)
         gridUsuario.ColumnDefinitions.Add(col3)
         gridUsuario.ColumnDefinitions.Add(col4)
+        gridUsuario.ColumnDefinitions.Add(col5)
+        gridUsuario.ColumnDefinitions.Add(col6)
 
         Dim imagenAvatar As New ImageBrush With {
             .Stretch = Stretch.Uniform,
@@ -144,6 +150,33 @@ Module TwitterConexion
         tbUsuario.SetValue(Grid.ColumnProperty, 1)
         gridUsuario.Children.Add(tbUsuario)
 
+        '--------------------------------------
+
+        Dim simboloAñadirTile As New FontAwesome.UWP.FontAwesome With {
+            .Foreground = New SolidColorBrush(App.Current.Resources("ColorSecundario")),
+            .Icon = FontAwesomeIcon.ThumbTack,
+            .VerticalAlignment = VerticalAlignment.Center
+        }
+
+        Dim botonAñadirTile As New Button With {
+            .Background = New SolidColorBrush(Colors.Transparent),
+            .Content = simboloAñadirTile,
+            .Tag = megaUsuario,
+            .Name = "botonAñadirTile" + megaUsuario.Usuario2.Usuario.Id
+        }
+
+        ToolTipService.SetToolTip(botonAñadirTile, recursos.GetString("ButtonAddTile"))
+        ToolTipService.SetPlacement(botonAñadirTile, PlacementMode.Bottom)
+
+        AddHandler botonAñadirTile.Click, AddressOf BotonAñadirTileCuenta
+        AddHandler botonAñadirTile.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler botonAñadirTile.PointerExited, AddressOf UsuarioSaleBoton
+
+        botonAñadirTile.SetValue(Grid.ColumnProperty, 2)
+        gridUsuario.Children.Add(botonAñadirTile)
+
+        '--------------------------------------
+
         Dim simboloNotificacion As New FontAwesome.UWP.FontAwesome With {
             .Foreground = New SolidColorBrush(App.Current.Resources("ColorSecundario")),
             .Icon = FontAwesomeIcon.Comment
@@ -160,7 +193,7 @@ Module TwitterConexion
         Dim cbNotificacion As New CheckBox With {
             .Content = simboloNotificacion,
             .MinWidth = 0,
-            .Margin = New Thickness(20, 0, 20, 0),
+            .Margin = New Thickness(20, 0, 0, 0),
             .Tag = megaUsuario,
             .IsChecked = boolNotificacion
         }
@@ -173,12 +206,24 @@ Module TwitterConexion
         AddHandler cbNotificacion.PointerEntered, AddressOf UsuarioEntraBoton
         AddHandler cbNotificacion.PointerExited, AddressOf UsuarioSaleBoton
 
-        cbNotificacion.SetValue(Grid.ColumnProperty, 2)
+        cbNotificacion.SetValue(Grid.ColumnProperty, 3)
         gridUsuario.Children.Add(cbNotificacion)
+
+        '--------------------------------------
+
+        Dim separador As New AppBarSeparator With {
+            .Foreground = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+        }
+
+        separador.SetValue(Grid.ColumnProperty, 4)
+        gridUsuario.Children.Add(separador)
+
+        '--------------------------------------
 
         Dim simboloQuitar As New FontAwesome.UWP.FontAwesome With {
             .Foreground = New SolidColorBrush(Colors.White),
-            .Icon = FontAwesomeIcon.Times
+            .Icon = FontAwesomeIcon.Times,
+            .VerticalAlignment = VerticalAlignment.Center
         }
 
         Dim botonQuitar As New Button With {
@@ -194,12 +239,21 @@ Module TwitterConexion
         AddHandler botonQuitar.PointerEntered, AddressOf UsuarioEntraBoton
         AddHandler botonQuitar.PointerExited, AddressOf UsuarioSaleBoton
 
-        botonQuitar.SetValue(Grid.ColumnProperty, 3)
+        botonQuitar.SetValue(Grid.ColumnProperty, 5)
         gridUsuario.Children.Add(botonQuitar)
 
         Return gridUsuario
 
     End Function
+
+    Private Sub BotonAñadirTileCuenta(sender As Object, e As RoutedEventArgs)
+
+        Dim boton As Button = sender
+        Dim megaUsuario As pepeizq.Twitter.MegaUsuario = boton.Tag
+
+        Tiles.Generar(megaUsuario)
+
+    End Sub
 
     Private Sub CbNotificacion_Checked(sender As Object, e As RoutedEventArgs)
 
@@ -270,7 +324,7 @@ Module TwitterConexion
             If menu.Items.Count > 0 Then
                 If i = 0 Then
                     Dim nuevoUsuario As TwitterUsuario = menu.Items(0).Tag
-                    UsuarioXaml.CambiarCuenta(nuevoUsuario.ScreenNombre)
+                    UsuarioXaml.CambiarCuenta(nuevoUsuario.ScreenNombre, False)
                 End If
             End If
 

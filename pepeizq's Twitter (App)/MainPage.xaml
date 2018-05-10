@@ -100,65 +100,7 @@
                                 </StackPanel.Background>
 
                                 <StackPanel x:Name="spConfigCuentas" Orientation="Vertical" Visibility="Collapsed">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <Button x:Name="botonAñadirCuenta" Grid.Column="0" Padding="10" Background="{StaticResource BrushSecundario}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                                            <StackPanel Orientation="Horizontal">
-                                                <fa:FontAwesome Icon="UserPlus" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="White"/>
-                                                <TextBlock x:Uid="buttonAddAccount" Foreground="White"/>
-                                            </StackPanel>
-                                        </Button>
-
-                                        <TextBlock x:Name="tbNumeroCuentas" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                                    </Grid>
-
-                                    <Border Margin="0,20" BorderBrush="{StaticResource BrushSecundario}" BorderThickness="1"/>
-
-                                    <ListView x:Name="lvConfigUsuarios" ItemContainerStyle="{StaticResource ListViewEstilo1}"/>
-                                </StackPanel>
-
-                                <StackPanel x:Name="spConfigApp" Orientation="Vertical" Visibility="Collapsed">
-                                    <Button x:Name="botonConfigAppAutoArranque" Padding="10" Background="{StaticResource BrushSecundario}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                                        <Button.Content>
-                                            <StackPanel Orientation="Horizontal">
-                                                <fa:FontAwesome Icon="Windows" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="White"/>
-                                                <TextBlock x:Uid="tbConfigAppAutoStart" Foreground="White"/>
-                                            </StackPanel>
-                                        </Button.Content>
-                                    </Button>
-                                    
-                                    <CheckBox x:Name="cbConfigAppCargarMedia" Margin="0,15" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                                        <CheckBox.Content>
-                                            <Grid>
-                                                <TextBlock x:Uid="tbConfigAppLoadMedia"/>
-                                            </Grid>
-                                        </CheckBox.Content>
-                                    </CheckBox>
-                                    
-                                    <CheckBox x:Name="cbConfigAppTweetCard" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                                        <CheckBox.Content>
-                                            <Grid>
-                                                <TextBlock x:Uid="tbConfigAppTweetCard"/>
-                                            </Grid>
-                                        </CheckBox.Content>
-                                    </CheckBox>
-
-                                    <Border Margin="0,20" BorderBrush="{StaticResource BrushSecundario}" BorderThickness="1"/>
-
-                                    <Button x:Name="botonConfigAPIMostrar" Padding="10" Background="{StaticResource BrushSecundario}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                                        <Button.Content>
-                                            <StackPanel Orientation="Horizontal">
-                                                <fa:FontAwesome Icon="CaretDown" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="White"/>
-                                                <TextBlock x:Uid="tbConfigAPIShow" Foreground="White"/>
-                                            </StackPanel>
-                                        </Button.Content>
-                                    </Button>
-
-                                    <StackPanel x:Name="spConfigAPI" Orientation="Vertical" Margin="0,15,0,0" Visibility="Collapsed">
+                                    <StackPanel x:Name="spConfigAPI" Orientation="Vertical" Visibility="Collapsed">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto"/>
@@ -198,7 +140,66 @@
                                             <TextBlock Grid.Column="0" Text="Consumer Secret:" VerticalAlignment="Center" Margin="0,0,10,0"/>
                                             <TextBox x:Name="tbConfigConsumerSecret" Grid.Column="1"/>
                                         </Grid>
+
+                                        <Border Margin="0,20" BorderBrush="{StaticResource BrushSecundario}" BorderThickness="1"/>
                                     </StackPanel>
+                                    
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Button x:Name="botonAñadirCuenta" Grid.Column="0" Padding="10" Background="{StaticResource BrushSecundario}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:FontAwesome Icon="UserPlus" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="White"/>
+                                                <TextBlock x:Uid="buttonAddAccount" Foreground="White"/>
+                                            </StackPanel>
+                                        </Button>
+
+                                        <TextBlock x:Name="tbNumeroCuentas" Grid.Column="1" Margin="20,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                                        <Button x:Name="botonConfigAPIMostrar" Grid.Column="2" Padding="10" Background="{StaticResource BrushSecundario}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                            <Button.Content>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <fa:FontAwesome Icon="AngleDoubleUp" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="White"/>
+                                                    <TextBlock x:Uid="tbConfigAPIShow" Foreground="White"/>
+                                                </StackPanel>
+                                            </Button.Content>
+                                        </Button>
+                                    </Grid>
+
+                                    <Border Margin="0,20" BorderBrush="{StaticResource BrushSecundario}" BorderThickness="1"/>
+
+                                    <ListView x:Name="lvConfigUsuarios" ItemContainerStyle="{StaticResource ListViewEstilo1}"/>
+                                </StackPanel>
+
+                                <StackPanel x:Name="spConfigApp" Orientation="Vertical" Visibility="Collapsed">
+                                    <Button x:Name="botonConfigAppAutoArranque" Padding="10" Background="{StaticResource BrushSecundario}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                        <Button.Content>
+                                            <StackPanel Orientation="Horizontal">
+                                                <fa:FontAwesome Icon="Windows" Margin="0,0,10,0" VerticalAlignment="Center" Foreground="White"/>
+                                                <TextBlock x:Uid="tbConfigAppAutoStart" Foreground="White"/>
+                                            </StackPanel>
+                                        </Button.Content>
+                                    </Button>
+                                    
+                                    <CheckBox x:Name="cbConfigAppCargarMedia" Margin="0,15" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                        <CheckBox.Content>
+                                            <Grid>
+                                                <TextBlock x:Uid="tbConfigAppLoadMedia"/>
+                                            </Grid>
+                                        </CheckBox.Content>
+                                    </CheckBox>
+
+                                    <CheckBox x:Name="cbConfigAppTweetCard" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                        <CheckBox.Content>
+                                            <Grid>
+                                                <TextBlock x:Uid="tbConfigAppTweetCard"/>
+                                            </Grid>
+                                        </CheckBox.Content>
+                                    </CheckBox>
                                 </StackPanel>
 
                                 <StackPanel x:Name="spConfigNotificaciones" Orientation="Vertical" Visibility="Collapsed">
@@ -302,10 +303,12 @@
                                     <TextBlock x:Name="tbSeguirUsuario" Foreground="White"/>
                                 </Button.Content> 
                             </Button> 
+                            
+                            
 
                             <Button x:Name="botonMasOpcionesUsuario" Padding="10" BorderThickness="1" BorderBrush="White" MinWidth="50" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
                                 <Button.Content>
-                                    <fa:FontAwesome Icon="ChevronDown" Foreground="White"/>
+                                    <fa:FontAwesome Icon="AngleDoubleDown" Foreground="White"/>
                                 </Button.Content>    
                             </Button> 
                         </StackPanel>
@@ -323,9 +326,9 @@
                                     <SolidColorBrush Color="Black" Opacity="0.5"/>
                                 </StackPanel.Background>
 
-                                <Button x:Name="botonEnlaceUsuario" Background="Transparent" Style="{ThemeResource ButtonRevealStyle}" BorderThickness="0" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Visibility="Collapsed"/>
+                                <Button x:Name="botonEnlaceUsuario" Background="Transparent" Style="{ThemeResource ButtonRevealStyle}" BorderThickness="0" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Margin="0,0,40,0" Visibility="Collapsed"/>
 
-                                <Button x:Name="botonNumTweetsUsuario" Background="Transparent" Style="{ThemeResource ButtonRevealStyle}" BorderThickness="0" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Margin="40,0">
+                                <Button x:Name="botonNumTweetsUsuario" Background="Transparent" Style="{ThemeResource ButtonRevealStyle}" BorderThickness="0" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Margin="0,0,40,0">
                                     <Button.Content>
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock x:Uid="tbNumTweetsUser" Margin="0,0,5,0" Foreground="White"/>

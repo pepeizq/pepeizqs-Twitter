@@ -17,7 +17,9 @@
         End If
 
         If e.Kind = ActivationKind.Launch Then
-            CambiarCuenta(e.Arguments)
+            If Not e.Arguments = String.Empty Then
+                UsuarioXaml.CambiarCuenta(e.Arguments, True)
+            End If
         End If
 
         If e.PrelaunchActivated = False Then

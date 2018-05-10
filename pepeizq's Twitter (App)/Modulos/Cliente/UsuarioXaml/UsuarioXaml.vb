@@ -121,11 +121,15 @@ Module UsuarioXaml
         Dim boton As MenuFlyoutItem = sender
         Dim usuario As TwitterUsuario = boton.Tag
 
-        CambiarCuenta(usuario.ScreenNombre)
+        CambiarCuenta(usuario.ScreenNombre, False)
 
     End Sub
 
-    Public Sub CambiarCuenta(usuarioRecibido As String)
+    Public Async Sub CambiarCuenta(usuarioRecibido As String, esperar As Boolean)
+
+        If esperar = True Then
+            Await Task.Delay(5000)
+        End If
 
         Dim helper As New LocalObjectStorageHelper
 
