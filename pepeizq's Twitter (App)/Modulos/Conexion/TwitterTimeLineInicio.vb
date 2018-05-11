@@ -1,9 +1,8 @@
 ﻿Imports Microsoft.Advertising.WinRT.UI
-Imports Microsoft.Toolkit.Uwp.Helpers
 Imports pepeizq.Twitter
 Imports pepeizq.Twitter.Tweet
 Imports Windows.ApplicationModel.Store
-Imports Windows.System
+Imports Windows.Services.Store
 Imports Windows.UI
 Imports Windows.UI.Core
 
@@ -197,7 +196,8 @@ Module TwitterTimeLineInicio
 
     Private Async Sub BotonMostrarAnunciosClick(sender As Object, e As RoutedEventArgs)
 
-        Await Launcher.LaunchUriAsync(New Uri("ms-windows-store://pdp/?ProductId=9NVM8JPQ57VT"))
+        Dim contexto As StoreContext = StoreContext.GetDefault
+        Await contexto.RequestPurchaseAsync("9NVM8JPQ57VT")
 
     End Sub
 
