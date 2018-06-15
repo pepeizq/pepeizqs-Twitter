@@ -1,6 +1,8 @@
 ﻿Imports FontAwesome.UWP
 Imports Microsoft.Toolkit.Uwp.Helpers
+Imports Newtonsoft.Json
 Imports pepeizq.Twitter
+Imports pepeizq.Twitter.OAuth
 Imports Windows.Storage
 Imports Windows.UI
 Imports Windows.UI.Core
@@ -23,22 +25,30 @@ Module TwitterConexion
         End If
 
         Try
-            servicio.Initialize(consumerKey, consumerSecret, "https://pepeizqapps.com/")
+            servicio.Iniciar(consumerKey, consumerSecret, "https://pepeizqapps.com/")
             estado = Await servicio.Provider.Logear
         Catch ex As Exception
             estado = False
         End Try
 
         If estado = True Then
-            Dim usuario As TwitterUsuario = Nothing
+            Dim enlaceString As String = Nothing
 
-            Try
-                usuario = Await servicio.Provider.GenerarUsuario
-            Catch ex As Exception
+            If Not usuarioRecibido Is Nothing Then
+                enlaceString = "https://api.twitter.com/1.1/users/show.json?screen_name=" + usuarioRecibido.Usuario.ScreenNombre
+            Else
+                enlaceString = "https://api.twitter.com/1.1/users/show.json?screen_name=" + servicio.twitterDataProvider.UsuarioScreenNombre
+            End If
 
-            End Try
+            Dim enlace As New Uri(enlaceString)
+
+            Dim request As New TwitterOAuthRequest
+            Dim resultado As String = Await request.EjecutarGetAsync(enlace, servicio.twitterDataProvider._tokens)
+            Dim usuario As TwitterUsuario = JsonConvert.DeserializeObject(Of TwitterUsuario)(resultado)
 
             If Not usuario Is Nothing Then
+                usuario.Tokens = servicio.twitterDataProvider._tokens
+
                 Dim usuario2 As New pepeizq.Twitter.TwitterUsuario2(usuario, True)
 
                 Dim megaUsuario As New pepeizq.Twitter.MegaUsuario(usuario2, servicio)
@@ -54,7 +64,7 @@ Module TwitterConexion
                 Dim añadirLista As Boolean = True
 
                 For Each item In listaUsuarios
-                    If item.Usuario.Id = usuario.Id Then
+                    If item.Usuario.ID = usuario.ID Then
                         añadirLista = False
                     End If
                 Next
@@ -162,7 +172,7 @@ Module TwitterConexion
             .Background = New SolidColorBrush(Colors.Transparent),
             .Content = simboloAñadirTile,
             .Tag = megaUsuario,
-            .Name = "botonAñadirTile" + megaUsuario.Usuario2.Usuario.Id
+            .Name = "botonAñadirTile" + megaUsuario.Usuario2.Usuario.ID
         }
 
         ToolTipService.SetToolTip(botonAñadirTile, recursos.GetString("ButtonAddTile"))
@@ -298,7 +308,7 @@ Module TwitterConexion
                 Dim grid As Grid = item
                 Dim megaUsuarioGrid As pepeizq.Twitter.MegaUsuario = grid.Tag
 
-                If megaUsuarioGrid.Usuario2.Usuario.Id = megaUsuario.Usuario2.Usuario.Id Then
+                If megaUsuarioGrid.Usuario2.Usuario.ID = megaUsuario.Usuario2.Usuario.ID Then
                     lvConfigUsuarios.Items.RemoveAt(i)
                     Exit For
                 End If
@@ -312,7 +322,7 @@ Module TwitterConexion
             For Each item As MenuFlyoutItem In menu.Items
                 Dim usuarioItem As TwitterUsuario = item.Tag
 
-                If usuarioItem.Id = megaUsuario.Usuario2.Usuario.Id Then
+                If usuarioItem.ID = megaUsuario.Usuario2.Usuario.ID Then
                     menu.Items.RemoveAt(i)
 
                     Exit For

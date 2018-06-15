@@ -5,7 +5,6 @@ Imports Windows.UI.Popups
 Imports pepeizq.Twitter
 Imports pepeizq.Twitter.Tweet
 Imports System.Text
-Imports Windows.UI.Xaml.Documents
 
 Namespace Notificaciones
 
@@ -14,7 +13,7 @@ Namespace Notificaciones
         Public Async Sub MessageBox(contenido As String)
 
             Try
-                Dim messageDialog = New MessageDialog(contenido)
+                Dim messageDialog As New MessageDialog(contenido)
                 Await messageDialog.ShowAsync()
             Catch ex As Exception
 
