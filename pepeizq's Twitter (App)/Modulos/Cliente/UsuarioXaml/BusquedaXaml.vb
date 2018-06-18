@@ -11,7 +11,7 @@ Module BusquedaXaml
 
         Dim recursos As New Resources.ResourceLoader
 
-        Dim usuario As TwitterUsuario = megaUsuario.Usuario2.Usuario
+        Dim usuario As TwitterUsuario = megaUsuario.Usuario
 
         Dim gridFondo As New Grid
         gridFondo.SetValue(Grid.RowProperty, 1)
@@ -169,7 +169,7 @@ Module BusquedaXaml
 
         Dim usuarioBuscar As String = ApplicationData.Current.LocalSettings.Values("UsuarioBuscar")
 
-        Dim usuarios As List(Of TwitterUsuario) = Await provider.BuscarUsuarios(cosas.MegaUsuario.Usuario2.Usuario.Tokens, usuarioBuscar, New TwitterBusquedaUsuariosParser)
+        Dim usuarios As List(Of TwitterUsuario) = Await provider.BuscarUsuarios(cosas.MegaUsuario.Servicio.twitterDataProvider._tokens, usuarioBuscar, New TwitterBusquedaUsuariosParser)
         Dim visibilidad As Visibility = Visibility.Collapsed
 
         If usuarios.Count > 0 Then

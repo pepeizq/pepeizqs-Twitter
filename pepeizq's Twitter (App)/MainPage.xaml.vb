@@ -33,11 +33,11 @@ Public NotInheritable Class MainPage
 
         Dim usuario As TwitterUsuario = Nothing
 
-        If TypeOf itemUsuarios.Tag Is pepeizq.Twitter.TwitterUsuario2 Then
-            Dim usuario2 As pepeizq.Twitter.TwitterUsuario2 = itemUsuarios.Tag
-            usuario = usuario2.Usuario
-        ElseIf TypeOf itemUsuarios.Tag Is TwitterUsuario Then
+        If TypeOf itemUsuarios.Tag Is TwitterUsuario Then
             usuario = itemUsuarios.Tag
+        ElseIf TypeOf itemUsuarios.Tag Is pepeizq.Twitter.MegaUsuario Then
+            Dim megaUsuario As pepeizq.Twitter.MegaUsuario = itemUsuarios.Tag
+            usuario = megaUsuario.Usuario
         End If
 
         gridConfig.Visibility = Visibility.Collapsed
@@ -59,23 +59,43 @@ Public NotInheritable Class MainPage
         If Not item Is Nothing Then
             If item.Text = recursos.GetString("Home") Then
 
-                Dim grid As Grid = pagina.FindName("gridTweets" + usuario.ScreenNombre)
-                UsuarioXaml.GridVisibilidad(grid, usuario)
+                If Not usuario Is Nothing Then
+                    Dim grid As Grid = pagina.FindName("gridTweets" + usuario.ScreenNombre)
+
+                    If Not grid Is Nothing Then
+                        UsuarioXaml.GridVisibilidad(grid, usuario)
+                    End If
+                End If
 
             ElseIf item.Text = recursos.GetString("Mentions") Then
 
-                Dim grid As Grid = pagina.FindName("gridMenciones" + usuario.ScreenNombre)
-                UsuarioXaml.GridVisibilidad(grid, usuario)
+                If Not usuario Is Nothing Then
+                    Dim grid As Grid = pagina.FindName("gridMenciones" + usuario.ScreenNombre)
+
+                    If Not grid Is Nothing Then
+                        UsuarioXaml.GridVisibilidad(grid, usuario)
+                    End If
+                End If
 
             ElseIf item.Text = recursos.GetString("WriteTweet") Then
 
-                Dim grid As Grid = pagina.FindName("gridEscribir" + usuario.ScreenNombre)
-                UsuarioXaml.GridVisibilidad(grid, usuario)
+                If Not usuario Is Nothing Then
+                    Dim grid As Grid = pagina.FindName("gridEscribir" + usuario.ScreenNombre)
+
+                    If Not grid Is Nothing Then
+                        UsuarioXaml.GridVisibilidad(grid, usuario)
+                    End If
+                End If
 
             ElseIf item.Text = recursos.GetString("Search") Then
 
-                Dim grid As Grid = pagina.FindName("gridBusqueda" + usuario.ScreenNombre)
-                UsuarioXaml.GridVisibilidad(grid, usuario)
+                If Not usuario Is Nothing Then
+                    Dim grid As Grid = pagina.FindName("gridBusqueda" + usuario.ScreenNombre)
+
+                    If Not grid Is Nothing Then
+                        UsuarioXaml.GridVisibilidad(grid, usuario)
+                    End If
+                End If
 
             ElseIf item.Text = recursos.GetString("Config") Then
 
@@ -109,10 +129,10 @@ Public NotInheritable Class MainPage
         If NetworkInterface.GetIsNetworkAvailable = True Then
             Dim helper As New LocalObjectStorageHelper
 
-            Dim listaUsuarios As New List(Of pepeizq.Twitter.TwitterUsuario2)
+            Dim listaUsuarios As New List(Of TwitterUsuario)
 
-            If helper.KeyExists("listaUsuarios3") Then
-                listaUsuarios = helper.Read(Of List(Of pepeizq.Twitter.TwitterUsuario2))("listaUsuarios3")
+            If helper.KeyExists("listaUsuarios4") Then
+                listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios4")
             End If
 
             Dim i As Integer = 0
@@ -143,7 +163,7 @@ Public NotInheritable Class MainPage
 
                         UsuarioXaml.GenerarCadaUsuario(megaUsuario, visibilidad)
 
-                        Dim itemSalto As JumpListItem = JumpListItem.CreateWithArguments(megaUsuario.Usuario2.Usuario.ScreenNombre, megaUsuario.Usuario2.Usuario.Nombre)
+                        Dim itemSalto As JumpListItem = JumpListItem.CreateWithArguments(megaUsuario.Usuario.ScreenNombre, megaUsuario.Usuario.Nombre)
                         itemSalto.Logo = New Uri("ms-appx:///Assets/logo2.png")
                         listaSalto.Items.Add(itemSalto)
 
@@ -280,10 +300,10 @@ Public NotInheritable Class MainPage
         Dim recursos As New Resources.ResourceLoader
         Dim helper As New LocalObjectStorageHelper
 
-        Dim listaUsuarios As New List(Of pepeizq.Twitter.TwitterUsuario2)
+        Dim listaUsuarios As New List(Of TwitterUsuario)
 
-        If helper.KeyExists("listaUsuarios3") Then
-            listaUsuarios = helper.Read(Of List(Of pepeizq.Twitter.TwitterUsuario2))("listaUsuarios3")
+        If helper.KeyExists("listaUsuarios4") Then
+            listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios4")
         End If
 
         Dim visibilidad As New Visibility

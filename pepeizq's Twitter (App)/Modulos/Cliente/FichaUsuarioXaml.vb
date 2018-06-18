@@ -1,6 +1,8 @@
 ﻿Imports Microsoft.Toolkit.Uwp.Helpers
 Imports Microsoft.Toolkit.Uwp.UI.Controls
+Imports Newtonsoft.Json
 Imports pepeizq.Twitter
+Imports pepeizq.Twitter.OAuth
 Imports pepeizq.Twitter.Tweet
 Imports Windows.ApplicationModel.DataTransfer
 Imports Windows.Storage
@@ -29,8 +31,13 @@ Module FichaUsuarioXaml
         If Not cosas.Usuario Is Nothing Then
             usuario = cosas.Usuario
         Else
-            usuario = Await provider.GenerarUsuario(cosas.ScreenNombre)
-            cosas.Usuario = usuario
+            Dim enlaceString As String = "https://api.twitter.com/1.1/users/show.json?screen_name=" + cosas.ScreenNombre
+
+            Dim enlace As New Uri(enlaceString)
+            Dim request As New TwitterOAuthRequest
+            Dim resultado As String = Await request.EjecutarGetAsync(enlace, cosas.MegaUsuario.Servicio.twitterDataProvider._tokens)
+
+            cosas.Usuario = JsonConvert.DeserializeObject(Of TwitterUsuario)(resultado)
         End If
 
         Dim gridTitulo As Grid = pagina.FindName("gridTitulo")
@@ -188,30 +195,28 @@ Module FichaUsuarioXaml
 
         Dim listaTweets As New List(Of Tweet)
 
-        Try
-            listaTweets = Await provider.CogerTweetsTimelineUsuario(Of Tweet)(usuario.ScreenNombre, Nothing, New TweetParser)
-        Catch ex As Exception
+        listaTweets = Await TwitterPeticiones.UserTimeline(listaTweets, cosas.MegaUsuario, usuario.ScreenNombre, Nothing)
 
-        End Try
+        If listaTweets.Count > 0 Then
+            For Each tweet In listaTweets
+                Dim boolAñadir As Boolean = True
 
-        For Each tweet In listaTweets
-            Dim boolAñadir As Boolean = True
+                For Each item In lvTweets.Items
+                    Dim lvItem As ListViewItem = item
+                    Dim gridTweet As Grid = lvItem.Content
+                    Dim tweetAmpliado As pepeizq.Twitter.Objetos.TweetAmpliado = gridTweet.Tag
+                    Dim lvTweet As Tweet = tweetAmpliado.Tweet
 
-            For Each item In lvTweets.Items
-                Dim lvItem As ListViewItem = item
-                Dim gridTweet As Grid = lvItem.Content
-                Dim tweetAmpliado As pepeizq.Twitter.Objetos.TweetAmpliado = gridTweet.Tag
-                Dim lvTweet As Tweet = tweetAmpliado.Tweet
+                    If lvTweet.ID = tweet.ID Then
+                        boolAñadir = False
+                    End If
+                Next
 
-                If lvTweet.ID = tweet.ID Then
-                    boolAñadir = False
+                If boolAñadir = True Then
+                    lvTweets.Items.Add(pepeizq.Twitter.Xaml.TweetXaml.Añadir(tweet, cosas.MegaUsuario, color))
                 End If
             Next
-
-            If boolAñadir = True Then
-                lvTweets.Items.Add(pepeizq.Twitter.Xaml.TweetXaml.Añadir(tweet, cosas.MegaUsuario, color))
-            End If
-        Next
+        End If
 
     End Sub
 
@@ -224,10 +229,10 @@ Module FichaUsuarioXaml
         Dim cosas As pepeizq.Twitter.Objetos.SeguirUsuarioBoton = boton.Tag
 
         If tbSeguir.Text = recursos.GetString("Following") Then
-            Await cosas.MegaUsuario.Servicio.DeshacerSeguirUsuario(cosas.MegaUsuario.Usuario2.Usuario.Tokens, cosas.Usuario.Id)
+            Await cosas.MegaUsuario.Servicio.DeshacerSeguirUsuario(cosas.MegaUsuario.Servicio.twitterDataProvider._tokens, cosas.Usuario.ID)
             tbSeguir.Text = recursos.GetString("Follow")
         Else
-            Await cosas.MegaUsuario.Servicio.SeguirUsuario(cosas.MegaUsuario.Usuario2.Usuario.Tokens, cosas.Usuario.Id)
+            Await cosas.MegaUsuario.Servicio.SeguirUsuario(cosas.MegaUsuario.Servicio.twitterDataProvider._tokens, cosas.Usuario.ID)
             tbSeguir.Text = recursos.GetString("Following")
         End If
 
@@ -310,7 +315,7 @@ Module FichaUsuarioXaml
         Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = boton.Tag
 
         Try
-            Await cosas.MegaUsuario.Servicio.BloquearUsuario(cosas.MegaUsuario.Usuario2.Usuario.Tokens, cosas.Usuario.ScreenNombre)
+            Await cosas.MegaUsuario.Servicio.BloquearUsuario(cosas.MegaUsuario.Servicio.twitterDataProvider._tokens, cosas.Usuario.ScreenNombre)
         Catch ex As Exception
 
         End Try
@@ -326,7 +331,7 @@ Module FichaUsuarioXaml
         Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = boton.Tag
 
         Try
-            Await cosas.MegaUsuario.Servicio.MutearUsuario(cosas.MegaUsuario.Usuario2.Usuario.Tokens, cosas.Usuario.ScreenNombre)
+            Await cosas.MegaUsuario.Servicio.MutearUsuario(cosas.MegaUsuario.Servicio.twitterDataProvider._tokens, cosas.Usuario.ScreenNombre)
         Catch ex As Exception
 
         End Try
@@ -342,7 +347,7 @@ Module FichaUsuarioXaml
         Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = boton.Tag
 
         Try
-            Await cosas.MegaUsuario.Servicio.ReportarUsuario(cosas.MegaUsuario.Usuario2.Usuario.Tokens, cosas.Usuario.ScreenNombre)
+            Await cosas.MegaUsuario.Servicio.ReportarUsuario(cosas.MegaUsuario.Servicio.twitterDataProvider._tokens, cosas.Usuario.ScreenNombre)
         Catch ex As Exception
 
         End Try

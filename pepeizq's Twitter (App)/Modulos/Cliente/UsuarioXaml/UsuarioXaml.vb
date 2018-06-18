@@ -5,7 +5,7 @@ Imports Windows.UI.Core
 
 Module UsuarioXaml
 
-    Public Sub GenerarListaUsuarios(listaUsuarios As List(Of pepeizq.Twitter.TwitterUsuario2))
+    Public Sub GenerarListaUsuarios(listaUsuarios As List(Of TwitterUsuario))
 
         Dim recursos As New Resources.ResourceLoader
 
@@ -32,7 +32,7 @@ Module UsuarioXaml
 
         Dim recursos As New Resources.ResourceLoader
 
-        Dim usuario As TwitterUsuario = megaUsuario.Usuario2.Usuario
+        Dim usuario As TwitterUsuario = megaUsuario.Usuario
 
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
@@ -70,7 +70,7 @@ Module UsuarioXaml
             tbCuenta.Text = usuario.Nombre
 
             Dim itemUsuarios As NavigationViewItem = pagina.FindName("itemUsuarios")
-            itemUsuarios.Tag = megaUsuario.Usuario2
+            itemUsuarios.Tag = megaUsuario
 
             Dim tbTitulo As TextBlock = pagina.FindName("tbTitulo")
             tbTitulo.Text = Package.Current.DisplayName + " (" + Package.Current.Id.Version.Major.ToString + "." + Package.Current.Id.Version.Minor.ToString + "." + Package.Current.Id.Version.Build.ToString + "." + Package.Current.Id.Version.Revision.ToString + ") - " + usuario.Nombre
@@ -133,17 +133,17 @@ Module UsuarioXaml
 
         Dim helper As New LocalObjectStorageHelper
 
-        Dim listaUsuarios As New List(Of pepeizq.Twitter.TwitterUsuario2)
+        Dim listaUsuarios As New List(Of TwitterUsuario)
 
-        If helper.KeyExists("listaUsuarios3") Then
-            listaUsuarios = helper.Read(Of List(Of pepeizq.Twitter.TwitterUsuario2))("listaUsuarios3")
+        If helper.KeyExists("listaUsuarios4") Then
+            listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios4")
         End If
 
         Dim usuario As TwitterUsuario = Nothing
 
-        For Each usuario2 As pepeizq.Twitter.TwitterUsuario2 In listaUsuarios
-            If usuarioRecibido = usuario2.Usuario.ScreenNombre Then
-                usuario = usuario2.Usuario
+        For Each usuario2 As TwitterUsuario In listaUsuarios
+            If usuarioRecibido = usuario2.ScreenNombre Then
+                usuario = usuario2
             End If
         Next
 

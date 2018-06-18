@@ -32,7 +32,7 @@ Namespace pepeizq.Twitter.Xaml
             If tweet Is Nothing Then
                 nombreGrid = "gridTweetEscribir"
             Else
-                nombreGrid = "gridTweetEscribir" + tweet.ID + megaUsuario.Usuario2.Usuario.Id
+                nombreGrid = "gridTweetEscribir" + tweet.ID + megaUsuario.Usuario.ID
             End If
 
             Dim gridTweetEscribir As New Grid With {
@@ -71,7 +71,7 @@ Namespace pepeizq.Twitter.Xaml
 
                 cosas = New Objetos.UsuarioAmpliado(megaUsuario, Nothing, Nothing)
 
-                If Not tweet.Usuario.ScreenNombre = megaUsuario.Usuario2.Usuario.ScreenNombre Then
+                If Not tweet.Usuario.ScreenNombre = megaUsuario.Usuario.ScreenNombre Then
                     Dim fragmento2 As New Run With {
                         .Text = "@" + tweet.Usuario.ScreenNombre
                     }
@@ -94,7 +94,7 @@ Namespace pepeizq.Twitter.Xaml
                 End If
 
                 For Each mencion In listaMenciones
-                    If Not mencion.ScreenNombre = megaUsuario.Usuario2.Usuario.ScreenNombre Then
+                    If Not mencion.ScreenNombre = megaUsuario.Usuario.ScreenNombre Then
                         If tbRespondiendoSpan.Inlines.Count > 1 Then
                             Dim fragmentoAnterior As New Run With {
                                .Text = ", "
@@ -327,7 +327,7 @@ Namespace pepeizq.Twitter.Xaml
 
             If Not cosas.ListaMenciones Is Nothing Then
                 For Each mencion In cosas.ListaMenciones
-                    If Not mencion.ScreenNombre = cosas.MegaUsuario.Usuario2.Usuario.ScreenNombre Then
+                    If Not mencion.ScreenNombre = cosas.MegaUsuario.Usuario.ScreenNombre Then
                         mensaje = mensaje + "@" + mencion.ScreenNombre + " "
                     End If
                 Next
@@ -343,7 +343,7 @@ Namespace pepeizq.Twitter.Xaml
                 status.InReplyToStatusId = cosas.Tweet.ID
             End If
 
-            Await cosas.MegaUsuario.Servicio.EnviarTweet(cosas.MegaUsuario.Usuario2.Usuario.Tokens, status)
+            Await cosas.MegaUsuario.Servicio.EnviarTweet(cosas.MegaUsuario.Servicio.twitterDataProvider._tokens, status)
 
             tb.Text = String.Empty
 

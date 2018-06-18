@@ -258,7 +258,7 @@ Namespace pepeizq.Twitter.Xaml
             If cosas.Tweet Is Nothing Then
                 nombreGrid = "gridTweetEscribir"
             Else
-                nombreGrid = "gridTweetEscribir" + cosas.Tweet.ID + cosas.MegaUsuario.Usuario2.Usuario.Id
+                nombreGrid = "gridTweetEscribir" + cosas.Tweet.ID + cosas.MegaUsuario.Usuario.ID
             End If
 
             Dim gridResponder As Grid = pagina.FindName(nombreGrid)
@@ -293,7 +293,7 @@ Namespace pepeizq.Twitter.Xaml
             Dim recursos As New Resources.ResourceLoader
 
             If cosas.Tweet.Retwitteado = False Then
-                Await cosas.MegaUsuario.Servicio.Retwitear(cosas.MegaUsuario.Usuario2.Usuario.Tokens, status)
+                Await cosas.MegaUsuario.Servicio.Retwitear(cosas.MegaUsuario.Servicio.twitterDataProvider._tokens, status)
 
                 Notificaciones.Toast.Enseñar(recursos.GetString("RetweetSent"))
 
@@ -314,7 +314,7 @@ Namespace pepeizq.Twitter.Xaml
 
                 cosas.Tweet.Retwitteado = True
             Else
-                Await cosas.MegaUsuario.Servicio.DeshacerRetweet(cosas.MegaUsuario.Usuario2.Usuario.Tokens, status)
+                Await cosas.MegaUsuario.Servicio.DeshacerRetweet(cosas.MegaUsuario.Servicio.twitterDataProvider._tokens, status)
 
                 boton.Background = New SolidColorBrush(Colors.Transparent)
 
@@ -346,7 +346,7 @@ Namespace pepeizq.Twitter.Xaml
             Dim recursos As New Resources.ResourceLoader
 
             If cosas.Tweet.Favoriteado = False Then
-                Await cosas.MegaUsuario.Servicio.Favoritear(cosas.MegaUsuario.Usuario2.Usuario.Tokens, status)
+                Await cosas.MegaUsuario.Servicio.Favoritear(cosas.MegaUsuario.Servicio.twitterDataProvider._tokens, status)
 
                 Notificaciones.Toast.Enseñar(recursos.GetString("FavoriteSent"))
 
@@ -367,7 +367,7 @@ Namespace pepeizq.Twitter.Xaml
 
                 cosas.Tweet.Favoriteado = True
             Else
-                Await cosas.MegaUsuario.Servicio.DeshacerFavorito(cosas.MegaUsuario.Usuario2.Usuario.Tokens, status)
+                Await cosas.MegaUsuario.Servicio.DeshacerFavorito(cosas.MegaUsuario.Servicio.twitterDataProvider._tokens, status)
 
                 boton.Background = New SolidColorBrush(Colors.Transparent)
 
@@ -529,7 +529,7 @@ Namespace pepeizq.Twitter.Xaml
             If cosas.Tweet Is Nothing Then
                 nombreGrid = "gridTweetEscribir"
             Else
-                nombreGrid = "gridTweetEscribir" + cosas.Tweet.ID + cosas.MegaUsuario.Usuario2.Usuario.Id
+                nombreGrid = "gridTweetEscribir" + cosas.Tweet.ID + cosas.MegaUsuario.Usuario.ID
             End If
 
             Dim gridResponder As Grid = pagina.FindName(nombreGrid)
@@ -573,7 +573,7 @@ Namespace pepeizq.Twitter.Xaml
             If cosas.Tweet Is Nothing Then
                 nombreGrid = "gridTweetEscribir"
             Else
-                nombreGrid = "gridTweetEscribir" + cosas.Tweet.ID + cosas.MegaUsuario.Usuario2.Usuario.Id
+                nombreGrid = "gridTweetEscribir" + cosas.Tweet.ID + cosas.MegaUsuario.Usuario.ID
             End If
 
             Dim gridResponder As Grid = pagina.FindName(nombreGrid)
@@ -702,7 +702,7 @@ Namespace pepeizq.Twitter.Xaml
             Dim cosas As Objetos.TweetXamlBoton = boton.Tag
 
             ApplicationData.Current.LocalSettings.Values("TweetCompartirTitulo") = "@" + cosas.Tweet.Usuario.ScreenNombre
-            ApplicationData.Current.LocalSettings.Values("TweetCompartirDescripcion") = WebUtility.HtmlDecode(cosas.Tweet.Texto)
+            ApplicationData.Current.LocalSettings.Values("TweetCompartirDescripcion") = WebUtility.HtmlDecode(cosas.Tweet.TextoCompleto)
             ApplicationData.Current.LocalSettings.Values("TweetCompartirEnlace") = "https://twitter.com/" + cosas.Tweet.Usuario.ScreenNombre + "/status/" + cosas.Tweet.ID
 
             Dim datos As DataTransferManager = DataTransferManager.GetForCurrentView()

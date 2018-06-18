@@ -302,9 +302,7 @@
                                 <Button.Content>
                                     <TextBlock x:Name="tbSeguirUsuario" Foreground="White"/>
                                 </Button.Content> 
-                            </Button> 
-                            
-                            
+                            </Button>                                                    
 
                             <Button x:Name="botonMasOpcionesUsuario" Padding="10" BorderThickness="1" BorderBrush="White" MinWidth="50" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
                                 <Button.Content>

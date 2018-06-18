@@ -5,7 +5,7 @@ Module TwitterTimeLineMenciones
 
     Public Async Sub CargarTweets(megaUsuario As pepeizq.Twitter.MegaUsuario, ultimoTweet As String, limpiar As Boolean)
 
-        Dim usuario As TwitterUsuario = megaUsuario.Usuario2.Usuario
+        Dim usuario As TwitterUsuario = megaUsuario.Usuario
 
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
@@ -23,14 +23,9 @@ Module TwitterTimeLineMenciones
                 lv.Items.Clear()
             End If
 
-            Dim provider As TwitterDataProvider = megaUsuario.Servicio.Provider
             Dim listaTweets As New List(Of Tweet)
 
-            Try
-                listaTweets = Await provider.CogerTweetsTimelineMenciones(Of Tweet)(megaUsuario.Usuario2.Usuario.Tokens, ultimoTweet, New TweetParser)
-            Catch ex As Exception
-
-            End Try
+            listaTweets = Await TwitterPeticiones.MentionsTimeline(listaTweets, megaUsuario, ultimoTweet)
 
             If listaTweets.Count > 0 Then
                 For Each tweet In listaTweets

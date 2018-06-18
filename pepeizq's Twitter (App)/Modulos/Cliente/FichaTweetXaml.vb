@@ -14,225 +14,200 @@ Namespace pepeizq.Twitter.Xaml
 
         Public Async Sub Generar(cosas As Objetos.TweetAmpliado, objetoAnimar As Object)
 
-            Dim tweet As Tweet = cosas.Tweet
+            Dim tweet As Tweet = Nothing
+            tweet = Await TwitterPeticiones.CogerTweet(tweet, cosas.MegaUsuario, cosas.Tweet.ID)
 
-            Dim frame As Frame = Window.Current.Content
-            Dim pagina As Page = frame.Content
+            If Not tweet Is Nothing Then
+                Dim frame As Frame = Window.Current.Content
+                Dim pagina As Page = frame.Content
 
-            Dim gridUsuario As Grid = pagina.FindName("gridUsuarioAmpliado")
-            gridUsuario.Visibility = Visibility.Collapsed
+                Dim gridUsuario As Grid = pagina.FindName("gridUsuarioAmpliado")
+                gridUsuario.Visibility = Visibility.Collapsed
 
-            Dim gridTweet As Grid = pagina.FindName("gridTweetAmpliado")
+                Dim gridTweet As Grid = pagina.FindName("gridTweetAmpliado")
 
-            Dim provider As TwitterDataProvider = cosas.MegaUsuario.Servicio.Provider
+                Dim color As Color = Nothing
 
-            Dim tweetNuevo As Tweet = Await provider.CogerTweet(cosas.MegaUsuario.Usuario2.Usuario.Tokens, tweet.ID, New TweetParserIndividual)
+                Try
+                    color = ("#" + tweet.Usuario.ColorEnlace).ToColor
+                Catch ex As Exception
+                    color = App.Current.Resources("ColorSecundario")
+                End Try
 
-            Dim color As Color = Nothing
+                App.Current.Resources("ButtonBackgroundPointerOver") = color
 
-            Try
-                color = ("#" + tweetNuevo.Usuario.ColorEnlace).ToColor
-            Catch ex As Exception
-                color = App.Current.Resources("ColorSecundario")
-            End Try
+                Dim transpariencia As New UISettings
+                Dim boolTranspariencia As Boolean = transpariencia.AdvancedEffectsEnabled
 
-            App.Current.Resources("ButtonBackgroundPointerOver") = color
+                If boolTranspariencia = False Then
+                    gridTweet.Background = New SolidColorBrush(color)
+                Else
+                    Dim acrilico As New AcrylicBrush With {
+                        .BackgroundSource = AcrylicBackgroundSource.Backdrop,
+                        .TintOpacity = 0.7,
+                        .TintColor = color
+                    }
 
-            Dim transpariencia As New UISettings
-            Dim boolTranspariencia As Boolean = transpariencia.AdvancedEffectsEnabled
-
-            If boolTranspariencia = False Then
-                gridTweet.Background = New SolidColorBrush(color)
-            Else
-                Dim acrilico As New AcrylicBrush With {
-                    .BackgroundSource = AcrylicBackgroundSource.Backdrop,
-                    .TintOpacity = 0.7,
-                    .TintColor = color
-                }
-
-                gridTweet.Background = acrilico
-            End If
-
-            Try
-                ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("animacionTweet", objetoAnimar)
-
-                Dim animacion As ConnectedAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("animacionTweet")
-
-                If Not animacion Is Nothing Then
-                    animacion.TryStart(gridTweet)
+                    gridTweet.Background = acrilico
                 End If
-            Catch ex As Exception
 
-            End Try
+                Try
+                    ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("animacionTweet", objetoAnimar)
 
-            gridTweet.Visibility = Visibility.Visible
+                    Dim animacion As ConnectedAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("animacionTweet")
 
-            '-----------------------------
+                    If Not animacion Is Nothing Then
+                        animacion.TryStart(gridTweet)
+                    End If
+                Catch ex As Exception
 
-            Dim botonCerrar As Button = pagina.FindName("botonCerrarTweet")
-            botonCerrar.Background = New SolidColorBrush(color)
+                End Try
 
-            Dim spIzquierda As StackPanel = pagina.FindName("spTweetIzquierda")
-            spIzquierda.Children.Clear()
-            spIzquierda.Children.Add(TweetAvatar.Generar(tweetNuevo, cosas.MegaUsuario))
+                gridTweet.Visibility = Visibility.Visible
 
-            Dim spDerecha As StackPanel = pagina.FindName("spTweetDerecha")
-            spDerecha.Children.Clear()
-            spDerecha.Children.Add(TweetUsuario.Generar(tweetNuevo, cosas.MegaUsuario, color))
-            spDerecha.Children.Add(TweetTexto.Generar(tweetNuevo, Nothing, color, cosas.MegaUsuario, False))
+                '-----------------------------
 
-            If Not tweetNuevo.Cita Is Nothing Then
-                spDerecha.Children.Add(TweetCita.Generar(tweetNuevo, cosas.MegaUsuario, color))
-            End If
+                Dim botonCerrar As Button = pagina.FindName("botonCerrarTweet")
+                botonCerrar.Background = New SolidColorBrush(color)
 
-            spDerecha.Children.Add(TweetMediaXaml.Generar(tweetNuevo, color))
-            spDerecha.Children.Add(TweetBotones.Generar(tweetNuevo, gridTweet, cosas.MegaUsuario, 1, color))
-            spDerecha.Children.Add(TweetEnviarTweet.Generar(tweetNuevo, cosas.MegaUsuario, Visibility.Collapsed, color))
+                Dim spIzquierda As StackPanel = pagina.FindName("spTweetIzquierda")
+                spIzquierda.Children.Clear()
+                spIzquierda.Children.Add(TweetAvatar.Generar(tweet, cosas.MegaUsuario))
 
-            '-----------------------------
+                Dim spDerecha As StackPanel = pagina.FindName("spTweetDerecha")
+                spDerecha.Children.Clear()
+                spDerecha.Children.Add(TweetUsuario.Generar(tweet, cosas.MegaUsuario, color))
+                spDerecha.Children.Add(TweetTexto.Generar(tweet, Nothing, color, cosas.MegaUsuario, False))
 
-            Dim gridCard As Grid = pagina.FindName("gridTweetCard")
-            gridCard.Visibility = Visibility.Collapsed
+                If Not tweet.Cita Is Nothing Then
+                    spDerecha.Children.Add(TweetCita.Generar(tweet, cosas.MegaUsuario, color))
+                End If
 
-            If Not ApplicationData.Current.LocalSettings.Values("tweetcard") Is Nothing Then
-                If Not ApplicationData.Current.LocalSettings.Values("tweetcard") = False Then
-                    Await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, Async Sub()
-                                                                                                                                                   If tweetNuevo.Entidades.Enlaces.Length > 0 Then
-                                                                                                                                                       If Not tweetNuevo.Entidades.Enlaces(0).Enlace = String.Empty Then
-                                                                                                                                                           Dim html As String = Nothing
+                spDerecha.Children.Add(TweetMediaXaml.Generar(tweet, color))
+                spDerecha.Children.Add(TweetBotones.Generar(tweet, gridTweet, cosas.MegaUsuario, 1, color))
+                spDerecha.Children.Add(TweetEnviarTweet.Generar(tweet, cosas.MegaUsuario, Visibility.Collapsed, color))
 
-                                                                                                                                                           Try
-                                                                                                                                                               html = Await Decompiladores.HttpClient(New Uri(tweetNuevo.Entidades.Enlaces(0).Expandida))
-                                                                                                                                                           Catch ex As Exception
+                '-----------------------------
 
-                                                                                                                                                           End Try
+                Dim gridCard As Grid = pagina.FindName("gridTweetCard")
+                gridCard.Visibility = Visibility.Collapsed
 
-                                                                                                                                                           If Not html = Nothing Then
-                                                                                                                                                               Dim boolEnseñar As Boolean = False
+                If Not ApplicationData.Current.LocalSettings.Values("tweetcard") Is Nothing Then
+                    If Not ApplicationData.Current.LocalSettings.Values("tweetcard") = False Then
+                        Await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, Async Sub()
+                                                                                                                                                       If tweet.Entidades.Enlaces.Length > 0 Then
+                                                                                                                                                           If Not tweet.Entidades.Enlaces(0).Enlace = String.Empty Then
+                                                                                                                                                               Dim html As String = Nothing
 
-                                                                                                                                                               If html.Contains(ChrW(34) + "twitter:description" + ChrW(34)) Then
-                                                                                                                                                                   Dim temp, temp2, temp3 As String
-                                                                                                                                                                   Dim int, int2, int3 As Integer
+                                                                                                                                                               Try
+                                                                                                                                                                   html = Await Decompiladores.HttpClient(New Uri(tweet.Entidades.Enlaces(0).Expandida))
+                                                                                                                                                               Catch ex As Exception
 
-                                                                                                                                                                   int = html.IndexOf(ChrW(34) + "twitter:description" + ChrW(34))
-                                                                                                                                                                   temp = html.Remove(0, int + 2)
+                                                                                                                                                               End Try
 
-                                                                                                                                                                   int2 = temp.IndexOf("content=" + ChrW(34))
+                                                                                                                                                               If Not html = Nothing Then
+                                                                                                                                                                   Dim boolEnseñar As Boolean = False
 
-                                                                                                                                                                   int2 = temp.IndexOf("content=" + ChrW(34))
-                                                                                                                                                                   int3 = temp.IndexOf(">")
+                                                                                                                                                                   If html.Contains(ChrW(34) + "twitter:description" + ChrW(34)) Then
+                                                                                                                                                                       Dim temp, temp2, temp3 As String
+                                                                                                                                                                       Dim int, int2, int3 As Integer
 
-                                                                                                                                                                   If int2 > int3 Then
-                                                                                                                                                                       temp = html.Remove(int, temp.Length - int)
-                                                                                                                                                                       int2 = temp.LastIndexOf("content=" + ChrW(34))
+                                                                                                                                                                       int = html.IndexOf(ChrW(34) + "twitter:description" + ChrW(34))
+                                                                                                                                                                       temp = html.Remove(0, int + 2)
+
+                                                                                                                                                                       int2 = temp.IndexOf("content=" + ChrW(34))
+
+                                                                                                                                                                       int2 = temp.IndexOf("content=" + ChrW(34))
+                                                                                                                                                                       int3 = temp.IndexOf(">")
+
+                                                                                                                                                                       If int2 > int3 Then
+                                                                                                                                                                           temp = html.Remove(int, temp.Length - int)
+                                                                                                                                                                           int2 = temp.LastIndexOf("content=" + ChrW(34))
+                                                                                                                                                                       End If
+
+                                                                                                                                                                       If int2 = -1 And int3 > 0 Then
+                                                                                                                                                                           temp = html.Remove(int, temp.Length - int)
+                                                                                                                                                                           int2 = temp.LastIndexOf("content=" + ChrW(34))
+                                                                                                                                                                       End If
+
+                                                                                                                                                                       temp2 = temp.Remove(0, int2 + 9)
+
+                                                                                                                                                                       int3 = temp2.IndexOf(ChrW(34))
+                                                                                                                                                                       temp3 = temp2.Remove(int3, temp2.Length - int3)
+
+                                                                                                                                                                       Dim descripcion As TextBlock = pagina.FindName("tbTweetCardDescripcion")
+                                                                                                                                                                       descripcion.Text = WebUtility.HtmlDecode(temp3.Trim)
+
+                                                                                                                                                                       boolEnseñar = True
                                                                                                                                                                    End If
 
-                                                                                                                                                                   If int2 = -1 And int3 > 0 Then
-                                                                                                                                                                       temp = html.Remove(int, temp.Length - int)
-                                                                                                                                                                       int2 = temp.LastIndexOf("content=" + ChrW(34))
+                                                                                                                                                                   If html.Contains(ChrW(34) + "twitter:image" + ChrW(34)) Then
+                                                                                                                                                                       Dim temp, temp2, temp3 As String
+                                                                                                                                                                       Dim int, int2, int3 As Integer
+
+                                                                                                                                                                       int = html.IndexOf(ChrW(34) + "twitter:image" + ChrW(34))
+                                                                                                                                                                       temp = html.Remove(0, int + 2)
+
+                                                                                                                                                                       int2 = temp.IndexOf("content=" + ChrW(34))
+                                                                                                                                                                       int3 = temp.IndexOf(">")
+
+                                                                                                                                                                       If int2 > int3 Then
+                                                                                                                                                                           temp = html.Remove(int, temp.Length - int)
+                                                                                                                                                                           int2 = temp.LastIndexOf("content=" + ChrW(34))
+                                                                                                                                                                       End If
+
+                                                                                                                                                                       If int2 = -1 And int3 > 0 Then
+                                                                                                                                                                           temp = html.Remove(int, temp.Length - int)
+                                                                                                                                                                           int2 = temp.LastIndexOf("content=" + ChrW(34))
+                                                                                                                                                                       End If
+
+                                                                                                                                                                       temp2 = temp.Remove(0, int2 + 9)
+
+                                                                                                                                                                       int3 = temp2.IndexOf(ChrW(34))
+                                                                                                                                                                       temp3 = temp2.Remove(int3, temp2.Length - int3)
+
+                                                                                                                                                                       Dim imagen As ImageEx = pagina.FindName("imagenTweetCard")
+                                                                                                                                                                       imagen.Source = temp3.Trim
+
+                                                                                                                                                                       Dim borde As Border = pagina.FindName("bordeImagenTweetCard")
+                                                                                                                                                                       borde.BorderBrush = New SolidColorBrush(color)
+
+                                                                                                                                                                       boolEnseñar = True
                                                                                                                                                                    End If
 
-                                                                                                                                                                   temp2 = temp.Remove(0, int2 + 9)
-
-                                                                                                                                                                   int3 = temp2.IndexOf(ChrW(34))
-                                                                                                                                                                   temp3 = temp2.Remove(int3, temp2.Length - int3)
-
-                                                                                                                                                                   Dim descripcion As TextBlock = pagina.FindName("tbTweetCardDescripcion")
-                                                                                                                                                                   descripcion.Text = WebUtility.HtmlDecode(temp3.Trim)
-
-                                                                                                                                                                   boolEnseñar = True
-                                                                                                                                                               End If
-
-                                                                                                                                                               If html.Contains(ChrW(34) + "twitter:image" + ChrW(34)) Then
-                                                                                                                                                                   Dim temp, temp2, temp3 As String
-                                                                                                                                                                   Dim int, int2, int3 As Integer
-
-                                                                                                                                                                   int = html.IndexOf(ChrW(34) + "twitter:image" + ChrW(34))
-                                                                                                                                                                   temp = html.Remove(0, int + 2)
-
-                                                                                                                                                                   int2 = temp.IndexOf("content=" + ChrW(34))
-                                                                                                                                                                   int3 = temp.IndexOf(">")
-
-                                                                                                                                                                   If int2 > int3 Then
-                                                                                                                                                                       temp = html.Remove(int, temp.Length - int)
-                                                                                                                                                                       int2 = temp.LastIndexOf("content=" + ChrW(34))
+                                                                                                                                                                   If boolEnseñar = True Then
+                                                                                                                                                                       gridCard.Visibility = Visibility.Visible
                                                                                                                                                                    End If
-
-                                                                                                                                                                   If int2 = -1 And int3 > 0 Then
-                                                                                                                                                                       temp = html.Remove(int, temp.Length - int)
-                                                                                                                                                                       int2 = temp.LastIndexOf("content=" + ChrW(34))
-                                                                                                                                                                   End If
-
-                                                                                                                                                                   temp2 = temp.Remove(0, int2 + 9)
-
-                                                                                                                                                                   int3 = temp2.IndexOf(ChrW(34))
-                                                                                                                                                                   temp3 = temp2.Remove(int3, temp2.Length - int3)
-
-                                                                                                                                                                   Dim imagen As ImageEx = pagina.FindName("imagenTweetCard")
-                                                                                                                                                                   imagen.Source = temp3.Trim
-
-                                                                                                                                                                   Dim borde As Border = pagina.FindName("bordeImagenTweetCard")
-                                                                                                                                                                   borde.BorderBrush = New SolidColorBrush(color)
-
-                                                                                                                                                                   boolEnseñar = True
-                                                                                                                                                               End If
-
-                                                                                                                                                               If boolEnseñar = True Then
-                                                                                                                                                                   gridCard.Visibility = Visibility.Visible
                                                                                                                                                                End If
                                                                                                                                                            End If
                                                                                                                                                        End If
-                                                                                                                                                   End If
-                                                                                                                                               End Sub)
-                End If
-            End If
-
-            '-----------------------------
-
-            Dim listaTweetRespuestas As New List(Of Tweet)
-
-            Try
-                listaTweetRespuestas = Await provider.BuscarRespuestasTweet(cosas.MegaUsuario.Usuario2.Usuario.Tokens, tweetNuevo.Usuario.ScreenNombre, tweetNuevo.ID, New TwitterBusquedaTweetsParser)
-            Catch ex As Exception
-
-            End Try
-
-            Dim lvTweets As ListView = pagina.FindName("lvTweetRespuestas")
-            lvTweets.IsItemClickEnabled = True
-
-            If lvTweets.Items.Count > 0 Then
-                lvTweets.Items.Clear()
-            End If
-
-            AddHandler lvTweets.ItemClick, AddressOf LvTweets_ItemClick
-
-            For Each tweet In listaTweetRespuestas
-                Dim boolAñadir As Boolean = True
-
-                For Each item In lvTweets.Items
-                    Dim lvItem As ListViewItem = item
-                    Dim subGridTweet As Grid = lvItem.Content
-                    Dim tweetAmpliado As pepeizq.Twitter.Objetos.TweetAmpliado = subGridTweet.Tag
-                    Dim lvTweet As Tweet = tweetAmpliado.Tweet
-
-                    If lvTweet.ID = tweet.ID Then
-                        boolAñadir = False
+                                                                                                                                                   End Sub)
                     End If
-                Next
-
-                'If Not tweet.RespuestaUsuarioID = tweetNuevo.ID Then
-                '    boolAñadir = False
-                'End If
-
-                If Not tweet.Retweet Is Nothing Then
-                    boolAñadir = False
                 End If
 
-                If boolAñadir = True Then
-                    lvTweets.Items.Add(TweetXaml.Añadir(tweet, cosas.MegaUsuario, color))
-                End If
-            Next
+                '-----------------------------
 
+                Dim listaTweetRespuestas As New List(Of Tweet)
+
+                listaTweetRespuestas = Await TwitterPeticiones.BuscarRespuestasTweet(listaTweetRespuestas, cosas.MegaUsuario, tweet.ID, tweet.Usuario.ScreenNombre)
+
+                If listaTweetRespuestas.Count > 0 Then
+                    Dim lvTweets As ListView = pagina.FindName("lvTweetRespuestas")
+                    lvTweets.IsItemClickEnabled = True
+
+                    If lvTweets.Items.Count > 0 Then
+                        lvTweets.Items.Clear()
+                    End If
+
+                    AddHandler lvTweets.ItemClick, AddressOf LvTweets_ItemClick
+
+                    For Each tweetRespuesta In listaTweetRespuestas
+                        If tweetRespuesta.RespuestaUsuarioID = tweet.ID Then
+                            lvTweets.Items.Insert(0, TweetXaml.Añadir(tweetRespuesta, cosas.MegaUsuario, color))
+                        End If
+                    Next
+                End If
+            End If
         End Sub
 
     End Module

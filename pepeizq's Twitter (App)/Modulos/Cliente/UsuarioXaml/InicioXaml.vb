@@ -1,5 +1,4 @@
 ﻿Imports FontAwesome.UWP
-Imports Microsoft.Toolkit.Uwp.Helpers
 Imports pepeizq.Twitter
 Imports pepeizq.Twitter.Tweet
 Imports Windows.UI
@@ -9,7 +8,7 @@ Module InicioXaml
 
     Public Function Generar(megaUsuario As pepeizq.Twitter.MegaUsuario, visibilidad As Visibility)
 
-        Dim usuario As TwitterUsuario = megaUsuario.Usuario2.Usuario
+        Dim usuario As TwitterUsuario = megaUsuario.Usuario
 
         Dim gridTweets As New Grid
         gridTweets.SetValue(Grid.RowProperty, 1)
@@ -160,10 +159,10 @@ Module InicioXaml
 
         If sv.VerticalOffset > 50 Then
             If cosas.Query = 0 Then
-                Dim botonSubir As Button = pagina.FindName("botonSubirArribaInicio" + cosas.MegaUsuario.Usuario2.Usuario.ScreenNombre)
+                Dim botonSubir As Button = pagina.FindName("botonSubirArribaInicio" + cosas.MegaUsuario.Usuario.ScreenNombre)
                 botonSubir.Visibility = Visibility.Visible
             ElseIf cosas.Query = 1 Then
-                Dim botonSubir As Button = pagina.FindName("botonSubirArribaMenciones" + cosas.MegaUsuario.Usuario2.Usuario.ScreenNombre)
+                Dim botonSubir As Button = pagina.FindName("botonSubirArribaMenciones" + cosas.MegaUsuario.Usuario.ScreenNombre)
                 botonSubir.Visibility = Visibility.Visible
             ElseIf cosas.Query = 2 Then
                 Dim botonSubir As Button = pagina.FindName("botonSubirArribaUsuario")
@@ -171,10 +170,10 @@ Module InicioXaml
             End If
         Else
             If cosas.Query = 0 Then
-                Dim botonSubir As Button = pagina.FindName("botonSubirArribaInicio" + cosas.MegaUsuario.Usuario2.Usuario.ScreenNombre)
+                Dim botonSubir As Button = pagina.FindName("botonSubirArribaInicio" + cosas.MegaUsuario.Usuario.ScreenNombre)
                 botonSubir.Visibility = Visibility.Collapsed
             ElseIf cosas.Query = 1 Then
-                Dim botonSubir As Button = pagina.FindName("botonSubirArribaMenciones" + cosas.MegaUsuario.Usuario2.Usuario.ScreenNombre)
+                Dim botonSubir As Button = pagina.FindName("botonSubirArribaMenciones" + cosas.MegaUsuario.Usuario.ScreenNombre)
                 botonSubir.Visibility = Visibility.Collapsed
             ElseIf cosas.Query = 2 Then
                 Dim botonSubir As Button = pagina.FindName("botonSubirArribaUsuario")
@@ -209,11 +208,11 @@ Module InicioXaml
 
                             Try
                                 If cosas.Query = 0 Then
-                                    listaTweets = Await provider.CogerTweetsTimelineInicio(Of Tweet)(cosas.MegaUsuario.Usuario2.Usuario.Tokens, ultimoTweet.ID, New TweetParser)
+                                    listaTweets = Await TwitterPeticiones.HomeTimeline(listaTweets, cosas.MegaUsuario, ultimoTweet.ID)
                                 ElseIf cosas.Query = 1 Then
-                                    listaTweets = Await provider.CogerTweetsTimelineMenciones(Of Tweet)(cosas.MegaUsuario.Usuario2.Usuario.Tokens, ultimoTweet.ID, New TweetParser)
+                                    listaTweets = Await TwitterPeticiones.MentionsTimeline(listaTweets, cosas.MegaUsuario, ultimoTweet.ID)
                                 ElseIf cosas.Query = 2 Then
-                                    listaTweets = Await provider.CogerTweetsTimelineUsuario(Of Tweet)(cosas.UsuarioScreenNombre, ultimoTweet.ID, New TweetParser)
+                                    listaTweets = Await TwitterPeticiones.UserTimeline(listaTweets, cosas.MegaUsuario, cosas.UsuarioScreenNombre, ultimoTweet.ID)
                                 End If
                             Catch ex As Exception
 

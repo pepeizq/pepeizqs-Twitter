@@ -21,15 +21,45 @@ Namespace pepeizq.Twitter.Xaml
             Dim coordenadas2 As Integer = 0
 
             If tweet.Retweet Is Nothing Then
-                textoTweet = tweet.Texto
+                If Not tweet.TextoCompleto = String.Empty Then
+                    textoTweet = tweet.TextoCompleto
+                End If
 
-                coordenadas1 = tweet.TextoRango(0)
-                coordenadas2 = tweet.TextoRango(1)
+                If textoTweet = String.Empty Then
+                    If Not tweet.TextoParcial = String.Empty Then
+                        textoTweet = tweet.TextoParcial
+                    End If
+                End If
+
+                If Not tweet.TextoRango Is Nothing Then
+                    If Not tweet.TextoRango(0) = Nothing Then
+                        coordenadas1 = tweet.TextoRango(0)
+                    End If
+
+                    If Not tweet.TextoRango(1) = Nothing Then
+                        coordenadas2 = tweet.TextoRango(1)
+                    End If
+                End If
             Else
-                textoTweet = tweet.Retweet.Texto
+                If Not tweet.Retweet.TextoCompleto = String.Empty Then
+                    textoTweet = tweet.Retweet.TextoCompleto
+                End If
 
-                coordenadas1 = tweet.Retweet.TextoRango(0)
-                coordenadas2 = tweet.Retweet.TextoRango(1)
+                If textoTweet = String.Empty Then
+                    If Not tweet.Retweet.TextoParcial = String.Empty Then
+                        textoTweet = tweet.Retweet.TextoParcial
+                    End If
+                End If
+
+                If Not tweet.Retweet.TextoRango Is Nothing Then
+                    If Not tweet.Retweet.TextoRango(0) = Nothing Then
+                        coordenadas1 = tweet.Retweet.TextoRango(0)
+                    End If
+
+                    If Not tweet.Retweet.TextoRango(1) = Nothing Then
+                        coordenadas2 = tweet.Retweet.TextoRango(1)
+                    End If
+                End If
             End If
 
             If Not textoTweet = String.Empty Then

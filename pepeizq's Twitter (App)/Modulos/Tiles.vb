@@ -12,10 +12,10 @@ Module Tiles
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
-        Dim boton As Button = pagina.FindName("botonAñadirTile" + megaUsuario.Usuario2.Usuario.Id)
+        Dim boton As Button = pagina.FindName("botonAñadirTile" + megaUsuario.Usuario.ID)
         boton.IsEnabled = False
 
-        Dim nuevaTile As New SecondaryTile(megaUsuario.Usuario2.Usuario.Id, megaUsuario.Usuario2.Usuario.Nombre, megaUsuario.Usuario2.Usuario.ScreenNombre, New Uri("ms-appdata:///local/" + megaUsuario.Usuario2.Usuario.Id + "ancha.png", UriKind.RelativeOrAbsolute), TileSize.Square150x150)
+        Dim nuevaTile As New SecondaryTile(megaUsuario.Usuario.ID, megaUsuario.Usuario.Nombre, megaUsuario.Usuario.ScreenNombre, New Uri("ms-appdata:///local/" + megaUsuario.Usuario.ID + "ancha.png", UriKind.RelativeOrAbsolute), TileSize.Square150x150)
 
         'nuevaTile.VisualElements.Wide310x150Logo = New Uri("ms-appdata:///local/" + megaUsuario.Usuario2.Usuario.Id + "ancha.png", UriKind.RelativeOrAbsolute)
         'nuevaTile.VisualElements.Square310x310Logo = New Uri("ms-appdata:///local/" + megaUsuario.Usuario2.Usuario.Id + "grande.png", UriKind.RelativeOrAbsolute)
@@ -40,22 +40,22 @@ Module Tiles
         '-----------------------
 
         Dim imagenPequeña As New ImageEx With {
-            .Source = New Uri(megaUsuario.Usuario2.Usuario.ImagenAvatar)
+            .Source = New Uri(megaUsuario.Usuario.ImagenAvatar)
         }
-        Dim boolImagenPequeña As Boolean = Await DescargaImagen(imagenPequeña, megaUsuario.Usuario2.Usuario.Id + "pequena")
+        Dim boolImagenPequeña As Boolean = Await DescargaImagen(imagenPequeña, megaUsuario.Usuario.ID + "pequena")
 
         Dim imagenMediana As New ImageEx With {
-            .Source = New Uri(megaUsuario.Usuario2.Usuario.ImagenAvatar)
+            .Source = New Uri(megaUsuario.Usuario.ImagenAvatar)
         }
-        Dim boolImagenMediana As Boolean = Await DescargaImagen(imagenMediana, megaUsuario.Usuario2.Usuario.Id + "mediana")
+        Dim boolImagenMediana As Boolean = Await DescargaImagen(imagenMediana, megaUsuario.Usuario.ID + "mediana")
 
         Dim imagenAncha As New ImageEx
-        Dim boolImagenAncha As Boolean = Await DescargaImagen(imagenAncha, megaUsuario.Usuario2.Usuario.Id + "ancha")
+        Dim boolImagenAncha As Boolean = Await DescargaImagen(imagenAncha, megaUsuario.Usuario.ID + "ancha")
 
         Dim imagenGrande As New ImageEx With {
-            .Source = New Uri(megaUsuario.Usuario2.Usuario.ImagenAvatar)
+            .Source = New Uri(megaUsuario.Usuario.ImagenAvatar)
         }
-        Dim boolImagenGrande As Boolean = Await DescargaImagen(imagenGrande, megaUsuario.Usuario2.Usuario.Id + "grande")
+        Dim boolImagenGrande As Boolean = Await DescargaImagen(imagenGrande, megaUsuario.Usuario.ID + "grande")
 
         '-----------------------
 
@@ -63,7 +63,7 @@ Module Tiles
 
         If boolImagenPequeña = True Then
             Dim fondoImagenPequeña As New TileBackgroundImage With {
-                .Source = "ms-appdata:///local/" + megaUsuario.Usuario2.Usuario.Id + "pequena.png",
+                .Source = "ms-appdata:///local/" + megaUsuario.Usuario.ID + "pequena.png",
                 .HintCrop = AdaptiveImageCrop.Default
             }
 
@@ -86,7 +86,7 @@ Module Tiles
 
         If boolImagenMediana = True Then
             Dim fondoImagenMediano As New TileBackgroundImage With {
-                .Source = "ms-appdata:///local/" + megaUsuario.Usuario2.Usuario.Id + "mediana.png",
+                .Source = "ms-appdata:///local/" + megaUsuario.Usuario.ID + "mediana.png",
                 .HintCrop = AdaptiveImageCrop.Default
             }
 
@@ -109,7 +109,7 @@ Module Tiles
 
         If boolImagenAncha = True Then
             Dim fondoImagenAncha As New TileBackgroundImage With {
-                .Source = "ms-appdata:///local/" + megaUsuario.Usuario2.Usuario.Id + "ancha.png",
+                .Source = "ms-appdata:///local/" + megaUsuario.Usuario.ID + "ancha.png",
                 .HintCrop = AdaptiveImageCrop.Default
             }
 
@@ -132,7 +132,7 @@ Module Tiles
 
         If boolImagenGrande = True Then
             Dim fondoImagenGrande As New TileBackgroundImage With {
-                .Source = "ms-appdata:///local/" + megaUsuario.Usuario2.Usuario.Id + "grande.png",
+                .Source = "ms-appdata:///local/" + megaUsuario.Usuario.ID + "grande.png",
                 .HintCrop = AdaptiveImageCrop.Default
             }
 
@@ -170,7 +170,7 @@ Module Tiles
         Dim notificacion As New TileNotification(contenido.GetXml)
 
         Try
-            TileUpdateManager.CreateTileUpdaterForSecondaryTile(megaUsuario.Usuario2.Usuario.Id).Update(notificacion)
+            TileUpdateManager.CreateTileUpdaterForSecondaryTile(megaUsuario.Usuario.ID).Update(notificacion)
         Catch ex As Exception
 
         End Try

@@ -118,7 +118,7 @@ Namespace Notificaciones
 
                 If ApplicationData.Current.LocalSettings.Values("notificacionUsuario") = True Then
                     atribucion = New ToastGenericAttributionText With {
-                        .Text = "@" + megaUsuario.Usuario2.Usuario.ScreenNombre
+                        .Text = "@" + megaUsuario.Usuario.ScreenNombre
                     }
                 End If
 
@@ -181,7 +181,7 @@ Namespace Notificaciones
                     End If
                 End If
 
-                Dim bytesTexto() As Byte = Encoding.Default.GetBytes(tweet.Texto)
+                Dim bytesTexto() As Byte = Encoding.Default.GetBytes(tweet.TextoCompleto)
                 Dim textoFinal As String = Encoding.UTF8.GetString(bytesTexto)
 
                 Dim tostada As New ToastContent With {

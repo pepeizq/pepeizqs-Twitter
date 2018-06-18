@@ -7,7 +7,7 @@ Module EscribirXaml
 
         Dim recursos As New Resources.ResourceLoader
 
-        Dim usuario As TwitterUsuario = megaUsuario.Usuario2.Usuario
+        Dim usuario As TwitterUsuario = megaUsuario.Usuario
 
         Dim gridFondo As New Grid
         gridFondo.SetValue(Grid.RowProperty, 1)
