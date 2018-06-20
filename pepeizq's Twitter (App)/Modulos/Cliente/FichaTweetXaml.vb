@@ -186,20 +186,20 @@ Namespace pepeizq.Twitter.Xaml
 
                 '-----------------------------
 
+                Dim lvTweets As ListView = pagina.FindName("lvTweetRespuestas")
+                lvTweets.IsItemClickEnabled = True
+
+                If lvTweets.Items.Count > 0 Then
+                    lvTweets.Items.Clear()
+                End If
+
+                AddHandler lvTweets.ItemClick, AddressOf LvTweets_ItemClick
+
                 Dim listaTweetRespuestas As New List(Of Tweet)
 
                 listaTweetRespuestas = Await TwitterPeticiones.BuscarRespuestasTweet(listaTweetRespuestas, cosas.MegaUsuario, tweet.ID, tweet.Usuario.ScreenNombre)
 
                 If listaTweetRespuestas.Count > 0 Then
-                    Dim lvTweets As ListView = pagina.FindName("lvTweetRespuestas")
-                    lvTweets.IsItemClickEnabled = True
-
-                    If lvTweets.Items.Count > 0 Then
-                        lvTweets.Items.Clear()
-                    End If
-
-                    AddHandler lvTweets.ItemClick, AddressOf LvTweets_ItemClick
-
                     For Each tweetRespuesta In listaTweetRespuestas
                         If tweetRespuesta.RespuestaUsuarioID = tweet.ID Then
                             lvTweets.Items.Insert(0, TweetXaml.Añadir(tweetRespuesta, cosas.MegaUsuario, color))

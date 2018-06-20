@@ -1,4 +1,5 @@
 ﻿Imports pepeizq.Twitter
+Imports Windows.UI
 
 Namespace pepeizq.Twitter.Objetos
     Public Class UsuarioAmpliado

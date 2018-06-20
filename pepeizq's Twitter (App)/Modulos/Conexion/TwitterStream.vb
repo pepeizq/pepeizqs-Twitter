@@ -189,6 +189,23 @@ Module TwitterStream
                                                                                           End Try
                                                                                       End Sub, periodoBloqueos)
 
+        Dim periodoMuteos As TimeSpan = TimeSpan.FromMinutes(2)
+        Dim contadorMuteos As ThreadPoolTimer = ThreadPoolTimer.CreatePeriodicTimer(Async Sub()
+                                                                                        Try
+                                                                                            Await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (Async Sub()
+                                                                                                                                                                                              Dim listaMuteados As New List(Of String)
+
+                                                                                                                                                                                              listaMuteados = Await TwitterPeticiones.CogerListaMuteados(listaMuteados, megaUsuario)
+
+                                                                                                                                                                                              If listaMuteados.Count > 0 Then
+                                                                                                                                                                                                  megaUsuario.UsuariosMuteados = listaMuteados
+                                                                                                                                                                                              End If
+                                                                                                                                                                                          End Sub))
+                                                                                        Catch ex As Exception
+
+                                                                                        End Try
+                                                                                    End Sub, periodoMuteos)
+
     End Sub
 
 End Module

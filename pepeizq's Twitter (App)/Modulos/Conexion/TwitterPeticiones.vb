@@ -68,10 +68,10 @@ Module TwitterPeticiones
 
     End Function
 
-    Public Async Function CogerTweet(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario, idTweet As String) As Task(Of Tweet)
+    Public Async Function CogerTweet(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario, tweetID As String) As Task(Of Tweet)
 
         Try
-            Dim enlace As New Uri("https://api.twitter.com/1.1/statuses/show.json?id=" + idTweet + "&tweet_mode=extended")
+            Dim enlace As New Uri("https://api.twitter.com/1.1/statuses/show.json?id=" + tweetID + "&tweet_mode=extended")
             Dim request As New TwitterOAuthRequest
             Dim resultado As String = Await request.EjecutarGetAsync(enlace, megaUsuario.Servicio.twitterDataProvider._tokens)
             Dim parser As New TweetParserIndividual
@@ -85,10 +85,10 @@ Module TwitterPeticiones
 
     End Function
 
-    Public Async Function BuscarRespuestasTweet(listaTweets As List(Of Tweet), megaUsuario As pepeizq.Twitter.MegaUsuario, idTweet As String, screenNombre As String) As Task(Of List(Of Tweet))
+    Public Async Function BuscarRespuestasTweet(listaTweets As List(Of Tweet), megaUsuario As pepeizq.Twitter.MegaUsuario, tweetID As String, screenNombre As String) As Task(Of List(Of Tweet))
 
         Try
-            Dim enlace As New Uri("https://api.twitter.com/1.1/search/tweets.json?q=%3A" + screenNombre + "&result_type=recent&count=100")
+            Dim enlace As New Uri("https://api.twitter.com/1.1/search/tweets.json?q=%3A" + screenNombre + "&result_type=recent&count=100&since_id=" + tweetID)
             Dim request As New TwitterOAuthRequest
             Dim resultado As String = Await request.EjecutarGetAsync(enlace, megaUsuario.Servicio.twitterDataProvider._tokens)
             Dim busqueda As pepeizq.Twitter.TweetsBusqueda = JsonConvert.DeserializeObject(Of pepeizq.Twitter.TweetsBusqueda)(resultado)
@@ -196,6 +196,127 @@ Module TwitterPeticiones
 
         Try
             Dim enlace As New Uri("https://api.twitter.com/1.1/blocks/destroy.json?user_id=" + usuarioID + "&skip_status=1")
+            Dim request As New TwitterOAuthRequest
+            Await request.EjecutarPostAsync(enlace, megaUsuario.Servicio.twitterDataProvider._tokens)
+            estado = True
+        Catch ex As Exception
+
+        End Try
+
+        Return estado
+
+    End Function
+
+    Public Async Function CogerListaMuteados(listaIDs As List(Of String), megaUsuario As pepeizq.Twitter.MegaUsuario) As Task(Of List(Of String))
+
+        Try
+            Dim enlace As New Uri("https://api.twitter.com/1.1/mutes/users/ids.json?cursor=-1")
+            Dim request As New TwitterOAuthRequest
+            Dim resultado As String = Await request.EjecutarGetAsync(enlace, megaUsuario.Servicio.twitterDataProvider._tokens)
+            Dim bloqueos As pepeizq.Twitter.UsuarioMuteados = JsonConvert.DeserializeObject(Of pepeizq.Twitter.UsuarioMuteados)(resultado)
+            listaIDs = bloqueos.IDs
+        Catch ex As Exception
+
+        End Try
+
+        Return listaIDs
+
+    End Function
+
+    Public Async Function MutearUsuario(estado As Boolean, megaUsuario As pepeizq.Twitter.MegaUsuario, usuarioID As String) As Task(Of Boolean)
+
+        Try
+            Dim enlace As New Uri("https://api.twitter.com/1.1/mutes/users/create.json?user_id=" + usuarioID)
+            Dim request As New TwitterOAuthRequest
+            Await request.EjecutarPostAsync(enlace, megaUsuario.Servicio.twitterDataProvider._tokens)
+            estado = True
+        Catch ex As Exception
+
+        End Try
+
+        Return estado
+
+    End Function
+
+    Public Async Function DeshacerMutearUsuario(estado As Boolean, megaUsuario As pepeizq.Twitter.MegaUsuario, usuarioID As String) As Task(Of Boolean)
+
+        Try
+            Dim enlace As New Uri("https://api.twitter.com/1.1/mutes/users/destroy.json?user_id=" + usuarioID)
+            Dim request As New TwitterOAuthRequest
+            Await request.EjecutarPostAsync(enlace, megaUsuario.Servicio.twitterDataProvider._tokens)
+            estado = True
+        Catch ex As Exception
+
+        End Try
+
+        Return estado
+
+    End Function
+
+    Public Async Function ReportarUsuario(estado As Boolean, megaUsuario As pepeizq.Twitter.MegaUsuario, usuarioID As String) As Task(Of Boolean)
+
+        Try
+            Dim enlace As New Uri("https://api.twitter.com/1.1/users/report_spam.json?user_id=" + usuarioID + "&perform_block=true")
+            Dim request As New TwitterOAuthRequest
+            Await request.EjecutarPostAsync(enlace, megaUsuario.Servicio.twitterDataProvider._tokens)
+            estado = True
+        Catch ex As Exception
+
+        End Try
+
+        Return estado
+
+    End Function
+
+    Public Async Function FavoritearTweet(estado As Boolean, megaUsuario As pepeizq.Twitter.MegaUsuario, tweetID As String) As Task(Of Boolean)
+
+        Try
+            Dim enlace As New Uri("https://api.twitter.com/1.1/favorites/create.json?id=" + tweetID)
+            Dim request As New TwitterOAuthRequest
+            Await request.EjecutarPostAsync(enlace, megaUsuario.Servicio.twitterDataProvider._tokens)
+            estado = True
+        Catch ex As Exception
+
+        End Try
+
+        Return estado
+
+    End Function
+
+    Public Async Function DeshacerFavoritearTweet(estado As Boolean, megaUsuario As pepeizq.Twitter.MegaUsuario, tweetID As String) As Task(Of Boolean)
+
+        Try
+            Dim enlace As New Uri("https://api.twitter.com/1.1/favorites/destroy.json?id=" + tweetID)
+            Dim request As New TwitterOAuthRequest
+            Await request.EjecutarPostAsync(enlace, megaUsuario.Servicio.twitterDataProvider._tokens)
+            estado = True
+        Catch ex As Exception
+
+        End Try
+
+        Return estado
+
+    End Function
+
+    Public Async Function RetwittearTweet(estado As Boolean, megaUsuario As pepeizq.Twitter.MegaUsuario, tweetID As String) As Task(Of Boolean)
+
+        Try
+            Dim enlace As New Uri("https://api.twitter.com/1.1/statuses/retweet/" + tweetID + ".json")
+            Dim request As New TwitterOAuthRequest
+            Await request.EjecutarPostAsync(enlace, megaUsuario.Servicio.twitterDataProvider._tokens)
+            estado = True
+        Catch ex As Exception
+
+        End Try
+
+        Return estado
+
+    End Function
+
+    Public Async Function DeshacerRetwittearTweet(estado As Boolean, megaUsuario As pepeizq.Twitter.MegaUsuario, tweetID As String) As Task(Of Boolean)
+
+        Try
+            Dim enlace As New Uri("https://api.twitter.com/1.1/statuses/unretweet/" + tweetID + ".json")
             Dim request As New TwitterOAuthRequest
             Await request.EjecutarPostAsync(enlace, megaUsuario.Servicio.twitterDataProvider._tokens)
             estado = True

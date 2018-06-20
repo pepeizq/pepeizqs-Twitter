@@ -286,46 +286,48 @@ Namespace pepeizq.Twitter.Xaml
             Dim boton As Button = sender
             Dim cosas As Objetos.TweetXamlBoton = boton.Tag
 
-            Dim status As New TwitterStatus With {
-                .TweetID = cosas.Tweet.ID
-            }
-
             Dim recursos As New Resources.ResourceLoader
 
             If cosas.Tweet.Retwitteado = False Then
-                Await cosas.MegaUsuario.Servicio.Retwitear(cosas.MegaUsuario.Servicio.twitterDataProvider._tokens, status)
+                Dim estado As Boolean = False
 
-                Notificaciones.Toast.Enseñar(recursos.GetString("RetweetSent"))
+                estado = Await TwitterPeticiones.RetwittearTweet(estado, cosas.MegaUsuario, cosas.Tweet.ID)
+                Notificaciones.Toast.Enseñar(estado)
+                If estado = True Then
+                    Dim color As Color = Nothing
 
-                Dim color As Color = Nothing
+                    If cosas.Color = Nothing Then
+                        color = App.Current.Resources("ColorSecundario")
+                    End If
 
-                If cosas.Color = Nothing Then
-                    color = App.Current.Resources("ColorSecundario")
+                    boton.Background = New SolidColorBrush(color)
+
+                    Dim spBoton As StackPanel = boton.Content
+
+                    If TypeOf spBoton.Children(0) Is TextBlock Then
+                        Dim tb As TextBlock = spBoton.Children(0)
+                        tb.Foreground = New SolidColorBrush(Colors.White)
+                    End If
+
+                    cosas.Tweet.Retwitteado = True
                 End If
-
-                boton.Background = New SolidColorBrush(color)
-
-                Dim spBoton As StackPanel = boton.Content
-
-                If TypeOf spBoton.Children(0) Is TextBlock Then
-                    Dim tb As TextBlock = spBoton.Children(0)
-                    tb.Foreground = New SolidColorBrush(Colors.White)
-                End If
-
-                cosas.Tweet.Retwitteado = True
             Else
-                Await cosas.MegaUsuario.Servicio.DeshacerRetweet(cosas.MegaUsuario.Servicio.twitterDataProvider._tokens, status)
+                Dim estado As Boolean = False
 
-                boton.Background = New SolidColorBrush(Colors.Transparent)
+                estado = Await TwitterPeticiones.DeshacerRetwittearTweet(estado, cosas.MegaUsuario, cosas.Tweet.ID)
 
-                Dim spBoton As StackPanel = boton.Content
+                If estado = True Then
+                    boton.Background = New SolidColorBrush(Colors.Transparent)
 
-                If TypeOf spBoton.Children(0) Is TextBlock Then
-                    Dim tb As TextBlock = spBoton.Children(0)
-                    tb.Foreground = New SolidColorBrush(Colors.Black)
+                    Dim spBoton As StackPanel = boton.Content
+
+                    If TypeOf spBoton.Children(0) Is TextBlock Then
+                        Dim tb As TextBlock = spBoton.Children(0)
+                        tb.Foreground = New SolidColorBrush(Colors.Black)
+                    End If
+
+                    cosas.Tweet.Retwitteado = False
                 End If
-
-                cosas.Tweet.Retwitteado = False
             End If
 
         End Sub
@@ -339,52 +341,54 @@ Namespace pepeizq.Twitter.Xaml
                 cosas.Color = App.Current.Resources("ColorSecundario")
             End If
 
-            Dim status As New TwitterStatus With {
-                .TweetID = cosas.Tweet.ID
-            }
-
             Dim recursos As New Resources.ResourceLoader
 
             If cosas.Tweet.Favoriteado = False Then
-                Await cosas.MegaUsuario.Servicio.Favoritear(cosas.MegaUsuario.Servicio.twitterDataProvider._tokens, status)
+                Dim estado As Boolean = False
 
-                Notificaciones.Toast.Enseñar(recursos.GetString("FavoriteSent"))
+                estado = Await TwitterPeticiones.FavoritearTweet(estado, cosas.MegaUsuario, cosas.Tweet.ID)
 
-                boton.Background = New SolidColorBrush(cosas.Color)
+                If estado = True Then
+                    boton.Background = New SolidColorBrush(cosas.Color)
 
-                Dim spBoton As StackPanel = boton.Content
+                    Dim spBoton As StackPanel = boton.Content
 
-                If TypeOf spBoton.Children(0) Is FontAwesome.UWP.FontAwesome Then
-                    Dim icono As FontAwesome.UWP.FontAwesome = spBoton.Children(0)
-                    icono.Foreground = New SolidColorBrush(Colors.White)
+                    If TypeOf spBoton.Children(0) Is FontAwesome.UWP.FontAwesome Then
+                        Dim icono As FontAwesome.UWP.FontAwesome = spBoton.Children(0)
+                        icono.Foreground = New SolidColorBrush(Colors.White)
+                    End If
+
+                    If TypeOf spBoton.Children(0) Is StackPanel Then
+                        Dim subsp As StackPanel = spBoton.Children(0)
+                        Dim icono As FontAwesome.UWP.FontAwesome = subsp.Children(0)
+                        icono.Foreground = New SolidColorBrush(Colors.White)
+                    End If
+
+                    cosas.Tweet.Favoriteado = True
                 End If
-
-                If TypeOf spBoton.Children(0) Is StackPanel Then
-                    Dim subsp As StackPanel = spBoton.Children(0)
-                    Dim icono As FontAwesome.UWP.FontAwesome = subsp.Children(0)
-                    icono.Foreground = New SolidColorBrush(Colors.White)
-                End If
-
-                cosas.Tweet.Favoriteado = True
             Else
-                Await cosas.MegaUsuario.Servicio.DeshacerFavorito(cosas.MegaUsuario.Servicio.twitterDataProvider._tokens, status)
+                Dim estado As Boolean = False
 
-                boton.Background = New SolidColorBrush(Colors.Transparent)
+                estado = Await TwitterPeticiones.DeshacerFavoritearTweet(estado, cosas.MegaUsuario, cosas.Tweet.ID)
 
-                Dim spBoton As StackPanel = boton.Content
+                If estado = True Then
+                    boton.Background = New SolidColorBrush(Colors.Transparent)
 
-                If TypeOf spBoton.Children(0) Is FontAwesome.UWP.FontAwesome Then
-                    Dim icono As FontAwesome.UWP.FontAwesome = spBoton.Children(0)
-                    icono.Foreground = New SolidColorBrush(cosas.Color)
+                    Dim spBoton As StackPanel = boton.Content
+
+                    If TypeOf spBoton.Children(0) Is FontAwesome.UWP.FontAwesome Then
+                        Dim icono As FontAwesome.UWP.FontAwesome = spBoton.Children(0)
+                        icono.Foreground = New SolidColorBrush(cosas.Color)
+                    End If
+
+                    If TypeOf spBoton.Children(0) Is StackPanel Then
+                        Dim subsp As StackPanel = spBoton.Children(0)
+                        Dim icono As FontAwesome.UWP.FontAwesome = subsp.Children(0)
+                        icono.Foreground = New SolidColorBrush(cosas.Color)
+                    End If
+
+                    cosas.Tweet.Favoriteado = False
                 End If
-
-                If TypeOf spBoton.Children(0) Is StackPanel Then
-                    Dim subsp As StackPanel = spBoton.Children(0)
-                    Dim icono As FontAwesome.UWP.FontAwesome = subsp.Children(0)
-                    icono.Foreground = New SolidColorBrush(cosas.Color)
-                End If
-
-                cosas.Tweet.Favoriteado = False
             End If
 
         End Sub

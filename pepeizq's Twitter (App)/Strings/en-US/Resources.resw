@@ -210,14 +210,8 @@
   <data name="Retweet" xml:space="preserve">
     <value>Retweet</value>
   </data>
-  <data name="RetweetSent" xml:space="preserve">
-    <value>Successfully Retweeted</value>
-  </data>
   <data name="Favorite" xml:space="preserve">
     <value>Favorite</value>
-  </data>
-  <data name="FavoriteSent" xml:space="preserve">
-    <value>Successfully Favorited</value>
   </data>
   <data name="MoreOptions" xml:space="preserve">
     <value>More Options</value>
@@ -243,11 +237,11 @@
   <data name="UserBlock" xml:space="preserve">
     <value>Block User</value>
   </data>
-  <data name="Report" xml:space="preserve">
-    <value>Report</value>
+  <data name="UserReport" xml:space="preserve">
+    <value>Report User</value>
   </data>
-  <data name="Mute" xml:space="preserve">
-    <value>Mute</value>
+  <data name="UserMute" xml:space="preserve">
+    <value>Mute User</value>
   </data>
   <data name="OEmbedTweet" xml:space="preserve">
     <value>Embed This Tweet</value>
@@ -320,5 +314,8 @@
   </data>
   <data name="UserUnblock" xml:space="preserve">
     <value>Unblock User</value>
+  </data>
+  <data name="UserUnmute" xml:space="preserve">
+    <value>Unmute User</value>
   </data>
 </root>

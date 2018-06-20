@@ -46,7 +46,7 @@ Module TwitterConexion
             Dim usuario As TwitterUsuario = JsonConvert.DeserializeObject(Of TwitterUsuario)(resultado)
 
             If Not usuario Is Nothing Then
-                Dim megaUsuario As New pepeizq.Twitter.MegaUsuario(usuario, servicio, Nothing, Nothing, Nothing, Nothing)
+                Dim megaUsuario As New pepeizq.Twitter.MegaUsuario(usuario, servicio, Nothing, Nothing, Nothing, Nothing, Nothing)
 
                 If ApplicationData.Current.LocalSettings.Values(usuario.ID + "notificacion") Is Nothing Then
                     ApplicationData.Current.LocalSettings.Values(usuario.ID + "notificacion") = True
@@ -60,6 +60,14 @@ Module TwitterConexion
 
                 If listaBloqueos.Count > 0 Then
                     megaUsuario.UsuariosBloqueados = listaBloqueos
+                End If
+
+                Dim listaMuteados As New List(Of String)
+
+                listaMuteados = Await TwitterPeticiones.CogerListaMuteados(listaMuteados, megaUsuario)
+
+                If listaMuteados.Count > 0 Then
+                    megaUsuario.UsuariosMuteados = listaMuteados
                 End If
 
                 Dim helper As New LocalObjectStorageHelper

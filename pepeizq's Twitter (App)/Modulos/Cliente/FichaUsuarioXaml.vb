@@ -192,15 +192,15 @@ Module FichaUsuarioXaml
         Dim botonBloquearUsuario As Button = pagina.FindName("botonBloquearUsuario")
         botonBloquearUsuario.Tag = cosas
 
-        Dim aspectoBloqueo As Boolean = False
+        Dim boolBloqueo As Boolean = False
 
         For Each bloqueo In cosas.MegaUsuario.UsuariosBloqueados
             If bloqueo = cosas.Usuario.ID Then
-                aspectoBloqueo = True
+                boolBloqueo = True
             End If
         Next
 
-        If aspectoBloqueo = True Then
+        If boolBloqueo = True Then
             Dim toolTip As New ToolTip With {
                 .Content = recursos.GetString("UserUnblock")
             }
@@ -226,34 +226,85 @@ Module FichaUsuarioXaml
 
         AddHandler botonBloquearUsuario.Click, AddressOf BotonBloquearUsuarioClick
 
+        Dim botonMutearUsuario As Button = pagina.FindName("botonMutearUsuario")
+        botonMutearUsuario.Tag = cosas
+
+        Dim boolMuteado As Boolean = False
+
+        For Each muteo In cosas.MegaUsuario.UsuariosMuteados
+            If muteo = cosas.Usuario.ID Then
+                boolMuteado = True
+            End If
+        Next
+
+        If boolMuteado = True Then
+            Dim toolTip As New ToolTip With {
+                .Content = recursos.GetString("UserUnmute")
+            }
+            ToolTipService.SetToolTip(botonMutearUsuario, toolTip)
+
+            Dim iconoFinal As New FontAwesome.UWP.FontAwesome With {
+                .Icon = FontAwesomeIcon.VolumeUp,
+                .Foreground = New SolidColorBrush(Colors.White)
+            }
+            botonMutearUsuario.Content = iconoFinal
+        Else
+            Dim toolTip As New ToolTip With {
+                .Content = recursos.GetString("UserMute")
+            }
+            ToolTipService.SetToolTip(botonMutearUsuario, toolTip)
+
+            Dim iconoFinal As New FontAwesome.UWP.FontAwesome With {
+                .Icon = FontAwesomeIcon.VolumeOff,
+                .Foreground = New SolidColorBrush(Colors.White)
+            }
+            botonMutearUsuario.Content = iconoFinal
+        End If
+
+        AddHandler botonMutearUsuario.Click, AddressOf BotonMutearUsuarioClick
+
+        Dim botonReportarUsuario As Button = pagina.FindName("botonReportarUsuario")
+        botonReportarUsuario.Tag = cosas
+
+        Dim toolTipReportar As New ToolTip With {
+            .Content = recursos.GetString("UserReport")
+        }
+        ToolTipService.SetToolTip(botonReportarUsuario, toolTipReportar)
+
+        AddHandler botonReportarUsuario.Click, AddressOf BotonReportarUsuarioClick
+
         '------------------------------------
 
         Dim botonSubir As Button = pagina.FindName("botonSubirArribaUsuario")
         botonSubir.Background = New SolidColorBrush(color)
 
-        Dim listaTweets As New List(Of Tweet)
+        If boolBloqueo = False Then
+            lvTweets.Visibility = Visibility.Visible
 
-        listaTweets = Await TwitterPeticiones.UserTimeline(listaTweets, cosas.MegaUsuario, usuario.ScreenNombre, Nothing)
+            Dim listaTweets As New List(Of Tweet)
 
-        If listaTweets.Count > 0 Then
-            For Each tweet In listaTweets
-                Dim boolAñadir As Boolean = True
+            listaTweets = Await TwitterPeticiones.UserTimeline(listaTweets, cosas.MegaUsuario, usuario.ScreenNombre, Nothing)
 
-                For Each item In lvTweets.Items
-                    Dim lvItem As ListViewItem = item
-                    Dim gridTweet As Grid = lvItem.Content
-                    Dim tweetAmpliado As pepeizq.Twitter.Objetos.TweetAmpliado = gridTweet.Tag
-                    Dim lvTweet As Tweet = tweetAmpliado.Tweet
+            If listaTweets.Count > 0 Then
+                For Each tweet In listaTweets
+                    Dim boolAñadir As Boolean = True
 
-                    If lvTweet.ID = tweet.ID Then
-                        boolAñadir = False
+                    For Each item In lvTweets.Items
+                        Dim lvItem As ListViewItem = item
+                        Dim gridTweet As Grid = lvItem.Content
+                        Dim tweetAmpliado As pepeizq.Twitter.Objetos.TweetAmpliado = gridTweet.Tag
+                        Dim lvTweet As Tweet = tweetAmpliado.Tweet
+
+                        If lvTweet.ID = tweet.ID Then
+                            boolAñadir = False
+                        End If
+                    Next
+
+                    If boolAñadir = True Then
+                        lvTweets.Items.Add(pepeizq.Twitter.Xaml.TweetXaml.Añadir(tweet, cosas.MegaUsuario, color))
                     End If
                 Next
-
-                If boolAñadir = True Then
-                    lvTweets.Items.Add(pepeizq.Twitter.Xaml.TweetXaml.Añadir(tweet, cosas.MegaUsuario, color))
-                End If
-            Next
+            End If
         End If
 
     End Sub
@@ -299,31 +350,6 @@ Module FichaUsuarioXaml
             .Placement = FlyoutPlacementMode.Bottom
         }
 
-        Dim botonMutearUsuario As New MenuFlyoutItem With {
-            .Text = recursos.GetString("Mute") + " @" + cosas.Usuario.ScreenNombre,
-            .Tag = cosas,
-            .Name = "botonMutearUsuario"
-        }
-
-        AddHandler botonMutearUsuario.Click, AddressOf BotonMutearUsuarioClick
-        AddHandler botonMutearUsuario.PointerEntered, AddressOf UsuarioEntraBoton
-        AddHandler botonMutearUsuario.PointerExited, AddressOf UsuarioSaleBoton
-        menu.Items.Add(botonMutearUsuario)
-
-        Dim botonReportarUsuario As New MenuFlyoutItem With {
-            .Text = recursos.GetString("Report") + " @" + cosas.Usuario.ScreenNombre,
-            .Tag = cosas,
-            .Name = "botonReportarUsuario"
-        }
-
-        AddHandler botonReportarUsuario.Click, AddressOf BotonReportarUsuarioClick
-        AddHandler botonReportarUsuario.PointerEntered, AddressOf UsuarioEntraBoton
-        AddHandler botonReportarUsuario.PointerExited, AddressOf UsuarioSaleBoton
-        menu.Items.Add(botonReportarUsuario)
-
-        Dim separador As New MenuFlyoutSeparator
-        menu.Items.Add(separador)
-
         Dim botonCompartirUsuario As New MenuFlyoutItem With {
             .Text = recursos.GetString("ShareUser"),
             .Tag = cosas
@@ -353,6 +379,11 @@ Module FichaUsuarioXaml
 
         Dim recursos As New Resources.ResourceLoader
 
+        Dim frame As Frame = Window.Current.Content
+        Dim pagina As Page = frame.Content
+
+        Dim lvTweets As ListView = pagina.FindName("lvTweetsUsuario")
+
         Dim boton As Button = sender
         Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = boton.Tag
         Dim icono As FontAwesome.UWP.FontAwesome = boton.Content
@@ -373,6 +404,32 @@ Module FichaUsuarioXaml
                     .Foreground = New SolidColorBrush(Colors.White)
                 }
                 boton.Content = iconoFinal
+                lvTweets.Visibility = Visibility.Visible
+
+                Dim listaTweets As New List(Of Tweet)
+
+                listaTweets = Await TwitterPeticiones.UserTimeline(listaTweets, cosas.MegaUsuario, cosas.Usuario.ScreenNombre, Nothing)
+
+                If listaTweets.Count > 0 Then
+                    For Each tweet In listaTweets
+                        Dim boolAñadir As Boolean = True
+
+                        For Each item In lvTweets.Items
+                            Dim lvItem As ListViewItem = item
+                            Dim gridTweet As Grid = lvItem.Content
+                            Dim tweetAmpliado As pepeizq.Twitter.Objetos.TweetAmpliado = gridTweet.Tag
+                            Dim lvTweet As Tweet = tweetAmpliado.Tweet
+
+                            If lvTweet.ID = tweet.ID Then
+                                boolAñadir = False
+                            End If
+                        Next
+
+                        If boolAñadir = True Then
+                            lvTweets.Items.Add(pepeizq.Twitter.Xaml.TweetXaml.Añadir(tweet, cosas.MegaUsuario, ("#" + cosas.Usuario.ColorEnlace).ToColor))
+                        End If
+                    Next
+                End If
             End If
         Else
             Dim estado As Boolean = False
@@ -390,6 +447,8 @@ Module FichaUsuarioXaml
                     .Foreground = New SolidColorBrush(Colors.White)
                 }
                 boton.Content = iconoFinal
+                lvTweets.Visibility = Visibility.Collapsed
+                lvTweets.Items.Clear()
             End If
         End If
 
@@ -400,14 +459,47 @@ Module FichaUsuarioXaml
 
     Private Async Sub BotonMutearUsuarioClick(sender As Object, e As RoutedEventArgs)
 
-        Dim boton As MenuFlyoutItem = sender
+        Dim recursos As New Resources.ResourceLoader
+
+        Dim boton As Button = sender
         Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = boton.Tag
+        Dim icono As FontAwesome.UWP.FontAwesome = boton.Content
 
-        Try
-            Await cosas.MegaUsuario.Servicio.MutearUsuario(cosas.MegaUsuario.Servicio.twitterDataProvider._tokens, cosas.Usuario.ScreenNombre)
-        Catch ex As Exception
+        If icono.Icon = FontAwesomeIcon.VolumeUp Then
+            Dim estado As Boolean = False
 
-        End Try
+            estado = Await TwitterPeticiones.DeshacerMutearUsuario(estado, cosas.MegaUsuario, cosas.Usuario.ID)
+
+            If estado = True Then
+                Dim toolTip As New ToolTip With {
+                    .Content = recursos.GetString("UserMute")
+                }
+                ToolTipService.SetToolTip(boton, toolTip)
+
+                Dim iconoFinal As New FontAwesome.UWP.FontAwesome With {
+                    .Icon = FontAwesomeIcon.VolumeOff,
+                    .Foreground = New SolidColorBrush(Colors.White)
+                }
+                boton.Content = iconoFinal
+            End If
+        Else
+            Dim estado As Boolean = False
+
+            estado = Await TwitterPeticiones.MutearUsuario(estado, cosas.MegaUsuario, cosas.Usuario.ID)
+
+            If estado = True Then
+                Dim toolTip As New ToolTip With {
+                    .Content = recursos.GetString("UserUnmute")
+                }
+                ToolTipService.SetToolTip(boton, toolTip)
+
+                Dim iconoFinal As New FontAwesome.UWP.FontAwesome With {
+                    .Icon = FontAwesomeIcon.VolumeUp,
+                    .Foreground = New SolidColorBrush(Colors.White)
+                }
+                boton.Content = iconoFinal
+            End If
+        End If
 
         TwitterTimeLineInicio.CargarTweets(cosas.MegaUsuario, Nothing, True)
         TwitterTimeLineMenciones.CargarTweets(cosas.MegaUsuario, Nothing, True)
@@ -416,14 +508,22 @@ Module FichaUsuarioXaml
 
     Private Async Sub BotonReportarUsuarioClick(sender As Object, e As RoutedEventArgs)
 
-        Dim boton As MenuFlyoutItem = sender
+        Dim frame As Frame = Window.Current.Content
+        Dim pagina As Page = frame.Content
+
+        Dim lvTweets As ListView = pagina.FindName("lvTweetsUsuario")
+
+        Dim boton As Button = sender
         Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = boton.Tag
 
-        Try
-            Await cosas.MegaUsuario.Servicio.ReportarUsuario(cosas.MegaUsuario.Servicio.twitterDataProvider._tokens, cosas.Usuario.ScreenNombre)
-        Catch ex As Exception
+        Dim estado As Boolean = False
 
-        End Try
+        estado = Await TwitterPeticiones.ReportarUsuario(estado, cosas.MegaUsuario, cosas.Usuario.ID)
+
+        If estado = True Then
+            lvTweets.Visibility = Visibility.Collapsed
+            lvTweets.Items.Clear()
+        End If
 
         TwitterTimeLineInicio.CargarTweets(cosas.MegaUsuario, Nothing, True)
         TwitterTimeLineMenciones.CargarTweets(cosas.MegaUsuario, Nothing, True)
