@@ -1,4 +1,5 @@
-﻿Imports Microsoft.Toolkit.Uwp.Helpers
+﻿Imports FontAwesome.UWP
+Imports Microsoft.Toolkit.Uwp.Helpers
 Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports Newtonsoft.Json
 Imports pepeizq.Twitter
@@ -188,10 +189,47 @@ Module FichaUsuarioXaml
 
         AddHandler botonMasOpciones.Click, AddressOf BotonMasOpcionesClick
 
-        Dim botonSubir As Button = pagina.FindName("botonSubirArribaUsuario")
-        botonSubir.Background = New SolidColorBrush(color)
+        Dim botonBloquearUsuario As Button = pagina.FindName("botonBloquearUsuario")
+        botonBloquearUsuario.Tag = cosas
+
+        Dim aspectoBloqueo As Boolean = False
+
+        For Each bloqueo In cosas.MegaUsuario.UsuariosBloqueados
+            If bloqueo = cosas.Usuario.ID Then
+                aspectoBloqueo = True
+            End If
+        Next
+
+        If aspectoBloqueo = True Then
+            Dim toolTip As New ToolTip With {
+                .Content = recursos.GetString("UserUnblock")
+            }
+            ToolTipService.SetToolTip(botonBloquearUsuario, toolTip)
+
+            Dim iconoFinal As New FontAwesome.UWP.FontAwesome With {
+                .Icon = FontAwesomeIcon.Unlock,
+                .Foreground = New SolidColorBrush(Colors.White)
+            }
+            botonBloquearUsuario.Content = iconoFinal
+        Else
+            Dim toolTip As New ToolTip With {
+                .Content = recursos.GetString("UserBlock")
+            }
+            ToolTipService.SetToolTip(botonBloquearUsuario, toolTip)
+
+            Dim iconoFinal As New FontAwesome.UWP.FontAwesome With {
+                .Icon = FontAwesomeIcon.Lock,
+                .Foreground = New SolidColorBrush(Colors.White)
+            }
+            botonBloquearUsuario.Content = iconoFinal
+        End If
+
+        AddHandler botonBloquearUsuario.Click, AddressOf BotonBloquearUsuarioClick
 
         '------------------------------------
+
+        Dim botonSubir As Button = pagina.FindName("botonSubirArribaUsuario")
+        botonSubir.Background = New SolidColorBrush(color)
 
         Dim listaTweets As New List(Of Tweet)
 
@@ -229,11 +267,21 @@ Module FichaUsuarioXaml
         Dim cosas As pepeizq.Twitter.Objetos.SeguirUsuarioBoton = boton.Tag
 
         If tbSeguir.Text = recursos.GetString("Following") Then
-            Await cosas.MegaUsuario.Servicio.DeshacerSeguirUsuario(cosas.MegaUsuario.Servicio.twitterDataProvider._tokens, cosas.Usuario.ID)
-            tbSeguir.Text = recursos.GetString("Follow")
+            Dim estado As Boolean = False
+
+            estado = Await TwitterPeticiones.DeshacerSeguirUsuario(estado, cosas.MegaUsuario, cosas.Usuario.ID)
+
+            If estado = True Then
+                tbSeguir.Text = recursos.GetString("Follow")
+            End If
         Else
-            Await cosas.MegaUsuario.Servicio.SeguirUsuario(cosas.MegaUsuario.Servicio.twitterDataProvider._tokens, cosas.Usuario.ID)
-            tbSeguir.Text = recursos.GetString("Following")
+            Dim estado As Boolean = False
+
+            estado = Await TwitterPeticiones.SeguirUsuario(estado, cosas.MegaUsuario, cosas.Usuario.ID)
+
+            If estado = True Then
+                tbSeguir.Text = recursos.GetString("Following")
+            End If
         End If
 
         TwitterTimeLineInicio.CargarTweets(cosas.MegaUsuario, Nothing, True)
@@ -251,19 +299,10 @@ Module FichaUsuarioXaml
             .Placement = FlyoutPlacementMode.Bottom
         }
 
-        Dim botonBloquearUsuario As New MenuFlyoutItem With {
-            .Text = recursos.GetString("Block") + " @" + cosas.Usuario.ScreenNombre,
-            .Tag = cosas
-        }
-
-        AddHandler botonBloquearUsuario.Click, AddressOf BotonBloquearUsuarioClick
-        AddHandler botonBloquearUsuario.PointerEntered, AddressOf UsuarioEntraBoton
-        AddHandler botonBloquearUsuario.PointerExited, AddressOf UsuarioSaleBoton
-        menu.Items.Add(botonBloquearUsuario)
-
         Dim botonMutearUsuario As New MenuFlyoutItem With {
             .Text = recursos.GetString("Mute") + " @" + cosas.Usuario.ScreenNombre,
-            .Tag = cosas
+            .Tag = cosas,
+            .Name = "botonMutearUsuario"
         }
 
         AddHandler botonMutearUsuario.Click, AddressOf BotonMutearUsuarioClick
@@ -273,7 +312,8 @@ Module FichaUsuarioXaml
 
         Dim botonReportarUsuario As New MenuFlyoutItem With {
             .Text = recursos.GetString("Report") + " @" + cosas.Usuario.ScreenNombre,
-            .Tag = cosas
+            .Tag = cosas,
+            .Name = "botonReportarUsuario"
         }
 
         AddHandler botonReportarUsuario.Click, AddressOf BotonReportarUsuarioClick
@@ -311,14 +351,47 @@ Module FichaUsuarioXaml
 
     Private Async Sub BotonBloquearUsuarioClick(sender As Object, e As RoutedEventArgs)
 
-        Dim boton As MenuFlyoutItem = sender
+        Dim recursos As New Resources.ResourceLoader
+
+        Dim boton As Button = sender
         Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = boton.Tag
+        Dim icono As FontAwesome.UWP.FontAwesome = boton.Content
 
-        Try
-            Await cosas.MegaUsuario.Servicio.BloquearUsuario(cosas.MegaUsuario.Servicio.twitterDataProvider._tokens, cosas.Usuario.ScreenNombre)
-        Catch ex As Exception
+        If icono.Icon = FontAwesomeIcon.Unlock Then
+            Dim estado As Boolean = False
 
-        End Try
+            estado = Await TwitterPeticiones.DeshacerBloquearUsuario(estado, cosas.MegaUsuario, cosas.Usuario.ID)
+
+            If estado = True Then
+                Dim toolTip As New ToolTip With {
+                    .Content = recursos.GetString("UserBlock")
+                }
+                ToolTipService.SetToolTip(boton, toolTip)
+
+                Dim iconoFinal As New FontAwesome.UWP.FontAwesome With {
+                    .Icon = FontAwesomeIcon.Lock,
+                    .Foreground = New SolidColorBrush(Colors.White)
+                }
+                boton.Content = iconoFinal
+            End If
+        Else
+            Dim estado As Boolean = False
+
+            estado = Await TwitterPeticiones.BloquearUsuario(estado, cosas.MegaUsuario, cosas.Usuario.ID)
+
+            If estado = True Then
+                Dim toolTip As New ToolTip With {
+                    .Content = recursos.GetString("UserUnblock")
+                }
+                ToolTipService.SetToolTip(boton, toolTip)
+
+                Dim iconoFinal As New FontAwesome.UWP.FontAwesome With {
+                    .Icon = FontAwesomeIcon.Unlock,
+                    .Foreground = New SolidColorBrush(Colors.White)
+                }
+                boton.Content = iconoFinal
+            End If
+        End If
 
         TwitterTimeLineInicio.CargarTweets(cosas.MegaUsuario, Nothing, True)
         TwitterTimeLineMenciones.CargarTweets(cosas.MegaUsuario, Nothing, True)

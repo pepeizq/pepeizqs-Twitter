@@ -752,7 +752,7 @@ Namespace pepeizq.Twitter.Xaml
             Dim boton As MenuFlyoutItem = sender
             Dim cosas As Objetos.TweetXamlBoton = boton.Tag
 
-            FichaOEmbedXaml.Generar(cosas.MegaUsuario.Servicio.Provider, cosas.Tweet)
+            FichaOEmbedXaml.Generar(cosas.MegaUsuario, cosas.Tweet)
 
         End Sub
 

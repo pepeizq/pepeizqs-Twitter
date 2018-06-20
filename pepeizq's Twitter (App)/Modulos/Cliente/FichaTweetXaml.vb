@@ -2,7 +2,6 @@
 Imports Microsoft.Toolkit.Uwp.Helpers
 Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports pepeizq.Twitter
-Imports pepeizq.Twitter.Busqueda
 Imports pepeizq.Twitter.Tweet
 Imports Windows.Storage
 Imports Windows.UI

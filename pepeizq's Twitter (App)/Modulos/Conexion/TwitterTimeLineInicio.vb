@@ -8,8 +8,6 @@ Imports Windows.UI.Core
 
 Module TwitterTimeLineInicio
 
-    Dim intentosCarga As Integer = 0
-
     Public Async Sub CargarTweets(megaUsuario As pepeizq.Twitter.MegaUsuario, ultimoTweet As String, limpiar As Boolean)
 
         Dim usuario As TwitterUsuario = megaUsuario.Usuario
@@ -40,29 +38,7 @@ Module TwitterTimeLineInicio
 
             listaTweets = Await TwitterPeticiones.HomeTimeline(listaTweets, megaUsuario, ultimoTweet)
 
-            If listaTweets.Count = 0 Then
-
-                pr.IsActive = True
-
-                Await Task.Delay(20000)
-
-                intentosCarga = intentosCarga + 1
-                pr.IsActive = False
-
-                If intentosCarga < 500 Then
-                    TwitterTimeLineInicio.CargarTweets(megaUsuario, ultimoTweet, False)
-                Else
-                    TwitterConexion.Desconectar(megaUsuario.Servicio)
-
-                    Dim megaUsuarioNuevo As pepeizq.Twitter.MegaUsuario = Await TwitterConexion.Iniciar(megaUsuario.Usuario)
-
-                    If Not megaUsuarioNuevo Is Nothing Then
-                        TwitterTimeLineInicio.CargarTweets(megaUsuarioNuevo, Nothing, False)
-
-                        intentosCarga = 0
-                    End If
-                End If
-            Else
+            If listaTweets.Count > 0 Then
                 For Each tweet In listaTweets
                     Dim boolAñadirTweet As Boolean = True
 

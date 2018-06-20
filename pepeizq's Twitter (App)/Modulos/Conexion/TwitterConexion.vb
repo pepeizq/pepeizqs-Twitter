@@ -46,7 +46,21 @@ Module TwitterConexion
             Dim usuario As TwitterUsuario = JsonConvert.DeserializeObject(Of TwitterUsuario)(resultado)
 
             If Not usuario Is Nothing Then
-                Dim megaUsuario As New pepeizq.Twitter.MegaUsuario(usuario, servicio, True, Nothing, Nothing)
+                Dim megaUsuario As New pepeizq.Twitter.MegaUsuario(usuario, servicio, Nothing, Nothing, Nothing, Nothing)
+
+                If ApplicationData.Current.LocalSettings.Values(usuario.ID + "notificacion") Is Nothing Then
+                    ApplicationData.Current.LocalSettings.Values(usuario.ID + "notificacion") = True
+                End If
+
+                megaUsuario.Notificacion = ApplicationData.Current.LocalSettings.Values(usuario.ID + "notificacion")
+
+                Dim listaBloqueos As New List(Of String)
+
+                listaBloqueos = Await TwitterPeticiones.CogerListaBloqueos(listaBloqueos, megaUsuario)
+
+                If listaBloqueos.Count > 0 Then
+                    megaUsuario.UsuariosBloqueados = listaBloqueos
+                End If
 
                 Dim helper As New LocalObjectStorageHelper
 
@@ -187,20 +201,20 @@ Module TwitterConexion
             .Icon = FontAwesomeIcon.Comment
         }
 
-        Dim boolNotificacion As Boolean = True
+        'Dim boolNotificacion As Boolean = True
 
-        If ApplicationData.Current.LocalSettings.Values("notificacion" + usuario.ScreenNombre) Is Nothing Then
-            boolNotificacion = megaUsuario.Notificacion
-        Else
-            boolNotificacion = ApplicationData.Current.LocalSettings.Values("notificacion" + usuario.ScreenNombre)
-        End If
+        'If Not ApplicationData.Current.LocalSettings.Values(usuario.ID + "notificacion") Is Nothing Then
+        '    boolNotificacion =
+        'Else
+        '    boolNotificacion = ApplicationData.Current.LocalSettings.Values("notificacion" + usuario.ScreenNombre)
+        'End If
 
         Dim cbNotificacion As New CheckBox With {
             .Content = simboloNotificacion,
             .MinWidth = 0,
             .Margin = New Thickness(20, 0, 0, 0),
             .Tag = megaUsuario,
-            .IsChecked = boolNotificacion
+            .IsChecked = megaUsuario.Notificacion
         }
 
         ToolTipService.SetToolTip(cbNotificacion, recursos.GetString("CbNotification"))
@@ -267,6 +281,7 @@ Module TwitterConexion
         Dim usuario As TwitterUsuario = megaUsuario.Usuario
 
         megaUsuario.Notificacion = True
+        ApplicationData.Current.LocalSettings.Values(usuario.ID + "notificacion") = True
 
     End Sub
 
@@ -277,6 +292,7 @@ Module TwitterConexion
         Dim usuario As TwitterUsuario = megaUsuario.Usuario
 
         megaUsuario.Notificacion = False
+        ApplicationData.Current.LocalSettings.Values(usuario.ID + "notificacion") = False
 
     End Sub
 

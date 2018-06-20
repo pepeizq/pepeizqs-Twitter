@@ -240,8 +240,8 @@
   <data name="tbNumFavoritesUser.Text" xml:space="preserve">
     <value>Likes</value>
   </data>
-  <data name="Block" xml:space="preserve">
-    <value>Block</value>
+  <data name="UserBlock" xml:space="preserve">
+    <value>Block User</value>
   </data>
   <data name="Report" xml:space="preserve">
     <value>Report</value>
@@ -317,5 +317,8 @@
   </data>
   <data name="ButtonAddTile" xml:space="preserve">
     <value>Add Tile</value>
+  </data>
+  <data name="UserUnblock" xml:space="preserve">
+    <value>Unblock User</value>
   </data>
 </root>

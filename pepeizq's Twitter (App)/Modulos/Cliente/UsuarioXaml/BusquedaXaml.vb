@@ -1,5 +1,4 @@
 ﻿Imports pepeizq.Twitter
-Imports pepeizq.Twitter.Busqueda
 Imports Windows.Storage
 Imports Windows.UI
 Imports Windows.UI.Core
@@ -165,79 +164,80 @@ Module BusquedaXaml
         Dim boton As Button = sender
         Dim cosas As pepeizq.Twitter.Objetos.BusquedaUsuario = boton.Tag
 
-        Dim provider As TwitterDataProvider = cosas.MegaUsuario.Servicio.Provider
-
         Dim usuarioBuscar As String = ApplicationData.Current.LocalSettings.Values("UsuarioBuscar")
 
-        Dim usuarios As List(Of TwitterUsuario) = Await provider.BuscarUsuarios(cosas.MegaUsuario.Servicio.twitterDataProvider._tokens, usuarioBuscar, New TwitterBusquedaUsuariosParser)
+        Dim listaUsuarios As New List(Of TwitterUsuario)
+
+        listaUsuarios = Await TwitterPeticiones.BuscarUsuarios(listaUsuarios, cosas.MegaUsuario, usuarioBuscar)
+
         Dim visibilidad As Visibility = Visibility.Collapsed
 
-        If usuarios.Count > 0 Then
+        If listaUsuarios.Count > 0 Then
             visibilidad = Visibility.Visible
+
+            Dim lv As ListView = cosas.ListView
+            lv.Items.Clear()
+            lv.Visibility = visibilidad
+
+            For Each usuario In listaUsuarios
+                Dim imagenAvatar As New ImageBrush With {
+                    .Stretch = Stretch.Uniform,
+                    .ImageSource = New BitmapImage(New Uri(usuario.ImagenAvatar))
+                }
+
+                Dim circulo As New Ellipse With {
+                    .Fill = imagenAvatar,
+                    .Height = 48,
+                    .Width = 48
+                }
+
+                Dim sp1 As New StackPanel With {
+                    .Orientation = Orientation.Horizontal,
+                    .VerticalAlignment = VerticalAlignment.Center,
+                    .Tag = New pepeizq.Twitter.Objetos.UsuarioAmpliado(cosas.MegaUsuario, usuario, Nothing)
+                }
+
+                sp1.Children.Add(circulo)
+
+                Dim sp2 As New StackPanel With {
+                    .Orientation = Orientation.Vertical,
+                    .Margin = New Thickness(10, 0, 0, 0)
+                }
+
+                Dim tbNombre As New TextBlock With {
+                    .Text = usuario.Nombre,
+                    .TextWrapping = TextWrapping.Wrap
+                }
+
+                sp2.Children.Add(tbNombre)
+
+                Dim tbScreenNombre As New TextBlock With {
+                    .Text = "@" + usuario.ScreenNombre,
+                    .FontSize = 13
+                }
+
+                sp2.Children.Add(tbScreenNombre)
+
+                sp1.Children.Add(sp2)
+
+                Dim botonUsuario As New ListViewItem With {
+                    .Content = sp1,
+                    .Background = New SolidColorBrush(Colors.Transparent),
+                    .BorderBrush = New SolidColorBrush(Colors.Transparent),
+                    .BorderThickness = New Thickness(0, 0, 0, 0),
+                    .Padding = New Thickness(5, 5, 5, 5),
+                    .Margin = New Thickness(10, 10, 10, 10),
+                    .HorizontalAlignment = HorizontalAlignment.Stretch,
+                    .HorizontalContentAlignment = HorizontalAlignment.Left
+                }
+
+                AddHandler botonUsuario.PointerPressed, AddressOf UsuarioPulsaUsuario
+                AddHandler botonUsuario.PointerEntered, AddressOf UsuarioEntraBoton
+                AddHandler botonUsuario.PointerExited, AddressOf UsuarioSaleBoton
+
+                lv.Items.Add(botonUsuario)
+            Next
         End If
-
-        Dim lv As ListView = cosas.ListView
-        lv.Items.Clear()
-        lv.Visibility = visibilidad
-
-        For Each usuario In usuarios
-            Dim imagenAvatar As New ImageBrush With {
-                .Stretch = Stretch.Uniform,
-                .ImageSource = New BitmapImage(New Uri(usuario.ImagenAvatar))
-            }
-
-            Dim circulo As New Ellipse With {
-                .Fill = imagenAvatar,
-                .Height = 48,
-                .Width = 48
-            }
-
-            Dim sp1 As New StackPanel With {
-                .Orientation = Orientation.Horizontal,
-                .VerticalAlignment = VerticalAlignment.Center,
-                .Tag = New pepeizq.Twitter.Objetos.UsuarioAmpliado(cosas.MegaUsuario, usuario, Nothing)
-            }
-
-            sp1.Children.Add(circulo)
-
-            Dim sp2 As New StackPanel With {
-                .Orientation = Orientation.Vertical,
-                .Margin = New Thickness(10, 0, 0, 0)
-            }
-
-            Dim tbNombre As New TextBlock With {
-                .Text = usuario.Nombre,
-                .TextWrapping = TextWrapping.Wrap
-            }
-
-            sp2.Children.Add(tbNombre)
-
-            Dim tbScreenNombre As New TextBlock With {
-                .Text = "@" + usuario.ScreenNombre,
-                .FontSize = 13
-            }
-
-            sp2.Children.Add(tbScreenNombre)
-
-            sp1.Children.Add(sp2)
-
-            Dim botonUsuario As New ListViewItem With {
-                .Content = sp1,
-                .Background = New SolidColorBrush(Colors.Transparent),
-                .BorderBrush = New SolidColorBrush(Colors.Transparent),
-                .BorderThickness = New Thickness(0, 0, 0, 0),
-                .Padding = New Thickness(5, 5, 5, 5),
-                .Margin = New Thickness(10, 10, 10, 10),
-                .HorizontalAlignment = HorizontalAlignment.Stretch,
-                .HorizontalContentAlignment = HorizontalAlignment.Left
-            }
-
-            AddHandler botonUsuario.PointerPressed, AddressOf UsuarioPulsaUsuario
-            AddHandler botonUsuario.PointerEntered, AddressOf UsuarioEntraBoton
-            AddHandler botonUsuario.PointerExited, AddressOf UsuarioSaleBoton
-
-            lv.Items.Add(botonUsuario)
-        Next
 
     End Sub
 
