@@ -292,7 +292,7 @@ Namespace pepeizq.Twitter.Xaml
                 Dim estado As Boolean = False
 
                 estado = Await TwitterPeticiones.RetwittearTweet(estado, cosas.MegaUsuario, cosas.Tweet.ID)
-                Notificaciones.Toast.Enseñar(estado)
+
                 If estado = True Then
                     Dim color As Color = Nothing
 
