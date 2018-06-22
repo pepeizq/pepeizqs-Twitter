@@ -111,6 +111,7 @@
     <Compile Include="App.xaml.vb">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Clases\Objetos\EnviarTweetImagen.vb" />
     <Compile Include="Clases\UsuarioBloqueos.vb" />
     <Compile Include="Clases\MegaUsuario.vb" />
     <Compile Include="Clases\Objetos\BusquedaUsuario.vb" />

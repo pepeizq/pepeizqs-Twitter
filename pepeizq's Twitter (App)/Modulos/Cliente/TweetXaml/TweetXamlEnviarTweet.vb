@@ -165,18 +165,21 @@ Namespace pepeizq.Twitter.Xaml
             Dim colGridInferior3 As New ColumnDefinition
             Dim colGridInferior4 As New ColumnDefinition
             Dim colGridInferior5 As New ColumnDefinition
+            Dim colGridInferior6 As New ColumnDefinition
 
-            colGridInferior1.Width = New GridLength(1, GridUnitType.Star)
-            colGridInferior2.Width = New GridLength(1, GridUnitType.Auto)
+            colGridInferior1.Width = New GridLength(1, GridUnitType.Auto)
+            colGridInferior2.Width = New GridLength(1, GridUnitType.Star)
             colGridInferior3.Width = New GridLength(1, GridUnitType.Auto)
             colGridInferior4.Width = New GridLength(1, GridUnitType.Auto)
             colGridInferior5.Width = New GridLength(1, GridUnitType.Auto)
+            colGridInferior6.Width = New GridLength(1, GridUnitType.Auto)
 
             gridInferior.ColumnDefinitions.Add(colGridInferior1)
             gridInferior.ColumnDefinitions.Add(colGridInferior2)
             gridInferior.ColumnDefinitions.Add(colGridInferior3)
             gridInferior.ColumnDefinitions.Add(colGridInferior4)
             gridInferior.ColumnDefinitions.Add(colGridInferior5)
+            gridInferior.ColumnDefinitions.Add(colGridInferior6)
 
             '---------------------------------
 
@@ -185,7 +188,6 @@ Namespace pepeizq.Twitter.Xaml
             botonEnviarTweet.Padding = New Thickness(10, 10, 10, 10)
             botonEnviarTweet.Background = New SolidColorBrush(colorBoton)
             botonEnviarTweet.IsEnabled = False
-            botonEnviarTweet.HorizontalAlignment = HorizontalAlignment.Left
 
             Dim spBoton As New StackPanel With {
                 .Orientation = Orientation.Horizontal
@@ -216,8 +218,21 @@ Namespace pepeizq.Twitter.Xaml
 
             '---------------------------------
 
+            Dim prEnviando As New ProgressRing
+            prEnviando.SetValue(Grid.ColumnProperty, 1)
+            prEnviando.Width = 42
+            prEnviando.Height = 42
+            prEnviando.Margin = New Thickness(10, 0, 0, 0)
+            prEnviando.Foreground = New SolidColorBrush(color)
+            prEnviando.HorizontalAlignment = HorizontalAlignment.Left
+            prEnviando.Visibility = Visibility.Collapsed
+
+            gridInferior.Children.Add(prEnviando)
+
+            '---------------------------------
+
             Dim prContadorCaracteres As New RadialProgressBar
-            prContadorCaracteres.SetValue(Grid.ColumnProperty, 1)
+            prContadorCaracteres.SetValue(Grid.ColumnProperty, 2)
             prContadorCaracteres.Maximum = 280
             prContadorCaracteres.VerticalAlignment = VerticalAlignment.Center
             prContadorCaracteres.Height = 44
@@ -226,7 +241,7 @@ Namespace pepeizq.Twitter.Xaml
             gridInferior.Children.Add(prContadorCaracteres)
 
             Dim tbContadorCaracteres As New TextBlock
-            tbContadorCaracteres.SetValue(Grid.ColumnProperty, 1)
+            tbContadorCaracteres.SetValue(Grid.ColumnProperty, 2)
             tbContadorCaracteres.VerticalAlignment = VerticalAlignment.Center
             tbContadorCaracteres.HorizontalAlignment = HorizontalAlignment.Center
 
@@ -237,7 +252,7 @@ Namespace pepeizq.Twitter.Xaml
             '---------------------------------
 
             Dim botonEmojis As New Button
-            botonEmojis.SetValue(Grid.ColumnProperty, 2)
+            botonEmojis.SetValue(Grid.ColumnProperty, 3)
             botonEmojis.Padding = New Thickness(10, 10, 10, 10)
             botonEmojis.VerticalAlignment = VerticalAlignment.Center
             botonEmojis.Margin = New Thickness(15, 0, 0, 0)
@@ -287,7 +302,7 @@ Namespace pepeizq.Twitter.Xaml
             '---------------------------------
 
             Dim botonImagenes As New Button
-            botonImagenes.SetValue(Grid.ColumnProperty, 3)
+            botonImagenes.SetValue(Grid.ColumnProperty, 4)
             botonImagenes.Padding = New Thickness(10, 10, 10, 10)
             botonImagenes.VerticalAlignment = VerticalAlignment.Center
             botonImagenes.Margin = New Thickness(15, 0, 0, 0)
@@ -305,8 +320,10 @@ Namespace pepeizq.Twitter.Xaml
 
             gridInferior.Children.Add(botonImagenes)
 
+            '---------------------------------
+
             Dim spImagenes As New StackPanel
-            spImagenes.SetValue(Grid.ColumnProperty, 4)
+            spImagenes.SetValue(Grid.ColumnProperty, 5)
             spImagenes.Orientation = Orientation.Horizontal
             spImagenes.Visibility = Visibility.Collapsed
             spImagenes.VerticalAlignment = VerticalAlignment.Center
@@ -316,7 +333,9 @@ Namespace pepeizq.Twitter.Xaml
 
             gridInferior.Children.Add(spImagenes)
 
-            botonEnviarTweet.Tag = New Objetos.EnviarTweetBoton(tbMensaje, megaUsuario, tweet, listaMenciones, botonImagenes, spImagenes)
+            '---------------------------------
+
+            botonEnviarTweet.Tag = New Objetos.EnviarTweetBoton(tbMensaje, megaUsuario, tweet, listaMenciones, prEnviando, botonImagenes, spImagenes)
             gridTweetEscribir.Children.Add(gridInferior)
 
             Return gridTweetEscribir
@@ -357,7 +376,10 @@ Namespace pepeizq.Twitter.Xaml
         Private Async Sub BotonEnviarTweetClick(sender As Object, e As RoutedEventArgs)
 
             Dim boton As Button = sender
+            boton.IsEnabled = False
             Dim cosas As Objetos.EnviarTweetBoton = boton.Tag
+            cosas.PrEnviando.IsActive = True
+            cosas.PrEnviando.Visibility = Visibility.Visible
 
             Dim mensaje As String = Nothing
 
@@ -385,8 +407,8 @@ Namespace pepeizq.Twitter.Xaml
 
             If cosas.SpImagenes.Children.Count > 0 Then
                 For Each botonImagen As Button In cosas.SpImagenes.Children
-                    Dim ficheroImagen As StorageFile = botonImagen.Tag
-                    Dim stream As FileRandomAccessStream = Await ficheroImagen.OpenAsync(FileAccessMode.Read)
+                    Dim cosas2 As Objetos.EnviarTweetImagen = botonImagen.Tag
+                    Dim stream As FileRandomAccessStream = Await cosas2.FicheroImagen.OpenAsync(FileAccessMode.Read)
 
                     imagenes.Add(stream)
                 Next
@@ -405,6 +427,15 @@ Namespace pepeizq.Twitter.Xaml
 
                 Notificaciones.Toast.Enseñar(recursos.GetString("TweetSent"))
             End If
+
+            If cosas.CajaTexto.Text.Length > 0 Then
+                boton.IsEnabled = True
+            Else
+                boton.IsEnabled = False
+            End If
+
+            cosas.PrEnviando.IsActive = False
+            cosas.PrEnviando.Visibility = Visibility.Collapsed
 
         End Sub
 
@@ -483,8 +514,8 @@ Namespace pepeizq.Twitter.Xaml
                         .BorderThickness = New Thickness(0, 0, 0, 0)
                     }
 
-                    botonImagen.Tag = ficheroImagen
-
+                    botonImagen.Tag = New Objetos.EnviarTweetImagen(sp, ficheroImagen)
+                    AddHandler botonImagen.Click, AddressOf BotonQuitarImagenClick
                     AddHandler botonImagen.PointerEntered, AddressOf UsuarioEntraBoton
                     AddHandler botonImagen.PointerExited, AddressOf UsuarioSaleBoton
 
@@ -507,6 +538,14 @@ Namespace pepeizq.Twitter.Xaml
 
                 End Try
             End If
+
+        End Sub
+
+        Private Sub BotonQuitarImagenClick(sender As Object, e As RoutedEventArgs)
+
+            Dim boton As Button = sender
+            Dim cosas As Objetos.EnviarTweetImagen = boton.Tag
+            cosas.SpImagenes.Children.Remove(boton)
 
         End Sub
 
