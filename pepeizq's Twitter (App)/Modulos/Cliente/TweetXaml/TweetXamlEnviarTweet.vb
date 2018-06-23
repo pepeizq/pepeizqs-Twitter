@@ -130,11 +130,23 @@ Namespace pepeizq.Twitter.Xaml
 
             '---------------------------------
 
+            Dim gridCentro As New Grid
+            gridCentro.SetValue(Grid.RowProperty, 1)
+
+            Dim colGridCentro1 As New ColumnDefinition
+            Dim colGridCentro2 As New ColumnDefinition
+
+            colGridCentro1.Width = New GridLength(1, GridUnitType.Auto)
+            colGridCentro2.Width = New GridLength(1, GridUnitType.Auto)
+
+            gridCentro.ColumnDefinitions.Add(colGridCentro1)
+            gridCentro.ColumnDefinitions.Add(colGridCentro2)
+
             Dim bordeTbMensaje As New Border With {
                 .BorderThickness = New Thickness(1, 1, 1, 1),
                 .BorderBrush = New SolidColorBrush(color),
                 .Height = 110,
-                .Width = 600,
+                .Width = 500,
                 .HorizontalAlignment = HorizontalAlignment.Left,
                 .Margin = New Thickness(0, 10, 0, 10)
             }
@@ -148,38 +160,80 @@ Namespace pepeizq.Twitter.Xaml
 
             AddHandler tbMensaje.TextChanged, AddressOf TbTweetEscribirTextChanged
 
-            bordeTbMensaje.SetValue(Grid.RowProperty, 1)
+            bordeTbMensaje.SetValue(Grid.ColumnProperty, 0)
             bordeTbMensaje.Child = tbMensaje
 
-            gridTweetEscribir.Children.Add(bordeTbMensaje)
+            gridCentro.Children.Add(bordeTbMensaje)
+
+            '---------------------------------
+
+            Dim spBotonesMedia As New StackPanel
+            spBotonesMedia.SetValue(Grid.ColumnProperty, 1)
+            spBotonesMedia.Orientation = Orientation.Vertical
+            spBotonesMedia.Margin = New Thickness(15, 10, 0, 10)
+
+            Dim spBotonImagen As New StackPanel With {
+                .Orientation = Orientation.Horizontal
+            }
+
+            Dim botonImagenes As New Button
+            botonImagenes.SetValue(Grid.ColumnProperty, 4)
+            botonImagenes.Padding = New Thickness(10, 10, 10, 10)
+            botonImagenes.VerticalAlignment = VerticalAlignment.Center
+            botonImagenes.Background = New SolidColorBrush(colorBoton)
+            AddHandler botonImagenes.Click, AddressOf BotonImagenesClick
+            AddHandler botonImagenes.PointerEntered, AddressOf UsuarioEntraBoton
+            AddHandler botonImagenes.PointerExited, AddressOf UsuarioSaleBoton
+
+            Dim iconoImagenes As New FontAwesome.UWP.FontAwesome With {
+                .Foreground = New SolidColorBrush(Colors.White),
+                .Icon = FontAwesomeIcon.FileImageOutline
+            }
+
+            botonImagenes.Content = iconoImagenes
+
+            spBotonImagen.Children.Add(botonImagenes)
+
+            Dim spImagenes As New StackPanel
+            spImagenes.SetValue(Grid.ColumnProperty, 5)
+            spImagenes.Orientation = Orientation.Horizontal
+            spImagenes.Visibility = Visibility.Collapsed
+            spImagenes.VerticalAlignment = VerticalAlignment.Center
+            spImagenes.MinHeight = 0
+
+            botonImagenes.Tag = spImagenes
+
+            spBotonImagen.Children.Add(spImagenes)
+
+            spBotonesMedia.Children.Add(spBotonImagen)
+
+            '---------------------------------
+
+            gridCentro.Children.Add(spBotonesMedia)
+
+            gridTweetEscribir.Children.Add(gridCentro)
 
             '---------------------------------
 
             Dim gridInferior As New Grid
             gridInferior.SetValue(Grid.RowProperty, 2)
             gridInferior.HorizontalAlignment = HorizontalAlignment.Left
-            gridInferior.Width = 600
+            gridInferior.Width = 500
 
             Dim colGridInferior1 As New ColumnDefinition
             Dim colGridInferior2 As New ColumnDefinition
             Dim colGridInferior3 As New ColumnDefinition
             Dim colGridInferior4 As New ColumnDefinition
-            Dim colGridInferior5 As New ColumnDefinition
-            Dim colGridInferior6 As New ColumnDefinition
 
             colGridInferior1.Width = New GridLength(1, GridUnitType.Auto)
             colGridInferior2.Width = New GridLength(1, GridUnitType.Star)
             colGridInferior3.Width = New GridLength(1, GridUnitType.Auto)
             colGridInferior4.Width = New GridLength(1, GridUnitType.Auto)
-            colGridInferior5.Width = New GridLength(1, GridUnitType.Auto)
-            colGridInferior6.Width = New GridLength(1, GridUnitType.Auto)
 
             gridInferior.ColumnDefinitions.Add(colGridInferior1)
             gridInferior.ColumnDefinitions.Add(colGridInferior2)
             gridInferior.ColumnDefinitions.Add(colGridInferior3)
             gridInferior.ColumnDefinitions.Add(colGridInferior4)
-            gridInferior.ColumnDefinitions.Add(colGridInferior5)
-            gridInferior.ColumnDefinitions.Add(colGridInferior6)
 
             '---------------------------------
 
@@ -298,40 +352,6 @@ Namespace pepeizq.Twitter.Xaml
             botonEmojis.Tag = popupEmojis
 
             gridInferior.Children.Add(popupEmojis)
-
-            '---------------------------------
-
-            Dim botonImagenes As New Button
-            botonImagenes.SetValue(Grid.ColumnProperty, 4)
-            botonImagenes.Padding = New Thickness(10, 10, 10, 10)
-            botonImagenes.VerticalAlignment = VerticalAlignment.Center
-            botonImagenes.Margin = New Thickness(15, 0, 0, 0)
-            botonImagenes.Background = New SolidColorBrush(colorBoton)
-            AddHandler botonImagenes.Click, AddressOf BotonImagenesClick
-            AddHandler botonImagenes.PointerEntered, AddressOf UsuarioEntraBoton
-            AddHandler botonImagenes.PointerExited, AddressOf UsuarioSaleBoton
-
-            Dim iconoImagenes As New FontAwesome.UWP.FontAwesome With {
-                .Foreground = New SolidColorBrush(Colors.White),
-                .Icon = FontAwesomeIcon.FileImageOutline
-            }
-
-            botonImagenes.Content = iconoImagenes
-
-            gridInferior.Children.Add(botonImagenes)
-
-            '---------------------------------
-
-            Dim spImagenes As New StackPanel
-            spImagenes.SetValue(Grid.ColumnProperty, 5)
-            spImagenes.Orientation = Orientation.Horizontal
-            spImagenes.Visibility = Visibility.Collapsed
-            spImagenes.VerticalAlignment = VerticalAlignment.Center
-            spImagenes.MinHeight = 0
-
-            botonImagenes.Tag = spImagenes
-
-            gridInferior.Children.Add(spImagenes)
 
             '---------------------------------
 
