@@ -26,19 +26,8 @@ Module FichaUsuarioXaml
         Dim gridTweetAmpliado As Grid = pagina.FindName("gridTweetAmpliado")
         gridTweetAmpliado.Visibility = Visibility.Collapsed
 
-        Dim provider As TwitterDataProvider = cosas.MegaUsuario.Servicio.Provider
-        Dim usuario As TwitterUsuario = Nothing
-
-        If Not cosas.Usuario Is Nothing Then
-            usuario = cosas.Usuario
-        Else
-            Dim enlaceString As String = "https://api.twitter.com/1.1/users/show.json?screen_name=" + cosas.ScreenNombre
-
-            Dim enlace As New Uri(enlaceString)
-            Dim request As New TwitterOAuthRequest
-            Dim resultado As String = Await request.EjecutarGetAsync(enlace, cosas.MegaUsuario.Servicio.twitterDataProvider._tokens)
-
-            cosas.Usuario = JsonConvert.DeserializeObject(Of TwitterUsuario)(resultado)
+        If cosas.Usuario Is Nothing Then
+            cosas.Usuario = Await TwitterPeticiones.CogerUsuario(cosas.Usuario, cosas.MegaUsuario, cosas.ScreenNombre)
         End If
 
         Dim gridTitulo As Grid = pagina.FindName("gridTitulo")
@@ -47,7 +36,7 @@ Module FichaUsuarioXaml
         Dim color As Color = Nothing
 
         Try
-            color = ("#" + usuario.ColorEnlace).ToColor
+            color = ("#" + cosas.Usuario.ColorEnlace).ToColor
         Catch ex As Exception
             color = App.Current.Resources("ColorSecundario")
         End Try
@@ -98,8 +87,8 @@ Module FichaUsuarioXaml
         prTweets.Foreground = New SolidColorBrush(color)
 
         Dim svTweets As ScrollViewer = pagina.FindName("svTweetsUsuario")
-        svTweets.Tag = New pepeizq.Twitter.Objetos.ScrollViewerTweets(cosas.MegaUsuario, Nothing, prTweets, 2, usuario.ScreenNombre, color)
-        svTweets.Foreground = New SolidColorBrush(("#" + usuario.ColorTexto).ToColor)
+        svTweets.Tag = New pepeizq.Twitter.Objetos.ScrollViewerTweets(cosas.MegaUsuario, Nothing, prTweets, 2, cosas.Usuario.ScreenNombre, color)
+        svTweets.Foreground = New SolidColorBrush(("#" + cosas.Usuario.ColorTexto).ToColor)
         AddHandler svTweets.ViewChanging, AddressOf SvTweets_ViewChanging
 
         '------------------------------------
@@ -108,33 +97,33 @@ Module FichaUsuarioXaml
 
         Dim imagenAvatar As New ImageBrush With {
             .Stretch = Stretch.Uniform,
-            .ImageSource = New BitmapImage(New Uri(usuario.ImagenAvatar.Replace("_normal.png", "_bigger.png")))
+            .ImageSource = New BitmapImage(New Uri(cosas.Usuario.ImagenAvatar.Replace("_normal.png", "_bigger.png")))
         }
 
         circuloAvatar.Fill = imagenAvatar
 
         Dim tbNombre As TextBlock = pagina.FindName("tbNombreUsuario")
-        tbNombre.Text = usuario.Nombre
+        tbNombre.Text = cosas.Usuario.Nombre
 
         Dim imagenVerificado As ImageEx = pagina.FindName("imagenUsuarioVerificado")
 
-        If usuario.Verificado = True Then
+        If cosas.Usuario.Verificado = True Then
             imagenVerificado.Visibility = Visibility.Visible
         Else
             imagenVerificado.Visibility = Visibility.Collapsed
         End If
 
         Dim tbScreenNombre As TextBlock = pagina.FindName("tbScreenNombreUsuario")
-        tbScreenNombre.Text = "@" + usuario.ScreenNombre
+        tbScreenNombre.Text = "@" + cosas.Usuario.ScreenNombre
 
         Dim botonEnlace As Button = pagina.FindName("botonEnlaceUsuario")
 
-        If Not usuario.Entidades.Enlace Is Nothing Then
+        If Not cosas.Usuario.Entidades.Enlace Is Nothing Then
             Try
-                botonEnlace.Tag = New Uri(usuario.Entidades.Enlace.Enlaces(0).Expandida)
+                botonEnlace.Tag = New Uri(cosas.Usuario.Entidades.Enlace.Enlaces(0).Expandida)
 
                 Dim tbEnlace As New TextBlock With {
-                    .Text = usuario.Entidades.Enlace.Enlaces(0).Mostrar,
+                    .Text = cosas.Usuario.Entidades.Enlace.Enlaces(0).Mostrar,
                     .Foreground = New SolidColorBrush(Colors.White),
                     .FontWeight = FontWeights.SemiBold
                 }
@@ -151,29 +140,29 @@ Module FichaUsuarioXaml
         End If
 
         Dim tbNumTweets As TextBlock = pagina.FindName("tbNumTweetsUsuario")
-        tbNumTweets.Text = String.Format("{0:n0}", Integer.Parse(usuario.NumTweets))
+        tbNumTweets.Text = String.Format("{0:n0}", Integer.Parse(cosas.Usuario.NumTweets))
 
         Dim botonNumTweets As Button = pagina.FindName("botonNumTweetsUsuario")
-        botonNumTweets.Tag = New Uri("https://twitter.com/" + usuario.ScreenNombre)
+        botonNumTweets.Tag = New Uri("https://twitter.com/" + cosas.Usuario.ScreenNombre)
 
         Dim tbNumSeguidores As TextBlock = pagina.FindName("tbNumSeguidoresUsuario")
-        tbNumSeguidores.Text = String.Format("{0:n0}", Integer.Parse(usuario.Followers))
+        tbNumSeguidores.Text = String.Format("{0:n0}", Integer.Parse(cosas.Usuario.Followers))
 
         Dim botonSeguidores As Button = pagina.FindName("botonSeguidoresUsuario")
-        botonSeguidores.Tag = New Uri("https://twitter.com/" + usuario.ScreenNombre + "/followers")
+        botonSeguidores.Tag = New Uri("https://twitter.com/" + cosas.Usuario.ScreenNombre + "/followers")
 
         Dim tbNumFavoritos As TextBlock = pagina.FindName("tbNumFavoritosUsuario")
-        tbNumFavoritos.Text = String.Format("{0:n0}", Integer.Parse(usuario.Favoritos))
+        tbNumFavoritos.Text = String.Format("{0:n0}", Integer.Parse(cosas.Usuario.Favoritos))
 
         Dim botonFavoritos As Button = pagina.FindName("botonFavoritosUsuario")
-        botonFavoritos.Tag = New Uri("https://twitter.com/" + usuario.ScreenNombre + "/likes")
+        botonFavoritos.Tag = New Uri("https://twitter.com/" + cosas.Usuario.ScreenNombre + "/likes")
 
         '------------------------------------
 
         Dim botonSeguir As Button = pagina.FindName("botonSeguirUsuario")
         Dim tbSeguir As TextBlock = pagina.FindName("tbSeguirUsuario")
 
-        If usuario.Siguiendo = True Then
+        If cosas.Usuario.Siguiendo = True Then
             tbSeguir.Text = recursos.GetString("Following")
         Else
             tbSeguir.Text = recursos.GetString("Follow")
@@ -231,11 +220,13 @@ Module FichaUsuarioXaml
 
         Dim boolMuteado As Boolean = False
 
-        For Each muteo In cosas.MegaUsuario.UsuariosMuteados
-            If muteo = cosas.Usuario.ID Then
-                boolMuteado = True
-            End If
-        Next
+        If Not cosas.MegaUsuario.UsuariosMuteados Is Nothing Then
+            For Each muteo In cosas.MegaUsuario.UsuariosMuteados
+                If muteo = cosas.Usuario.ID Then
+                    boolMuteado = True
+                End If
+            Next
+        End If
 
         If boolMuteado = True Then
             Dim toolTip As New ToolTip With {
@@ -283,7 +274,7 @@ Module FichaUsuarioXaml
 
             Dim listaTweets As New List(Of Tweet)
 
-            listaTweets = Await TwitterPeticiones.UserTimeline(listaTweets, cosas.MegaUsuario, usuario.ScreenNombre, Nothing)
+            listaTweets = Await TwitterPeticiones.UserTimeline(listaTweets, cosas.MegaUsuario, cosas.Usuario.ScreenNombre, Nothing)
 
             If listaTweets.Count > 0 Then
                 For Each tweet In listaTweets

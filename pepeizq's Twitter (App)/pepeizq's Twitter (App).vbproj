@@ -111,12 +111,10 @@
     <Compile Include="App.xaml.vb">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Clases\Objetos\EnviarTweetImagen.vb" />
     <Compile Include="Clases\UsuarioBloqueos.vb" />
     <Compile Include="Clases\MegaUsuario.vb" />
     <Compile Include="Clases\Objetos\BusquedaUsuario.vb" />
-    <Compile Include="Clases\Objetos\EnviarTweetBoton.vb" />
-    <Compile Include="Clases\Objetos\EnviarTweetTextoCambia.vb" />
+    <Compile Include="Clases\Objetos\EnviarTweet.vb" />
     <Compile Include="Clases\Objetos\MediaDatos.vb" />
     <Compile Include="Clases\Objetos\SeguirUsuarioBoton.vb" />
     <Compile Include="Clases\Objetos\TweetAmpliado.vb" />

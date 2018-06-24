@@ -47,15 +47,12 @@ Namespace pepeizq.Twitter.Xaml
 
             Dim rowTweetEscribir1 As New RowDefinition
             Dim rowTweetEscribir2 As New RowDefinition
-            Dim rowTweetEscribir3 As New RowDefinition
 
             rowTweetEscribir1.Height = New GridLength(1, GridUnitType.Auto)
             rowTweetEscribir2.Height = New GridLength(1, GridUnitType.Auto)
-            rowTweetEscribir3.Height = New GridLength(1, GridUnitType.Auto)
 
             gridTweetEscribir.RowDefinitions.Add(rowTweetEscribir1)
             gridTweetEscribir.RowDefinitions.Add(rowTweetEscribir2)
-            gridTweetEscribir.RowDefinitions.Add(rowTweetEscribir3)
 
             '---------------------------------
 
@@ -135,12 +132,27 @@ Namespace pepeizq.Twitter.Xaml
 
             Dim colGridCentro1 As New ColumnDefinition
             Dim colGridCentro2 As New ColumnDefinition
+            Dim colGridCentro3 As New ColumnDefinition
 
             colGridCentro1.Width = New GridLength(1, GridUnitType.Auto)
             colGridCentro2.Width = New GridLength(1, GridUnitType.Auto)
+            colGridCentro3.Width = New GridLength(1, GridUnitType.Auto)
 
             gridCentro.ColumnDefinitions.Add(colGridCentro1)
             gridCentro.ColumnDefinitions.Add(colGridCentro2)
+            gridCentro.ColumnDefinitions.Add(colGridCentro3)
+
+            Dim gridEscribir As New Grid
+            gridEscribir.SetValue(Grid.ColumnProperty, 0)
+
+            Dim rowGridEscribir1 As New RowDefinition
+            Dim rowGridEscribir2 As New RowDefinition
+
+            rowGridEscribir1.Height = New GridLength(1, GridUnitType.Auto)
+            rowGridEscribir2.Height = New GridLength(1, GridUnitType.Auto)
+
+            gridEscribir.RowDefinitions.Add(rowGridEscribir1)
+            gridEscribir.RowDefinitions.Add(rowGridEscribir2)
 
             Dim bordeTbMensaje As New Border With {
                 .BorderThickness = New Thickness(1, 1, 1, 1),
@@ -148,7 +160,7 @@ Namespace pepeizq.Twitter.Xaml
                 .Height = 110,
                 .Width = 500,
                 .HorizontalAlignment = HorizontalAlignment.Left,
-                .Margin = New Thickness(0, 10, 0, 10)
+                .Margin = New Thickness(0, 10, 0, 15)
             }
 
             Dim tbMensaje As New TextBox With {
@@ -160,80 +172,27 @@ Namespace pepeizq.Twitter.Xaml
 
             AddHandler tbMensaje.TextChanged, AddressOf TbTweetEscribirTextChanged
 
-            bordeTbMensaje.SetValue(Grid.ColumnProperty, 0)
+            bordeTbMensaje.SetValue(Grid.RowProperty, 0)
             bordeTbMensaje.Child = tbMensaje
 
-            gridCentro.Children.Add(bordeTbMensaje)
+            gridEscribir.Children.Add(bordeTbMensaje)
 
-            '---------------------------------
-
-            Dim spBotonesMedia As New StackPanel
-            spBotonesMedia.SetValue(Grid.ColumnProperty, 1)
-            spBotonesMedia.Orientation = Orientation.Vertical
-            spBotonesMedia.Margin = New Thickness(15, 10, 0, 10)
-
-            Dim spBotonImagen As New StackPanel With {
-                .Orientation = Orientation.Horizontal
-            }
-
-            Dim botonImagenes As New Button
-            botonImagenes.SetValue(Grid.ColumnProperty, 4)
-            botonImagenes.Padding = New Thickness(10, 10, 10, 10)
-            botonImagenes.VerticalAlignment = VerticalAlignment.Center
-            botonImagenes.Background = New SolidColorBrush(colorBoton)
-            AddHandler botonImagenes.Click, AddressOf BotonImagenesClick
-            AddHandler botonImagenes.PointerEntered, AddressOf UsuarioEntraBoton
-            AddHandler botonImagenes.PointerExited, AddressOf UsuarioSaleBoton
-
-            Dim iconoImagenes As New FontAwesome.UWP.FontAwesome With {
-                .Foreground = New SolidColorBrush(Colors.White),
-                .Icon = FontAwesomeIcon.FileImageOutline
-            }
-
-            botonImagenes.Content = iconoImagenes
-
-            spBotonImagen.Children.Add(botonImagenes)
-
-            Dim spImagenes As New StackPanel
-            spImagenes.SetValue(Grid.ColumnProperty, 5)
-            spImagenes.Orientation = Orientation.Horizontal
-            spImagenes.Visibility = Visibility.Collapsed
-            spImagenes.VerticalAlignment = VerticalAlignment.Center
-            spImagenes.MinHeight = 0
-
-            botonImagenes.Tag = spImagenes
-
-            spBotonImagen.Children.Add(spImagenes)
-
-            spBotonesMedia.Children.Add(spBotonImagen)
-
-            '---------------------------------
-
-            gridCentro.Children.Add(spBotonesMedia)
-
-            gridTweetEscribir.Children.Add(gridCentro)
-
-            '---------------------------------
-
-            Dim gridInferior As New Grid
-            gridInferior.SetValue(Grid.RowProperty, 2)
-            gridInferior.HorizontalAlignment = HorizontalAlignment.Left
-            gridInferior.Width = 500
+            Dim gridEscribirInferior As New Grid
+            gridEscribirInferior.SetValue(Grid.RowProperty, 1)
+            gridEscribirInferior.HorizontalAlignment = HorizontalAlignment.Left
+            gridEscribirInferior.Margin = New Thickness(0, 0, 0, 5)
 
             Dim colGridInferior1 As New ColumnDefinition
             Dim colGridInferior2 As New ColumnDefinition
             Dim colGridInferior3 As New ColumnDefinition
-            Dim colGridInferior4 As New ColumnDefinition
 
             colGridInferior1.Width = New GridLength(1, GridUnitType.Auto)
-            colGridInferior2.Width = New GridLength(1, GridUnitType.Star)
+            colGridInferior2.Width = New GridLength(1, GridUnitType.Auto)
             colGridInferior3.Width = New GridLength(1, GridUnitType.Auto)
-            colGridInferior4.Width = New GridLength(1, GridUnitType.Auto)
 
-            gridInferior.ColumnDefinitions.Add(colGridInferior1)
-            gridInferior.ColumnDefinitions.Add(colGridInferior2)
-            gridInferior.ColumnDefinitions.Add(colGridInferior3)
-            gridInferior.ColumnDefinitions.Add(colGridInferior4)
+            gridEscribirInferior.ColumnDefinitions.Add(colGridInferior1)
+            gridEscribirInferior.ColumnDefinitions.Add(colGridInferior2)
+            gridEscribirInferior.ColumnDefinitions.Add(colGridInferior3)
 
             '---------------------------------
 
@@ -241,75 +200,83 @@ Namespace pepeizq.Twitter.Xaml
             botonEnviarTweet.SetValue(Grid.ColumnProperty, 0)
             botonEnviarTweet.Padding = New Thickness(10, 10, 10, 10)
             botonEnviarTweet.Background = New SolidColorBrush(colorBoton)
+            botonEnviarTweet.Margin = New Thickness(0, 0, 15, 0)
             botonEnviarTweet.IsEnabled = False
 
-            Dim spBoton As New StackPanel With {
+            Dim spBotonEnviar As New StackPanel With {
                 .Orientation = Orientation.Horizontal
             }
 
-            Dim simboloBoton As New FontAwesome.UWP.FontAwesome With {
+            Dim simboloBotonEnviar As New FontAwesome.UWP.FontAwesome With {
                 .Icon = FontAwesomeIcon.Send,
                 .Margin = New Thickness(0, 0, 10, 0),
                 .Foreground = New SolidColorBrush(Colors.White),
                 .VerticalAlignment = VerticalAlignment.Center
             }
 
-            spBoton.Children.Add(simboloBoton)
+            spBotonEnviar.Children.Add(simboloBotonEnviar)
 
-            Dim tbBoton As New TextBlock With {
+            Dim tbBotonEnviar As New TextBlock With {
                 .Foreground = New SolidColorBrush(Colors.White),
                 .Text = recursos.GetString("SendTweet")
             }
 
-            spBoton.Children.Add(tbBoton)
+            spBotonEnviar.Children.Add(tbBotonEnviar)
 
-            botonEnviarTweet.Content = spBoton
+            botonEnviarTweet.Content = spBotonEnviar
             AddHandler botonEnviarTweet.Click, AddressOf BotonEnviarTweetClick
             AddHandler botonEnviarTweet.PointerEntered, AddressOf UsuarioEntraBoton
             AddHandler botonEnviarTweet.PointerExited, AddressOf UsuarioSaleBoton
 
-            gridInferior.Children.Add(botonEnviarTweet)
-
-            '---------------------------------
-
-            Dim prEnviando As New ProgressRing
-            prEnviando.SetValue(Grid.ColumnProperty, 1)
-            prEnviando.Width = 42
-            prEnviando.Height = 42
-            prEnviando.Margin = New Thickness(10, 0, 0, 0)
-            prEnviando.Foreground = New SolidColorBrush(color)
-            prEnviando.HorizontalAlignment = HorizontalAlignment.Left
-            prEnviando.Visibility = Visibility.Collapsed
-
-            gridInferior.Children.Add(prEnviando)
+            gridEscribirInferior.Children.Add(botonEnviarTweet)
 
             '---------------------------------
 
             Dim prContadorCaracteres As New RadialProgressBar
-            prContadorCaracteres.SetValue(Grid.ColumnProperty, 2)
+            prContadorCaracteres.SetValue(Grid.ColumnProperty, 1)
             prContadorCaracteres.Maximum = 280
             prContadorCaracteres.VerticalAlignment = VerticalAlignment.Center
             prContadorCaracteres.Height = 44
             prContadorCaracteres.Width = 44
 
-            gridInferior.Children.Add(prContadorCaracteres)
+            gridEscribirInferior.Children.Add(prContadorCaracteres)
 
             Dim tbContadorCaracteres As New TextBlock
-            tbContadorCaracteres.SetValue(Grid.ColumnProperty, 2)
+            tbContadorCaracteres.SetValue(Grid.ColumnProperty, 1)
             tbContadorCaracteres.VerticalAlignment = VerticalAlignment.Center
             tbContadorCaracteres.HorizontalAlignment = HorizontalAlignment.Center
 
-            gridInferior.Children.Add(tbContadorCaracteres)
-
-            tbMensaje.Tag = New Objetos.EnviarTweetTextoCambia(botonEnviarTweet, tbContadorCaracteres, prContadorCaracteres)
+            gridEscribirInferior.Children.Add(tbContadorCaracteres)
 
             '---------------------------------
+
+            Dim prEnviando As New ProgressRing
+            prEnviando.SetValue(Grid.ColumnProperty, 2)
+            prEnviando.Width = 42
+            prEnviando.Height = 42
+            prEnviando.Margin = New Thickness(15, 0, 0, 0)
+            prEnviando.Foreground = New SolidColorBrush(color)
+            prEnviando.Visibility = Visibility.Collapsed
+
+            gridEscribirInferior.Children.Add(prEnviando)
+
+            tbMensaje.Tag = New Objetos.EnviarTweet.TextoCambia(botonEnviarTweet, tbContadorCaracteres, prContadorCaracteres)
+
+            gridEscribir.Children.Add(gridEscribirInferior)
+
+            gridCentro.Children.Add(gridEscribir)
+
+            '---------------------------------
+
+            Dim spBotones1 As New StackPanel
+            spBotones1.SetValue(Grid.ColumnProperty, 1)
+            spBotones1.Orientation = Orientation.Vertical
+            spBotones1.Margin = New Thickness(15, 10, 15, 10)
 
             Dim botonEmojis As New Button
             botonEmojis.SetValue(Grid.ColumnProperty, 3)
             botonEmojis.Padding = New Thickness(10, 10, 10, 10)
             botonEmojis.VerticalAlignment = VerticalAlignment.Center
-            botonEmojis.Margin = New Thickness(15, 0, 0, 0)
             botonEmojis.Background = New SolidColorBrush(colorBoton)
             AddHandler botonEmojis.Click, AddressOf BotonEmojisClick
             AddHandler botonEmojis.PointerEntered, AddressOf UsuarioEntraBoton
@@ -322,9 +289,7 @@ Namespace pepeizq.Twitter.Xaml
 
             botonEmojis.Content = iconoEmojis
 
-            gridInferior.Children.Add(botonEmojis)
-
-            '---------------------------------
+            spBotones1.Children.Add(botonEmojis)
 
             Dim popupEmojis As New Popup
             popupEmojis.SetValue(Grid.ColumnProperty, 0)
@@ -338,7 +303,7 @@ Namespace pepeizq.Twitter.Xaml
             }
 
             Dim gvEmojis As New GridView With {
-                .MaxWidth = 600,
+                .MaxWidth = 550,
                 .HorizontalContentAlignment = HorizontalAlignment.Center,
                 .IsItemClickEnabled = True,
                 .ItemContainerStyle = App.Current.Resources("GridViewEstilo1"),
@@ -351,12 +316,132 @@ Namespace pepeizq.Twitter.Xaml
             popupEmojis.Child = gridEmojis
             botonEmojis.Tag = popupEmojis
 
-            gridInferior.Children.Add(popupEmojis)
+            gridCentro.Children.Add(popupEmojis)
 
             '---------------------------------
 
-            botonEnviarTweet.Tag = New Objetos.EnviarTweetBoton(tbMensaje, megaUsuario, tweet, listaMenciones, prEnviando, botonImagenes, spImagenes)
-            gridTweetEscribir.Children.Add(gridInferior)
+            Dim spBotonGif As New StackPanel With {
+                .Orientation = Orientation.Vertical,
+                .Margin = New Thickness(0, 15, 0, 0)
+            }
+
+            Dim botonGif As New Button With {
+                .Padding = New Thickness(10, 10, 10, 10),
+                .VerticalAlignment = VerticalAlignment.Center,
+                .Background = New SolidColorBrush(colorBoton)
+            }
+            AddHandler botonGif.Click, AddressOf BotonGifClick
+            AddHandler botonGif.PointerEntered, AddressOf UsuarioEntraBoton
+            AddHandler botonGif.PointerExited, AddressOf UsuarioSaleBoton
+
+            Dim tbGif As New TextBlock With {
+                .Foreground = New SolidColorBrush(Colors.White),
+                .Text = "gif"
+            }
+
+            botonGif.Content = tbGif
+
+            spBotonGif.Children.Add(botonGif)
+
+            Dim spGif As New StackPanel With {
+                .Orientation = Orientation.Vertical,
+                .Visibility = Visibility.Collapsed,
+                .VerticalAlignment = VerticalAlignment.Center,
+                .MinHeight = 0
+            }
+
+            spBotonGif.Children.Add(spGif)
+
+            spBotones1.Children.Add(spBotonGif)
+
+            gridCentro.Children.Add(spBotones1)
+
+            '---------------------------------
+
+            Dim spBotones2 As New StackPanel
+            spBotones2.SetValue(Grid.ColumnProperty, 2)
+            spBotones2.Orientation = Orientation.Vertical
+            spBotones2.Margin = New Thickness(0, 10, 0, 10)
+
+            Dim spBotonImagen As New StackPanel With {
+                .Orientation = Orientation.Horizontal
+            }
+
+            Dim botonImagenes As New Button With {
+                .Padding = New Thickness(10, 10, 10, 10),
+                .VerticalAlignment = VerticalAlignment.Center,
+                .Background = New SolidColorBrush(colorBoton)
+            }
+            AddHandler botonImagenes.Click, AddressOf BotonImagenesClick
+            AddHandler botonImagenes.PointerEntered, AddressOf UsuarioEntraBoton
+            AddHandler botonImagenes.PointerExited, AddressOf UsuarioSaleBoton
+
+            Dim iconoImagenes As New FontAwesome.UWP.FontAwesome With {
+                .Foreground = New SolidColorBrush(Colors.White),
+                .Icon = FontAwesomeIcon.FileImageOutline
+            }
+
+            botonImagenes.Content = iconoImagenes
+
+            spBotonImagen.Children.Add(botonImagenes)
+
+            Dim spImagenes As New StackPanel With {
+                .Orientation = Orientation.Horizontal,
+                .Visibility = Visibility.Collapsed,
+                .VerticalAlignment = VerticalAlignment.Center,
+                .MinHeight = 0
+            }
+
+            spBotonImagen.Children.Add(spImagenes)
+
+            spBotones2.Children.Add(spBotonImagen)
+
+            Dim spBotonVideo As New StackPanel With {
+                .Orientation = Orientation.Vertical,
+                .Margin = New Thickness(0, 15, 0, 0),
+                .Visibility = Visibility.Collapsed
+            }
+
+            Dim botonVideo As New Button With {
+                .Padding = New Thickness(10, 10, 10, 10),
+                .VerticalAlignment = VerticalAlignment.Center,
+                .Background = New SolidColorBrush(colorBoton)
+            }
+            AddHandler botonVideo.Click, AddressOf BotonVideoClick
+            AddHandler botonVideo.PointerEntered, AddressOf UsuarioEntraBoton
+            AddHandler botonVideo.PointerExited, AddressOf UsuarioSaleBoton
+
+            Dim iconoVideo As New FontAwesome.UWP.FontAwesome With {
+                .Foreground = New SolidColorBrush(Colors.White),
+                .Icon = FontAwesomeIcon.FileMovieOutline
+            }
+
+            botonVideo.Content = iconoVideo
+
+            spBotonVideo.Children.Add(botonVideo)
+
+            Dim spVideo As New StackPanel With {
+                .Orientation = Orientation.Vertical,
+                .Visibility = Visibility.Collapsed,
+                .VerticalAlignment = VerticalAlignment.Center,
+                .MinHeight = 0
+            }
+
+            spBotonVideo.Children.Add(spVideo)
+
+            spBotones2.Children.Add(spBotonVideo)
+
+            gridCentro.Children.Add(spBotones2)
+
+            gridTweetEscribir.Children.Add(gridCentro)
+
+            '---------------------------------
+
+            botonEnviarTweet.Tag = New Objetos.EnviarTweet.Boton(tbMensaje, megaUsuario, tweet, listaMenciones, prEnviando, botonImagenes, botonGif, botonVideo, spImagenes, spGif, spVideo)
+
+            botonImagenes.Tag = New Objetos.EnviarTweet.Media(spImagenes, spGif, spVideo, Nothing, colorBoton, botonImagenes, botonGif, botonVideo)
+            botonGif.Tag = New Objetos.EnviarTweet.Media(spImagenes, spGif, spVideo, Nothing, colorBoton, botonImagenes, botonGif, botonVideo)
+            botonVideo.Tag = New Objetos.EnviarTweet.Media(spImagenes, spGif, spVideo, Nothing, colorBoton, botonImagenes, botonGif, botonVideo)
 
             Return gridTweetEscribir
 
@@ -365,7 +450,7 @@ Namespace pepeizq.Twitter.Xaml
         Private Sub TbTweetEscribirTextChanged(sender As Object, e As TextChangedEventArgs)
 
             Dim tb As TextBox = sender
-            Dim objeto As Objetos.EnviarTweetTextoCambia = tb.Tag
+            Dim objeto As Objetos.EnviarTweet.TextoCambia = tb.Tag
 
             Dim boton As Button = objeto.Boton
 
@@ -397,7 +482,8 @@ Namespace pepeizq.Twitter.Xaml
 
             Dim boton As Button = sender
             boton.IsEnabled = False
-            Dim cosas As Objetos.EnviarTweetBoton = boton.Tag
+
+            Dim cosas As Objetos.EnviarTweet.Boton = boton.Tag
             cosas.PrEnviando.IsActive = True
             cosas.PrEnviando.Visibility = Visibility.Visible
 
@@ -423,25 +509,49 @@ Namespace pepeizq.Twitter.Xaml
                 respuestaID = cosas.Tweet.ID
             End If
 
-            Dim imagenes As New List(Of IRandomAccessStream)
+            Dim media As New List(Of IRandomAccessStream)
 
             If cosas.SpImagenes.Children.Count > 0 Then
                 For Each botonImagen As Button In cosas.SpImagenes.Children
-                    Dim cosas2 As Objetos.EnviarTweetImagen = botonImagen.Tag
-                    Dim stream As FileRandomAccessStream = Await cosas2.FicheroImagen.OpenAsync(FileAccessMode.Read)
+                    Dim cosas2 As Objetos.EnviarTweet.Media = botonImagen.Tag
+                    Dim stream As FileRandomAccessStream = Await cosas2.Fichero.OpenAsync(FileAccessMode.Read)
 
-                    imagenes.Add(stream)
+                    media.Add(stream)
+                Next
+            End If
+
+            If cosas.SpGif.Children.Count > 0 Then
+                For Each botonGif As Button In cosas.SpGif.Children
+                    Dim cosas2 As Objetos.EnviarTweet.Media = botonGif.Tag
+                    Dim stream As FileRandomAccessStream = Await cosas2.Fichero.OpenAsync(FileAccessMode.Read)
+
+                    media.Add(stream)
+                Next
+            End If
+
+            If cosas.SpVideo.Children.Count > 0 Then
+                For Each botonVideo As Button In cosas.SpVideo.Children
+                    Dim cosas2 As Objetos.EnviarTweet.Media = botonVideo.Tag
+                    Dim stream As FileRandomAccessStream = Await cosas2.Fichero.OpenAsync(FileAccessMode.Read)
+
+                    media.Add(stream)
                 Next
             End If
 
             Dim estado As Boolean = False
 
-            estado = Await TwitterPeticiones.EnviarTweet(estado, cosas.MegaUsuario, mensaje, respuestaID, imagenes)
+            estado = Await TwitterPeticiones.EnviarTweet(estado, cosas.MegaUsuario, mensaje, respuestaID, media)
 
             If estado = True Then
                 cosas.CajaTexto.Text = String.Empty
+
                 cosas.BotonImagenes.IsEnabled = True
+                cosas.BotonGif.IsEnabled = True
+                cosas.BotonVideo.IsEnabled = True
+
                 cosas.SpImagenes.Children.Clear()
+                cosas.SpGif.Children.Clear()
+                cosas.SpVideo.Children.Clear()
 
                 Dim recursos As New Resources.ResourceLoader
 
@@ -484,6 +594,9 @@ Namespace pepeizq.Twitter.Xaml
                             .Padding = New Thickness(0, 0, 0, 0)
                         }
 
+                        AddHandler item.PointerEntered, AddressOf UsuarioEntraBoton
+                        AddHandler item.PointerExited, AddressOf UsuarioSaleBoton
+
                         gv.Items.Add(item)
 
                         i += 1
@@ -507,7 +620,7 @@ Namespace pepeizq.Twitter.Xaml
         Private Async Sub BotonImagenesClick(sender As Object, e As RoutedEventArgs)
 
             Dim boton As Button = sender
-            Dim sp As StackPanel = boton.Tag
+            Dim cosas As Objetos.EnviarTweet.Media = boton.Tag
 
             Dim picker As New FileOpenPicker With {
                 .SuggestedStartLocation = PickerLocationId.PicturesLibrary,
@@ -534,7 +647,8 @@ Namespace pepeizq.Twitter.Xaml
                         .BorderThickness = New Thickness(0, 0, 0, 0)
                     }
 
-                    botonImagen.Tag = New Objetos.EnviarTweetImagen(sp, ficheroImagen)
+                    cosas.Fichero = ficheroImagen
+                    botonImagen.Tag = cosas
                     AddHandler botonImagen.Click, AddressOf BotonQuitarImagenClick
                     AddHandler botonImagen.PointerEntered, AddressOf UsuarioEntraBoton
                     AddHandler botonImagen.PointerExited, AddressOf UsuarioSaleBoton
@@ -545,14 +659,17 @@ Namespace pepeizq.Twitter.Xaml
 
                     botonImagen.Content = imagenBoton
 
-                    sp.Children.Add(botonImagen)
+                    cosas.SpImagenes.Children.Add(botonImagen)
 
-                    If sp.Visibility = Visibility.Collapsed Then
-                        sp.Visibility = Visibility.Visible
+                    If cosas.SpImagenes.Visibility = Visibility.Collapsed Then
+                        cosas.SpImagenes.Visibility = Visibility.Visible
                     End If
 
-                    If sp.Children.Count = 4 Then
-                        boton.IsEnabled = False
+                    If cosas.SpImagenes.Children.Count = 4 Then
+                        cosas.BotonImagenes.IsEnabled = False
+                    ElseIf cosas.SpImagenes.Children.Count = 1 Then
+                        cosas.BotonGif.IsEnabled = False
+                        cosas.BotonVideo.IsEnabled = False
                     End If
                 Catch ex As Exception
 
@@ -564,8 +681,151 @@ Namespace pepeizq.Twitter.Xaml
         Private Sub BotonQuitarImagenClick(sender As Object, e As RoutedEventArgs)
 
             Dim boton As Button = sender
-            Dim cosas As Objetos.EnviarTweetImagen = boton.Tag
+            Dim cosas As Objetos.EnviarTweet.Media = boton.Tag
             cosas.SpImagenes.Children.Remove(boton)
+
+            If cosas.SpImagenes.Children.Count < 4 Then
+                cosas.BotonImagenes.IsEnabled = True
+            Else
+                cosas.BotonImagenes.IsEnabled = False
+            End If
+
+            If cosas.SpImagenes.Children.Count = 0 Then
+                cosas.BotonGif.IsEnabled = True
+                cosas.BotonVideo.IsEnabled = True
+            End If
+
+        End Sub
+
+        Private Async Sub BotonGifClick(sender As Object, e As RoutedEventArgs)
+
+            Dim boton As Button = sender
+            Dim cosas As Objetos.EnviarTweet.Media = boton.Tag
+
+            Dim picker As New FileOpenPicker With {
+                .SuggestedStartLocation = PickerLocationId.PicturesLibrary,
+                .ViewMode = PickerViewMode.Thumbnail
+            }
+
+            picker.FileTypeFilter.Add(".gif")
+
+            Dim ficheroGif As StorageFile = Await picker.PickSingleFileAsync
+
+            If Not ficheroGif Is Nothing Then
+                Dim botonGif As New Button With {
+                    .Width = 42,
+                    .Height = 42,
+                    .Padding = New Thickness(0, 0, 0, 0),
+                    .Margin = New Thickness(0, 15, 0, 0),
+                    .BorderThickness = New Thickness(0, 0, 0, 0),
+                    .Background = New SolidColorBrush(cosas.Color)
+                }
+
+                Dim tbGif As New TextBlock With {
+                    .Foreground = New SolidColorBrush(Colors.White),
+                    .Text = "X"
+                }
+
+                botonGif.Content = tbGif
+
+                cosas.Fichero = ficheroGif
+                botonGif.Tag = cosas
+                AddHandler botonGif.Click, AddressOf BotonQuitarGifClick
+                AddHandler botonGif.PointerEntered, AddressOf UsuarioEntraBoton
+                AddHandler botonGif.PointerExited, AddressOf UsuarioSaleBoton
+
+                cosas.SpGif.Children.Add(botonGif)
+
+                If cosas.SpGif.Visibility = Visibility.Collapsed Then
+                    cosas.SpGif.Visibility = Visibility.Visible
+                End If
+
+                If cosas.SpGif.Children.Count = 1 Then
+                    cosas.BotonGif.IsEnabled = False
+                    cosas.BotonImagenes.IsEnabled = False
+                    cosas.BotonVideo.IsEnabled = False
+                End If
+            End If
+
+        End Sub
+
+        Private Sub BotonQuitarGifClick(sender As Object, e As RoutedEventArgs)
+
+            Dim boton As Button = sender
+            Dim cosas As Objetos.EnviarTweet.Media = boton.Tag
+            cosas.SpGif.Children.Remove(boton)
+
+            If cosas.SpGif.Children.Count = 0 Then
+                cosas.BotonImagenes.IsEnabled = True
+                cosas.BotonGif.IsEnabled = True
+                cosas.BotonVideo.IsEnabled = True
+            End If
+
+        End Sub
+
+        Private Async Sub BotonVideoClick(sender As Object, e As RoutedEventArgs)
+
+            Dim boton As Button = sender
+            Dim cosas As Objetos.EnviarTweet.Media = boton.Tag
+
+            Dim picker As New FileOpenPicker With {
+                .SuggestedStartLocation = PickerLocationId.PicturesLibrary,
+                .ViewMode = PickerViewMode.Thumbnail
+            }
+
+            picker.FileTypeFilter.Add(".mp4")
+
+            Dim ficheroVideo As StorageFile = Await picker.PickSingleFileAsync
+
+            If Not ficheroVideo Is Nothing Then
+                Dim botonVideo As New Button With {
+                    .Width = 42,
+                    .Height = 42,
+                    .Padding = New Thickness(0, 0, 0, 0),
+                    .Margin = New Thickness(0, 15, 0, 0),
+                    .BorderThickness = New Thickness(0, 0, 0, 0),
+                    .Background = New SolidColorBrush(cosas.Color)
+                }
+
+                Dim tbVideo As New TextBlock With {
+                    .Foreground = New SolidColorBrush(Colors.White),
+                    .Text = "X"
+                }
+
+                botonVideo.Content = tbVideo
+
+                cosas.Fichero = ficheroVideo
+                botonVideo.Tag = cosas
+                AddHandler botonVideo.Click, AddressOf BotonQuitarVideoClick
+                AddHandler botonVideo.PointerEntered, AddressOf UsuarioEntraBoton
+                AddHandler botonVideo.PointerExited, AddressOf UsuarioSaleBoton
+
+                cosas.SpVideo.Children.Add(botonVideo)
+
+                If cosas.SpVideo.Visibility = Visibility.Collapsed Then
+                    cosas.SpVideo.Visibility = Visibility.Visible
+                End If
+
+                If cosas.SpVideo.Children.Count = 1 Then
+                    cosas.BotonGif.IsEnabled = False
+                    cosas.BotonImagenes.IsEnabled = False
+                    cosas.BotonVideo.IsEnabled = False
+                End If
+            End If
+
+        End Sub
+
+        Private Sub BotonQuitarVideoClick(sender As Object, e As RoutedEventArgs)
+
+            Dim boton As Button = sender
+            Dim cosas As Objetos.EnviarTweet.Media = boton.Tag
+            cosas.SpVideo.Children.Remove(boton)
+
+            If cosas.SpVideo.Children.Count = 0 Then
+                cosas.BotonImagenes.IsEnabled = True
+                cosas.BotonGif.IsEnabled = True
+                cosas.BotonVideo.IsEnabled = True
+            End If
 
         End Sub
 

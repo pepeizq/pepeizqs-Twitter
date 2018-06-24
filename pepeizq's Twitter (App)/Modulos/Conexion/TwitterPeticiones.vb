@@ -1,4 +1,5 @@
-﻿Imports Newtonsoft.Json
+﻿Imports System.Text
+Imports Newtonsoft.Json
 Imports pepeizq.Twitter
 Imports pepeizq.Twitter.OAuth
 Imports pepeizq.Twitter.Tweet
@@ -66,6 +67,21 @@ Module TwitterPeticiones
         End Try
 
         Return listaTweets
+
+    End Function
+
+    Public Async Function CogerUsuario(usuario As TwitterUsuario, megaUsuario As pepeizq.Twitter.MegaUsuario, screenNombre As String) As Task(Of TwitterUsuario)
+
+        Try
+            Dim enlace As New Uri("https://api.twitter.com/1.1/users/show.json?screen_name=" + screenNombre)
+            Dim request As New TwitterOAuthRequest
+            Dim resultado As String = Await request.EjecutarGetAsync(enlace, megaUsuario.Servicio.twitterDataProvider._tokens)
+            usuario = JsonConvert.DeserializeObject(Of TwitterUsuario)(resultado)
+        Catch ex As Exception
+
+        End Try
+
+        Return usuario
 
     End Function
 
@@ -329,25 +345,25 @@ Module TwitterPeticiones
 
     End Function
 
-    Public Async Function EnviarTweet(estado As Boolean, megaUsuario As pepeizq.Twitter.MegaUsuario, mensaje As String, respuestaID As String, imagenes As List(Of IRandomAccessStream)) As Task(Of Boolean)
+    Public Async Function EnviarTweet(estado As Boolean, megaUsuario As pepeizq.Twitter.MegaUsuario, mensaje As String, respuestaID As String, medias As List(Of IRandomAccessStream)) As Task(Of Boolean)
 
         Try
-            Dim imagenesIDs As String = Nothing
+            Dim mediasIDs As String = Nothing
 
-            If Not imagenes Is Nothing Then
-                If imagenes.Count > 0 Then
+            If Not medias Is Nothing Then
+                If medias.Count > 0 Then
                     Dim i As Integer = 0
 
-                    For Each imagen In imagenes
+                    For Each subMedia In medias
                         Dim id As String = Nothing
 
-                        id = Await SubirImagen(id, megaUsuario, imagen)
+                        id = Await SubirMedia(id, megaUsuario, subMedia)
 
                         If Not id = Nothing Then
                             If i = 0 Then
-                                imagenesIDs = imagenesIDs + id
+                                mediasIDs = mediasIDs + id
                             Else
-                                imagenesIDs = imagenesIDs + "," + id
+                                mediasIDs = mediasIDs + "," + id
                             End If
                             i += 1
                         End If
@@ -355,8 +371,8 @@ Module TwitterPeticiones
                 End If
             End If
 
-            If Not imagenesIDs = Nothing Then
-                imagenesIDs = "&media_ids=" + imagenesIDs
+            If Not mediasIDs = Nothing Then
+                mediasIDs = "&media_ids=" + mediasIDs
             End If
 
             If Not respuestaID = Nothing Then
@@ -364,7 +380,7 @@ Module TwitterPeticiones
             End If
 
             Dim encodeMensaje As String = Uri.EscapeDataString(mensaje)
-            Dim enlace As New Uri("https://api.twitter.com/1.1/statuses/update.json?status=" + encodeMensaje + respuestaID + imagenesIDs)
+            Dim enlace As New Uri("https://api.twitter.com/1.1/statuses/update.json?status=" + encodeMensaje + respuestaID + mediasIDs)
             Dim request As New TwitterOAuthRequest
             Await request.EjecutarPostAsync(enlace, megaUsuario.Servicio.twitterDataProvider._tokens)
             estado = True
@@ -376,15 +392,16 @@ Module TwitterPeticiones
 
     End Function
 
-    Public Async Function SubirImagen(id As String, megaUsuario As pepeizq.Twitter.MegaUsuario, stream As IRandomAccessStream) As Task(Of String)
+    Public Async Function SubirMedia(id As String, megaUsuario As pepeizq.Twitter.MegaUsuario, stream As IRandomAccessStream) As Task(Of String)
 
         Try
-            Dim enlace As New Uri("https://upload.twitter.com/1.1/media/upload.json")
             Dim ficheroTamaño As Long = stream.Size
             Dim buffer(ficheroTamaño) As Byte
             Await stream.ReadAsync(buffer.AsBuffer, stream.Size, InputStreamOptions.None)
             stream.Seek(0)
             Dim limite As String = DateTime.Now.Ticks.ToString("x")
+
+            Dim enlace As New Uri("https://upload.twitter.com/1.1/media/upload.json")
             Dim request As New TwitterOAuthRequest
             id = Await request.ExecutePostMultipartAsync(enlace, megaUsuario.Servicio.twitterDataProvider._tokens, limite, buffer)
         Catch ex As Exception
