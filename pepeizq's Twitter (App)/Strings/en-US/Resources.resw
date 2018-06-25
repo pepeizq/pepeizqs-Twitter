@@ -147,9 +147,6 @@
   <data name="tbConfigNotifications.Text" xml:space="preserve">
     <value>Notifications</value>
   </data>
-  <data name="tbConfigNotificationsSeconds.Text" xml:space="preserve">
-    <value>seconds (top 99 seconds) </value>
-  </data>
   <data name="tbConfigNotificationsSound.Text" xml:space="preserve">
     <value>Set a sound</value>
   </data>
@@ -317,5 +314,23 @@
   </data>
   <data name="UserUnmute" xml:space="preserve">
     <value>Unmute User</value>
+  </data>
+  <data name="CopyUrl.Text" xml:space="preserve">
+    <value>Copy Link</value>
+  </data>
+  <data name="Download.Text" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>Height</value>
+  </data>
+  <data name="Seconds" xml:space="preserve">
+    <value>Seconds</value>
+  </data>
+  <data name="tbConfigAppLoadMediaPreview.Text" xml:space="preserve">
+    <value>Maximum dimensions of the preview</value>
+  </data>
+  <data name="Width" xml:space="preserve">
+    <value>Width</value>
   </data>
 </root>

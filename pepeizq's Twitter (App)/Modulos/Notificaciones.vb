@@ -194,10 +194,8 @@ Namespace Notificaciones
                 Try
                     Dim notificacion As ToastNotification = New ToastNotification(tostada.GetXml)
 
-                    If Not ApplicationData.Current.LocalSettings.Values("notificacionTiempo") Is Nothing Then
-                        If ApplicationData.Current.LocalSettings.Values("notificacionTiempo") = True Then
-                            notificacion.ExpirationTime = DateTime.Now.AddSeconds(ApplicationData.Current.LocalSettings.Values("notificacionTiempoSegundos"))
-                        End If
+                    If ApplicationData.Current.LocalSettings.Values("notificacionTiempo") = True Then
+                        notificacion.ExpirationTime = DateTime.Now.AddSeconds(ApplicationData.Current.LocalSettings.Values("notificacionTiempoSegundos"))
                     End If
 
                     Dim notificador As ToastNotifier = ToastNotificationManager.CreateToastNotifier()

@@ -6,7 +6,9 @@ Imports pepeizq.Twitter
 Imports Windows.ApplicationModel.DataTransfer
 Imports Windows.Media.Core
 Imports Windows.Media.Playback
+Imports Windows.Networking.BackgroundTransfer
 Imports Windows.Storage
+Imports Windows.Storage.Pickers
 Imports Windows.System
 Imports Windows.UI
 Imports Windows.UI.Core
@@ -373,6 +375,30 @@ Public NotInheritable Class MainPage
 
     End Sub
 
+    Private Sub SliderMediaVistaPreviaAlto_ValueChanged(sender As Object, e As RangeBaseValueChangedEventArgs) Handles sliderMediaVistaPreviaAlto.ValueChanged
+
+        Dim recursos As New Resources.ResourceLoader
+
+        If Not sliderMediaVistaPreviaAlto.Value = 1 Then
+            ApplicationData.Current.LocalSettings.Values("mediaVistaPreviaAlto") = sliderMediaVistaPreviaAlto.Value
+
+            tbMediaVistaPreviaAlto.Text = sliderMediaVistaPreviaAlto.Value.ToString + "px (" + recursos.GetString("Height") + ")"
+        End If
+
+    End Sub
+
+    Private Sub SliderMediaVistaPreviaAncho_ValueChanged(sender As Object, e As RangeBaseValueChangedEventArgs) Handles sliderMediaVistaPreviaAncho.ValueChanged
+
+        Dim recursos As New Resources.ResourceLoader
+
+        If Not sliderMediaVistaPreviaAncho.Value = 1 Then
+            ApplicationData.Current.LocalSettings.Values("mediaVistaPreviaAncho") = sliderMediaVistaPreviaAncho.Value
+
+            tbMediaVistaPreviaAncho.Text = sliderMediaVistaPreviaAncho.Value.ToString + "px (" + recursos.GetString("Width") + ")"
+        End If
+
+    End Sub
+
     Private Sub CbConfigAppTweetCard_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppTweetCard.Checked
 
         Configuracion.CargarTweetCard(True)
@@ -429,20 +455,14 @@ Public NotInheritable Class MainPage
 
     End Sub
 
-    Private Sub TbConfigNotificacionesSegundos_TextChanged(sender As Object, e As TextChangedEventArgs) Handles tbConfigNotificacionesSegundos.TextChanged
+    Private Sub SliderNotificacionesTiempo_ValueChanged(sender As Object, e As RangeBaseValueChangedEventArgs) Handles sliderNotificacionesTiempo.ValueChanged
 
-        If tbConfigNotificacionesSegundos.Text = String.Empty Then
-            tbConfigNotificacionesSegundos.Text = 30
-        Else
-            Dim segundos As String = tbConfigNotificacionesSegundos.Text
-            segundos = segundos.Replace("_", Nothing)
+        Dim recursos As New Resources.ResourceLoader
 
-            If segundos = "0" Or segundos = "00" Then
-                ApplicationData.Current.LocalSettings.Values("notificacionTiempoSegundos") = 1
-                tbConfigNotificacionesSegundos.Text = 1
-            Else
-                ApplicationData.Current.LocalSettings.Values("notificacionTiempoSegundos") = segundos
-            End If
+        If Not sliderNotificacionesTiempo.Value = 5 Then
+            ApplicationData.Current.LocalSettings.Values("notificacionTiempoSegundos") = sliderNotificacionesTiempo.Value
+
+            tbConfigNotificacionesTiempo.Text = sliderNotificacionesTiempo.Value.ToString + " " + recursos.GetString("Seconds")
         End If
 
     End Sub
@@ -509,6 +529,33 @@ Public NotInheritable Class MainPage
 
     End Sub
 
+    Private Async Sub BotonDescargarImagen_Click(sender As Object, e As RoutedEventArgs) Handles botonDescargarImagen.Click
+
+        botonDescargarImagen.IsEnabled = False
+        prDescargaImagen.Visibility = Visibility.Visible
+
+        Dim enlace As New Uri(tbImagenAmpliada.Text)
+
+        Dim picker As New FolderPicker()
+
+        picker.FileTypeFilter.Add("*")
+        picker.ViewMode = PickerViewMode.List
+
+        Try
+            Dim carpeta As StorageFolder = Await picker.PickSingleFolderAsync()
+            Dim fichero As StorageFile = Await carpeta.CreateFileAsync("twitter.jpg", CreationCollisionOption.ReplaceExisting)
+            Dim descargador As New BackgroundDownloader
+            Dim descarga As DownloadOperation = descargador.CreateDownload(enlace, fichero)
+            Await descarga.StartAsync
+        Catch ex As Exception
+
+        End Try
+
+        prDescargaImagen.Visibility = Visibility.Collapsed
+        botonDescargarImagen.IsEnabled = True
+
+    End Sub
+
     Private Sub BotonCopiarImagen_Click(sender As Object, e As RoutedEventArgs) Handles botonCopiarImagen.Click
 
         Dim paquete As New DataPackage
@@ -534,6 +581,42 @@ Public NotInheritable Class MainPage
         If Not animacion Is Nothing Then
             animacion.TryStart(imagenOrigen)
         End If
+
+    End Sub
+
+    Private Async Sub BotonDescargarVideo_Click(sender As Object, e As RoutedEventArgs) Handles botonDescargarVideo.Click
+
+        botonDescargarVideo.IsEnabled = False
+        prDescargaVideo.Visibility = Visibility.Visible
+
+        Dim enlace As New Uri(tbVideoAmpliado.Text)
+
+        Dim picker As New FolderPicker()
+
+        picker.FileTypeFilter.Add("*")
+        picker.ViewMode = PickerViewMode.List
+
+        Try
+            Dim carpeta As StorageFolder = Await picker.PickSingleFolderAsync()
+            Dim fichero As StorageFile = Await carpeta.CreateFileAsync("twitter.mp4", CreationCollisionOption.ReplaceExisting)
+            Dim descargador As New BackgroundDownloader
+            Dim descarga As DownloadOperation = descargador.CreateDownload(enlace, fichero)
+            Await descarga.StartAsync
+        Catch ex As Exception
+
+        End Try
+
+        prDescargaVideo.Visibility = Visibility.Collapsed
+        botonDescargarVideo.IsEnabled = True
+
+    End Sub
+
+    Private Sub BotonCopiarVideo_Click(sender As Object, e As RoutedEventArgs) Handles botonCopiarVideo.Click
+
+        Dim paquete As New DataPackage
+        paquete.SetText(tbVideoAmpliado.Text)
+
+        Clipboard.SetContent(paquete)
 
     End Sub
 

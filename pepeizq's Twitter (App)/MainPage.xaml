@@ -187,9 +187,21 @@
                                     
                                     <CheckBox x:Name="cbConfigAppCargarMedia" Margin="0,15" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                                         <CheckBox.Content>
-                                            <Grid>
+                                            <StackPanel Orientation="Vertical">
                                                 <TextBlock x:Uid="tbConfigAppLoadMedia"/>
-                                            </Grid>
+
+                                                <StackPanel x:Name="spConfigAppCargarMediaVistaPrevia" Orientation="Vertical" Margin="0,15,0,0">
+                                                    <TextBlock x:Uid="tbConfigAppLoadMediaPreview" Margin="0,0,0,5"/>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Slider x:Name="sliderMediaVistaPreviaAlto" Width="250" Minimum="1" Maximum="800" IsThumbToolTipEnabled="False"/>
+                                                        <TextBlock x:Name="tbMediaVistaPreviaAlto" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="14"/>
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <Slider x:Name="sliderMediaVistaPreviaAncho" Width="250" Minimum="1" Maximum="800" IsThumbToolTipEnabled="False"/>
+                                                        <TextBlock x:Name="tbMediaVistaPreviaAncho" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="14"/>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </StackPanel>
                                         </CheckBox.Content>
                                     </CheckBox>
 
@@ -205,19 +217,14 @@
                                 <StackPanel x:Name="spConfigNotificaciones" Orientation="Vertical" Visibility="Collapsed">
                                     <CheckBox x:Name="cbConfigNotificacionesTiempo" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                                         <CheckBox.Content>
-                                            <Grid>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="Auto"/>
-                                                </Grid.RowDefinitions>
+                                            <StackPanel Orientation="Vertical">
+                                                <TextBlock x:Uid="tbConfigNotificationsTime"/>
 
-                                                <TextBlock x:Uid="tbConfigNotificationsTime" Grid.Row="0"/>
-
-                                                <StackPanel x:Name="spConfigNotificacionesTiempo" Grid.Row="1" Orientation="Horizontal" Visibility="Collapsed" Margin="0,10,0,0">
-                                                    <TextBox x:Name="tbConfigNotificacionesSegundos" MinWidth="40" Width="40" TextAlignment="Justify"/>
-                                                    <TextBlock x:Uid="tbConfigNotificationsSeconds" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="14"/>
+                                                <StackPanel x:Name="spConfigNotificacionesTiempo"  Orientation="Horizontal" Visibility="Collapsed" Margin="0,10,0,0">
+                                                    <Slider x:Name="sliderNotificacionesTiempo" Width="250" Minimum="5" Maximum="120" IsThumbToolTipEnabled="False"/>
+                                                    <TextBlock x:Name="tbConfigNotificacionesTiempo" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="14"/>
                                                 </StackPanel>
-                                            </Grid>
+                                            </StackPanel>
                                         </CheckBox.Content>
                                     </CheckBox>
 
@@ -476,13 +483,29 @@
 
                         <AppBarSeparator Foreground="White"/>
 
-                        <Button x:Name="botonCopiarImagen" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                        <Button x:Name="botonDescargarImagen" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                            <ToolTipService.ToolTip>
+                                <TextBlock x:Uid="Download"/>
+                            </ToolTipService.ToolTip>
+
+                            <Button.Content>
+                                <fa:FontAwesome Icon="Download" Foreground="White"/>
+                            </Button.Content>
+                        </Button>
+
+                        <ProgressRing x:Name="prDescargaImagen" Margin="10,0,0,0" IsActive="True" Visibility="Collapsed" VerticalAlignment="Center" Width="30" Height="30"/>
+
+                        <Button x:Name="botonCopiarImagen" Margin="10,0,0,0" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                            <ToolTipService.ToolTip>
+                                <TextBlock x:Uid="CopyUrl"/>
+                            </ToolTipService.ToolTip>
+                            
                             <Button.Content>
                                 <fa:FontAwesome Icon="Copy" Foreground="White"/>
                             </Button.Content>
                         </Button>
 
-                        <TextBox x:Name="tbImagenAmpliada" Margin="10,0" IsReadOnly="True" BorderBrush="White" BorderThickness="1" Padding="10"/>
+                        <TextBox x:Name="tbImagenAmpliada" Margin="10,0,0,0" IsReadOnly="True" BorderBrush="White" BorderThickness="1" Padding="10"/>
                     </StackPanel>
                     
                     <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="10">
@@ -507,13 +530,29 @@
 
                         <AppBarSeparator Foreground="White"/>
 
-                        <Button x:Name="botonCopiarVideo" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                        <Button x:Name="botonDescargarVideo" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                            <ToolTipService.ToolTip>
+                                <TextBlock x:Uid="Download"/>
+                            </ToolTipService.ToolTip>
+
+                            <Button.Content>
+                                <fa:FontAwesome Icon="Download" Foreground="White"/>
+                            </Button.Content>
+                        </Button>
+
+                        <ProgressRing x:Name="prDescargaVideo" Margin="10,0,0,0" IsActive="True" Visibility="Collapsed" VerticalAlignment="Center" Width="30" Height="30"/>
+
+                        <Button x:Name="botonCopiarVideo" Margin="10,0,0,0" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                            <ToolTipService.ToolTip>
+                                <TextBlock x:Uid="CopyUrl"/>
+                            </ToolTipService.ToolTip>
+                            
                             <Button.Content>
                                 <fa:FontAwesome Icon="Copy" Foreground="White"/>
                             </Button.Content>
                         </Button>
 
-                        <TextBox x:Name="tbVideoAmpliado" Margin="10,0" IsReadOnly="True" BorderBrush="White" BorderThickness="1" Padding="10"/>
+                        <TextBox x:Name="tbVideoAmpliado" Margin="10,0,0,0" IsReadOnly="True" BorderBrush="White" BorderThickness="1" Padding="10"/>
                     </StackPanel>
                     
                     <Border x:Name="bordeVideoAmpliado" Grid.Row="1" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">

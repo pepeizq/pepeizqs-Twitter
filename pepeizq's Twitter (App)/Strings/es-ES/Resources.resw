@@ -147,9 +147,6 @@
   <data name="tbConfigNotifications.Text" xml:space="preserve">
     <value>Notificaciones</value>
   </data>
-  <data name="tbConfigNotificationsSeconds.Text" xml:space="preserve">
-    <value>segundos (tope 99 segundos)</value>
-  </data>
   <data name="tbConfigNotificationsSound.Text" xml:space="preserve">
     <value>Selecciona un sonido</value>
   </data>
@@ -277,7 +274,7 @@
     <value>Cargar información de la "Tweet Card" si el tweet dispone de ello</value>
   </data>
   <data name="tbConfigAppLoadMedia.Text" xml:space="preserve">
-    <value>Cargar y mostrar achivos multimedia de los tweets (imagenes, gifs y videos)</value>
+    <value>Cargar y mostrar archivos multimedia de los tweets (imagenes, gifs y videos)</value>
   </data>
   <data name="tbConfigAppAutoStart.Text" xml:space="preserve">
     <value>Iniciar automáticamente la app en cada arranque de Windows</value>
@@ -317,5 +314,23 @@
   </data>
   <data name="UserUnmute" xml:space="preserve">
     <value>Desinlenciar Usuario</value>
+  </data>
+  <data name="CopyUrl.Text" xml:space="preserve">
+    <value>Copiar Enlace</value>
+  </data>
+  <data name="Download.Text" xml:space="preserve">
+    <value>Descargar</value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value>Alto</value>
+  </data>
+  <data name="Seconds" xml:space="preserve">
+    <value>Segundos</value>
+  </data>
+  <data name="tbConfigAppLoadMediaPreview.Text" xml:space="preserve">
+    <value>Dimensiones máximas de la vista previa</value>
+  </data>
+  <data name="Width" xml:space="preserve">
+    <value>Ancho</value>
   </data>
 </root>

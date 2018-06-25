@@ -3,6 +3,7 @@ Imports Microsoft.Toolkit.Uwp.UI.Animations
 Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports pepeizq.Twitter.Tweet
 Imports Windows.Media.Core
+Imports Windows.Storage
 Imports Windows.UI
 Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Media.Animation
@@ -77,8 +78,8 @@ Namespace pepeizq.Twitter.Xaml
                         Dim gridMedia As New Grid With {
                             .BorderBrush = New SolidColorBrush(color),
                             .BorderThickness = New Thickness(1, 1, 1, 1),
-                            .MaxHeight = 200,
-                            .MaxWidth = 500,
+                            .MaxHeight = ApplicationData.Current.LocalSettings.Values("mediaVistaPreviaAlto"),
+                            .MaxWidth = ApplicationData.Current.LocalSettings.Values("mediaVistaPreviaAncho"),
                             .HorizontalAlignment = HorizontalAlignment.Left
                         }
 
@@ -103,16 +104,13 @@ Namespace pepeizq.Twitter.Xaml
 
                         End Try
 
-                        If itemMedia.Tipo = "video" Or itemMedia.Tipo = "animated_gif" Then
+                        If itemMedia.Tipo = "video" Then
                             gridMedia.Background = New SolidColorBrush(Colors.Black)
                             imagenMedia.Opacity = 0.6
                         End If
 
                         gridMedia.BorderThickness = New Thickness(1, 1, 1, 1)
                         gridMedia.Margin = New Thickness(0, 10, 5, 0)
-
-                        AddHandler gridMedia.PointerEntered, AddressOf UsuarioEntraMedia
-                        AddHandler gridMedia.PointerExited, AddressOf UsuarioSaleMedia
 
                         Dim datos As New Objetos.MediaDatos(color, imagenUrl, imagenMedia)
 
@@ -121,6 +119,8 @@ Namespace pepeizq.Twitter.Xaml
 
                         If itemMedia.Tipo = "photo" Then
                             AddHandler gridMedia.PointerPressed, AddressOf UsuarioClickeaImagen
+                            AddHandler gridMedia.PointerEntered, AddressOf UsuarioEntraMedia
+                            AddHandler gridMedia.PointerExited, AddressOf UsuarioSaleMedia
                         ElseIf itemMedia.Tipo = "video" Then
                             Dim listaVideos As TweetVideoVariante() = itemMedia.Video.Variantes
                             Dim listaOrdenada As New List(Of TweetVideoVariante)
@@ -134,15 +134,19 @@ Namespace pepeizq.Twitter.Xaml
                             datos.Enlace = listaOrdenada(0).Enlace
 
                             AddHandler gridMedia.PointerPressed, AddressOf UsuarioClickeaVideo
+                            AddHandler gridMedia.PointerEntered, AddressOf UsuarioEntraMedia
+                            AddHandler gridMedia.PointerExited, AddressOf UsuarioSaleMedia
                         ElseIf itemMedia.Tipo = "animated_gif" Then
                             datos.Enlace = itemMedia.Video.Variantes(0).Enlace
-                            AddHandler gridMedia.PointerPressed, AddressOf UsuarioClickeaGif
+                            AddHandler gridMedia.PointerPressed, AddressOf UsuarioClickeaVideo
+                            AddHandler gridMedia.PointerEntered, AddressOf UsuarioEntraGif
+                            AddHandler gridMedia.PointerExited, AddressOf UsuarioSaleGif
                         End If
 
                         gridMedia.Tag = datos
                         gridMedia.Children.Add(imagenMedia)
 
-                        If itemMedia.Tipo = "video" Or itemMedia.Tipo = "animated_gif" Then
+                        If itemMedia.Tipo = "video" Then
                             gridPlay.Width = gridMedia.ActualWidth / 2
                             gridPlay.Height = gridMedia.ActualHeight / 2
 
@@ -160,8 +164,6 @@ Namespace pepeizq.Twitter.Xaml
 
                             If itemMedia.Tipo = "video" Then
                                 tbTipo.Text = "video"
-                            ElseIf itemMedia.Tipo = "animated_gif" Then
-                                tbTipo.Text = "gif"
                             End If
 
                             gridTipo.Children.Add(tbTipo)
@@ -215,6 +217,68 @@ Namespace pepeizq.Twitter.Xaml
 
         End Sub
 
+        Private Sub UsuarioEntraGif(sender As Object, e As PointerRoutedEventArgs)
+
+            Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
+
+            Dim grid As Grid = sender
+            Dim cosas As Objetos.MediaDatos = grid.Tag
+            Dim imagen As ImageEx = grid.Children(0)
+
+            Dim añadirReproductor As Boolean = True
+
+            For Each hijo In grid.Children
+                If TypeOf hijo Is MediaPlayerElement Then
+                    añadirReproductor = False
+
+                    Dim reproductor As MediaPlayerElement = hijo
+                    reproductor.MediaPlayer.Play()
+                End If
+            Next
+
+            If añadirReproductor = True Then
+                Dim pr As New ProgressRing With {
+                    .IsActive = True,
+                    .Width = 20,
+                    .Height = 20,
+                    .Foreground = New SolidColorBrush(Colors.White),
+                    .HorizontalAlignment = HorizontalAlignment.Left,
+                    .VerticalAlignment = VerticalAlignment.Top,
+                    .Margin = New Thickness(5, 5, 5, 5)
+                }
+
+                grid.Children.Add(pr)
+
+                Dim reproductor As New MediaPlayerElement With {
+                    .Source = MediaSource.CreateFromUri(New Uri(cosas.Enlace)),
+                    .Width = imagen.ActualWidth,
+                    .Height = imagen.ActualHeight,
+                    .MinWidth = 0
+                }
+                reproductor.MediaPlayer.IsLoopingEnabled = True
+                reproductor.MediaPlayer.Play()
+
+                grid.Children.Add(reproductor)
+
+            End If
+
+        End Sub
+
+        Private Sub UsuarioSaleGif(sender As Object, e As PointerRoutedEventArgs)
+
+            Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
+
+            Dim grid As Grid = sender
+
+            For Each hijo In grid.Children
+                If TypeOf hijo Is MediaPlayerElement Then
+                    Dim reproductor As MediaPlayerElement = hijo
+                    reproductor.MediaPlayer.Pause()
+                End If
+            Next
+
+        End Sub
+
         Public Sub UsuarioClickeaImagen(sender As Object, e As PointerRoutedEventArgs)
 
             Dim frame As Frame = Window.Current.Content
@@ -240,6 +304,9 @@ Namespace pepeizq.Twitter.Xaml
 
             Dim tbImagenAmpliada As TextBox = pagina.FindName("tbImagenAmpliada")
             tbImagenAmpliada.Text = datos.Enlace
+
+            Dim botonDescargar As Button = pagina.FindName("botonDescargarImagen")
+            botonDescargar.Background = New SolidColorBrush(color)
 
             Dim botonCopiar As Button = pagina.FindName("botonCopiarImagen")
             botonCopiar.Background = New SolidColorBrush(color)
@@ -296,14 +363,17 @@ Namespace pepeizq.Twitter.Xaml
             Dim tbVideoAmpliado As TextBox = pagina.FindName("tbVideoAmpliado")
             tbVideoAmpliado.Text = datos.Enlace
 
+            Dim botonDescargar As Button = pagina.FindName("botonDescargarVideo")
+            botonDescargar.Background = New SolidColorBrush(color)
+
             Dim botonCopiar As Button = pagina.FindName("botonCopiarVideo")
             botonCopiar.Background = New SolidColorBrush(color)
 
             Dim bordeVideo As Border = pagina.FindName("bordeVideoAmpliado")
             bordeVideo.BorderBrush = New SolidColorBrush(color)
 
-            Dim gridImagen As Grid = pagina.FindName("gridVideoAmpliado")
-            gridImagen.Visibility = Visibility.Visible
+            Dim gridVideo As Grid = pagina.FindName("gridVideoAmpliado")
+            gridVideo.Visibility = Visibility.Visible
 
             Dim reproductor As MediaPlayerElement = pagina.FindName("videoAmpliado")
 
@@ -314,47 +384,6 @@ Namespace pepeizq.Twitter.Xaml
             Catch ex As Exception
 
             End Try
-
-        End Sub
-
-        Public Sub UsuarioClickeaGif(sender As Object, e As PointerRoutedEventArgs)
-
-            Dim frame As Frame = Window.Current.Content
-            Dim pagina As Page = frame.Content
-
-            Dim gridRecibido As Grid = sender
-            Dim datos As Objetos.MediaDatos = gridRecibido.Tag
-
-            Dim boolPlay As Boolean = True
-
-            For Each hijo In gridRecibido.Children
-                If TypeOf hijo Is MediaPlayerElement Then
-                    Dim hijoReproductor As MediaPlayerElement = hijo
-
-                    If hijoReproductor.MediaPlayer.PlaybackSession.PlaybackState = Windows.Media.Playback.MediaPlaybackState.Playing Then
-                        boolPlay = False
-                    Else
-                        boolPlay = True
-                    End If
-                End If
-            Next
-
-            Dim reproductor As New MediaPlayerElement
-
-            Try
-                reproductor.Source = MediaSource.CreateFromUri(New Uri(datos.Enlace))
-                reproductor.MediaPlayer.IsLoopingEnabled = True
-
-                If boolPlay = True Then
-                    reproductor.MediaPlayer.Play()
-                Else
-                    reproductor.MediaPlayer.Pause()
-                End If
-            Catch ex As Exception
-
-            End Try
-
-            gridRecibido.Children.Add(reproductor)
 
         End Sub
 

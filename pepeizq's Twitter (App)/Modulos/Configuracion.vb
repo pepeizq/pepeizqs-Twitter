@@ -116,6 +116,30 @@ Module Configuracion
         Dim cb As CheckBox = pagina.FindName("cbConfigAppCargarMedia")
         cb.IsChecked = estado
 
+        Dim sp As StackPanel = pagina.FindName("spConfigAppCargarMediaVistaPrevia")
+
+        If estado = True Then
+            sp.Visibility = Visibility.Visible
+
+            Dim sliderAlto As Slider = pagina.FindName("sliderMediaVistaPreviaAlto")
+
+            If ApplicationData.Current.LocalSettings.Values("mediaVistaPreviaAlto") Is Nothing Then
+                ApplicationData.Current.LocalSettings.Values("mediaVistaPreviaAlto") = 200
+            End If
+
+            sliderAlto.Value = Double.Parse(ApplicationData.Current.LocalSettings.Values("mediaVistaPreviaAlto"))
+
+            Dim sliderAncho As Slider = pagina.FindName("sliderMediaVistaPreviaAncho")
+
+            If ApplicationData.Current.LocalSettings.Values("mediaVistaPreviaAncho") Is Nothing Then
+                ApplicationData.Current.LocalSettings.Values("mediaVistaPreviaAncho") = 500
+            End If
+
+            sliderAncho.Value = ApplicationData.Current.LocalSettings.Values("mediaVistaPreviaAncho")
+        Else
+            sp.Visibility = Visibility.Collapsed
+        End If
+
     End Sub
 
     Public Sub CargarTweetCard(estado As Boolean)
@@ -145,13 +169,13 @@ Module Configuracion
         If estado = True Then
             sp.Visibility = Visibility.Visible
 
-            Dim tb As TextBox = pagina.FindName("tbConfigNotificacionesSegundos")
+            Dim slider As Slider = pagina.FindName("sliderNotificacionesTiempo")
 
             If ApplicationData.Current.LocalSettings.Values("notificacionTiempoSegundos") = Nothing Then
                 ApplicationData.Current.LocalSettings.Values("notificacionTiempoSegundos") = 30
             End If
 
-            tb.Text = ApplicationData.Current.LocalSettings.Values("notificacionTiempoSegundos")
+            slider.Value = ApplicationData.Current.LocalSettings.Values("notificacionTiempoSegundos")
         Else
             sp.Visibility = Visibility.Collapsed
         End If

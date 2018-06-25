@@ -44,7 +44,7 @@ Module EscribirXaml
         spEscribir.Children.Add(tbFondo)
 
         Dim gridEscribir As New Grid With {
-            .Padding = New Thickness(15, 0, 20, 15),
+            .Padding = New Thickness(15, 0, 20, 10),
             .BorderBrush = New SolidColorBrush(App.Current.Resources("ColorCuarto")),
             .BorderThickness = New Thickness(1, 1, 1, 1)
         }
