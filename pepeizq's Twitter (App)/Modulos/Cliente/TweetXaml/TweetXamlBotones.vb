@@ -526,7 +526,7 @@ Namespace pepeizq.Twitter.Xaml
 
             If estado = True Then
                 TwitterTimeLineInicio.CargarTweets(cosas.MegaUsuario, Nothing, True)
-                TwitterTimeLineMenciones.CargarTweets(cosas.MegaUsuario, Nothing, True)
+                TwitterTimeLineMenciones.CargarTweets(cosas.MegaUsuario, Nothing, True, False)
             End If
 
         End Sub

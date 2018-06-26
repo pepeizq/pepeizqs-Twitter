@@ -571,7 +571,7 @@ Namespace pepeizq.Twitter.Xaml
 
                 Dim recursos As New Resources.ResourceLoader
 
-                Notificaciones.Toast.Enseñar(recursos.GetString("TweetSent"))
+                Notificaciones.Toast(recursos.GetString("TweetSent"))
             End If
 
             If cosas.CajaTexto.Text.Length > 0 Then

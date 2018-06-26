@@ -336,4 +336,7 @@
   <data name="DeleteTweet" xml:space="preserve">
     <value>Delete Tweet</value>
   </data>
+  <data name="UserNewMentions" xml:space="preserve">
+    <value>has new mentions</value>
+  </data>
 </root>

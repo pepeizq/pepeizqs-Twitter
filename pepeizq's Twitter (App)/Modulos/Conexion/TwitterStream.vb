@@ -89,7 +89,7 @@ Module TwitterStream
                                                                                                                                                                                                         lvInicio.Items.Insert(0, pepeizq.Twitter.Xaml.TweetXaml.Añadir(tweetAñadir, megaUsuario, Nothing))
 
                                                                                                                                                                                                         If megaUsuario.Notificacion = True Then
-                                                                                                                                                                                                            Notificaciones.ToastTweet.Enseñar(tweetAñadir, megaUsuario)
+                                                                                                                                                                                                            Notificaciones.ToastTweet(tweetAñadir, megaUsuario)
                                                                                                                                                                                                         End If
 
                                                                                                                                                                                                         For Each item In lvInicio.Items
@@ -160,7 +160,7 @@ Module TwitterStream
                                                                                                                                                                                                             lvMenciones.Items.Insert(0, pepeizq.Twitter.Xaml.TweetXaml.Añadir(tweetNuevo, megaUsuario, Nothing))
 
                                                                                                                                                                                                             If megaUsuario.Notificacion = True Then
-                                                                                                                                                                                                                Notificaciones.ToastTweet.Enseñar(tweetNuevo, megaUsuario)
+                                                                                                                                                                                                                Notificaciones.ToastTweet(tweetNuevo, megaUsuario)
                                                                                                                                                                                                             End If
                                                                                                                                                                                                         End If
                                                                                                                                                                                                     Next

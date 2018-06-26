@@ -77,7 +77,7 @@ Module UsuarioXaml
         End If
 
         TwitterTimeLineInicio.CargarTweets(megaUsuario, Nothing, False)
-        TwitterTimeLineMenciones.CargarTweets(megaUsuario, Nothing, False)
+        TwitterTimeLineMenciones.CargarTweets(megaUsuario, Nothing, False, True)
 
         TwitterStream.Iniciar(megaUsuario)
 

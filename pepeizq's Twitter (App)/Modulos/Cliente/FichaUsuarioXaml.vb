@@ -444,7 +444,7 @@ Module FichaUsuarioXaml
         End If
 
         TwitterTimeLineInicio.CargarTweets(cosas.MegaUsuario, Nothing, True)
-        TwitterTimeLineMenciones.CargarTweets(cosas.MegaUsuario, Nothing, True)
+        TwitterTimeLineMenciones.CargarTweets(cosas.MegaUsuario, Nothing, True, False)
 
     End Sub
 
@@ -493,7 +493,7 @@ Module FichaUsuarioXaml
         End If
 
         TwitterTimeLineInicio.CargarTweets(cosas.MegaUsuario, Nothing, True)
-        TwitterTimeLineMenciones.CargarTweets(cosas.MegaUsuario, Nothing, True)
+        TwitterTimeLineMenciones.CargarTweets(cosas.MegaUsuario, Nothing, True, False)
 
     End Sub
 
@@ -517,7 +517,7 @@ Module FichaUsuarioXaml
         End If
 
         TwitterTimeLineInicio.CargarTweets(cosas.MegaUsuario, Nothing, True)
-        TwitterTimeLineMenciones.CargarTweets(cosas.MegaUsuario, Nothing, True)
+        TwitterTimeLineMenciones.CargarTweets(cosas.MegaUsuario, Nothing, True, False)
 
     End Sub
 

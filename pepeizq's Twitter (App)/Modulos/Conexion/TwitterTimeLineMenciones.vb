@@ -1,11 +1,12 @@
 ﻿Imports pepeizq.Twitter
 Imports pepeizq.Twitter.Tweet
+Imports Windows.Storage
 
 Module TwitterTimeLineMenciones
 
-    Public Async Sub CargarTweets(megaUsuario As pepeizq.Twitter.MegaUsuario, ultimoTweet As String, limpiar As Boolean)
+    Public Async Sub CargarTweets(megaUsuario As pepeizq.Twitter.MegaUsuario, ultimoTweet As String, limpiar As Boolean, inicio As Boolean)
 
-        Dim usuario As TwitterUsuario = megaUsuario.Usuario
+        Dim recursos As New Resources.ResourceLoader
 
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
@@ -13,7 +14,7 @@ Module TwitterTimeLineMenciones
         Dim gridPrincipal As Grid = pagina.FindName("gridPrincipal")
         Dim gridUsuario As New Grid
 
-        Dim gridTweets As Grid = pagina.FindName("gridMenciones" + usuario.ScreenNombre)
+        Dim gridTweets As Grid = pagina.FindName("gridMenciones" + megaUsuario.Usuario.ScreenNombre)
 
         If Not gridTweets Is Nothing Then
             Dim sv As ScrollViewer = gridTweets.Children(0)
@@ -46,6 +47,16 @@ Module TwitterTimeLineMenciones
                         lv.Items.Add(pepeizq.Twitter.Xaml.TweetXaml.Añadir(tweet, megaUsuario, Nothing))
                     End If
                 Next
+
+                If inicio = True Then
+                    If ApplicationData.Current.LocalSettings.Values("ultimaMencion" + megaUsuario.Usuario.ScreenNombre) Is Nothing Then
+                        ApplicationData.Current.LocalSettings.Values("ultimaMencion" + megaUsuario.Usuario.ScreenNombre) = listaTweets(0).ID
+                    Else
+                        If Not listaTweets(0).ID = ApplicationData.Current.LocalSettings.Values("ultimaMencion" + megaUsuario.Usuario.ScreenNombre) Then
+                            Notificaciones.ToastMencion(megaUsuario.Usuario)
+                        End If
+                    End If
+                End If
             End If
         End If
 
