@@ -180,6 +180,32 @@ Namespace pepeizq.Twitter.Xaml
 
             '------------------------------------------
 
+            If tweet.Usuario.ID = megaUsuario.Usuario.ID Then
+                Dim botonBorrar As New Button With {
+                    .Content = ConstructorBotones(FontAwesomeIcon.TrashOutline, recursos.GetString("DeleteTweet"), colorBoton),
+                    .Padding = New Thickness(5, 5, 5, 5),
+                    .Margin = New Thickness(15, 0, 0, 0),
+                    .Background = New SolidColorBrush(Colors.Transparent),
+                    .BorderThickness = New Thickness(0, 0, 0, 0),
+                    .Tag = New Objetos.TweetXamlBoton(tweet, megaUsuario, gridTweet, False, Nothing, color),
+                    .Style = App.Current.Resources("ButtonRevealStyle")
+                }
+
+                If estilo = 0 Then
+                    botonBorrar.Visibility = Visibility.Collapsed
+                ElseIf estilo = 1 Then
+                    botonBorrar.Visibility = Visibility.Visible
+                End If
+
+                AddHandler botonBorrar.Click, AddressOf BotonBorrarClick
+                AddHandler botonBorrar.PointerEntered, AddressOf BotonMasOpcionesUsuarioEntra
+                AddHandler botonBorrar.PointerExited, AddressOf BotonMasOpcionesUsuarioSale
+
+                spBotones.Children.Add(botonBorrar)
+            End If
+
+            '------------------------------------------
+
             If estilo = 1 Then
 
                 If Not tweet.Creacion = Nothing Then
@@ -486,6 +512,22 @@ Namespace pepeizq.Twitter.Xaml
 
             FlyoutBase.SetAttachedFlyout(boton, menu)
             menu.ShowAt(boton)
+
+        End Sub
+
+        Private Async Sub BotonBorrarClick(sender As Object, e As RoutedEventArgs)
+
+            Dim boton As Button = sender
+            Dim cosas As Objetos.TweetXamlBoton = boton.Tag
+
+            Dim estado As Boolean = False
+
+            estado = Await TwitterPeticiones.BorrarTweet(estado, cosas.MegaUsuario, cosas.Tweet.ID)
+
+            If estado = True Then
+                TwitterTimeLineInicio.CargarTweets(cosas.MegaUsuario, Nothing, True)
+                TwitterTimeLineMenciones.CargarTweets(cosas.MegaUsuario, Nothing, True)
+            End If
 
         End Sub
 

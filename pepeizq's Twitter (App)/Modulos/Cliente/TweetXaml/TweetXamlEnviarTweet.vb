@@ -72,25 +72,41 @@ Namespace pepeizq.Twitter.Xaml
 
                 cosas = New Objetos.UsuarioAmpliado(megaUsuario, Nothing, Nothing)
 
-                If Not tweet.Usuario.ScreenNombre = megaUsuario.Usuario.ScreenNombre Then
-                    Dim fragmento2 As New Run With {
-                        .Text = "@" + tweet.Usuario.ScreenNombre
-                    }
-
-                    Dim enlace As New Hyperlink With {
-                        .TextDecorations = Nothing,
-                        .Foreground = New SolidColorBrush(color)
-                    }
-
-                    AddHandler enlace.Click, AddressOf EnlaceClick
-
-                    enlace.Inlines.Add(fragmento2)
-                    tbRespondiendoSpan.Inlines.Add(enlace)
-                End If
-
                 If tweet.Retweet Is Nothing Then
+                    If Not tweet.Usuario.ScreenNombre = megaUsuario.Usuario.ScreenNombre Then
+                        Dim fragmento2 As New Run With {
+                            .Text = "@" + tweet.Usuario.ScreenNombre
+                        }
+
+                        Dim enlace As New Hyperlink With {
+                            .TextDecorations = Nothing,
+                            .Foreground = New SolidColorBrush(color)
+                        }
+
+                        AddHandler enlace.Click, AddressOf EnlaceClick
+
+                        enlace.Inlines.Add(fragmento2)
+                        tbRespondiendoSpan.Inlines.Add(enlace)
+                    End If
+
                     listaMenciones = tweet.Entidades.Menciones
                 Else
+                    If Not tweet.Retweet.Usuario.ScreenNombre = megaUsuario.Usuario.ScreenNombre Then
+                        Dim fragmento2 As New Run With {
+                            .Text = "@" + tweet.Retweet.Usuario.ScreenNombre
+                        }
+
+                        Dim enlace As New Hyperlink With {
+                            .TextDecorations = Nothing,
+                            .Foreground = New SolidColorBrush(color)
+                        }
+
+                        AddHandler enlace.Click, AddressOf EnlaceClick
+
+                        enlace.Inlines.Add(fragmento2)
+                        tbRespondiendoSpan.Inlines.Add(enlace)
+                    End If
+
                     listaMenciones = tweet.Retweet.Entidades.Menciones
                 End If
 

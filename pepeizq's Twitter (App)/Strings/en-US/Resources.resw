@@ -333,4 +333,7 @@
   <data name="Width" xml:space="preserve">
     <value>Width</value>
   </data>
+  <data name="DeleteTweet" xml:space="preserve">
+    <value>Delete Tweet</value>
+  </data>
 </root>

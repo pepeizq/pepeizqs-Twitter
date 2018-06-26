@@ -412,4 +412,19 @@ Module TwitterPeticiones
 
     End Function
 
+    Public Async Function BorrarTweet(estado As Boolean, megaUsuario As pepeizq.Twitter.MegaUsuario, tweetID As String) As Task(Of Boolean)
+
+        Try
+            Dim enlace As New Uri("https://api.twitter.com/1.1/statuses/destroy/" + tweetID + ".json")
+            Dim request As New TwitterOAuthRequest
+            Await request.EjecutarPostAsync(enlace, megaUsuario.Servicio.twitterDataProvider._tokens)
+            estado = True
+        Catch ex As Exception
+
+        End Try
+
+        Return estado
+
+    End Function
+
 End Module
