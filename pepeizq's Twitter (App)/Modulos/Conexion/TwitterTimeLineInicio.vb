@@ -18,6 +18,8 @@ Module TwitterTimeLineInicio
         Dim gridTweets As Grid = pagina.FindName("gridTweets" + usuario.ScreenNombre)
 
         If Not gridTweets Is Nothing Then
+            gridTweets.Background = New SolidColorBrush(Colors.LightGray)
+
             Dim pr As ProgressRing = gridTweets.Children(0)
             Dim pb As ProgressBar = gridTweets.Children(3)
 

@@ -24,7 +24,7 @@ Module EscribirXaml
         End If
 
         Dim spEscribir As New StackPanel With {
-            .Orientation = Orientation.Horizontal,
+            .Orientation = Orientation.Vertical,
             .HorizontalAlignment = HorizontalAlignment.Center,
             .VerticalAlignment = VerticalAlignment.Center
         }
@@ -36,7 +36,7 @@ Module EscribirXaml
 
         Dim tbEscribir As New TextBlock With {
             .Text = recursos.GetString("WriteTweet"),
-            .Padding = New Thickness(15, 10, 15, 10),
+            .Padding = New Thickness(20, 10, 15, 10),
             .Foreground = New SolidColorBrush(Colors.White)
         }
 

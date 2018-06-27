@@ -1,6 +1,7 @@
 ﻿Imports pepeizq.Twitter
 Imports pepeizq.Twitter.Tweet
 Imports Windows.Storage
+Imports Windows.UI
 
 Module TwitterTimeLineMenciones
 
@@ -17,6 +18,8 @@ Module TwitterTimeLineMenciones
         Dim gridTweets As Grid = pagina.FindName("gridMenciones" + megaUsuario.Usuario.ScreenNombre)
 
         If Not gridTweets Is Nothing Then
+            gridTweets.Background = New SolidColorBrush(Colors.LightGray)
+
             Dim sv As ScrollViewer = gridTweets.Children(0)
             Dim lv As ListView = sv.Content
 
@@ -53,6 +56,7 @@ Module TwitterTimeLineMenciones
                         ApplicationData.Current.LocalSettings.Values("ultimaMencion" + megaUsuario.Usuario.ScreenNombre) = listaTweets(0).ID
                     Else
                         If Not listaTweets(0).ID = ApplicationData.Current.LocalSettings.Values("ultimaMencion" + megaUsuario.Usuario.ScreenNombre) Then
+                            ApplicationData.Current.LocalSettings.Values("ultimaMencion" + megaUsuario.Usuario.ScreenNombre) = listaTweets(0).ID
                             Notificaciones.ToastMencion(megaUsuario.Usuario)
                         End If
                     End If

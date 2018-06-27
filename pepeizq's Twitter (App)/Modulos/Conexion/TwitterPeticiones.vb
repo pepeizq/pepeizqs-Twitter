@@ -1,5 +1,4 @@
-﻿Imports System.Text
-Imports Newtonsoft.Json
+﻿Imports Newtonsoft.Json
 Imports pepeizq.Twitter
 Imports pepeizq.Twitter.OAuth
 Imports pepeizq.Twitter.Tweet

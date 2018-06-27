@@ -1,4 +1,5 @@
-﻿Imports pepeizq.Twitter
+﻿Imports FontAwesome.UWP
+Imports pepeizq.Twitter
 Imports Windows.Storage
 Imports Windows.UI
 Imports Windows.UI.Core
@@ -27,10 +28,19 @@ Module BusquedaXaml
         End If
 
         Dim spBusqueda As New StackPanel With {
-            .Orientation = Orientation.Horizontal,
+            .Orientation = Orientation.Vertical,
             .HorizontalAlignment = HorizontalAlignment.Center,
             .VerticalAlignment = VerticalAlignment.Center
         }
+
+        Dim rowBusqueda1 As New RowDefinition
+        Dim rowBusqueda2 As New RowDefinition
+
+        rowBusqueda1.Height = New GridLength(1, GridUnitType.Star)
+        rowBusqueda2.Height = New GridLength(1, GridUnitType.Auto)
+
+        gridFondo.RowDefinitions.Add(rowBusqueda1)
+        gridFondo.RowDefinitions.Add(rowBusqueda2)
 
         Dim tbFondo As New Border With {
             .Background = New SolidColorBrush(App.Current.Resources("ColorCuarto")),
@@ -39,7 +49,7 @@ Module BusquedaXaml
 
         Dim tbBusqueda As New TextBlock With {
             .Text = recursos.GetString("Users"),
-            .Padding = New Thickness(15, 10, 15, 10),
+            .Padding = New Thickness(20, 10, 15, 10),
             .Foreground = New SolidColorBrush(Colors.White)
         }
 
@@ -76,15 +86,6 @@ Module BusquedaXaml
 
         gridBusqueda.Background = brush
 
-        Dim rowBusqueda1 As New RowDefinition
-        Dim rowBusqueda2 As New RowDefinition
-
-        rowBusqueda1.Height = New GridLength(1, GridUnitType.Auto)
-        rowBusqueda2.Height = New GridLength(1, GridUnitType.Star)
-
-        gridBusqueda.RowDefinitions.Add(rowBusqueda1)
-        gridBusqueda.RowDefinitions.Add(rowBusqueda2)
-
         '---------------------------------
 
         Dim spUsuarios As New StackPanel With {
@@ -106,14 +107,34 @@ Module BusquedaXaml
 
         spUsuariosBusqueda.Children.Add(tbUsuariosBusqueda)
 
-        Dim botonUsuariosBusqueda As New Button With {
-            .Content = recursos.GetString("Search2"),
-            .Foreground = New SolidColorBrush(Colors.White),
-            .Background = New SolidColorBrush(App.Current.Resources("ColorSecundario")),
-            .Margin = New Thickness(0, 10, 0, 0),
-            .Padding = New Thickness(15, 10, 15, 10),
-            .Style = App.Current.Resources("ButtonRevealStyle")
+        Dim spContenidoUsuariosBusqueda As New StackPanel With {
+            .Orientation = Orientation.Horizontal
         }
+
+        Dim iconoContenidoUsuariosBusqueda As New FontAwesome.UWP.FontAwesome With {
+            .Icon = FontAwesomeIcon.Search,
+            .Foreground = New SolidColorBrush(Colors.White)
+        }
+
+        spContenidoUsuariosBusqueda.Children.Add(iconoContenidoUsuariosBusqueda)
+
+        Dim tbContenidoUsuariosBusqueda As New TextBlock With {
+            .Text = recursos.GetString("Search2"),
+            .Foreground = New SolidColorBrush(Colors.White),
+            .Margin = New Thickness(10, 0, 0, 0)
+        }
+
+        spContenidoUsuariosBusqueda.Children.Add(tbContenidoUsuariosBusqueda)
+
+        Dim botonUsuariosBusqueda As New Button With {
+            .Content = spContenidoUsuariosBusqueda,
+            .Background = New SolidColorBrush(App.Current.Resources("ColorSecundario")),
+            .Margin = New Thickness(0, 15, 0, 0),
+            .Padding = New Thickness(10, 10, 10, 10),
+            .IsEnabled = False
+        }
+
+        tbUsuariosBusqueda.Tag = botonUsuariosBusqueda
 
         AddHandler botonUsuariosBusqueda.Click, AddressOf BotonUsuariosBusquedaClick
         AddHandler botonUsuariosBusqueda.PointerEntered, AddressOf UsuarioEntraBoton
@@ -124,26 +145,27 @@ Module BusquedaXaml
         spUsuarios.Children.Add(spUsuariosBusqueda)
 
         gridBusqueda.Children.Add(spUsuarios)
+        spBusqueda.Children.Add(gridBusqueda)
+        gridFondo.Children.Add(spBusqueda)
 
         '--------------------------
 
-        Dim lvResultados As New ListView With {
+        Dim gvResultados As New GridView With {
             .IsItemClickEnabled = True,
-            .ItemContainerStyle = App.Current.Resources("ListViewEstilo1"),
+            .ItemContainerStyle = App.Current.Resources("GridViewEstilo1"),
             .Margin = New Thickness(10, 10, 10, 10),
-            .Visibility = Visibility.Collapsed
+            .Visibility = Visibility.Collapsed,
+            .VerticalAlignment = VerticalAlignment.Top,
+            .HorizontalAlignment = HorizontalAlignment.Center
         }
 
-        AddHandler lvResultados.ItemClick, AddressOf LvResultadosItemClick
+        AddHandler gvResultados.ItemClick, AddressOf LvResultadosItemClick
 
-        lvResultados.SetValue(Grid.RowProperty, 1)
+        gvResultados.SetValue(Grid.RowProperty, 1)
 
-        botonUsuariosBusqueda.Tag = New pepeizq.Twitter.Objetos.BusquedaUsuario(megaUsuario, Nothing, lvResultados)
+        botonUsuariosBusqueda.Tag = New pepeizq.Twitter.Objetos.BusquedaUsuario(megaUsuario, Nothing, gvResultados, rowBusqueda2)
 
-        gridBusqueda.Children.Add(lvResultados)
-
-        spBusqueda.Children.Add(gridBusqueda)
-        gridFondo.Children.Add(spBusqueda)
+        gridFondo.Children.Add(gvResultados)
 
         Return gridFondo
 
@@ -152,9 +174,13 @@ Module BusquedaXaml
     Private Sub TbUsuariosBusquedaTextoCambia(sender As Object, e As TextChangedEventArgs)
 
         Dim tb As TextBox = sender
+        Dim boton As Button = tb.Tag
 
         If tb.Text.Trim.Length > 0 Then
             ApplicationData.Current.LocalSettings.Values("UsuarioBuscar") = tb.Text
+            boton.IsEnabled = True
+        Else
+            boton.IsEnabled = False
         End If
 
     End Sub
@@ -174,10 +200,11 @@ Module BusquedaXaml
 
         If listaUsuarios.Count > 0 Then
             visibilidad = Visibility.Visible
+            cosas.Fila2.Height = New GridLength(1, GridUnitType.Star)
 
-            Dim lv As ListView = cosas.ListView
-            lv.Items.Clear()
-            lv.Visibility = visibilidad
+            Dim gv As GridView = cosas.Resultados
+            gv.Items.Clear()
+            gv.Visibility = visibilidad
 
             For Each usuario In listaUsuarios
                 Dim imagenAvatar As New ImageBrush With {
@@ -220,23 +247,26 @@ Module BusquedaXaml
 
                 sp1.Children.Add(sp2)
 
-                Dim botonUsuario As New ListViewItem With {
+                Dim botonUsuario As New GridViewItem With {
                     .Content = sp1,
                     .Background = New SolidColorBrush(Colors.Transparent),
                     .BorderBrush = New SolidColorBrush(Colors.Transparent),
                     .BorderThickness = New Thickness(0, 0, 0, 0),
-                    .Padding = New Thickness(5, 5, 5, 5),
+                    .Padding = New Thickness(10, 10, 10, 10),
                     .Margin = New Thickness(10, 10, 10, 10),
                     .HorizontalAlignment = HorizontalAlignment.Stretch,
-                    .HorizontalContentAlignment = HorizontalAlignment.Left
+                    .HorizontalContentAlignment = HorizontalAlignment.Stretch,
+                    .MinWidth = 250
                 }
 
                 AddHandler botonUsuario.PointerPressed, AddressOf UsuarioPulsaUsuario
                 AddHandler botonUsuario.PointerEntered, AddressOf UsuarioEntraBoton
                 AddHandler botonUsuario.PointerExited, AddressOf UsuarioSaleBoton
 
-                lv.Items.Add(botonUsuario)
+                gv.Items.Add(botonUsuario)
             Next
+        Else
+            cosas.Fila2.Height = New GridLength(1, GridUnitType.Auto)
         End If
 
     End Sub
