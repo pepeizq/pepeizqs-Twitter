@@ -443,6 +443,18 @@ Public NotInheritable Class MainPage
 
     End Sub
 
+    Private Sub CbConfigNotificacionesAgrupar_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesAgrupar.Checked
+
+        Configuracion.NotificacionesAgrupar(True)
+
+    End Sub
+
+    Private Sub CbConfigNotificacionesAgrupar_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesAgrupar.Unchecked
+
+        Configuracion.NotificacionesAgrupar(False)
+
+    End Sub
+
     Private Sub CbConfigNotificacionesTiempo_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesTiempo.Checked
 
         Configuracion.NotificacionesTiempo(True)

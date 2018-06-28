@@ -2,6 +2,7 @@
 Imports pepeizq.Twitter.Tweet
 Imports Windows.ApplicationModel.Core
 Imports Windows.ApplicationModel.Store
+Imports Windows.Storage
 Imports Windows.System.Threading
 Imports Windows.UI.Core
 
@@ -85,11 +86,23 @@ Module TwitterStream
                                                                                                                                                                                                 If listaTweetsAñadir.Count > 0 Then
                                                                                                                                                                                                     listaTweetsAñadir.Reverse()
 
+                                                                                                                                                                                                    If megaUsuario.Notificacion = True Then
+                                                                                                                                                                                                        If ApplicationData.Current.LocalSettings.Values("notificacionAgrupar") = True Then
+                                                                                                                                                                                                            If listaTweetsAñadir.Count > 1 Then
+                                                                                                                                                                                                                Notificaciones.ToastTweets(listaTweetsAñadir.Count, megaUsuario)
+                                                                                                                                                                                                            Else
+                                                                                                                                                                                                                Notificaciones.ToastTweet(listaTweetsAñadir(0), megaUsuario)
+                                                                                                                                                                                                            End If
+                                                                                                                                                                                                        End If
+                                                                                                                                                                                                    End If
+
                                                                                                                                                                                                     For Each tweetAñadir As Tweet In listaTweetsAñadir
                                                                                                                                                                                                         lvInicio.Items.Insert(0, pepeizq.Twitter.Xaml.TweetXaml.Añadir(tweetAñadir, megaUsuario, Nothing))
 
                                                                                                                                                                                                         If megaUsuario.Notificacion = True Then
-                                                                                                                                                                                                            Notificaciones.ToastTweet(tweetAñadir, megaUsuario)
+                                                                                                                                                                                                            If ApplicationData.Current.LocalSettings.Values("notificacionAgrupar") = False Then
+                                                                                                                                                                                                                Notificaciones.ToastTweet(tweetAñadir, megaUsuario)
+                                                                                                                                                                                                            End If
                                                                                                                                                                                                         End If
 
                                                                                                                                                                                                         For Each item In lvInicio.Items

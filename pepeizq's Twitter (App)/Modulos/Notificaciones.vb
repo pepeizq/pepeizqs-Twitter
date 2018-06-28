@@ -204,6 +204,67 @@ Module Notificaciones
 
     End Sub
 
+    Public Sub ToastTweets(cantidad As Integer, megaUsuario As pepeizq.Twitter.MegaUsuario)
+
+        Dim recursos As New Resources.ResourceLoader
+
+        Dim textoFinal As String = "@" + megaUsuario.Usuario.ScreenNombre + " " + recursos.GetString("UserNewTweets") + " (" + cantidad.ToString + ")"
+
+        Dim texto As New AdaptiveText With {
+           .Text = textoFinal,
+           .HintMaxLines = 4
+        }
+
+        Dim logo As New ToastGenericAppLogo With {
+           .Source = megaUsuario.Usuario.ImagenAvatar,
+           .HintCrop = ToastGenericAppLogoCrop.Circle
+        }
+
+        Dim contenido As New ToastBindingGeneric With {
+            .AppLogoOverride = logo
+        }
+
+        contenido.Children.Add(texto)
+
+        Dim tostadaVisual As New ToastVisual With {
+            .BindingGeneric = contenido
+        }
+
+        Dim tostadaAudio As New ToastAudio
+
+        If ApplicationData.Current.LocalSettings.Values("notificacionSonido") = False Then
+            tostadaAudio.Silent = True
+        Else
+            tostadaAudio.Silent = False
+
+            If ApplicationData.Current.LocalSettings.Values("notificacionSonidoElegido") = Nothing Then
+                tostadaAudio.Src = New Uri("ms-winsoundevent:Notification.Default")
+            Else
+                tostadaAudio.Src = New Uri(ApplicationData.Current.LocalSettings.Values("notificacionSonidoElegido"))
+            End If
+        End If
+
+        Dim tostada As New ToastContent With {
+            .Launch = textoFinal,
+            .Visual = tostadaVisual,
+            .Audio = tostadaAudio
+        }
+
+        Try
+            Dim notificacion As ToastNotification = New ToastNotification(tostada.GetXml)
+
+            If ApplicationData.Current.LocalSettings.Values("notificacionTiempo") = True Then
+                notificacion.ExpirationTime = DateTime.Now.AddSeconds(ApplicationData.Current.LocalSettings.Values("notificacionTiempoSegundos"))
+            End If
+
+            Dim notificador As ToastNotifier = ToastNotificationManager.CreateToastNotifier()
+            notificador.Show(notificacion)
+        Catch ex As Exception
+
+        End Try
+
+    End Sub
+
     Public Sub ToastMencion(usuario As TwitterUsuario)
 
         Dim recursos As New Resources.ResourceLoader
@@ -216,7 +277,8 @@ Module Notificaciones
         }
 
         Dim logo As New ToastGenericAppLogo With {
-           .Source = usuario.ImagenAvatar
+           .Source = usuario.ImagenAvatar,
+           .HintCrop = ToastGenericAppLogoCrop.Circle
         }
 
         Dim contenido As New ToastBindingGeneric With {

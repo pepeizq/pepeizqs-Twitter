@@ -39,6 +39,12 @@ Module Configuracion
             CargarTweetCard(ApplicationData.Current.LocalSettings.Values("tweetcard"))
         End If
 
+        If ApplicationData.Current.LocalSettings.Values("notificacionAgrupar") Is Nothing Then
+            NotificacionesAgrupar(False)
+        Else
+            NotificacionesAgrupar(ApplicationData.Current.LocalSettings.Values("notificacionAgrupar"))
+        End If
+
         If ApplicationData.Current.LocalSettings.Values("notificacionTiempo") Is Nothing Then
             NotificacionesTiempo(False)
         Else
@@ -150,6 +156,18 @@ Module Configuracion
         ApplicationData.Current.LocalSettings.Values("tweetcard") = estado
 
         Dim cb As CheckBox = pagina.FindName("cbConfigAppTweetCard")
+        cb.IsChecked = estado
+
+    End Sub
+
+    Public Sub NotificacionesAgrupar(estado As Boolean)
+
+        Dim frame As Frame = Window.Current.Content
+        Dim pagina As Page = frame.Content
+
+        ApplicationData.Current.LocalSettings.Values("notificacionAgrupar") = estado
+
+        Dim cb As CheckBox = pagina.FindName("cbConfigNotificacionesAgrupar")
         cb.IsChecked = estado
 
     End Sub

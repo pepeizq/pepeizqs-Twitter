@@ -339,4 +339,10 @@
   <data name="UserNewMentions" xml:space="preserve">
     <value>tiene nuevas menciones</value>
   </data>
+  <data name="UserNewTweets" xml:space="preserve">
+    <value>tiene nuevos tweets</value>
+  </data>
+  <data name="tbConfigNotificationsGroup.Text" xml:space="preserve">
+    <value>Agrupar Notificaciones</value>
+  </data>
 </root>
