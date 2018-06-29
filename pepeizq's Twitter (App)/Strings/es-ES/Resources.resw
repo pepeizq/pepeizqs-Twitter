@@ -345,4 +345,7 @@
   <data name="tbConfigNotificationsGroup.Text" xml:space="preserve">
     <value>Agrupar Notificaciones</value>
   </data>
+  <data name="tbConfigNotificationsGroupTooltip.Text" xml:space="preserve">
+    <value>Activando esta opción te llegara una única notificación cada vez que la app encuentre nuevos tweets, en vez de una notificación por cada tweet</value>
+  </data>
 </root>
