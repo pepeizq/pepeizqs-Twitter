@@ -172,6 +172,10 @@
     <PRIResource Include="Strings\en-US\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Config\dimensiones_maximas_vista_previa.png" />
+    <Content Include="Assets\Config\notificacion_encabezado.png" />
+    <Content Include="Assets\Config\notificacion_usuario_dirigido.png" />
+    <Content Include="Assets\Config\tweetcard.png" />
     <Content Include="Assets\Logos\BadgeLogo.scale-100.png" />
     <Content Include="Assets\Logos\BadgeLogo.scale-125.png" />
     <Content Include="Assets\Logos\BadgeLogo.scale-150.png" />

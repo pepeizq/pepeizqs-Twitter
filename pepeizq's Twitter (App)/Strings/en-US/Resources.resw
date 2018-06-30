@@ -348,4 +348,7 @@
   <data name="tbConfigNotificationsGroupTooltip.Text" xml:space="preserve">
     <value>Activating this option you will receive a single notification every time the app finds new tweets, instead of a notification for each tweet</value>
   </data>
+  <data name="tbConfigAppAutoStartTooltip.Text" xml:space="preserve">
+    <value>You can disable this option from Task Manager -&gt; Startup</value>
+  </data>
 </root>
