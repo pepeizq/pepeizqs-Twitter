@@ -67,7 +67,7 @@
 
                 <Grid x:Name="gridConfig" Visibility="Collapsed">
                     <ScrollViewer>
-                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="200,100">
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Padding="20">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -110,7 +110,7 @@
 
                                             <fa:FontAwesome Icon="InfoCircle" Grid.Column="0" Foreground="{StaticResource BrushSecundario}"/>
 
-                                            <TextBlock x:Uid="tbConfigAPIKeys" Grid.Column="1" Margin="15,0" TextWrapping="Wrap"/>
+                                            <TextBlock x:Uid="tbConfigAPIKeys" Grid.Column="1" Margin="15,0" TextWrapping="Wrap" VerticalAlignment="Center"/>
 
                                             <Button x:Name="botonConfigAbrirNuevaApp" Grid.Column="2" Padding="10" Background="{StaticResource BrushSecundario}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                                                 <Button.Content>
@@ -229,7 +229,15 @@
                                         </CheckBox.Content>
                                     </CheckBox>
 
-                                    <CheckBox x:Name="cbConfigAppTweetCard" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                    <CheckBox x:Name="cbConfigAppTweetRetweets" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                        <CheckBox.Content>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock x:Uid="tbConfigAppTweetRetweets"/>
+                                            </StackPanel>
+                                        </CheckBox.Content>
+                                    </CheckBox>
+
+                                    <CheckBox x:Name="cbConfigAppTweetCard" Margin="0,15" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                                         <CheckBox.Content>
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock x:Uid="tbConfigAppTweetCard"/>
@@ -494,6 +502,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
@@ -515,7 +524,24 @@
                                 <StackPanel x:Name="spTweetDerecha" Grid.Column="1"/>
                             </Grid>
 
-                            <Grid x:Name="gridTweetCard" Grid.Row="1" Margin="0,30,0,0" Padding="20" Visibility="Collapsed">
+                            <Grid x:Name="gridTweetRetweets" Grid.Row="1" Margin="0,30,0,0" Padding="20" Visibility="Collapsed">
+                                <Grid.Background>
+                                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                        <GradientStop Color="#FFE4E4E4" Offset="0.5" />
+                                        <GradientStop Color="#FFBFBFBF" Offset="1.0" />
+                                    </LinearGradientBrush>
+                                </Grid.Background>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock x:Uid="RetweetBy" Grid.Column="0" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                <GridView x:Name="gvTweetRetweets" Grid.Column="1" Padding="0"/>
+                            </Grid> 
+
+                            <Grid x:Name="gridTweetCard" Grid.Row="2" Margin="0,30,0,0" Padding="20" Visibility="Collapsed">
                                 <Grid.Background>
                                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                         <GradientStop Color="#FFE4E4E4" Offset="0.5" />
@@ -535,7 +561,7 @@
                                 </Border>
                             </Grid>
 
-                            <ListView x:Name="lvTweetRespuestas" Grid.Row="2" Margin="0,30,0,0" ItemContainerStyle="{StaticResource ListViewEstilo1}"/>
+                            <ListView x:Name="lvTweetRespuestas" Grid.Row="3" Margin="0,30,0,0" ItemContainerStyle="{StaticResource ListViewEstilo1}"/>
                         </Grid>
                     </ScrollViewer>
                 </Grid>

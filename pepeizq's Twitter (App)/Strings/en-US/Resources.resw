@@ -271,7 +271,7 @@
     <value>Application</value>
   </data>
   <data name="tbConfigAppTweetCard.Text" xml:space="preserve">
-    <value>Load information from the "Tweet Card" if the tweet has it</value>
+    <value>Load information from the "Tweet Card" when you expand a tweet (if the tweet has it)</value>
   </data>
   <data name="tbConfigAppLoadMedia.Text" xml:space="preserve">
     <value>Load and show media from Tweets (images, gifs and videos)</value>
@@ -350,5 +350,11 @@
   </data>
   <data name="tbConfigAppAutoStartTooltip.Text" xml:space="preserve">
     <value>You can disable this option from Task Manager -&gt; Startup</value>
+  </data>
+  <data name="RetweetBy.Text" xml:space="preserve">
+    <value>Retweet by:</value>
+  </data>
+  <data name="tbConfigAppTweetRetweets.Text" xml:space="preserve">
+    <value>Load list of users who have retweeted when you expand a tweet</value>
   </data>
 </root>

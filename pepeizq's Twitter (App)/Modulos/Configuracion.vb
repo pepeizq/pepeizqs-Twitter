@@ -33,6 +33,12 @@ Module Configuracion
             CargarMedia(ApplicationData.Current.LocalSettings.Values("media"))
         End If
 
+        If ApplicationData.Current.LocalSettings.Values("tweetretweets") Is Nothing Then
+            CargarTweetRetweets(True)
+        Else
+            CargarTweetRetweets(ApplicationData.Current.LocalSettings.Values("tweetretweets"))
+        End If
+
         If ApplicationData.Current.LocalSettings.Values("tweetcard") Is Nothing Then
             CargarTweetCard(False)
         Else
@@ -145,6 +151,18 @@ Module Configuracion
         Else
             sp.Visibility = Visibility.Collapsed
         End If
+
+    End Sub
+
+    Public Sub CargarTweetRetweets(estado As Boolean)
+
+        Dim frame As Frame = Window.Current.Content
+        Dim pagina As Page = frame.Content
+
+        ApplicationData.Current.LocalSettings.Values("tweetretweets") = estado
+
+        Dim cb As CheckBox = pagina.FindName("cbConfigAppTweetRetweets")
+        cb.IsChecked = estado
 
     End Sub
 

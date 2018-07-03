@@ -399,6 +399,18 @@ Public NotInheritable Class MainPage
 
     End Sub
 
+    Private Sub CbConfigAppTweetRetweets_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppTweetRetweets.Checked
+
+        Configuracion.CargarTweetRetweets(True)
+
+    End Sub
+
+    Private Sub CbConfigAppTweetRetweets_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppTweetRetweets.Unchecked
+
+        Configuracion.CargarTweetRetweets(False)
+
+    End Sub
+
     Private Sub CbConfigAppTweetCard_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppTweetCard.Checked
 
         Configuracion.CargarTweetCard(True)

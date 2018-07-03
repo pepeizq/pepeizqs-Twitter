@@ -271,7 +271,7 @@
     <value>Aplicación</value>
   </data>
   <data name="tbConfigAppTweetCard.Text" xml:space="preserve">
-    <value>Cargar información de la "Tweet Card" si el tweet dispone de ello</value>
+    <value>Cargar información de la "Tweet Card" cuando amplias un tweet (si el tweet lo tiene)</value>
   </data>
   <data name="tbConfigAppLoadMedia.Text" xml:space="preserve">
     <value>Cargar y mostrar archivos multimedia de los tweets (imagenes, gifs y videos)</value>
@@ -350,5 +350,11 @@
   </data>
   <data name="tbConfigAppAutoStartTooltip.Text" xml:space="preserve">
     <value>Puedes desactivar esta opción desde Administrador de Tareas -&gt; Inicio</value>
+  </data>
+  <data name="RetweetBy.Text" xml:space="preserve">
+    <value>Retwitteado por:</value>
+  </data>
+  <data name="tbConfigAppTweetRetweets.Text" xml:space="preserve">
+    <value>Cargar lista de usuarios que han hecho retweet cuando amplias un tweet</value>
   </data>
 </root>

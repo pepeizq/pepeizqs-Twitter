@@ -426,4 +426,19 @@ Module TwitterPeticiones
 
     End Function
 
+    Public Async Function BuscarRetweetsTweet(listaTweets As List(Of Tweet), megaUsuario As pepeizq.Twitter.MegaUsuario, tweetID As String) As Task(Of List(Of Tweet))
+
+        Try
+            Dim enlace As New Uri("https://api.twitter.com/1.1/statuses/retweets/" + tweetID + ".json?count=100")
+            Dim request As New TwitterOAuthRequest
+            Dim resultado As String = Await request.EjecutarGetAsync(enlace, megaUsuario.Servicio.twitterDataProvider._tokens)
+            listaTweets = JsonConvert.DeserializeObject(Of List(Of Tweet))(resultado)
+        Catch ex As Exception
+
+        End Try
+
+        Return listaTweets
+
+    End Function
+
 End Module

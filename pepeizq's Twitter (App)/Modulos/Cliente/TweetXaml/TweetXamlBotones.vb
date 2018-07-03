@@ -289,20 +289,22 @@ Namespace pepeizq.Twitter.Xaml
 
             Dim gridResponder As Grid = pagina.FindName(nombreGrid)
 
-            If gridResponder.Visibility = Visibility.Visible Then
-                gridResponder.Visibility = Visibility.Collapsed
-                boton.Background = New SolidColorBrush(Colors.Transparent)
-                boton.Foreground = New SolidColorBrush(Colors.Black)
-            Else
-                Dim color As Color = Nothing
+            If Not gridResponder Is Nothing Then
+                If gridResponder.Visibility = Visibility.Visible Then
+                    gridResponder.Visibility = Visibility.Collapsed
+                    boton.Background = New SolidColorBrush(Colors.Transparent)
+                    boton.Foreground = New SolidColorBrush(Colors.Black)
+                Else
+                    Dim color As Color = Nothing
 
-                If cosas.Color = Nothing Then
-                    color = App.Current.Resources("ColorSecundario")
+                    If cosas.Color = Nothing Then
+                        color = App.Current.Resources("ColorSecundario")
+                    End If
+
+                    gridResponder.Visibility = Visibility.Visible
+                    boton.Background = New SolidColorBrush(cosas.Color)
+                    boton.Foreground = New SolidColorBrush(Colors.White)
                 End If
-
-                gridResponder.Visibility = Visibility.Visible
-                boton.Background = New SolidColorBrush(cosas.Color)
-                boton.Foreground = New SolidColorBrush(Colors.White)
             End If
 
         End Sub
