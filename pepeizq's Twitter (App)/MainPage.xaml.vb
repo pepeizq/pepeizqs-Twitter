@@ -269,10 +269,12 @@ Public NotInheritable Class MainPage
         botonConfigCuentas.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
         botonConfigApp.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
         botonConfigNotificaciones.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+        botonConfigApi.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
 
         spConfigCuentas.Visibility = Visibility.Collapsed
         spConfigApp.Visibility = Visibility.Collapsed
         spConfigNotificaciones.Visibility = Visibility.Collapsed
+        spConfigAPI.Visibility = Visibility.Collapsed
 
         boton.Background = New SolidColorBrush(App.Current.Resources("ColorCuarto"))
         sp.Visibility = Visibility.Visible
@@ -294,6 +296,12 @@ Public NotInheritable Class MainPage
     Private Sub BotonConfigNotificaciones_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigNotificaciones.Click
 
         SpConfigVisibilidad(botonConfigNotificaciones, spConfigNotificaciones)
+
+    End Sub
+
+    Private Sub BotonConfigApi_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigApi.Click
+
+        SpConfigVisibilidad(botonConfigApi, spConfigApi)
 
     End Sub
 
@@ -423,19 +431,16 @@ Public NotInheritable Class MainPage
 
     End Sub
 
-    Private Sub BotonConfigAPIMostrar_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigAPIMostrar.Click
+    Private Async Sub BotonConfigApiTutorial_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigApiTutorial.Click
 
-        If spConfigAPI.Visibility = Visibility.Collapsed Then
-            spConfigAPI.Visibility = Visibility.Visible
-        Else
-            spConfigAPI.Visibility = Visibility.Collapsed
-        End If
+        Await Launcher.LaunchUriAsync(New Uri("https://pepeizqapps.com/how-create-your-own-app-in-twitter/"))
 
     End Sub
 
-    Private Async Sub BotonConfigAbrirNuevaApp_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigAbrirNuevaApp.Click
+    Private Sub BotonConfigApiReset_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigApiReset.Click
 
-        Await Launcher.LaunchUriAsync(New Uri("https://apps.twitter.com/"))
+        tbConfigConsumerKey.Text = "poGVvY5De5zBqQ4ceqp7jw7cj"
+        tbConfigConsumerSecret.Text = "f8PCcuwFZxYi0r5iG6UaysgxD0NoaCT2RgYG8I41mvjghy58rc"
 
     End Sub
 

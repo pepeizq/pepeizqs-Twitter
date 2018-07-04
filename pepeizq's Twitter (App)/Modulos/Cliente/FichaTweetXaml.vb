@@ -102,8 +102,8 @@ Namespace pepeizq.Twitter.Xaml
                                                                                                                                                    If listaRetweets.Count > 0 Then
                                                                                                                                                        For Each retweet In listaRetweets
                                                                                                                                                            Dim boton As New Button With {
-                                                                                                                                                               .MinWidth = 0,
-                                                                                                                                                               .Background = New SolidColorBrush(Colors.Transparent)
+                                                                                                                                                               .Background = New SolidColorBrush(Colors.Transparent),
+                                                                                                                                                               .BorderThickness = New Thickness(0, 0, 0, 0)
                                                                                                                                                            }
 
                                                                                                                                                            Dim imagenAvatar As New ImageBrush With {

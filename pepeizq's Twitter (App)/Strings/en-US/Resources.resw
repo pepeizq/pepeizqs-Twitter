@@ -294,14 +294,8 @@
   <data name="CbNotification" xml:space="preserve">
     <value>Show Notifications</value>
   </data>
-  <data name="tbConfigAPIKeys.Text" xml:space="preserve">
-    <value>Change the keys so that it works as if it were another Twitter app (restart the app when you change the keys)</value>
-  </data>
-  <data name="tbConfigAPIShow.Text" xml:space="preserve">
+  <data name="tbConfigApi.Text" xml:space="preserve">
     <value>API Keys</value>
-  </data>
-  <data name="tbConfigCreateNewApp.Text" xml:space="preserve">
-    <value>Create New App</value>
   </data>
   <data name="ButtonRemoveAds" xml:space="preserve">
     <value>Remove Ads</value>
@@ -356,5 +350,14 @@
   </data>
   <data name="tbConfigAppTweetRetweets.Text" xml:space="preserve">
     <value>Load list of users who have retweeted when you expand a tweet</value>
+  </data>
+  <data name="tbConfigApiWarning.Text" xml:space="preserve">
+    <value>If you want the app to operate as if it were your own Twitter app you can change the keys, but you must configure the new app as specified in the tutorial</value>
+  </data>
+  <data name="tbConfigApiTutorial.Text" xml:space="preserve">
+    <value>Open Tutorial</value>
+  </data>
+  <data name="tbConfigApiReset.Text" xml:space="preserve">
+    <value>Reset Keys</value>
   </data>
 </root>
