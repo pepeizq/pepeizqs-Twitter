@@ -25,16 +25,6 @@
                         OpenPaneLength="200" AlwaysShowHeader="False" IsSettingsVisible="False">
             <NavigationView.PaneFooter>
                 <StackPanel Orientation="Vertical">
-                    <StackPanel x:Name="spCuentaSeleccionada" Orientation="Horizontal">
-                        <Ellipse Width="36" Height="36" HorizontalAlignment="Left" Margin="6">
-                            <Ellipse.Fill>
-                                <ImageBrush x:Name="imagenCuentaSeleccionada"/>
-                            </Ellipse.Fill>
-                        </Ellipse>
-                        <TextBlock x:Name="tbCuentaSeleccionada" VerticalAlignment="Center" Foreground="White"/>
-                    </StackPanel>
-
-                    <NavigationViewItemSeparator/>
                     <NavigationViewItem x:Name="itemUsuarios" Tapped="Nv_ItemFlyout" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Visibility="Collapsed">
                         <NavigationViewItem.Icon>
                             <fa:FontAwesome Icon="User"/>

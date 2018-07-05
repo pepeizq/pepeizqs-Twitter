@@ -22,7 +22,7 @@ NotInheritable Class App
 
         If e.Kind = ActivationKind.Launch Then
             If Not e.Arguments = String.Empty Then
-                UsuarioXaml.CambiarCuenta(e.Arguments, True)
+                UsuarioXaml.CambiarCuenta(Nothing, e.Arguments, True)
             End If
         End If
 

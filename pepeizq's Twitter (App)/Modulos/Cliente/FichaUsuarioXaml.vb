@@ -1,9 +1,7 @@
 ﻿Imports FontAwesome.UWP
 Imports Microsoft.Toolkit.Uwp.Helpers
 Imports Microsoft.Toolkit.Uwp.UI.Controls
-Imports Newtonsoft.Json
 Imports pepeizq.Twitter
-Imports pepeizq.Twitter.OAuth
 Imports pepeizq.Twitter.Tweet
 Imports Windows.ApplicationModel.DataTransfer
 Imports Windows.Storage

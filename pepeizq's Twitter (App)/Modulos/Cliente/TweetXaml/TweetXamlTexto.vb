@@ -1,6 +1,7 @@
 ﻿Imports System.Net
 Imports pepeizq.Twitter.Tweet
 Imports Windows.UI
+Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Documents
 
 Namespace pepeizq.Twitter.Xaml

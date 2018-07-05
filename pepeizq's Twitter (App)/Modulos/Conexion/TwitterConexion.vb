@@ -359,7 +359,7 @@ Module TwitterConexion
             If menu.Items.Count > 0 Then
                 If i = 0 Then
                     Dim nuevoUsuario As TwitterUsuario = menu.Items(0).Tag
-                    UsuarioXaml.CambiarCuenta(nuevoUsuario.ScreenNombre, False)
+                    UsuarioXaml.CambiarCuenta(megaUsuario, nuevoUsuario.ScreenNombre, False)
                 End If
             End If
 
@@ -396,7 +396,6 @@ Module TwitterConexion
 
             Dim nvPrincipal As NavigationView = pagina.FindName("nvPrincipal")
             Dim itemUsuarios As NavigationViewItem = pagina.FindName("itemUsuarios")
-            Dim spCuentaSeleccionada As StackPanel = pagina.FindName("spCuentaSeleccionada")
 
             If lvConfigUsuarios.Items.Count = 0 Then
                 For Each item In nvPrincipal.MenuItems
@@ -407,7 +406,6 @@ Module TwitterConexion
                 Next
 
                 itemUsuarios.Visibility = Visibility.Collapsed
-                spCuentaSeleccionada.Visibility = Visibility.Collapsed
             Else
                 For Each item In nvPrincipal.MenuItems
                     If TypeOf item Is NavigationViewItem Then
@@ -421,8 +419,6 @@ Module TwitterConexion
                 Else
                     itemUsuarios.Visibility = Visibility.Visible
                 End If
-
-                spCuentaSeleccionada.Visibility = Visibility.Visible
             End If
 
         End If

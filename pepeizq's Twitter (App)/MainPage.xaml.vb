@@ -14,6 +14,7 @@ Imports Windows.UI
 Imports Windows.UI.Core
 Imports Windows.UI.StartScreen
 Imports Windows.UI.Xaml.Media.Animation
+Imports Windows.UI.Xaml.Shapes
 
 Public NotInheritable Class MainPage
     Inherits Page
@@ -22,12 +23,47 @@ Public NotInheritable Class MainPage
 
         Dim recursos As New Resources.ResourceLoader()
 
-        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Home"), FontAwesomeIcon.Home, 0))
-        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Mentions"), FontAwesomeIcon.Bell, 1))
-        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("WriteTweet"), FontAwesomeIcon.Pencil, 2))
-        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Search"), FontAwesomeIcon.Search, 3))
+        Dim nvItemCuenta As New NavigationViewItem With {
+            .Margin = New Thickness(-8, 0, 0, 0),
+            .BorderThickness = New Thickness(0, 0, 0, 0)
+        }
+
+        Dim sp As New StackPanel With {
+            .Name = "spCuentaSeleccionada",
+            .Orientation = Orientation.Horizontal,
+            .Padding = New Thickness(2, 0, 2, 0)
+        }
+
+        Dim elipseCuentaSeleccionada As New Ellipse With {
+            .Name = "elipseCuentaSeleccionada",
+            .Width = 30,
+            .Height = 30,
+            .Margin = New Thickness(0, 0, 9, 0)
+        }
+
+        sp.Children.Add(elipseCuentaSeleccionada)
+
+        Dim tbCuentaSeleccionada As New TextBlock With {
+            .Foreground = New SolidColorBrush(Colors.White),
+            .VerticalAlignment = VerticalAlignment.Center,
+            .Name = "tbCuentaSeleccionada"
+        }
+
+        sp.Children.Add(tbCuentaSeleccionada)
+
+        AddHandler nvItemCuenta.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler nvItemCuenta.PointerExited, AddressOf UsuarioSaleBoton
+
+        nvItemCuenta.Content = sp
+
+        nvPrincipal.MenuItems.Add(nvItemCuenta)
         nvPrincipal.MenuItems.Add(New NavigationViewItemSeparator)
-        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Config"), FontAwesomeIcon.Cog, 4))
+        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Home"), FontAwesomeIcon.Home, 1))
+        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Mentions"), FontAwesomeIcon.Bell, 2))
+        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("WriteTweet"), FontAwesomeIcon.Pencil, 3))
+        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Search"), FontAwesomeIcon.Search, 4))
+        nvPrincipal.MenuItems.Add(New NavigationViewItemSeparator)
+        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Config"), FontAwesomeIcon.Cog, 5))
 
     End Sub
 
@@ -56,9 +92,9 @@ Public NotInheritable Class MainPage
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
-        Dim item As TextBlock = args.InvokedItem
+        If TypeOf args.InvokedItem Is TextBlock Then
+            Dim item As TextBlock = args.InvokedItem
 
-        If Not item Is Nothing Then
             If item.Text = recursos.GetString("Home") Then
 
                 If Not usuario Is Nothing Then
@@ -103,6 +139,18 @@ Public NotInheritable Class MainPage
 
                 GridVisibilidad(gridConfig, Nothing)
                 SpConfigVisibilidad(botonConfigCuentas, spConfigCuentas)
+
+            End If
+        ElseIf TypeOf args.InvokedItem Is StackPanel Then
+            Dim item As StackPanel = args.InvokedItem
+
+            If Not item Is Nothing Then
+
+                Dim usuarioAmpliado As pepeizq.Twitter.Objetos.UsuarioAmpliado = item.Tag
+
+                If Not usuarioAmpliado Is Nothing Then
+                    FichaUsuarioXaml.Generar(usuarioAmpliado, Nothing)
+                End If
 
             End If
         End If
@@ -274,7 +322,7 @@ Public NotInheritable Class MainPage
         spConfigCuentas.Visibility = Visibility.Collapsed
         spConfigApp.Visibility = Visibility.Collapsed
         spConfigNotificaciones.Visibility = Visibility.Collapsed
-        spConfigAPI.Visibility = Visibility.Collapsed
+        spConfigApi.Visibility = Visibility.Collapsed
 
         boton.Background = New SolidColorBrush(App.Current.Resources("ColorCuarto"))
         sp.Visibility = Visibility.Visible
@@ -343,8 +391,6 @@ Public NotInheritable Class MainPage
                 botonAñadirCuenta.IsEnabled = False
             End If
 
-            spCuentaSeleccionada.Visibility = Visibility.Visible
-
             For Each item In nvPrincipal.MenuItems
                 If TypeOf item Is NavigationViewItem Then
                     Dim nvItem As NavigationViewItem = item
@@ -353,7 +399,6 @@ Public NotInheritable Class MainPage
             Next
         Else
             itemUsuarios.Visibility = Visibility.Collapsed
-            spCuentaSeleccionada.Visibility = Visibility.Collapsed
 
             For Each item In nvPrincipal.MenuItems
                 If TypeOf item Is NavigationViewItem Then

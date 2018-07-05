@@ -2,6 +2,7 @@
 Imports pepeizq.Twitter
 Imports Windows.UI
 Imports Windows.UI.Core
+Imports Windows.UI.Xaml.Shapes
 
 Module UsuarioXaml
 
@@ -40,7 +41,7 @@ Module UsuarioXaml
         Dim menu As MenuFlyout = pagina.FindName("botonUsuariosMenu")
         Dim menuItemUsuario As New MenuFlyoutItem With {
             .Text = usuario.Nombre,
-            .Tag = usuario
+            .Tag = New pepeizq.Twitter.Objetos.UsuarioAmpliado(megaUsuario, usuario, Nothing)
         }
 
         AddHandler menuItemUsuario.Click, AddressOf BotonCambiarCuentaClick
@@ -63,8 +64,16 @@ Module UsuarioXaml
         gridPrincipal.Children.Insert(0, gridUsuario)
 
         If visibilidad = Visibility.Visible Then
-            Dim imagenCuenta As ImageBrush = pagina.FindName("imagenCuentaSeleccionada")
-            imagenCuenta.ImageSource = New BitmapImage(New Uri(usuario.ImagenAvatar))
+            Dim spCuentaSeleccionada As StackPanel = pagina.FindName("spCuentaSeleccionada")
+            spCuentaSeleccionada.Tag = New pepeizq.Twitter.Objetos.UsuarioAmpliado(megaUsuario, usuario, Nothing)
+
+            Dim elipseCuentaSeleccionada As Ellipse = pagina.FindName("elipseCuentaSeleccionada")
+
+            Dim imagenCuenta As New ImageBrush With {
+                .ImageSource = New BitmapImage(New Uri(usuario.ImagenAvatar))
+            }
+
+            elipseCuentaSeleccionada.Fill = imagenCuenta
 
             Dim tbCuenta As TextBlock = pagina.FindName("tbCuentaSeleccionada")
             tbCuenta.Text = usuario.Nombre
@@ -119,13 +128,13 @@ Module UsuarioXaml
     Private Sub BotonCambiarCuentaClick(sender As Object, e As RoutedEventArgs)
 
         Dim boton As MenuFlyoutItem = sender
-        Dim usuario As TwitterUsuario = boton.Tag
+        Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = boton.Tag
 
-        CambiarCuenta(usuario.ScreenNombre, False)
+        CambiarCuenta(cosas.MegaUsuario, cosas.Usuario.ScreenNombre, False)
 
     End Sub
 
-    Public Async Sub CambiarCuenta(usuarioRecibido As String, esperar As Boolean)
+    Public Async Sub CambiarCuenta(megaUsuario As pepeizq.Twitter.MegaUsuario, usuarioRecibido As String, esperar As Boolean)
 
         If esperar = True Then
             Await Task.Delay(5000)
@@ -157,8 +166,16 @@ Module UsuarioXaml
             Dim itemUsuarios As NavigationViewItem = pagina.FindName("itemUsuarios")
             itemUsuarios.Tag = usuario
 
-            Dim imagenCuenta As ImageBrush = pagina.FindName("imagenCuentaSeleccionada")
-            imagenCuenta.ImageSource = New BitmapImage(New Uri(usuario.ImagenAvatar))
+            Dim spCuentaSeleccionada As StackPanel = pagina.FindName("spCuentaSeleccionada")
+            spCuentaSeleccionada.Tag = New pepeizq.Twitter.Objetos.UsuarioAmpliado(megaUsuario, usuario, Nothing)
+
+            Dim elipseCuentaSeleccionada As Ellipse = pagina.FindName("elipseCuentaSeleccionada")
+
+            Dim imagenCuenta As New ImageBrush With {
+                .ImageSource = New BitmapImage(New Uri(usuario.ImagenAvatar))
+            }
+
+            elipseCuentaSeleccionada.Fill = imagenCuenta
 
             Dim tbCuenta As TextBlock = pagina.FindName("tbCuentaSeleccionada")
             tbCuenta.Text = usuario.Nombre
