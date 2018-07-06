@@ -280,7 +280,7 @@
     <value>Aplikacja</value>
   </data>
   <data name="tbConfigAppTweetCard.Text" xml:space="preserve">
-    <value>Załaduj informacje z &quot;Tweet Card&quot;, jeśli ma to tweet</value>
+    <value>Załaduj informacje z "Tweet Card", jeśli ma to tweet</value>
   </data>
   <data name="tbConfigAppLoadMedia.Text" xml:space="preserve">
     <value>Ładuj i wyświetlaj multimedia z tweetów (obrazy, gify i filmy)</value>
@@ -299,9 +299,6 @@
   </data>
   <data name="ButtonDeleteAccount" xml:space="preserve">
     <value>Usuń konto</value>
-  </data>
-  <data name="CbNotification" xml:space="preserve">
-    <value>Pokaż powiadomienia</value>
   </data>
   <data name="tbConfigAPIKeys.Text" xml:space="preserve">
     <value>Zmień klucze tak, aby działały jak kolejna aplikacja na Twitterze (uruchom ponownie aplikację po zmianie kluczy)</value>

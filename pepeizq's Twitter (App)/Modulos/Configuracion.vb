@@ -51,10 +51,16 @@ Module Configuracion
             NotificacionesAgrupar(ApplicationData.Current.LocalSettings.Values("notificacionAgrupar"))
         End If
 
-        If ApplicationData.Current.LocalSettings.Values("notificacionTiempo") Is Nothing Then
-            NotificacionesTiempo(False)
+        If ApplicationData.Current.LocalSettings.Values("notificacionInicioTiempo") Is Nothing Then
+            NotificacionesInicioTiempo(False)
         Else
-            NotificacionesTiempo(ApplicationData.Current.LocalSettings.Values("notificacionTiempo"))
+            NotificacionesInicioTiempo(ApplicationData.Current.LocalSettings.Values("notificacionInicioTiempo"))
+        End If
+
+        If ApplicationData.Current.LocalSettings.Values("notificacionMencionesTiempo") Is Nothing Then
+            NotificacionesMencionesTiempo(False)
+        Else
+            NotificacionesMencionesTiempo(ApplicationData.Current.LocalSettings.Values("notificacionMencionesTiempo"))
         End If
 
         If ApplicationData.Current.LocalSettings.Values("notificacionSonido") Is Nothing Then
@@ -190,28 +196,56 @@ Module Configuracion
 
     End Sub
 
-    Public Sub NotificacionesTiempo(estado As Boolean)
+    Public Sub NotificacionesInicioTiempo(estado As Boolean)
 
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
-        ApplicationData.Current.LocalSettings.Values("notificacionTiempo") = estado
+        ApplicationData.Current.LocalSettings.Values("notificacionInicioTiempo") = estado
 
-        Dim cb As CheckBox = pagina.FindName("cbConfigNotificacionesTiempo")
+        Dim cb As CheckBox = pagina.FindName("cbConfigNotificacionesInicioTiempo")
         cb.IsChecked = estado
 
-        Dim sp As StackPanel = pagina.FindName("spConfigNotificacionesTiempo")
+        Dim sp As StackPanel = pagina.FindName("spConfigNotificacionesInicioTiempo")
 
         If estado = True Then
             sp.Visibility = Visibility.Visible
 
-            Dim slider As Slider = pagina.FindName("sliderNotificacionesTiempo")
+            Dim slider As Slider = pagina.FindName("sliderNotificacionesInicioTiempo")
 
-            If ApplicationData.Current.LocalSettings.Values("notificacionTiempoSegundos") = Nothing Then
-                ApplicationData.Current.LocalSettings.Values("notificacionTiempoSegundos") = 30
+            If ApplicationData.Current.LocalSettings.Values("notificacionInicioTiempoSegundos") = Nothing Then
+                ApplicationData.Current.LocalSettings.Values("notificacionInicioTiempoSegundos") = 30
             End If
 
-            slider.Value = ApplicationData.Current.LocalSettings.Values("notificacionTiempoSegundos")
+            slider.Value = ApplicationData.Current.LocalSettings.Values("notificacionInicioTiempoSegundos")
+        Else
+            sp.Visibility = Visibility.Collapsed
+        End If
+
+    End Sub
+
+    Public Sub NotificacionesMencionesTiempo(estado As Boolean)
+
+        Dim frame As Frame = Window.Current.Content
+        Dim pagina As Page = frame.Content
+
+        ApplicationData.Current.LocalSettings.Values("notificacionMencionesTiempo") = estado
+
+        Dim cb As CheckBox = pagina.FindName("cbConfigNotificacionesMencionesTiempo")
+        cb.IsChecked = estado
+
+        Dim sp As StackPanel = pagina.FindName("spConfigNotificacionesMencionesTiempo")
+
+        If estado = True Then
+            sp.Visibility = Visibility.Visible
+
+            Dim slider As Slider = pagina.FindName("sliderNotificacionesMencionesTiempo")
+
+            If ApplicationData.Current.LocalSettings.Values("notificacionMencionesTiempoSegundos") = Nothing Then
+                ApplicationData.Current.LocalSettings.Values("notificacionMencionesTiempoSegundos") = 30
+            End If
+
+            slider.Value = ApplicationData.Current.LocalSettings.Values("notificacionMencionesTiempoSegundos")
         Else
             sp.Visibility = Visibility.Collapsed
         End If

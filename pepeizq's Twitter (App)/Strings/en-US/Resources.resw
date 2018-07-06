@@ -151,7 +151,7 @@
     <value>Set a sound</value>
   </data>
   <data name="tbConfigNotificationsTime.Text" xml:space="preserve">
-    <value>Set an expiration time</value>
+    <value>Set an expiration time in the Action Center</value>
   </data>
   <data name="tbConfigNotificationsImage.Text" xml:space="preserve">
     <value>Add image header (if the tweet has it)</value>
@@ -291,8 +291,8 @@
   <data name="ButtonDeleteAccount" xml:space="preserve">
     <value>Delete Account</value>
   </data>
-  <data name="CbNotification" xml:space="preserve">
-    <value>Show Notifications</value>
+  <data name="Notifications" xml:space="preserve">
+    <value>Notifications</value>
   </data>
   <data name="tbConfigApi.Text" xml:space="preserve">
     <value>API Keys</value>
@@ -359,5 +359,11 @@
   </data>
   <data name="tbConfigApiReset.Text" xml:space="preserve">
     <value>Reset Keys</value>
+  </data>
+  <data name="Home2.Text" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Mentions2.Text" xml:space="preserve">
+    <value>Mentions</value>
   </data>
 </root>

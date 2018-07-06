@@ -181,8 +181,8 @@ Public NotInheritable Class MainPage
 
             Dim listaUsuarios As New List(Of TwitterUsuario)
 
-            If helper.KeyExists("listaUsuarios4") Then
-                listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios4")
+            If helper.KeyExists("listaUsuarios5") Then
+                listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios5")
             End If
 
             Dim i As Integer = 0
@@ -235,7 +235,7 @@ Public NotInheritable Class MainPage
                 SpConfigVisibilidad(botonConfigCuentas, spConfigCuentas)
             End If
 
-            tbNumeroCuentas.Text = listaUsuarios.Count.ToString + "/35"
+            tbNumeroCuentas.Text = listaUsuarios.Count.ToString + "/25"
         Else
             For Each item In nvPrincipal.MenuItems
                 If TypeOf item Is NavigationViewItem Then
@@ -360,8 +360,8 @@ Public NotInheritable Class MainPage
 
         Dim listaUsuarios As New List(Of TwitterUsuario)
 
-        If helper.KeyExists("listaUsuarios4") Then
-            listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios4")
+        If helper.KeyExists("listaUsuarios5") Then
+            listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios5")
         End If
 
         Dim visibilidad As New Visibility
@@ -378,7 +378,7 @@ Public NotInheritable Class MainPage
             UsuarioXaml.GenerarCadaUsuario(megaUsuario, visibilidad)
         End If
 
-        tbNumeroCuentas.Text = lvConfigUsuarios.Items.Count.ToString + "/35"
+        tbNumeroCuentas.Text = lvConfigUsuarios.Items.Count.ToString + "/25"
 
         If lvConfigUsuarios.Items.Count > 0 Then
             If lvConfigUsuarios.Items.Count > 1 Then
@@ -387,7 +387,7 @@ Public NotInheritable Class MainPage
                 itemUsuarios.Visibility = Visibility.Collapsed
             End If
 
-            If lvConfigUsuarios.Items.Count > 35 Then
+            If lvConfigUsuarios.Items.Count > 25 Then
                 botonAñadirCuenta.IsEnabled = False
             End If
 
@@ -517,26 +517,50 @@ Public NotInheritable Class MainPage
 
     End Sub
 
-    Private Sub CbConfigNotificacionesTiempo_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesTiempo.Checked
+    Private Sub CbConfigNotificacionesInicioTiempo_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesInicioTiempo.Checked
 
-        Configuracion.NotificacionesTiempo(True)
-
-    End Sub
-
-    Private Sub CbConfigNotificacionesTiempo_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesTiempo.Unchecked
-
-        Configuracion.NotificacionesTiempo(False)
+        Configuracion.NotificacionesInicioTiempo(True)
 
     End Sub
 
-    Private Sub SliderNotificacionesTiempo_ValueChanged(sender As Object, e As RangeBaseValueChangedEventArgs) Handles sliderNotificacionesTiempo.ValueChanged
+    Private Sub CbConfigNotificacionesInicioTiempo_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesInicioTiempo.Unchecked
+
+        Configuracion.NotificacionesInicioTiempo(False)
+
+    End Sub
+
+    Private Sub SliderNotificacionesInicioTiempo_ValueChanged(sender As Object, e As RangeBaseValueChangedEventArgs) Handles sliderNotificacionesInicioTiempo.ValueChanged
 
         Dim recursos As New Resources.ResourceLoader
 
-        If Not sliderNotificacionesTiempo.Value = 5 Then
-            ApplicationData.Current.LocalSettings.Values("notificacionTiempoSegundos") = sliderNotificacionesTiempo.Value
+        If Not sliderNotificacionesInicioTiempo.Value = 5 Then
+            ApplicationData.Current.LocalSettings.Values("notificacionInicioTiempoSegundos") = sliderNotificacionesInicioTiempo.Value
 
-            tbConfigNotificacionesTiempo.Text = sliderNotificacionesTiempo.Value.ToString + " " + recursos.GetString("Seconds")
+            tbConfigNotificacionesInicioTiempo.Text = sliderNotificacionesInicioTiempo.Value.ToString + " " + recursos.GetString("Seconds")
+        End If
+
+    End Sub
+
+    Private Sub CbConfigNotificacionesMencionesTiempo_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesMencionesTiempo.Checked
+
+        Configuracion.NotificacionesMencionesTiempo(True)
+
+    End Sub
+
+    Private Sub CbConfigNotificacionesMencionesTiempo_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesMencionesTiempo.Unchecked
+
+        Configuracion.NotificacionesMencionesTiempo(False)
+
+    End Sub
+
+    Private Sub SliderNotificacionesMencionesTiempo_ValueChanged(sender As Object, e As RangeBaseValueChangedEventArgs) Handles sliderNotificacionesMencionesTiempo.ValueChanged
+
+        Dim recursos As New Resources.ResourceLoader
+
+        If Not sliderNotificacionesMencionesTiempo.Value = 5 Then
+            ApplicationData.Current.LocalSettings.Values("notificacionMencionesTiempoSegundos") = sliderNotificacionesMencionesTiempo.Value
+
+            tbConfigNotificacionesMencionesTiempo.Text = sliderNotificacionesMencionesTiempo.Value.ToString + " " + recursos.GetString("Seconds")
         End If
 
     End Sub

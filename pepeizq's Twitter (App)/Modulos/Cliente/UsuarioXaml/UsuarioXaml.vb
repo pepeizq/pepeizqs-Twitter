@@ -144,8 +144,8 @@ Module UsuarioXaml
 
         Dim listaUsuarios As New List(Of TwitterUsuario)
 
-        If helper.KeyExists("listaUsuarios4") Then
-            listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios4")
+        If helper.KeyExists("listaUsuarios5") Then
+            listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios5")
         End If
 
         Dim usuario As TwitterUsuario = Nothing

@@ -58,7 +58,7 @@ Module Notificaciones
 
     End Sub
 
-    Public Sub ToastTweet(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario)
+    Public Sub ToastTweet(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario, segundos As Double)
 
         Dim tb As New TextBlock
         tb = pepeizq.Twitter.Xaml.TweetTexto.Generar(tweet, Nothing, Nothing, megaUsuario, True)
@@ -191,8 +191,8 @@ Module Notificaciones
             Try
                 Dim notificacion As ToastNotification = New ToastNotification(tostada.GetXml)
 
-                If ApplicationData.Current.LocalSettings.Values("notificacionTiempo") = True Then
-                    notificacion.ExpirationTime = DateTime.Now.AddSeconds(ApplicationData.Current.LocalSettings.Values("notificacionTiempoSegundos"))
+                If Not segundos = Nothing Then
+                    notificacion.ExpirationTime = DateTime.Now.AddSeconds(segundos)
                 End If
 
                 Dim notificador As ToastNotifier = ToastNotificationManager.CreateToastNotifier()
@@ -204,7 +204,7 @@ Module Notificaciones
 
     End Sub
 
-    Public Sub ToastTweets(cantidad As Integer, megaUsuario As pepeizq.Twitter.MegaUsuario)
+    Public Sub ToastTweets(cantidad As Integer, megaUsuario As pepeizq.Twitter.MegaUsuario, segundos As Double)
 
         Dim recursos As New Resources.ResourceLoader
 
@@ -253,8 +253,8 @@ Module Notificaciones
         Try
             Dim notificacion As ToastNotification = New ToastNotification(tostada.GetXml)
 
-            If ApplicationData.Current.LocalSettings.Values("notificacionTiempo") = True Then
-                notificacion.ExpirationTime = DateTime.Now.AddSeconds(ApplicationData.Current.LocalSettings.Values("notificacionTiempoSegundos"))
+            If Not segundos = Nothing Then
+                notificacion.ExpirationTime = DateTime.Now.AddSeconds(segundos)
             End If
 
             Dim notificador As ToastNotifier = ToastNotificationManager.CreateToastNotifier()

@@ -15,6 +15,7 @@ Namespace pepeizq.Twitter.Xaml
         Public Async Sub Generar(cosas As Objetos.TweetAmpliado, objetoAnimar As Object)
 
             Dim tweet As Tweet = Nothing
+
             tweet = Await TwitterPeticiones.CogerTweet(tweet, cosas.MegaUsuario, cosas.Tweet.ID)
 
             If Not tweet Is Nothing Then

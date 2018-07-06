@@ -86,12 +86,18 @@ Module TwitterStream
                                                                                                                                                                                                 If listaTweetsAñadir.Count > 0 Then
                                                                                                                                                                                                     listaTweetsAñadir.Reverse()
 
-                                                                                                                                                                                                    If megaUsuario.Notificacion = True Then
+                                                                                                                                                                                                    Dim segundos As Double = Nothing
+
+                                                                                                                                                                                                    If ApplicationData.Current.LocalSettings.Values("notificacionInicioTiempo") = True Then
+                                                                                                                                                                                                        segundos = ApplicationData.Current.LocalSettings.Values("notificacionInicioTiempoSegundos")
+                                                                                                                                                                                                    End If
+
+                                                                                                                                                                                                    If megaUsuario.NotificacionInicio = True Then
                                                                                                                                                                                                         If ApplicationData.Current.LocalSettings.Values("notificacionAgrupar") = True Then
                                                                                                                                                                                                             If listaTweetsAñadir.Count > 1 Then
-                                                                                                                                                                                                                Notificaciones.ToastTweets(listaTweetsAñadir.Count, megaUsuario)
+                                                                                                                                                                                                                Notificaciones.ToastTweets(listaTweetsAñadir.Count, megaUsuario, segundos)
                                                                                                                                                                                                             Else
-                                                                                                                                                                                                                Notificaciones.ToastTweet(listaTweetsAñadir(0), megaUsuario)
+                                                                                                                                                                                                                Notificaciones.ToastTweet(listaTweetsAñadir(0), megaUsuario, segundos)
                                                                                                                                                                                                             End If
                                                                                                                                                                                                         End If
                                                                                                                                                                                                     End If
@@ -99,9 +105,9 @@ Module TwitterStream
                                                                                                                                                                                                     For Each tweetAñadir As Tweet In listaTweetsAñadir
                                                                                                                                                                                                         lvInicio.Items.Insert(0, pepeizq.Twitter.Xaml.TweetXaml.Añadir(tweetAñadir, megaUsuario, Nothing))
 
-                                                                                                                                                                                                        If megaUsuario.Notificacion = True Then
+                                                                                                                                                                                                        If megaUsuario.NotificacionInicio = True Then
                                                                                                                                                                                                             If ApplicationData.Current.LocalSettings.Values("notificacionAgrupar") = False Then
-                                                                                                                                                                                                                Notificaciones.ToastTweet(tweetAñadir, megaUsuario)
+                                                                                                                                                                                                                Notificaciones.ToastTweet(tweetAñadir, megaUsuario, segundos)
                                                                                                                                                                                                             End If
                                                                                                                                                                                                         End If
 
@@ -172,8 +178,14 @@ Module TwitterStream
                                                                                                                                                                                                         If mostrar = True Then
                                                                                                                                                                                                             lvMenciones.Items.Insert(0, pepeizq.Twitter.Xaml.TweetXaml.Añadir(tweetNuevo, megaUsuario, Nothing))
 
-                                                                                                                                                                                                            If megaUsuario.Notificacion = True Then
-                                                                                                                                                                                                                Notificaciones.ToastTweet(tweetNuevo, megaUsuario)
+                                                                                                                                                                                                            If megaUsuario.NotificacionMenciones = True Then
+                                                                                                                                                                                                                Dim segundos As Double = Nothing
+
+                                                                                                                                                                                                                If ApplicationData.Current.LocalSettings.Values("notificacionMencionesTiempo") = True Then
+                                                                                                                                                                                                                    segundos = ApplicationData.Current.LocalSettings.Values("notificacionMencionesTiempoSegundos")
+                                                                                                                                                                                                                End If
+
+                                                                                                                                                                                                                Notificaciones.ToastTweet(tweetNuevo, megaUsuario, segundos)
                                                                                                                                                                                                             End If
                                                                                                                                                                                                         End If
                                                                                                                                                                                                     Next

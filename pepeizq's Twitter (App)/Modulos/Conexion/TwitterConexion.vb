@@ -46,13 +46,19 @@ Module TwitterConexion
             Dim usuario As TwitterUsuario = JsonConvert.DeserializeObject(Of TwitterUsuario)(resultado)
 
             If Not usuario Is Nothing Then
-                Dim megaUsuario As New pepeizq.Twitter.MegaUsuario(usuario, servicio, Nothing, Nothing, Nothing, Nothing, Nothing)
+                Dim megaUsuario As New pepeizq.Twitter.MegaUsuario(usuario, servicio, Nothing, Nothing, Nothing, Nothing, Nothing, Nothing)
 
-                If ApplicationData.Current.LocalSettings.Values(usuario.ID + "notificacion") Is Nothing Then
-                    ApplicationData.Current.LocalSettings.Values(usuario.ID + "notificacion") = True
+                If ApplicationData.Current.LocalSettings.Values(usuario.ID + "notificacionInicio") Is Nothing Then
+                    ApplicationData.Current.LocalSettings.Values(usuario.ID + "notificacionInicio") = True
                 End If
 
-                megaUsuario.Notificacion = ApplicationData.Current.LocalSettings.Values(usuario.ID + "notificacion")
+                megaUsuario.NotificacionInicio = ApplicationData.Current.LocalSettings.Values(usuario.ID + "notificacionInicio")
+
+                If ApplicationData.Current.LocalSettings.Values(usuario.ID + "notificacionMenciones") Is Nothing Then
+                    ApplicationData.Current.LocalSettings.Values(usuario.ID + "notificacionMenciones") = True
+                End If
+
+                megaUsuario.NotificacionMenciones = ApplicationData.Current.LocalSettings.Values(usuario.ID + "notificacionMenciones")
 
                 Dim listaBloqueos As New List(Of String)
 
@@ -74,8 +80,8 @@ Module TwitterConexion
 
                 Dim listaUsuarios As New List(Of TwitterUsuario)
 
-                If helper.KeyExists("listaUsuarios4") Then
-                    listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios4")
+                If helper.KeyExists("listaUsuarios5") Then
+                    listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios5")
                 End If
 
                 Dim añadirLista As Boolean = True
@@ -89,7 +95,7 @@ Module TwitterConexion
                 If añadirLista = True Then
                     listaUsuarios.Add(usuario)
 
-                    helper.Save("listaUsuarios4", listaUsuarios)
+                    helper.Save("listaUsuarios5", listaUsuarios)
                 End If
 
                 Dim frame As Frame = Window.Current.Content
@@ -179,21 +185,33 @@ Module TwitterConexion
 
         '--------------------------------------
 
-        Dim simboloAñadirTile As New FontAwesome.UWP.FontAwesome With {
-            .Foreground = New SolidColorBrush(App.Current.Resources("ColorSecundario")),
-            .Icon = FontAwesomeIcon.ThumbTack,
-            .VerticalAlignment = VerticalAlignment.Center
+        Dim spBotonAñadirTile As New StackPanel With {
+            .Orientation = Orientation.Horizontal
         }
+
+        Dim simboloBotonAñadirTile As New FontAwesome.UWP.FontAwesome With {
+            .Foreground = New SolidColorBrush(Colors.White),
+            .Icon = FontAwesomeIcon.ThumbTack
+        }
+
+        spBotonAñadirTile.Children.Add(simboloBotonAñadirTile)
+
+        Dim textoBotonAñadirTile As New TextBlock With {
+            .Foreground = New SolidColorBrush(Colors.White),
+            .Text = recursos.GetString("ButtonAddTile"),
+            .Margin = New Thickness(10, 0, 0, 0)
+        }
+
+        spBotonAñadirTile.Children.Add(textoBotonAñadirTile)
 
         Dim botonAñadirTile As New Button With {
-            .Background = New SolidColorBrush(Colors.Transparent),
-            .Content = simboloAñadirTile,
+            .Background = New SolidColorBrush(App.Current.Resources("ColorSecundario")),
+            .Content = spBotonAñadirTile,
             .Tag = megaUsuario,
-            .Name = "botonAñadirTile" + megaUsuario.Usuario.ID
+            .Padding = New Thickness(10, 10, 10, 10),
+            .Name = "botonAñadirTile" + megaUsuario.Usuario.ID,
+            .Margin = New Thickness(0, 0, 15, 0)
         }
-
-        ToolTipService.SetToolTip(botonAñadirTile, recursos.GetString("ButtonAddTile"))
-        ToolTipService.SetPlacement(botonAñadirTile, PlacementMode.Bottom)
 
         AddHandler botonAñadirTile.Click, AddressOf BotonAñadirTileCuenta
         AddHandler botonAñadirTile.PointerEntered, AddressOf UsuarioEntraBoton
@@ -204,37 +222,38 @@ Module TwitterConexion
 
         '--------------------------------------
 
-        Dim simboloNotificacion As New FontAwesome.UWP.FontAwesome With {
-            .Foreground = New SolidColorBrush(App.Current.Resources("ColorSecundario")),
+        Dim spBotonNotificaciones As New StackPanel With {
+            .Orientation = Orientation.Horizontal
+        }
+
+        Dim simboloBotonNotificaciones As New FontAwesome.UWP.FontAwesome With {
+            .Foreground = New SolidColorBrush(Colors.White),
             .Icon = FontAwesomeIcon.Comment
         }
 
-        'Dim boolNotificacion As Boolean = True
+        spBotonNotificaciones.Children.Add(simboloBotonNotificaciones)
 
-        'If Not ApplicationData.Current.LocalSettings.Values(usuario.ID + "notificacion") Is Nothing Then
-        '    boolNotificacion =
-        'Else
-        '    boolNotificacion = ApplicationData.Current.LocalSettings.Values("notificacion" + usuario.ScreenNombre)
-        'End If
-
-        Dim cbNotificacion As New CheckBox With {
-            .Content = simboloNotificacion,
-            .MinWidth = 0,
-            .Margin = New Thickness(20, 0, 0, 0),
-            .Tag = megaUsuario,
-            .IsChecked = megaUsuario.Notificacion
+        Dim textoBotonNotificaciones As New TextBlock With {
+            .Foreground = New SolidColorBrush(Colors.White),
+            .Text = recursos.GetString("Notifications"),
+            .Margin = New Thickness(10, 0, 0, 0)
         }
 
-        ToolTipService.SetToolTip(cbNotificacion, recursos.GetString("CbNotification"))
-        ToolTipService.SetPlacement(cbNotificacion, PlacementMode.Bottom)
+        spBotonNotificaciones.Children.Add(textoBotonNotificaciones)
 
-        AddHandler cbNotificacion.Checked, AddressOf CbNotificacion_Checked
-        AddHandler cbNotificacion.Unchecked, AddressOf CbNotificacion_Unchecked
-        AddHandler cbNotificacion.PointerEntered, AddressOf UsuarioEntraBoton
-        AddHandler cbNotificacion.PointerExited, AddressOf UsuarioSaleBoton
+        Dim botonNotificaciones As New Button With {
+            .Background = New SolidColorBrush(App.Current.Resources("ColorSecundario")),
+            .Content = spBotonNotificaciones,
+            .Tag = megaUsuario,
+            .Padding = New Thickness(10, 10, 10, 10)
+        }
 
-        cbNotificacion.SetValue(Grid.ColumnProperty, 3)
-        gridUsuario.Children.Add(cbNotificacion)
+        AddHandler botonNotificaciones.Click, AddressOf BotonNotificacionesClick
+        AddHandler botonNotificaciones.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler botonNotificaciones.PointerExited, AddressOf UsuarioSaleBoton
+
+        botonNotificaciones.SetValue(Grid.ColumnProperty, 3)
+        gridUsuario.Children.Add(botonNotificaciones)
 
         '--------------------------------------
 
@@ -256,7 +275,8 @@ Module TwitterConexion
         Dim botonQuitar As New Button With {
             .Background = New SolidColorBrush(App.Current.Resources("ColorSecundario")),
             .Content = simboloQuitar,
-            .Tag = megaUsuario
+            .Tag = megaUsuario,
+            .Padding = New Thickness(10, 10, 10, 10)
         }
 
         ToolTipService.SetToolTip(botonQuitar, recursos.GetString("ButtonDeleteAccount"))
@@ -282,25 +302,65 @@ Module TwitterConexion
 
     End Sub
 
-    Private Sub CbNotificacion_Checked(sender As Object, e As RoutedEventArgs)
+    Private Sub BotonNotificacionesClick(sender As Object, e As RoutedEventArgs)
 
-        Dim cb As CheckBox = sender
-        Dim megaUsuario As pepeizq.Twitter.MegaUsuario = cb.Tag
-        Dim usuario As TwitterUsuario = megaUsuario.Usuario
+        Dim recursos As New Resources.ResourceLoader
 
-        megaUsuario.Notificacion = True
-        ApplicationData.Current.LocalSettings.Values(usuario.ID + "notificacion") = True
+        Dim boton As Button = sender
+        Dim megaUsuario As pepeizq.Twitter.MegaUsuario = boton.Tag
+
+        Dim menu As New MenuFlyout With {
+            .Placement = FlyoutPlacementMode.Bottom
+        }
+
+        Dim toggleNotificacionInicio As New ToggleMenuFlyoutItem With {
+            .Text = recursos.GetString("Home"),
+            .IsChecked = megaUsuario.NotificacionInicio,
+            .Tag = megaUsuario
+        }
+
+        AddHandler toggleNotificacionInicio.Click, AddressOf ToggleNotificacionInicioClick
+        AddHandler toggleNotificacionInicio.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler toggleNotificacionInicio.PointerExited, AddressOf UsuarioSaleBoton
+
+        menu.Items.Add(toggleNotificacionInicio)
+
+        Dim toggleNotificacionMenciones As New ToggleMenuFlyoutItem With {
+            .Text = recursos.GetString("Mentions"),
+            .IsChecked = megaUsuario.NotificacionMenciones,
+            .Tag = megaUsuario
+        }
+
+        AddHandler toggleNotificacionMenciones.Click, AddressOf ToggleNotificacionMencionesClick
+        AddHandler toggleNotificacionMenciones.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler toggleNotificacionMenciones.PointerExited, AddressOf UsuarioSaleBoton
+
+        menu.Items.Add(toggleNotificacionMenciones)
+
+        FlyoutBase.SetAttachedFlyout(boton, menu)
+        menu.ShowAt(boton)
 
     End Sub
 
-    Private Sub CbNotificacion_Unchecked(sender As Object, e As RoutedEventArgs)
+    Private Sub ToggleNotificacionInicioClick(sender As Object, e As RoutedEventArgs)
 
-        Dim cb As CheckBox = sender
-        Dim megaUsuario As pepeizq.Twitter.MegaUsuario = cb.Tag
+        Dim item As ToggleMenuFlyoutItem = sender
+        Dim megaUsuario As pepeizq.Twitter.MegaUsuario = item.Tag
         Dim usuario As TwitterUsuario = megaUsuario.Usuario
 
-        megaUsuario.Notificacion = False
-        ApplicationData.Current.LocalSettings.Values(usuario.ID + "notificacion") = False
+        megaUsuario.NotificacionInicio = item.IsChecked
+        ApplicationData.Current.LocalSettings.Values(usuario.ID + "notificacionInicio") = item.IsChecked
+
+    End Sub
+
+    Private Sub ToggleNotificacionMencionesClick(sender As Object, e As RoutedEventArgs)
+
+        Dim item As ToggleMenuFlyoutItem = sender
+        Dim megaUsuario As pepeizq.Twitter.MegaUsuario = item.Tag
+        Dim usuario As TwitterUsuario = megaUsuario.Usuario
+
+        megaUsuario.NotificacionMenciones = item.IsChecked
+        ApplicationData.Current.LocalSettings.Values(usuario.ID + "notificacionMenciones") = item.IsChecked
 
     End Sub
 
@@ -370,8 +430,8 @@ Module TwitterConexion
 
             Dim listaUsuarios As New List(Of TwitterUsuario)
 
-            If helper.KeyExists("listaUsuarios4") Then
-                listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios4")
+            If helper.KeyExists("listaUsuarios5") Then
+                listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios5")
             End If
 
             i = 0
@@ -384,7 +444,7 @@ Module TwitterConexion
                 i += 1
             Next
 
-            helper.Save("listaUsuarios4", listaUsuarios)
+            helper.Save("listaUsuarios5", listaUsuarios)
 
             Dim tbNumeroCuentas As TextBlock = pagina.FindName("tbNumeroCuentas")
             tbNumeroCuentas.Text = listaUsuarios.Count.ToString + "/25"
