@@ -13,6 +13,8 @@ Namespace pepeizq.Twitter.Xaml
 
         Public Function Generar(tweet As Tweet, color As Color)
 
+            Dim recursos As New Resources.ResourceLoader
+
             If color = Nothing Then
                 color = App.Current.Resources("ColorSecundario")
             End If
@@ -59,22 +61,6 @@ Namespace pepeizq.Twitter.Xaml
                     End If
 
                     If Not objetoString = Nothing Then
-                        Dim gridPlay As New Grid
-
-                        If itemMedia.Tipo = "video" Or itemMedia.Tipo = "animated_gif" Then
-                            gridPlay.Background = New SolidColorBrush(colorPlay)
-                            gridPlay.MinHeight = 50
-                            gridPlay.MinWidth = 50
-                            gridPlay.CornerRadius = New CornerRadius(30)
-
-                            Dim simboloPlay As New FontAwesome.UWP.FontAwesome With {
-                                .Icon = FontAwesomeIcon.Play,
-                                .Foreground = New SolidColorBrush(Colors.White)
-                            }
-
-                            gridPlay.Children.Add(simboloPlay)
-                        End If
-
                         Dim gridMedia As New Grid With {
                             .BorderBrush = New SolidColorBrush(color),
                             .BorderThickness = New Thickness(1, 1, 1, 1),
@@ -104,11 +90,6 @@ Namespace pepeizq.Twitter.Xaml
 
                         End Try
 
-                        If itemMedia.Tipo = "video" Then
-                            gridMedia.Background = New SolidColorBrush(Colors.Black)
-                            imagenMedia.Opacity = 0.6
-                        End If
-
                         gridMedia.BorderThickness = New Thickness(1, 1, 1, 1)
                         gridMedia.Margin = New Thickness(0, 10, 5, 0)
 
@@ -134,42 +115,53 @@ Namespace pepeizq.Twitter.Xaml
                             datos.Enlace = listaOrdenada(0).Enlace
 
                             AddHandler gridMedia.PointerPressed, AddressOf UsuarioClickeaVideo
-                            AddHandler gridMedia.PointerEntered, AddressOf UsuarioEntraMedia
-                            AddHandler gridMedia.PointerExited, AddressOf UsuarioSaleMedia
+                            AddHandler gridMedia.PointerEntered, AddressOf UsuarioEntraVideo
+                            AddHandler gridMedia.PointerExited, AddressOf UsuarioSaleVideo
                         ElseIf itemMedia.Tipo = "animated_gif" Then
                             datos.Enlace = itemMedia.Video.Variantes(0).Enlace
                             AddHandler gridMedia.PointerPressed, AddressOf UsuarioClickeaVideo
-                            AddHandler gridMedia.PointerEntered, AddressOf UsuarioEntraGif
-                            AddHandler gridMedia.PointerExited, AddressOf UsuarioSaleGif
+                            AddHandler gridMedia.PointerEntered, AddressOf UsuarioEntraVideo
+                            AddHandler gridMedia.PointerExited, AddressOf UsuarioSaleVideo
                         End If
 
                         gridMedia.Tag = datos
                         gridMedia.Children.Add(imagenMedia)
 
-                        If itemMedia.Tipo = "video" Then
-                            gridPlay.Width = gridMedia.ActualWidth / 2
-                            gridPlay.Height = gridMedia.ActualHeight / 2
+                        Dim gridTipo As New Grid With {
+                            .HorizontalAlignment = HorizontalAlignment.Left,
+                            .VerticalAlignment = VerticalAlignment.Bottom,
+                            .Padding = New Thickness(5, 5, 5, 5),
+                            .Background = New SolidColorBrush(color)
+                        }
 
-                            Dim gridTipo As New Grid With {
-                                .HorizontalAlignment = HorizontalAlignment.Left,
-                                .VerticalAlignment = VerticalAlignment.Bottom,
-                                .Padding = New Thickness(3, 3, 3, 3),
-                                .Background = New SolidColorBrush(color)
-                            }
-
-                            Dim tbTipo As New TextBlock With {
+                        If Not itemMedia.Tipo = "animated_gif" Then
+                            Dim iconoTipo As New FontAwesome.UWP.FontAwesome With {
                                 .Foreground = New SolidColorBrush(Colors.White),
-                                .FontSize = 13
+                                .FontSize = 12
                             }
 
                             If itemMedia.Tipo = "video" Then
-                                tbTipo.Text = "video"
+                                iconoTipo.Icon = FontAwesomeIcon.VideoCamera
+                            ElseIf itemMedia.Tipo = "photo" Then
+                                iconoTipo.Icon = FontAwesomeIcon.Image
                             End If
 
-                            gridTipo.Children.Add(tbTipo)
+                            gridTipo.Children.Add(iconoTipo)
+                        Else
+                            Dim tbTipo As New TextBlock With {
+                                .Foreground = New SolidColorBrush(Colors.White),
+                                .FontSize = 12,
+                                .Text = "gif"
+                            }
 
-                            gridMedia.Children.Add(gridTipo)
-                            gridMedia.Children.Add(gridPlay)
+                            gridTipo.Children.Add(tbTipo)
+                        End If
+
+                        gridMedia.Children.Add(gridTipo)
+
+                        If ApplicationData.Current.LocalSettings.Values("tooltipsayuda") = True Then
+                            ToolTipService.SetToolTip(gridMedia, recursos.GetString("ClickExpand"))
+                            ToolTipService.SetPlacement(gridMedia, PlacementMode.Bottom)
                         End If
 
                         spMedia.Children.Add(gridMedia)
@@ -217,7 +209,7 @@ Namespace pepeizq.Twitter.Xaml
 
         End Sub
 
-        Private Sub UsuarioEntraGif(sender As Object, e As PointerRoutedEventArgs)
+        Private Sub UsuarioEntraVideo(sender As Object, e As PointerRoutedEventArgs)
 
             Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
 
@@ -259,12 +251,11 @@ Namespace pepeizq.Twitter.Xaml
                 reproductor.MediaPlayer.Play()
 
                 grid.Children.Add(reproductor)
-
             End If
 
         End Sub
 
-        Private Sub UsuarioSaleGif(sender As Object, e As PointerRoutedEventArgs)
+        Private Sub UsuarioSaleVideo(sender As Object, e As PointerRoutedEventArgs)
 
             Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
 

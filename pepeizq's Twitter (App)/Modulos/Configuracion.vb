@@ -27,6 +27,12 @@ Module Configuracion
             End If
         End If
 
+        If ApplicationData.Current.LocalSettings.Values("tooltipsayuda") Is Nothing Then
+            CargarTooltipsAyuda(True)
+        Else
+            CargarTooltipsAyuda(ApplicationData.Current.LocalSettings.Values("tooltipsayuda"))
+        End If
+
         If ApplicationData.Current.LocalSettings.Values("media") Is Nothing Then
             CargarMedia(True)
         Else
@@ -43,12 +49,6 @@ Module Configuracion
             CargarTweetCard(False)
         Else
             CargarTweetCard(ApplicationData.Current.LocalSettings.Values("tweetcard"))
-        End If
-
-        If ApplicationData.Current.LocalSettings.Values("notificacionAgrupar") Is Nothing Then
-            NotificacionesAgrupar(False)
-        Else
-            NotificacionesAgrupar(ApplicationData.Current.LocalSettings.Values("notificacionAgrupar"))
         End If
 
         If ApplicationData.Current.LocalSettings.Values("notificacionInicioTiempo") Is Nothing Then
@@ -79,6 +79,12 @@ Module Configuracion
             NotificacionesUsuario(True)
         Else
             NotificacionesUsuario(ApplicationData.Current.LocalSettings.Values("notificacionUsuario"))
+        End If
+
+        If ApplicationData.Current.LocalSettings.Values("notificacionAgrupar") Is Nothing Then
+            NotificacionesAgrupar(False)
+        Else
+            NotificacionesAgrupar(ApplicationData.Current.LocalSettings.Values("notificacionAgrupar"))
         End If
 
     End Sub
@@ -121,6 +127,18 @@ Module Configuracion
             botonArranque.IsEnabled = False
             ApplicationData.Current.LocalSettings.Values("autoarranque") = False
         End If
+
+    End Sub
+
+    Public Sub CargarTooltipsAyuda(estado As Boolean)
+
+        Dim frame As Frame = Window.Current.Content
+        Dim pagina As Page = frame.Content
+
+        ApplicationData.Current.LocalSettings.Values("tooltipsayuda") = estado
+
+        Dim cb As CheckBox = pagina.FindName("cbConfigAppTooltipsAyuda")
+        cb.IsChecked = estado
 
     End Sub
 
@@ -180,18 +198,6 @@ Module Configuracion
         ApplicationData.Current.LocalSettings.Values("tweetcard") = estado
 
         Dim cb As CheckBox = pagina.FindName("cbConfigAppTweetCard")
-        cb.IsChecked = estado
-
-    End Sub
-
-    Public Sub NotificacionesAgrupar(estado As Boolean)
-
-        Dim frame As Frame = Window.Current.Content
-        Dim pagina As Page = frame.Content
-
-        ApplicationData.Current.LocalSettings.Values("notificacionAgrupar") = estado
-
-        Dim cb As CheckBox = pagina.FindName("cbConfigNotificacionesAgrupar")
         cb.IsChecked = estado
 
     End Sub
@@ -305,6 +311,18 @@ Module Configuracion
         ApplicationData.Current.LocalSettings.Values("notificacionUsuario") = estado
 
         Dim cb As CheckBox = pagina.FindName("cbConfigNotificacionesUsuario")
+        cb.IsChecked = estado
+
+    End Sub
+
+    Public Sub NotificacionesAgrupar(estado As Boolean)
+
+        Dim frame As Frame = Window.Current.Content
+        Dim pagina As Page = frame.Content
+
+        ApplicationData.Current.LocalSettings.Values("notificacionAgrupar") = estado
+
+        Dim cb As CheckBox = pagina.FindName("cbConfigNotificacionesAgrupar")
         cb.IsChecked = estado
 
     End Sub

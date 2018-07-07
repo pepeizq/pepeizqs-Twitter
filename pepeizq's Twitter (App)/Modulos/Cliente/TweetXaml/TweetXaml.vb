@@ -11,6 +11,8 @@ Namespace pepeizq.Twitter.Xaml
 
         Public Function Añadir(tweet As Tweet, megaUsuario As MegaUsuario, color As Windows.UI.Color)
 
+            Dim recursos As New Resources.ResourceLoader
+
             Dim grid As New Grid
 
             If Not tweet Is Nothing Then
@@ -149,12 +151,16 @@ Namespace pepeizq.Twitter.Xaml
                 '-----------------------------
 
                 grid.Children.Add(gridInferior)
-
             End If
 
             Dim item As New ListViewItem With {
                 .Content = grid
             }
+
+            If ApplicationData.Current.LocalSettings.Values("tooltipsayuda") = True Then
+                ToolTipService.SetToolTip(item, recursos.GetString("ClickExpandTweet"))
+                ToolTipService.SetPlacement(item, PlacementMode.Bottom)
+            End If
 
             AddHandler item.PointerEntered, AddressOf UsuarioEntraItem
             AddHandler item.PointerExited, AddressOf UsuarioSaleItem
@@ -239,7 +245,7 @@ Namespace pepeizq.Twitter.Xaml
                 Dim mostrar As Boolean = False
 
                 For Each boton As Button In spBotones.Children
-                    Dim cosas As pepeizq.Twitter.Objetos.TweetXamlBoton = boton.Tag
+                    Dim cosas As Objetos.TweetXamlBoton = boton.Tag
 
                     If cosas.Mostrar = True Then
                         mostrar = True

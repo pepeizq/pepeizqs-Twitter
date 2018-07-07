@@ -416,6 +416,18 @@ Public NotInheritable Class MainPage
 
     End Sub
 
+    Private Sub CbConfigAppTooltipsAyuda_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppTooltipsAyuda.Checked
+
+        Configuracion.CargarTooltipsAyuda(True)
+
+    End Sub
+
+    Private Sub CbConfigAppTooltipsAyuda_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppTooltipsAyuda.Unchecked
+
+        Configuracion.CargarTooltipsAyuda(False)
+
+    End Sub
+
     Private Sub CbConfigAppCargarMedia_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppCargarMedia.Checked
 
         Configuracion.CargarMedia(True)
@@ -502,18 +514,6 @@ Public NotInheritable Class MainPage
         If tbConfigConsumerSecret.Text.Trim.Length > 0 Then
             ApplicationData.Current.LocalSettings.Values("consumersecret") = tbConfigConsumerSecret.Text.Trim
         End If
-
-    End Sub
-
-    Private Sub CbConfigNotificacionesAgrupar_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesAgrupar.Checked
-
-        Configuracion.NotificacionesAgrupar(True)
-
-    End Sub
-
-    Private Sub CbConfigNotificacionesAgrupar_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesAgrupar.Unchecked
-
-        Configuracion.NotificacionesAgrupar(False)
 
     End Sub
 
@@ -605,6 +605,18 @@ Public NotInheritable Class MainPage
     Private Sub CbConfigNotificacionesImagen_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesImagen.Unchecked
 
         Configuracion.NotificacionesImagen(False)
+
+    End Sub
+
+    Private Sub CbConfigNotificacionesAgrupar_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesAgrupar.Checked
+
+        Configuracion.NotificacionesAgrupar(True)
+
+    End Sub
+
+    Private Sub CbConfigNotificacionesAgrupar_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesAgrupar.Unchecked
+
+        Configuracion.NotificacionesAgrupar(False)
 
     End Sub
 

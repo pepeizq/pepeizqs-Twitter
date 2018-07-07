@@ -1,8 +1,9 @@
 ﻿Imports System.Net
+Imports pepeizq.Twitter
 Imports pepeizq.Twitter.Tweet
 Imports Windows.UI
-Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Documents
+Imports Windows.UI.Xaml.Shapes
 
 Namespace pepeizq.Twitter.Xaml
     Module TweetTexto
@@ -200,6 +201,14 @@ Namespace pepeizq.Twitter.Xaml
                                         .Foreground = New SolidColorBrush(color)
                                     }
 
+                                    Dim spUsuario As New StackPanel With {
+                                        .Tag = New Objetos.UsuarioAmpliado(megaUsuario, Nothing, entidad.Mostrar)
+                                    }
+                                    AddHandler spUsuario.Loading, AddressOf SpUsuarioLoaded
+
+                                    ToolTipService.SetToolTip(enlace, spUsuario)
+                                    ToolTipService.SetPlacement(enlace, PlacementMode.Bottom)
+
                                     AddHandler enlace.Click, AddressOf EnlaceClick
 
                                     enlace.Inlines.Add(contenidoEnlace)
@@ -285,6 +294,63 @@ Namespace pepeizq.Twitter.Xaml
             cosas.ScreenNombre = usuario.Replace("@", Nothing)
 
             FichaUsuarioXaml.Generar(cosas, enlace)
+
+        End Sub
+
+        Private Async Sub SpUsuarioLoaded(sender As Object, e As RoutedEventArgs)
+
+            Dim recursos As New Resources.ResourceLoader
+
+            Dim sp As StackPanel = sender
+            sp.Orientation = Orientation.Horizontal
+            sp.Children.Clear()
+
+            Dim cosas As Objetos.UsuarioAmpliado = sp.Tag
+
+            If Not cosas.ScreenNombre = Nothing Then
+                cosas.ScreenNombre = cosas.ScreenNombre.Replace("@", Nothing)
+            End If
+
+            Dim usuario As New TwitterUsuario
+
+            usuario = Await TwitterPeticiones.CogerUsuario(usuario, cosas.MegaUsuario, cosas.ScreenNombre)
+
+            If Not usuario Is Nothing Then
+                Dim imagenAvatar As New ImageBrush With {
+                    .Stretch = Stretch.Uniform,
+                    .ImageSource = New BitmapImage(New Uri(usuario.ImagenAvatar))
+                }
+
+                Dim circulo As New Ellipse With {
+                    .Fill = imagenAvatar,
+                    .Height = 32,
+                    .Width = 32,
+                    .Margin = New Thickness(1, 1, 1, 1)
+                }
+
+                sp.Children.Add(circulo)
+
+                Dim subSp As New StackPanel With {
+                    .Orientation = Orientation.Vertical,
+                    .Margin = New Thickness(10, 0, 0, 0),
+                    .VerticalAlignment = VerticalAlignment.Center
+                }
+
+                Dim tbNombre As New TextBlock With {
+                    .Text = usuario.Nombre,
+                    .Margin = New Thickness(0, 0, 0, 5)
+                }
+
+                subSp.Children.Add(tbNombre)
+
+                Dim tbNumSeguidores As New TextBlock With {
+                    .Text = String.Format("{0:n0}", Integer.Parse(usuario.Followers)) + " " + recursos.GetString("Followers")
+                }
+
+                subSp.Children.Add(tbNumSeguidores)
+
+                sp.Children.Add(subSp)
+            End If
 
         End Sub
 

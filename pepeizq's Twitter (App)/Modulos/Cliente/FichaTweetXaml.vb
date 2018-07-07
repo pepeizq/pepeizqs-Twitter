@@ -35,6 +35,14 @@ Namespace pepeizq.Twitter.Xaml
                     color = App.Current.Resources("ColorSecundario")
                 End Try
 
+                Dim tweetID As String = Nothing
+
+                If cosas.Tweet.Retweet Is Nothing Then
+                    tweetID = cosas.Tweet.ID
+                Else
+                    tweetID = cosas.Tweet.Retweet.ID
+                End If
+
                 App.Current.Resources("ButtonBackgroundPointerOver") = color
 
                 Dim transpariencia As New UISettings
@@ -98,7 +106,7 @@ Namespace pepeizq.Twitter.Xaml
 
                                                                                                                                                    Dim listaRetweets As New List(Of Tweet)
 
-                                                                                                                                                   listaRetweets = Await TwitterPeticiones.BuscarRetweetsTweet(listaRetweets, cosas.MegaUsuario, cosas.Tweet.ID)
+                                                                                                                                                   listaRetweets = Await TwitterPeticiones.BuscarRetweetsTweet(listaRetweets, cosas.MegaUsuario, tweetID)
 
                                                                                                                                                    If listaRetweets.Count > 0 Then
                                                                                                                                                        For Each retweet In listaRetweets
@@ -255,11 +263,11 @@ Namespace pepeizq.Twitter.Xaml
 
                 Dim listaTweetRespuestas As New List(Of Tweet)
 
-                listaTweetRespuestas = Await TwitterPeticiones.BuscarRespuestasTweet(listaTweetRespuestas, cosas.MegaUsuario, tweet.ID, tweet.Usuario.ScreenNombre)
+                listaTweetRespuestas = Await TwitterPeticiones.BuscarRespuestasTweet(listaTweetRespuestas, cosas.MegaUsuario, tweetID, tweet.Usuario.ScreenNombre)
 
                 If listaTweetRespuestas.Count > 0 Then
                     For Each tweetRespuesta In listaTweetRespuestas
-                        If tweetRespuesta.RespuestaUsuarioID = tweet.ID Then
+                        If tweetRespuesta.RespuestaUsuarioID = tweetID Then
                             lvTweets.Items.Insert(0, TweetXaml.Añadir(tweetRespuesta, cosas.MegaUsuario, color))
                         End If
                     Next

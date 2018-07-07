@@ -117,7 +117,7 @@
                                 </StackPanel>
 
                                 <StackPanel x:Name="spConfigApp" Orientation="Vertical" Visibility="Collapsed">
-                                    <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
                                         <Button x:Name="botonConfigAppAutoArranque" Padding="10" Background="{StaticResource BrushSecundario}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                                             <Button.Content>
                                                 <StackPanel Orientation="Horizontal">
@@ -136,8 +136,16 @@
 
                                             <fa:FontAwesome Icon="Info" Foreground="White" FontSize="13"/>
                                         </Border>
-                                    </StackPanel> 
-                                                                            
+                                    </StackPanel>
+
+                                    <CheckBox x:Name="cbConfigAppTooltipsAyuda" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                        <CheckBox.Content>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock x:Uid="tbConfigAppTooltipsHelp"/>
+                                            </StackPanel>
+                                        </CheckBox.Content>
+                                    </CheckBox>
+
                                     <CheckBox x:Name="cbConfigAppCargarMedia" Margin="0,15" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                                         <CheckBox.Content>
                                             <StackPanel Orientation="Vertical">
@@ -198,24 +206,6 @@
                                 </StackPanel>
 
                                 <StackPanel x:Name="spConfigNotificaciones" Orientation="Vertical" Visibility="Collapsed">
-                                    <CheckBox x:Name="cbConfigNotificacionesAgrupar" Margin="0,0,0,15" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                                        <CheckBox.Content>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock x:Uid="tbConfigNotificationsGroup" VerticalAlignment="Center"/>
-
-                                                <Border VerticalAlignment="Center" Margin="10,0,0,0" CornerRadius="20" Background="{StaticResource BrushSecundario}" Width="20" Height="20">
-                                                    <ToolTipService.ToolTip>
-                                                        <StackPanel>
-                                                            <TextBlock x:Uid="tbConfigNotificationsGroupTooltip" TextWrapping="Wrap" FontSize="14"/>
-                                                        </StackPanel>
-                                                    </ToolTipService.ToolTip>
-
-                                                    <fa:FontAwesome Icon="Info" Foreground="White" FontSize="13"/>
-                                                </Border>
-                                            </StackPanel>
-                                        </CheckBox.Content>
-                                    </CheckBox>
-
                                     <StackPanel Orientation="Vertical">
                                         <TextBlock x:Uid="tbConfigNotificationsTime"/>
 
@@ -308,6 +298,24 @@
                                                     <ToolTipService.ToolTip>
                                                         <StackPanel>
                                                             <controls:ImageEx IsCacheEnabled="True" Source="Assets\Config\notificacion_usuario_dirigido.png"/>
+                                                        </StackPanel>
+                                                    </ToolTipService.ToolTip>
+
+                                                    <fa:FontAwesome Icon="Info" Foreground="White" FontSize="13"/>
+                                                </Border>
+                                            </StackPanel>
+                                        </CheckBox.Content>
+                                    </CheckBox>
+
+                                    <CheckBox x:Name="cbConfigNotificacionesAgrupar" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                                        <CheckBox.Content>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock x:Uid="tbConfigNotificationsGroup" VerticalAlignment="Center"/>
+
+                                                <Border VerticalAlignment="Center" Margin="10,0,0,0" CornerRadius="20" Background="{StaticResource BrushSecundario}" Width="20" Height="20">
+                                                    <ToolTipService.ToolTip>
+                                                        <StackPanel>
+                                                            <TextBlock x:Uid="tbConfigNotificationsGroupTooltip" TextWrapping="Wrap" FontSize="14"/>
                                                         </StackPanel>
                                                     </ToolTipService.ToolTip>
 

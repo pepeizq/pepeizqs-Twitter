@@ -366,4 +366,16 @@
   <data name="Mentions2.Text" xml:space="preserve">
     <value>Menciones</value>
   </data>
+  <data name="ClickExpand" xml:space="preserve">
+    <value>Clickea para expandir</value>
+  </data>
+  <data name="Followers" xml:space="preserve">
+    <value>Seguidores</value>
+  </data>
+  <data name="tbConfigAppTooltipsHelp.Text" xml:space="preserve">
+    <value>Enseñar globos de ayuda</value>
+  </data>
+  <data name="ClickExpandTweet" xml:space="preserve">
+    <value>Clickea para expandir el tweet</value>
+  </data>
 </root>
