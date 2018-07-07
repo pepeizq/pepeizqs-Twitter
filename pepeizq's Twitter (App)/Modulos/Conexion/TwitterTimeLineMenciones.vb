@@ -15,7 +15,7 @@ Module TwitterTimeLineMenciones
         Dim gridPrincipal As Grid = pagina.FindName("gridPrincipal")
         Dim gridUsuario As New Grid
 
-        Dim gridTweets As Grid = pagina.FindName("gridMenciones" + megaUsuario.Usuario.ScreenNombre)
+        Dim gridTweets As Grid = pagina.FindName("gridMenciones" + megaUsuario.Usuario.ID)
 
         If Not gridTweets Is Nothing Then
             gridTweets.Background = New SolidColorBrush(Colors.LightGray)

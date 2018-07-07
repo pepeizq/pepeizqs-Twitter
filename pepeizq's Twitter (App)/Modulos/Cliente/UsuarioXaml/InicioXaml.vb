@@ -12,7 +12,7 @@ Module InicioXaml
 
         Dim gridTweets As New Grid
         gridTweets.SetValue(Grid.RowProperty, 1)
-        gridTweets.Name = "gridTweets" + usuario.ScreenNombre
+        gridTweets.Name = "gridTweets" + usuario.ID
         gridTweets.Visibility = visibilidad
 
         Dim color1 As New GradientStop With {
@@ -149,7 +149,12 @@ Module InicioXaml
 
         If TypeOf sv.Content Is Grid Then
             Dim grid As Grid = sv.Content
-            lv = grid.Children(1)
+
+            For Each hijo In grid.Children
+                If TypeOf hijo Is ListView Then
+                    lv = hijo
+                End If
+            Next
         End If
 
         lv.Tag = cosas.MegaUsuario

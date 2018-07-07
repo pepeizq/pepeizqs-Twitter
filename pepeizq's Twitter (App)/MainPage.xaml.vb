@@ -61,9 +61,10 @@ Public NotInheritable Class MainPage
         nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Home"), FontAwesomeIcon.Home, 1))
         nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Mentions"), FontAwesomeIcon.Bell, 2))
         nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("WriteTweet"), FontAwesomeIcon.Pencil, 3))
-        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Search"), FontAwesomeIcon.Search, 4))
+        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("SearchUsers"), FontAwesomeIcon.Users, 4))
+        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("SearchTweets"), FontAwesomeIcon.Hashtag, 5))
         nvPrincipal.MenuItems.Add(New NavigationViewItemSeparator)
-        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Config"), FontAwesomeIcon.Cog, 5))
+        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Config"), FontAwesomeIcon.Cog, 6))
 
     End Sub
 
@@ -71,14 +72,16 @@ Public NotInheritable Class MainPage
 
         Dim usuario As TwitterUsuario = Nothing
 
-        If TypeOf itemUsuarios.Tag Is TwitterUsuario Then
-            usuario = itemUsuarios.Tag
-        ElseIf TypeOf itemUsuarios.Tag Is pepeizq.Twitter.MegaUsuario Then
-            Dim megaUsuario As pepeizq.Twitter.MegaUsuario = itemUsuarios.Tag
+        If TypeOf nvItemUsuarios.Tag Is TwitterUsuario Then
+            usuario = nvItemUsuarios.Tag
+        ElseIf TypeOf nvitemUsuarios.Tag Is pepeizq.Twitter.MegaUsuario Then
+            Dim megaUsuario As pepeizq.Twitter.MegaUsuario = nvItemUsuarios.Tag
             usuario = megaUsuario.Usuario
         End If
 
         gridConfig.Visibility = Visibility.Collapsed
+        gridBusquedaUsuarios.Visibility = Visibility.Collapsed
+        gridBusquedaTweets.Visibility = Visibility.Collapsed
         gridImagenAmpliada.Visibility = Visibility.Collapsed
         gridVideoAmpliado.Visibility = Visibility.Collapsed
         gridUsuarioAmpliado.Visibility = Visibility.Collapsed
@@ -98,7 +101,7 @@ Public NotInheritable Class MainPage
             If item.Text = recursos.GetString("Home") Then
 
                 If Not usuario Is Nothing Then
-                    Dim grid As Grid = pagina.FindName("gridTweets" + usuario.ScreenNombre)
+                    Dim grid As Grid = pagina.FindName("gridTweets" + usuario.ID)
 
                     If Not grid Is Nothing Then
                         UsuarioXaml.GridVisibilidad(grid, usuario)
@@ -108,7 +111,7 @@ Public NotInheritable Class MainPage
             ElseIf item.Text = recursos.GetString("Mentions") Then
 
                 If Not usuario Is Nothing Then
-                    Dim grid As Grid = pagina.FindName("gridMenciones" + usuario.ScreenNombre)
+                    Dim grid As Grid = pagina.FindName("gridMenciones" + usuario.ID)
 
                     If Not grid Is Nothing Then
                         UsuarioXaml.GridVisibilidad(grid, usuario)
@@ -118,21 +121,25 @@ Public NotInheritable Class MainPage
             ElseIf item.Text = recursos.GetString("WriteTweet") Then
 
                 If Not usuario Is Nothing Then
-                    Dim grid As Grid = pagina.FindName("gridEscribir" + usuario.ScreenNombre)
+                    Dim grid As Grid = pagina.FindName("gridEscribir" + usuario.ID)
 
                     If Not grid Is Nothing Then
                         UsuarioXaml.GridVisibilidad(grid, usuario)
                     End If
                 End If
 
-            ElseIf item.Text = recursos.GetString("Search") Then
+            ElseIf item.Text = recursos.GetString("SearchUsers") Then
 
                 If Not usuario Is Nothing Then
-                    Dim grid As Grid = pagina.FindName("gridBusqueda" + usuario.ScreenNombre)
+                    GridVisibilidad(gridBusquedaUsuarios, Nothing)
+                    pepeizq.Twitter.Xaml.BusquedaUsuarios.Generar()
+                End If
 
-                    If Not grid Is Nothing Then
-                        UsuarioXaml.GridVisibilidad(grid, usuario)
-                    End If
+            ElseIf item.Text = recursos.GetString("SearchTweets") Then
+
+                If Not usuario Is Nothing Then
+                    GridVisibilidad(gridBusquedaTweets, Nothing)
+                    pepeizq.Twitter.Xaml.BusquedaTweets.Generar()
                 End If
 
             ElseIf item.Text = recursos.GetString("Config") Then
@@ -288,6 +295,8 @@ Public NotInheritable Class MainPage
         End If
 
         gridConfig.Visibility = Visibility.Collapsed
+        gridBusquedaUsuarios.Visibility = Visibility.Collapsed
+        gridBusquedaTweets.Visibility = Visibility.Collapsed
         gridImagenAmpliada.Visibility = Visibility.Collapsed
         gridVideoAmpliado.Visibility = Visibility.Collapsed
         gridUsuarioAmpliado.Visibility = Visibility.Collapsed
@@ -382,9 +391,9 @@ Public NotInheritable Class MainPage
 
         If lvConfigUsuarios.Items.Count > 0 Then
             If lvConfigUsuarios.Items.Count > 1 Then
-                itemUsuarios.Visibility = Visibility.Visible
+                nvItemUsuarios.Visibility = Visibility.Visible
             Else
-                itemUsuarios.Visibility = Visibility.Collapsed
+                nvItemUsuarios.Visibility = Visibility.Collapsed
             End If
 
             If lvConfigUsuarios.Items.Count > 25 Then
@@ -398,7 +407,7 @@ Public NotInheritable Class MainPage
                 End If
             Next
         Else
-            itemUsuarios.Visibility = Visibility.Collapsed
+            nvItemUsuarios.Visibility = Visibility.Collapsed
 
             For Each item In nvPrincipal.MenuItems
                 If TypeOf item Is NavigationViewItem Then

@@ -455,7 +455,7 @@ Module TwitterConexion
             End If
 
             Dim nvPrincipal As NavigationView = pagina.FindName("nvPrincipal")
-            Dim itemUsuarios As NavigationViewItem = pagina.FindName("itemUsuarios")
+            Dim nvItemUsuarios As NavigationViewItem = pagina.FindName("nvItemUsuarios")
 
             If lvConfigUsuarios.Items.Count = 0 Then
                 For Each item In nvPrincipal.MenuItems
@@ -465,7 +465,7 @@ Module TwitterConexion
                     End If
                 Next
 
-                itemUsuarios.Visibility = Visibility.Collapsed
+                nvItemUsuarios.Visibility = Visibility.Collapsed
             Else
                 For Each item In nvPrincipal.MenuItems
                     If TypeOf item Is NavigationViewItem Then
@@ -475,9 +475,9 @@ Module TwitterConexion
                 Next
 
                 If lvConfigUsuarios.Items.Count = 1 Then
-                    itemUsuarios.Visibility = Visibility.Collapsed
+                    nvItemUsuarios.Visibility = Visibility.Collapsed
                 Else
-                    itemUsuarios.Visibility = Visibility.Visible
+                    nvItemUsuarios.Visibility = Visibility.Visible
                 End If
             End If
 

@@ -114,6 +114,21 @@ Module FichaUsuarioXaml
         Dim tbScreenNombre As TextBlock = pagina.FindName("tbScreenNombreUsuario")
         tbScreenNombre.Text = "@" + cosas.Usuario.ScreenNombre
 
+        '------------------------------------
+
+        Dim gridDescripcion As Grid = pagina.FindName("gridDescripcionUsuario")
+
+        If Not cosas.Usuario.Descripcion = Nothing Then
+            gridDescripcion.Visibility = Visibility.Visible
+
+            Dim tbDescripcion As TextBlock = pagina.FindName("tbDescripcionUsuario")
+            tbDescripcion.Text = cosas.Usuario.Descripcion
+        Else
+            gridDescripcion.Visibility = Visibility.Collapsed
+        End If
+
+        '------------------------------------
+
         Dim botonEnlace As Button = pagina.FindName("botonEnlaceUsuario")
 
         If Not cosas.Usuario.Entidades.Enlace Is Nothing Then

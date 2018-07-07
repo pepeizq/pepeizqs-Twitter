@@ -18,13 +18,13 @@ Module UsuarioXaml
             .Foreground = New SolidColorBrush(Colors.White)
         }
 
-        Dim itemUsuarios As NavigationViewItem = pagina.FindName("itemUsuarios")
-        itemUsuarios.Content = tbUsuarios
+        Dim nvItemUsuarios As NavigationViewItem = pagina.FindName("nvItemUsuarios")
+        nvItemUsuarios.Content = tbUsuarios
 
         If listaUsuarios.Count = 1 Then
-            itemUsuarios.Visibility = Visibility.Collapsed
+            nvItemUsuarios.Visibility = Visibility.Collapsed
         ElseIf listaUsuarios.Count > 1 Then
-            itemUsuarios.Visibility = Visibility.Visible
+            nvItemUsuarios.Visibility = Visibility.Visible
         End If
 
     End Sub
@@ -58,7 +58,12 @@ Module UsuarioXaml
         gridUsuario.Children.Add(InicioXaml.Generar(megaUsuario, visibilidad))
         gridUsuario.Children.Add(MencionesXaml.Generar(megaUsuario, Visibility.Collapsed))
         gridUsuario.Children.Add(EscribirXaml.Generar(megaUsuario, Visibility.Collapsed))
-        gridUsuario.Children.Add(BusquedaXaml.Generar(megaUsuario, Visibility.Collapsed))
+
+        Dim gridBusquedaUsuarios As Grid = pagina.FindName("gridBusquedaUsuarios")
+        gridBusquedaUsuarios.Tag = megaUsuario
+
+        Dim gridBusquedaTweets As Grid = pagina.FindName("gridBusquedaTweets")
+        gridBusquedaTweets.Tag = megaUsuario
 
         Dim gridPrincipal As Grid = pagina.FindName("gridPrincipal")
         gridPrincipal.Children.Insert(0, gridUsuario)
@@ -78,8 +83,8 @@ Module UsuarioXaml
             Dim tbCuenta As TextBlock = pagina.FindName("tbCuentaSeleccionada")
             tbCuenta.Text = usuario.Nombre
 
-            Dim itemUsuarios As NavigationViewItem = pagina.FindName("itemUsuarios")
-            itemUsuarios.Tag = megaUsuario
+            Dim nvItemUsuarios As NavigationViewItem = pagina.FindName("nvItemUsuarios")
+            nvItemUsuarios.Tag = megaUsuario
 
             Dim tbTitulo As TextBlock = pagina.FindName("tbTitulo")
             tbTitulo.Text = Package.Current.DisplayName + " (" + Package.Current.Id.Version.Major.ToString + "." + Package.Current.Id.Version.Minor.ToString + "." + Package.Current.Id.Version.Build.ToString + "." + Package.Current.Id.Version.Revision.ToString + ") - " + usuario.Nombre
@@ -109,17 +114,14 @@ Module UsuarioXaml
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
-        'Dim gridTweets As Grid = pagina.FindName("gridTweets" + usuario.ScreenNombre)
+        'Dim gridTweets As Grid = pagina.FindName("gridTweets" + usuario.ID)
         'gridTweets.Visibility = Visibility.Collapsed
 
-        Dim gridMenciones As Grid = pagina.FindName("gridMenciones" + usuario.ScreenNombre)
+        Dim gridMenciones As Grid = pagina.FindName("gridMenciones" + usuario.ID)
         gridMenciones.Visibility = Visibility.Collapsed
 
-        Dim gridEscribir As Grid = pagina.FindName("gridEscribir" + usuario.ScreenNombre)
+        Dim gridEscribir As Grid = pagina.FindName("gridEscribir" + usuario.ID)
         gridEscribir.Visibility = Visibility.Collapsed
-
-        Dim gridBusqueda As Grid = pagina.FindName("gridBusqueda" + usuario.ScreenNombre)
-        gridBusqueda.Visibility = Visibility.Collapsed
 
         gridElegido.Visibility = Visibility.Visible
 
@@ -163,8 +165,8 @@ Module UsuarioXaml
             Dim tbTitulo As TextBlock = pagina.FindName("tbTitulo")
             tbTitulo.Text = Package.Current.DisplayName + " (" + Package.Current.Id.Version.Major.ToString + "." + Package.Current.Id.Version.Minor.ToString + "." + Package.Current.Id.Version.Build.ToString + "." + Package.Current.Id.Version.Revision.ToString + ") - " + usuario.Nombre
 
-            Dim itemUsuarios As NavigationViewItem = pagina.FindName("itemUsuarios")
-            itemUsuarios.Tag = usuario
+            Dim nvItemUsuarios As NavigationViewItem = pagina.FindName("nvItemUsuarios")
+            nvItemUsuarios.Tag = usuario
 
             Dim spCuentaSeleccionada As StackPanel = pagina.FindName("spCuentaSeleccionada")
             spCuentaSeleccionada.Tag = New pepeizq.Twitter.Objetos.UsuarioAmpliado(megaUsuario, usuario, Nothing)
@@ -193,9 +195,9 @@ Module UsuarioXaml
                     End If
                 End If
 
-                If grid.Name = "gridUsuario" + usuario.ScreenNombre Then
+                If grid.Name = "gridUsuario" + usuario.ID Then
                     For Each subgrid As Grid In grid.Children
-                        If subgrid.Name.Contains("gridTweets" + usuario.ScreenNombre) Then
+                        If subgrid.Name.Contains("gridTweets" + usuario.ID) Then
                             subgrid.Visibility = Visibility.Visible
                         Else
                             subgrid.Visibility = Visibility.Collapsed

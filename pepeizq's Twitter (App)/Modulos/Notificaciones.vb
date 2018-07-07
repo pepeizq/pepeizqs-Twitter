@@ -58,7 +58,7 @@ Module Notificaciones
 
     End Sub
 
-    Public Sub ToastTweet(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario, segundos As Double)
+    Public Sub ToastTweet(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario, segundos As Integer)
 
         Dim tb As New TextBlock
         tb = pepeizq.Twitter.Xaml.TweetTexto.Generar(tweet, Nothing, Nothing, megaUsuario, True)
@@ -204,7 +204,7 @@ Module Notificaciones
 
     End Sub
 
-    Public Sub ToastTweets(cantidad As Integer, megaUsuario As pepeizq.Twitter.MegaUsuario, segundos As Double)
+    Public Sub ToastTweets(cantidad As Integer, megaUsuario As pepeizq.Twitter.MegaUsuario, segundos As Integer)
 
         Dim recursos As New Resources.ResourceLoader
 

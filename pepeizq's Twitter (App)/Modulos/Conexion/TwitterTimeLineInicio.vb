@@ -15,7 +15,7 @@ Module TwitterTimeLineInicio
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
-        Dim gridTweets As Grid = pagina.FindName("gridTweets" + usuario.ScreenNombre)
+        Dim gridTweets As Grid = pagina.FindName("gridTweets" + usuario.ID)
 
         If Not gridTweets Is Nothing Then
             gridTweets.Background = New SolidColorBrush(Colors.LightGray)

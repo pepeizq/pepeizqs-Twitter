@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -118,276 +118,246 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AccountChange" xml:space="preserve">
-    <value>Cambiar Cuenta</value>
+    <value>Changer de compte</value>
   </data>
   <data name="AccountNew" xml:space="preserve">
-    <value>Conectar Cuenta</value>
+    <value>Compte de connexion</value>
   </data>
   <data name="buttonConfigNotificationsSound.Text" xml:space="preserve">
-    <value>Probar</value>
+    <value>Test</value>
   </data>
   <data name="Config" xml:space="preserve">
-    <value>Configuración</value>
+    <value>Configuration</value>
   </data>
   <data name="Home" xml:space="preserve">
-    <value>Inicio</value>
+    <value>Accueil</value>
   </data>
   <data name="MoreThings" xml:space="preserve">
-    <value>Más Cosas</value>
+    <value>Plus de choses</value>
   </data>
   <data name="Open" xml:space="preserve">
-    <value>Abrir</value>
+    <value>Ouvrir</value>
   </data>
   <data name="tbAccountConnected.Text" xml:space="preserve">
-    <value>Estás conectado con:</value>
+    <value>Vous êtes connecté avec:</value>
   </data>
   <data name="tbConfigAccounts.Text" xml:space="preserve">
-    <value>Cuentas</value>
+    <value>Comptes</value>
   </data>
   <data name="tbConfigNotifications.Text" xml:space="preserve">
-    <value>Notificaciones</value>
+    <value>Notifications</value>
   </data>
   <data name="tbConfigNotificationsSound.Text" xml:space="preserve">
-    <value>Selecciona un sonido</value>
+    <value>Définir un son</value>
   </data>
   <data name="tbConfigNotificationsTime.Text" xml:space="preserve">
-    <value>Establece un tiempo de expiración en el Centro de Actividades</value>
+    <value>Définir un délai d&apos;expiration</value>
   </data>
   <data name="tbConfigNotificationsImage.Text" xml:space="preserve">
-    <value>Añadir encabezado de imagen (si el tweet lo tiene)</value>
+    <value>Ajouter l&apos;en-tête de l&apos;image (si le tweet l&apos;a)</value>
   </data>
   <data name="SendTweet" xml:space="preserve">
-    <value>Enviar Tweet</value>
-  </data>
-  <data name="MoreThings_Contact" xml:space="preserve">
-    <value>Contactar</value>
-  </data>
-  <data name="MoreThings_HelpTranslate" xml:space="preserve">
-    <value>Ayuda a Traducir</value>
-  </data>
-  <data name="MoreThings_MoreApps" xml:space="preserve">
-    <value>Más Apps</value>
-  </data>
-  <data name="MoreThings_ReportBug" xml:space="preserve">
-    <value>Informa de un Fallo</value>
-  </data>
-  <data name="MoreThings_SourceCode" xml:space="preserve">
-    <value>Código Fuente</value>
+    <value>Envoyer Tweet</value>
   </data>
   <data name="TweetSent" xml:space="preserve">
-    <value>Tweet enviado</value>
-  </data>
-  <data name="MoreThings_VoteApp" xml:space="preserve">
-    <value>Vota la App</value>
+    <value>Tweet envoyé</value>
   </data>
   <data name="Retweeted" xml:space="preserve">
-    <value>Retwiteo</value>
+    <value>Retweeté</value>
   </data>
   <data name="WriteTweet" xml:space="preserve">
-    <value>Escribir Tweet</value>
+    <value>Écrire un Tweet</value>
   </data>
   <data name="Accounts" xml:space="preserve">
-    <value>Cuentas</value>
+    <value>Comptes</value>
   </data>
-  <data name="MoreThings_Back" xml:space="preserve">
-    <value>Volver</value>
+  <data name="buttonBack.Text" xml:space="preserve">
+    <value>Retour</value>
   </data>
   <data name="buttonAddAccount.Text" xml:space="preserve">
-    <value>Añadir Cuenta</value>
+    <value>Ajouter un compte</value>
   </data>
   <data name="ReplyingTo" xml:space="preserve">
-    <value>Respondiendo a</value>
+    <value>Répondre à</value>
   </data>
   <data name="Mentions" xml:space="preserve">
-    <value>Menciones</value>
+    <value>Mentions</value>
   </data>
   <data name="ReplyTweet" xml:space="preserve">
-    <value>Responder Tweet</value>
+    <value>Répondre au Tweet</value>
   </data>
   <data name="Retweet" xml:space="preserve">
-    <value>Retwitear</value>
+    <value>Retweet</value>
   </data>
   <data name="Favorite" xml:space="preserve">
-    <value>Favorito</value>
+    <value>J&apos;aime</value>
   </data>
   <data name="MoreOptions" xml:space="preserve">
-    <value>Otras Opciones</value>
+    <value>Plus d&apos;options</value>
   </data>
   <data name="CopyUrlTweet" xml:space="preserve">
-    <value>Copiar Enlace del Tweet</value>
+    <value>Copier le lien du Tweet</value>
   </data>
   <data name="tbNumTweetsUser.Text" xml:space="preserve">
     <value>Tweets</value>
   </data>
   <data name="tbNumFollowersUser.Text" xml:space="preserve">
-    <value>Seguidores</value>
+    <value>Abonnés</value>
   </data>
   <data name="Follow" xml:space="preserve">
-    <value>Seguir</value>
+    <value>Suivre</value>
   </data>
   <data name="Following" xml:space="preserve">
-    <value>Siguiendo</value>
+    <value>Abonné</value>
   </data>
   <data name="tbNumFavoritesUser.Text" xml:space="preserve">
-    <value>Me Gusta</value>
-  </data>
-  <data name="UserBlock" xml:space="preserve">
-    <value>Bloquear Usuario</value>
-  </data>
-  <data name="UserReport" xml:space="preserve">
-    <value>Reportar Usuario</value>
-  </data>
-  <data name="UserMute" xml:space="preserve">
-    <value>Silenciar Usuario</value>
+    <value>J&apos;aime</value>
   </data>
   <data name="OEmbedTweet" xml:space="preserve">
-    <value>HTML Tweet</value>
+    <value>Intégrer ce Tweet</value>
   </data>
   <data name="Search" xml:space="preserve">
-    <value>Búsqueda</value>
+    <value>Chercher</value>
   </data>
   <data name="Users" xml:space="preserve">
-    <value>Usuarios</value>
+    <value>Utilisateurs</value>
   </data>
   <data name="Search2" xml:space="preserve">
-    <value>Buscar</value>
+    <value>Chercher</value>
   </data>
   <data name="OpenWebBrowserTweet" xml:space="preserve">
-    <value>Abrir Tweet en el Navegador</value>
+    <value>Ouvrir Tweet dans le navigateur Web</value>
   </data>
   <data name="OpenWebBrowserUser" xml:space="preserve">
-    <value>Abrir Usuario en el Navegador</value>
+    <value>Ouvrir utilisateur dans le navigateur Web</value>
   </data>
   <data name="ShareTweet" xml:space="preserve">
-    <value>Compartir Tweet</value>
+    <value>Partager le Tweet</value>
   </data>
   <data name="ShareUser" xml:space="preserve">
-    <value>Compartir Usuario</value>
+    <value>Partager l&apos;utilisateur</value>
   </data>
-  <data name="buttonBack.Text" xml:space="preserve">
-    <value>Volver</value>
+  <data name="MoreThings_Contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="MoreThings_HelpTranslate" xml:space="preserve">
+    <value>Aider à traduire</value>
+  </data>
+  <data name="MoreThings_MoreApps" xml:space="preserve">
+    <value>Plus d&apos;applications</value>
+  </data>
+  <data name="MoreThings_ReportBug" xml:space="preserve">
+    <value>Signaler un bug</value>
+  </data>
+  <data name="MoreThings_SourceCode" xml:space="preserve">
+    <value>Code source</value>
+  </data>
+  <data name="MoreThings_VoteApp" xml:space="preserve">
+    <value>Votez pour l&apos;application</value>
+  </data>
+  <data name="MoreThings_Back" xml:space="preserve">
+    <value>Retour</value>
   </data>
   <data name="tbConfigApp.Text" xml:space="preserve">
-    <value>Aplicación</value>
+    <value>Application</value>
   </data>
   <data name="tbConfigAppTweetCard.Text" xml:space="preserve">
-    <value>Cargar información de la "Tweet Card" cuando amplias un tweet (si el tweet lo tiene)</value>
+    <value>Charger des informations à partir de la &quot;Carte de Tweet&quot; lorsque vous développez un tweet (si le tweet l&apos;a)</value>
   </data>
   <data name="tbConfigAppLoadMedia.Text" xml:space="preserve">
-    <value>Cargar y mostrar archivos multimedia de los tweets (imagenes, gifs y videos)</value>
+    <value>Chargement et affichage des fichiers multimédia de Tweets (images, gifs et vidéos)</value>
   </data>
   <data name="tbConfigAppAutoStart.Text" xml:space="preserve">
-    <value>Iniciar automáticamente la app en cada arranque de Windows</value>
+    <value>Démarrer automatiquement l&apos;application au démarrage de Windows</value>
   </data>
   <data name="StoreDescription" xml:space="preserve">
-    <value>Cliente no oficial de Twitter con soporte multicuenta</value>
+    <value>Client Twitter non officiel avec prise en charge de plusieurs comptes</value>
   </data>
   <data name="StoreTags" xml:space="preserve">
-    <value>Twitter;Tweet;Retwittear;Hashtag</value>
+    <value>Twitter;Tweet;Retweet;Hashtag</value>
   </data>
   <data name="tbConfigNotificationsUser.Text" xml:space="preserve">
-    <value>Incluir usuario a quien va dirigido el tweet</value>
+    <value>Inclure l&apos;utilisateur à qui le tweet est adressé</value>
   </data>
   <data name="ButtonDeleteAccount" xml:space="preserve">
-    <value>Borrar Cuenta</value>
+    <value>Supprimer le compte</value>
   </data>
-  <data name="Notifications" xml:space="preserve">
-    <value>Notificaciones</value>
-  </data>
-  <data name="tbConfigApi.Text" xml:space="preserve">
-    <value>Claves de API</value>
+  <data name="CbNotification" xml:space="preserve">
+    <value>Afficher les notifications</value>
   </data>
   <data name="ButtonRemoveAds" xml:space="preserve">
-    <value>Quitar Anuncios</value>
+    <value>Supprimez la pub</value>
+  </data>
+  <data name="UserBlock" xml:space="preserve">
+    <value>Bloquer l&apos;utilisateur</value>
+  </data>
+  <data name="UserReport" xml:space="preserve">
+    <value>Dénoncer l&apos;utilisateur</value>
+  </data>
+  <data name="UserMute" xml:space="preserve">
+    <value>Ignorer l&apos;utilisateur</value>
   </data>
   <data name="ButtonAddTile" xml:space="preserve">
-    <value>Añadir Tile</value>
+    <value>Ajouter une tuile</value>
   </data>
   <data name="UserUnblock" xml:space="preserve">
-    <value>Desbloquear Usuario</value>
+    <value>Débloquer l&apos;utilisateur</value>
   </data>
   <data name="UserUnmute" xml:space="preserve">
-    <value>Desinlenciar Usuario</value>
+    <value>Ne plus ignorer l&apos;utilisateur</value>
   </data>
   <data name="CopyUrl.Text" xml:space="preserve">
-    <value>Copiar Enlace</value>
+    <value>Copier le lien</value>
   </data>
   <data name="Download.Text" xml:space="preserve">
-    <value>Descargar</value>
+    <value>Télécharger</value>
   </data>
   <data name="Height" xml:space="preserve">
-    <value>Alto</value>
+    <value>Hauteur</value>
   </data>
   <data name="Seconds" xml:space="preserve">
-    <value>Segundos</value>
+    <value>Secondes</value>
   </data>
   <data name="tbConfigAppLoadMediaPreview.Text" xml:space="preserve">
-    <value>Dimensiones máximas de la vista previa</value>
+    <value>Dimensions maximales de l&apos;aperçu</value>
   </data>
   <data name="Width" xml:space="preserve">
-    <value>Ancho</value>
+    <value>Largeur</value>
   </data>
   <data name="DeleteTweet" xml:space="preserve">
-    <value>Borrar Tweet</value>
+    <value>Supprimer le Tweet</value>
   </data>
   <data name="UserNewMentions" xml:space="preserve">
-    <value>tiene nuevas menciones</value>
+    <value>a de nouvelles mentions</value>
   </data>
   <data name="UserNewTweets" xml:space="preserve">
-    <value>tiene nuevos tweets</value>
+    <value>a de nouveaux tweets</value>
   </data>
   <data name="tbConfigNotificationsGroup.Text" xml:space="preserve">
-    <value>Agrupar Notificaciones</value>
+    <value>Notifications de groupe</value>
   </data>
   <data name="tbConfigNotificationsGroupTooltip.Text" xml:space="preserve">
-    <value>Activando esta opción te llegara una única notificación cada vez que la app encuentre nuevos tweets, en vez de una notificación por cada tweet</value>
+    <value>En activant cette option, vous recevrez une seule notification chaque fois que l&apos;application trouve de nouveaux tweets, au lieu d&apos;une notification pour chaque tweet.</value>
   </data>
   <data name="tbConfigAppAutoStartTooltip.Text" xml:space="preserve">
-    <value>Puedes desactivar esta opción desde Administrador de Tareas -&gt; Inicio</value>
+    <value>Vous pouvez désactiver cette option depuis le Gestionnaire des tâches -&gt; Démarrage</value>
   </data>
   <data name="RetweetBy.Text" xml:space="preserve">
-    <value>Retwitteado por:</value>
+    <value>Retweet par:</value>
   </data>
   <data name="tbConfigAppTweetRetweets.Text" xml:space="preserve">
-    <value>Cargar lista de usuarios que han hecho retweet cuando amplias un tweet</value>
+    <value>Charger la liste des utilisateurs qui ont retweeté lorsque vous développez un tweet</value>
+  </data>
+  <data name="tbConfigApi.Text" xml:space="preserve">
+    <value>Clés de l&apos;API</value>
   </data>
   <data name="tbConfigApiWarning.Text" xml:space="preserve">
-    <value>Si deseas que la app opere como si fuera tu propia app de Twitter puedes cambiar las claves, pero debes configurar la nueva app como especifico en el tutorial</value>
+    <value>Si vous voulez que l&apos;application fonctionne comme si elle était votre propre application Twitter, vous pouvez changer les clés, mais vous devez configurer la nouvelle application comme indiqué dans le tutoriel</value>
   </data>
   <data name="tbConfigApiTutorial.Text" xml:space="preserve">
-    <value>Abrir Tutorial</value>
+    <value>Ouvrir le didacticiel</value>
   </data>
   <data name="tbConfigApiReset.Text" xml:space="preserve">
-    <value>Resetear Claves</value>
-  </data>
-  <data name="Home2.Text" xml:space="preserve">
-    <value>Inicio</value>
-  </data>
-  <data name="Mentions2.Text" xml:space="preserve">
-    <value>Menciones</value>
-  </data>
-  <data name="ClickExpand" xml:space="preserve">
-    <value>Clickea para expandir</value>
-  </data>
-  <data name="Followers" xml:space="preserve">
-    <value>Seguidores</value>
-  </data>
-  <data name="tbConfigAppTooltipsHelp.Text" xml:space="preserve">
-    <value>Enseñar globos de ayuda</value>
-  </data>
-  <data name="ClickExpandTweet" xml:space="preserve">
-    <value>Clickea para expandir el tweet</value>
-  </data>
-  <data name="Search3.Text" xml:space="preserve">
-    <value>Buscar</value>
-  </data>
-  <data name="SearchUsers" xml:space="preserve">
-    <value>Buscar Usuarios</value>
-  </data>
-  <data name="SearchNoResults.Text" xml:space="preserve">
-    <value>No hay resultados</value>
-  </data>
-  <data name="SearchTweets" xml:space="preserve">
-    <value>Buscar Tweets</value>
+    <value>Réinitialiser les clés</value>
   </data>
 </root>

@@ -17,7 +17,7 @@ Module TwitterStream
 
         '------------------
 
-        Dim gridInicio As Grid = pagina.FindName("gridTweets" + usuario.ScreenNombre)
+        Dim gridInicio As Grid = pagina.FindName("gridTweets" + usuario.ID)
         Dim lvInicio As New ListView
 
         If Not gridInicio Is Nothing Then
@@ -29,7 +29,7 @@ Module TwitterStream
 
         '------------------
 
-        Dim gridMenciones As Grid = pagina.FindName("gridMenciones" + usuario.ScreenNombre)
+        Dim gridMenciones As Grid = pagina.FindName("gridMenciones" + usuario.ID)
         Dim lvMenciones As New ListView
 
         If Not gridMenciones Is Nothing Then
@@ -88,7 +88,7 @@ Module TwitterStream
                                                                                                                                                                                                         listaTweetsAñadir.Reverse()
                                                                                                                                                                                                     End If
 
-                                                                                                                                                                                                    Dim segundos As Double = 0
+                                                                                                                                                                                                    Dim segundos As Integer = 0
 
                                                                                                                                                                                                     If ApplicationData.Current.LocalSettings.Values("notificacionInicioTiempo") = True Then
                                                                                                                                                                                                         segundos = ApplicationData.Current.LocalSettings.Values("notificacionInicioTiempoSegundos")
@@ -181,7 +181,7 @@ Module TwitterStream
                                                                                                                                                                                                             lvMenciones.Items.Insert(0, pepeizq.Twitter.Xaml.TweetXaml.Añadir(tweetNuevo, megaUsuario, Nothing))
 
                                                                                                                                                                                                             If megaUsuario.NotificacionMenciones = True Then
-                                                                                                                                                                                                                Dim segundos As Double = 0
+                                                                                                                                                                                                                Dim segundos As Integer = 0
 
                                                                                                                                                                                                                 If ApplicationData.Current.LocalSettings.Values("notificacionMencionesTiempo") = True Then
                                                                                                                                                                                                                     segundos = ApplicationData.Current.LocalSettings.Values("notificacionMencionesTiempoSegundos")

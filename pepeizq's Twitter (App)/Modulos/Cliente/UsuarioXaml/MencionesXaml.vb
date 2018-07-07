@@ -10,7 +10,7 @@ Module MencionesXaml
         Dim usuario As TwitterUsuario = megaUsuario.Usuario
 
         Dim gridMenciones As New Grid With {
-            .Name = "gridMenciones" + usuario.ScreenNombre,
+            .Name = "gridMenciones" + usuario.ID,
             .Visibility = visibilidad
         }
         gridMenciones.SetValue(Grid.RowProperty, 1)

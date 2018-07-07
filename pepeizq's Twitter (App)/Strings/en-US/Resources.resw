@@ -378,4 +378,16 @@
   <data name="ClickExpandTweet" xml:space="preserve">
     <value>Click to expand tweet</value>
   </data>
+  <data name="Search3.Text" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SearchUsers" xml:space="preserve">
+    <value>Search Users</value>
+  </data>
+  <data name="SearchNoResults.Text" xml:space="preserve">
+    <value>No results</value>
+  </data>
+  <data name="SearchTweets" xml:space="preserve">
+    <value>Search Tweets</value>
+  </data>
 </root>

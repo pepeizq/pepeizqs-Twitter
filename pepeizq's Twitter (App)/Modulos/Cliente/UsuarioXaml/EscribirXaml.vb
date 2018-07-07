@@ -11,7 +11,7 @@ Module EscribirXaml
 
         Dim gridFondo As New Grid
         gridFondo.SetValue(Grid.RowProperty, 1)
-        gridFondo.Name = "gridEscribir" + usuario.ScreenNombre
+        gridFondo.Name = "gridEscribir" + usuario.ID
         gridFondo.Visibility = visibilidad
         gridFondo.Padding = New Thickness(10, 10, 10, 10)
 
