@@ -47,7 +47,7 @@ Module MencionesXaml
             .Visibility = Visibility.Collapsed,
             .Margin = New Thickness(0, 0, 15, 0),
             .Padding = New Thickness(10, 10, 10, 10),
-            .Name = "prTweetsMenciones" + usuario.ScreenNombre
+            .Name = "prTweetsMenciones" + usuario.ID
         }
 
         svTweets.Tag = New pepeizq.Twitter.Objetos.ScrollViewerTweets(megaUsuario, Nothing, prTweets, 1, Nothing, Nothing)
@@ -60,7 +60,7 @@ Module MencionesXaml
         }
 
         Dim botonSubir As New Button With {
-            .Name = "botonSubirArribaMenciones" + usuario.ScreenNombre,
+            .Name = "botonSubirArribaMenciones" + usuario.ID,
             .Padding = New Thickness(10, 10, 10, 10),
             .BorderBrush = New SolidColorBrush(Colors.White),
             .BorderThickness = New Thickness(1, 1, 1, 1),

@@ -104,7 +104,27 @@ Module TwitterPeticiones
     Public Async Function BuscarRespuestasTweet(listaTweets As List(Of Tweet), megaUsuario As pepeizq.Twitter.MegaUsuario, tweetID As String, screenNombre As String) As Task(Of List(Of Tweet))
 
         Try
-            Dim enlace As New Uri("https://api.twitter.com/1.1/search/tweets.json?q=%3A" + screenNombre + "&result_type=recent&count=100&since_id=" + tweetID)
+            Dim enlace As New Uri("https://api.twitter.com/1.1/search/tweets.json?q=%3A" + screenNombre + "&tweet_mode=extended&result_type=recent&count=100&since_id=" + tweetID)
+            Dim request As New TwitterOAuthRequest
+            Dim resultado As String = Await request.EjecutarGetAsync(enlace, megaUsuario.Servicio.twitterDataProvider._tokens)
+            Dim busqueda As pepeizq.Twitter.TweetsBusqueda = JsonConvert.DeserializeObject(Of pepeizq.Twitter.TweetsBusqueda)(resultado)
+            listaTweets = busqueda.Resultados
+        Catch ex As Exception
+
+        End Try
+
+        Return listaTweets
+
+    End Function
+
+    Public Async Function BuscarHashtagTweets(listaTweets As List(Of Tweet), megaUsuario As pepeizq.Twitter.MegaUsuario, hashtag As String) As Task(Of List(Of Tweet))
+
+        If hashtag.Contains("#") Then
+            hashtag = hashtag.Replace("#", Nothing)
+        End If
+
+        Try
+            Dim enlace As New Uri("https://api.twitter.com/1.1/search/tweets.json?q=%23" + hashtag + "&tweet_mode=extended&result_type=recent&count=100")
             Dim request As New TwitterOAuthRequest
             Dim resultado As String = Await request.EjecutarGetAsync(enlace, megaUsuario.Servicio.twitterDataProvider._tokens)
             Dim busqueda As pepeizq.Twitter.TweetsBusqueda = JsonConvert.DeserializeObject(Of pepeizq.Twitter.TweetsBusqueda)(resultado)

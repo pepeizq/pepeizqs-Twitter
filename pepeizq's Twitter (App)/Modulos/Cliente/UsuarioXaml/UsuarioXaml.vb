@@ -51,7 +51,7 @@ Module UsuarioXaml
         menu.Items.Add(menuItemUsuario)
 
         Dim gridUsuario As New Grid With {
-            .Name = "gridUsuario" + usuario.ScreenNombre,
+            .Name = "gridUsuario" + usuario.ID,
             .Visibility = visibilidad
         }
 

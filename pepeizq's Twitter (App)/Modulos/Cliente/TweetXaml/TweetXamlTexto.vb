@@ -209,7 +209,17 @@ Namespace pepeizq.Twitter.Xaml
                                     ToolTipService.SetToolTip(enlace, spUsuario)
                                     ToolTipService.SetPlacement(enlace, PlacementMode.Bottom)
 
-                                    AddHandler enlace.Click, AddressOf EnlaceClick
+                                    AddHandler enlace.Click, AddressOf EnlaceUsuarioClick
+
+                                    enlace.Inlines.Add(contenidoEnlace)
+                                    textoSpan.Inlines.Add(enlace)
+                                ElseIf entidad.Tipo = 2 Then
+                                    Dim enlace As New Hyperlink With {
+                                        .TextDecorations = Nothing,
+                                        .Foreground = New SolidColorBrush(color)
+                                    }
+
+                                    AddHandler enlace.Click, AddressOf EnlaceHashtagClick
 
                                     enlace.Inlines.Add(contenidoEnlace)
                                     textoSpan.Inlines.Add(enlace)
@@ -285,7 +295,7 @@ Namespace pepeizq.Twitter.Xaml
 
         End Function
 
-        Private Sub EnlaceClick(sender As Object, e As HyperlinkClickEventArgs)
+        Private Sub EnlaceUsuarioClick(sender As Object, e As HyperlinkClickEventArgs)
 
             Dim enlace As Hyperlink = sender
             Dim contenido As Run = enlace.Inlines(0)
@@ -294,6 +304,38 @@ Namespace pepeizq.Twitter.Xaml
             cosas.ScreenNombre = usuario.Replace("@", Nothing)
 
             FichaUsuarioXaml.Generar(cosas, enlace)
+
+        End Sub
+
+        Private Sub EnlaceHashtagClick(sender As Object, e As HyperlinkClickEventArgs)
+
+            Dim enlace As Hyperlink = sender
+            Dim contenido As Run = enlace.Inlines(0)
+            Dim hashtag As String = contenido.Text
+
+            hashtag = hashtag.Replace("#", Nothing)
+
+            BusquedaTweets.Generar()
+
+            Dim frame As Frame = Window.Current.Content
+            Dim pagina As Page = frame.Content
+
+            Dim gridUsuarioAmpliado As Grid = pagina.FindName("gridUsuarioAmpliado")
+            gridUsuarioAmpliado.Visibility = Visibility.Collapsed
+
+            Dim gridTweetAmpliado As Grid = pagina.FindName("gridTweetAmpliado")
+            gridTweetAmpliado.Visibility = Visibility.Collapsed
+
+            Dim gridBusquedaUsuarios As Grid = pagina.FindName("gridBusquedaUsuarios")
+            gridBusquedaUsuarios.Visibility = Visibility.Collapsed
+
+            Dim gridBusqueda As Grid = pagina.FindName("gridBusquedaTweets")
+            gridBusqueda.Visibility = Visibility.Visible
+
+            Dim tb As TextBox = pagina.FindName("tbBuscarTweets")
+            tb.Text = hashtag
+
+            BusquedaTweets.BotonBuscarTweetsClick(sender, e)
 
         End Sub
 

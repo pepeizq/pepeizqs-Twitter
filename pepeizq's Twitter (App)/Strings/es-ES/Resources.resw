@@ -390,4 +390,16 @@
   <data name="SearchTweets" xml:space="preserve">
     <value>Buscar Tweets</value>
   </data>
+  <data name="SearchUsersMessage.Text" xml:space="preserve">
+    <value>Introduce el usuario que deseas buscar en la caja de texto</value>
+  </data>
+  <data name="SearchTweetsMessage.Text" xml:space="preserve">
+    <value>Introduce el hashtag con el que deseas buscar tweets en la caja de texto</value>
+  </data>
+  <data name="tbSearchTweetsTooltip.Text" xml:space="preserve">
+    <value>Por restricciones de Twitter la app solo puede mostrar los tweets de los ultimos 7 días con el hashtag que buscas</value>
+  </data>
+  <data name="tbSearchUsersTooltip.Text" xml:space="preserve">
+    <value>Por restricciones de Twitter la app solo puede mostrar los 20 primeros resultados de tu búsqueda</value>
+  </data>
 </root>

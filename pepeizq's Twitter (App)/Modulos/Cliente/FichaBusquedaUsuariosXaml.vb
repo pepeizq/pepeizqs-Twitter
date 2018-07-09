@@ -38,6 +38,19 @@ Namespace pepeizq.Twitter.Xaml
             Dim pagina As Page = frame.Content
 
             Dim boton As Button = sender
+            boton.IsEnabled = False
+
+            Dim gridMensaje As Grid = pagina.FindName("gridBusquedaUsuariosMensaje")
+            gridMensaje.Visibility = Visibility.Collapsed
+
+            Dim lv As ListView = pagina.FindName("lvResultadosBusquedaUsuarios")
+            lv.Items.Clear()
+
+            AddHandler lv.ItemClick, AddressOf LvResultadosItemClick
+
+            Dim pr As ProgressRing = pagina.FindName("prBusquedaUsuarios")
+            pr.Visibility = Visibility.Visible
+
             Dim megaUsuario As MegaUsuario = boton.Tag
 
             Dim usuarioBuscar As String = ApplicationData.Current.LocalSettings.Values("UsuarioBuscar")
@@ -46,10 +59,7 @@ Namespace pepeizq.Twitter.Xaml
 
             listaUsuarios = Await TwitterPeticiones.BuscarUsuarios(listaUsuarios, megaUsuario, usuarioBuscar)
 
-            Dim lv As ListView = pagina.FindName("lvResultadosBusquedaUsuarios")
-            lv.Items.Clear()
-
-            AddHandler lv.ItemClick, AddressOf LvResultadosItemClick
+            pr.Visibility = Visibility.Collapsed
 
             Dim gridNoResultados As Grid = pagina.FindName("gridBusquedaUsuariosNo")
 
@@ -152,7 +162,6 @@ Namespace pepeizq.Twitter.Xaml
                         .Padding = New Thickness(10, 10, 10, 10)
                     }
 
-                    AddHandler botonUsuario.PointerPressed, AddressOf UsuarioPulsaUsuario
                     AddHandler botonUsuario.PointerEntered, AddressOf UsuarioEntraBoton
                     AddHandler botonUsuario.PointerExited, AddressOf UsuarioSaleBoton
 
@@ -161,6 +170,8 @@ Namespace pepeizq.Twitter.Xaml
             Else
                 gridNoResultados.Visibility = Visibility.Visible
             End If
+
+            boton.IsEnabled = True
 
         End Sub
 
@@ -184,15 +195,6 @@ Namespace pepeizq.Twitter.Xaml
             Dim cosas As Objetos.UsuarioAmpliado = sp.Tag
 
             FichaUsuarioXaml.Generar(cosas, sp)
-
-        End Sub
-
-        Private Sub UsuarioPulsaUsuario(sender As Object, e As PointerRoutedEventArgs)
-
-            Dim boton As Button = sender
-            Dim cosas As Objetos.UsuarioAmpliado = boton.Tag
-
-            FichaUsuarioXaml.Generar(cosas, boton)
 
         End Sub
 

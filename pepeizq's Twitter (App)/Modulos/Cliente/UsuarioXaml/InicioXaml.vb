@@ -1,6 +1,7 @@
 ﻿Imports FontAwesome.UWP
 Imports pepeizq.Twitter
 Imports pepeizq.Twitter.Tweet
+Imports Windows.ApplicationModel.Store
 Imports Windows.UI
 Imports Windows.UI.Core
 
@@ -57,7 +58,7 @@ Module InicioXaml
         prTweets.Foreground = New SolidColorBrush(App.Current.Resources("ColorPrimario"))
         prTweets.VerticalAlignment = VerticalAlignment.Center
         prTweets.HorizontalAlignment = HorizontalAlignment.Center
-        prTweets.Name = "prTweets" + usuario.ScreenNombre
+        prTweets.Name = "prTweets" + usuario.ID
 
         gridTweets.Children.Add(prTweets)
 
@@ -96,7 +97,7 @@ Module InicioXaml
             .Visibility = Visibility.Collapsed,
             .Margin = New Thickness(0, 0, 15, 0),
             .Padding = New Thickness(10, 10, 10, 10),
-            .Name = "prTweetsInicio" + usuario.ScreenNombre
+            .Name = "prTweetsInicio" + usuario.ID
         }
 
         svTweets.Tag = New pepeizq.Twitter.Objetos.ScrollViewerTweets(megaUsuario, prTweets, prTweetsAbajo, 0, Nothing, Nothing)
@@ -109,7 +110,7 @@ Module InicioXaml
         }
 
         Dim botonSubir As New Button With {
-            .Name = "botonSubirArribaInicio" + usuario.ScreenNombre,
+            .Name = "botonSubirArribaInicio" + usuario.ID,
             .Padding = New Thickness(10, 10, 10, 10),
             .BorderBrush = New SolidColorBrush(Colors.White),
             .BorderThickness = New Thickness(1, 1, 1, 1),
@@ -159,96 +160,131 @@ Module InicioXaml
 
         lv.Tag = cosas.MegaUsuario
 
+        Dim añadirAnuncios As Boolean = False
+        Dim licencia As LicenseInformation = Nothing
+
+        Try
+            licencia = CurrentApp.LicenseInformation
+        Catch ex As Exception
+
+        End Try
+
+        If Not licencia Is Nothing Then
+            If Not licencia.ProductLicenses("NoAds2").IsActive Then
+                añadirAnuncios = True
+            End If
+        Else
+            añadirAnuncios = True
+        End If
+
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
         If sv.VerticalOffset > 50 Then
             If cosas.Query = 0 Then
-                Dim botonSubir As Button = pagina.FindName("botonSubirArribaInicio" + cosas.MegaUsuario.Usuario.ScreenNombre)
+                Dim botonSubir As Button = pagina.FindName("botonSubirArribaInicio" + cosas.MegaUsuario.Usuario.ID)
                 botonSubir.Visibility = Visibility.Visible
             ElseIf cosas.Query = 1 Then
-                Dim botonSubir As Button = pagina.FindName("botonSubirArribaMenciones" + cosas.MegaUsuario.Usuario.ScreenNombre)
+                Dim botonSubir As Button = pagina.FindName("botonSubirArribaMenciones" + cosas.MegaUsuario.Usuario.ID)
                 botonSubir.Visibility = Visibility.Visible
             ElseIf cosas.Query = 2 Then
                 Dim botonSubir As Button = pagina.FindName("botonSubirArribaUsuario")
+                botonSubir.Visibility = Visibility.Visible
+
+                If añadirAnuncios = True Then
+                    Dim gridAnuncios As Grid = pagina.FindName("gridAnunciosUsuario")
+                    gridAnuncios.Visibility = Visibility.Visible
+                End If
+            ElseIf cosas.Query = 3 Then
+                Dim botonSubir As Button = pagina.FindName("botonSubirArribaBusquedaTweets")
                 botonSubir.Visibility = Visibility.Visible
             End If
         Else
             If cosas.Query = 0 Then
-                Dim botonSubir As Button = pagina.FindName("botonSubirArribaInicio" + cosas.MegaUsuario.Usuario.ScreenNombre)
+                Dim botonSubir As Button = pagina.FindName("botonSubirArribaInicio" + cosas.MegaUsuario.Usuario.ID)
                 botonSubir.Visibility = Visibility.Collapsed
             ElseIf cosas.Query = 1 Then
-                Dim botonSubir As Button = pagina.FindName("botonSubirArribaMenciones" + cosas.MegaUsuario.Usuario.ScreenNombre)
+                Dim botonSubir As Button = pagina.FindName("botonSubirArribaMenciones" + cosas.MegaUsuario.Usuario.ID)
                 botonSubir.Visibility = Visibility.Collapsed
             ElseIf cosas.Query = 2 Then
                 Dim botonSubir As Button = pagina.FindName("botonSubirArribaUsuario")
                 botonSubir.Visibility = Visibility.Collapsed
+
+                If añadirAnuncios = True Then
+                    Dim gridAnuncios As Grid = pagina.FindName("gridAnunciosUsuario")
+                    gridAnuncios.Visibility = Visibility.Collapsed
+                End If
+            ElseIf cosas.Query = 3 Then
+                Dim botonSubir As Button = pagina.FindName("botonSubirArribaBusquedaTweets")
+                botonSubir.Visibility = Visibility.Collapsed
             End If
         End If
 
-        If pr2.Visibility = Visibility.Collapsed Then
-            If (sv.ScrollableHeight - 200) < sv.VerticalOffset Then
-                Dim mostrar As Boolean = False
+        If Not pr2 Is Nothing Then
+            If pr2.Visibility = Visibility.Collapsed Then
+                If (sv.ScrollableHeight - 200) < sv.VerticalOffset Then
+                    Dim mostrar As Boolean = False
 
-                If pr1 Is Nothing Then
-                    mostrar = True
-                Else
-                    If pr1.IsActive = False Then
+                    If pr1 Is Nothing Then
                         mostrar = True
-                    End If
-                End If
-
-                If mostrar = True Then
-                    pr2.Visibility = Visibility.Visible
-
-                    If lv.Items.Count > 0 And lv.Items.Count < 280 Then
-                        Dim lvItem As ListViewItem = lv.Items(lv.Items.Count - 1)
-                        Dim gridTweet As Grid = lvItem.Content
-                        Dim tweetAmpliado As pepeizq.Twitter.Objetos.TweetAmpliado = gridTweet.Tag
-                        Dim ultimoTweet As Tweet = tweetAmpliado.Tweet
-
-                        If Not ultimoTweet.ID = Nothing Then
-                            Dim provider As TwitterDataProvider = cosas.MegaUsuario.Servicio.Provider
-                            Dim listaTweets As New List(Of Tweet)
-
-                            Try
-                                If cosas.Query = 0 Then
-                                    listaTweets = Await TwitterPeticiones.HomeTimeline(listaTweets, cosas.MegaUsuario, ultimoTweet.ID)
-                                ElseIf cosas.Query = 1 Then
-                                    listaTweets = Await TwitterPeticiones.MentionsTimeline(listaTweets, cosas.MegaUsuario, ultimoTweet.ID)
-                                ElseIf cosas.Query = 2 Then
-                                    listaTweets = Await TwitterPeticiones.UserTimeline(listaTweets, cosas.MegaUsuario, cosas.UsuarioScreenNombre, ultimoTweet.ID)
-                                End If
-                            Catch ex As Exception
-
-                            End Try
-
-                            If listaTweets.Count > 0 Then
-                                For Each tweet In listaTweets
-                                    Dim boolAñadir As Boolean = True
-
-                                    For Each item In lv.Items
-                                        If TypeOf item Is ListViewItem Then
-                                            Dim lvItem2 As ListViewItem = item
-                                            Dim gridTweet2 As Grid = lvItem2.Content
-                                            Dim tweetAmpliado2 As pepeizq.Twitter.Objetos.TweetAmpliado = gridTweet2.Tag
-                                            Dim lvTweet As Tweet = tweetAmpliado2.Tweet
-
-                                            If lvTweet.ID = tweet.ID Then
-                                                boolAñadir = False
-                                            End If
-                                        End If
-                                    Next
-
-                                    If boolAñadir = True Then
-                                        lv.Items.Add(pepeizq.Twitter.Xaml.TweetXaml.Añadir(tweet, cosas.MegaUsuario, cosas.Color))
-                                    End If
-                                Next
-                            End If
+                    Else
+                        If pr1.IsActive = False Then
+                            mostrar = True
                         End If
                     End If
 
-                    pr2.Visibility = Visibility.Collapsed
+                    If mostrar = True Then
+                        pr2.Visibility = Visibility.Visible
+
+                        If lv.Items.Count > 0 And lv.Items.Count < 280 Then
+                            Dim lvItem As ListViewItem = lv.Items(lv.Items.Count - 1)
+                            Dim gridTweet As Grid = lvItem.Content
+                            Dim tweetAmpliado As pepeizq.Twitter.Objetos.TweetAmpliado = gridTweet.Tag
+                            Dim ultimoTweet As Tweet = tweetAmpliado.Tweet
+
+                            If Not ultimoTweet.ID = Nothing Then
+                                Dim provider As TwitterDataProvider = cosas.MegaUsuario.Servicio.Provider
+                                Dim listaTweets As New List(Of Tweet)
+
+                                Try
+                                    If cosas.Query = 0 Then
+                                        listaTweets = Await TwitterPeticiones.HomeTimeline(listaTweets, cosas.MegaUsuario, ultimoTweet.ID)
+                                    ElseIf cosas.Query = 1 Then
+                                        listaTweets = Await TwitterPeticiones.MentionsTimeline(listaTweets, cosas.MegaUsuario, ultimoTweet.ID)
+                                    ElseIf cosas.Query = 2 Then
+                                        listaTweets = Await TwitterPeticiones.UserTimeline(listaTweets, cosas.MegaUsuario, cosas.UsuarioScreenNombre, ultimoTweet.ID)
+                                    End If
+                                Catch ex As Exception
+
+                                End Try
+
+                                If listaTweets.Count > 0 Then
+                                    For Each tweet In listaTweets
+                                        Dim boolAñadir As Boolean = True
+
+                                        For Each item In lv.Items
+                                            If TypeOf item Is ListViewItem Then
+                                                Dim lvItem2 As ListViewItem = item
+                                                Dim gridTweet2 As Grid = lvItem2.Content
+                                                Dim tweetAmpliado2 As pepeizq.Twitter.Objetos.TweetAmpliado = gridTweet2.Tag
+                                                Dim lvTweet As Tweet = tweetAmpliado2.Tweet
+
+                                                If lvTweet.ID = tweet.ID Then
+                                                    boolAñadir = False
+                                                End If
+                                            End If
+                                        Next
+
+                                        If boolAñadir = True Then
+                                            lv.Items.Add(pepeizq.Twitter.Xaml.TweetXaml.Añadir(tweet, cosas.MegaUsuario, cosas.Color))
+                                        End If
+                                    Next
+                                End If
+                            End If
+                        End If
+
+                        pr2.Visibility = Visibility.Collapsed
+                    End If
                 End If
             End If
         End If
