@@ -402,4 +402,7 @@
   <data name="tbSearchUsersTooltip.Text" xml:space="preserve">
     <value>Por restricciones de Twitter la app solo puede mostrar los 20 primeros resultados de tu búsqueda</value>
   </data>
+  <data name="buttonRemoveAds2.Text" xml:space="preserve">
+    <value>Quitar Anuncios</value>
+  </data>
 </root>

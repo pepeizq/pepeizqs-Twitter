@@ -1,4 +1,5 @@
 ﻿Imports FontAwesome.UWP
+Imports Microsoft.Advertising.WinRT.UI
 Imports pepeizq.Twitter
 Imports pepeizq.Twitter.Tweet
 Imports Windows.ApplicationModel.Store
@@ -8,6 +9,8 @@ Imports Windows.UI.Core
 Module InicioXaml
 
     Public Function Generar(megaUsuario As pepeizq.Twitter.MegaUsuario, visibilidad As Visibility)
+
+        Dim recursos As New Resources.ResourceLoader
 
         Dim usuario As TwitterUsuario = megaUsuario.Usuario
 
@@ -77,19 +80,92 @@ Module InicioXaml
         lvTweets.IsItemClickEnabled = True
         lvTweets.ItemContainerStyle = App.Current.Resources("ListViewEstilo1")
         lvTweets.Tag = usuario
+        lvTweets.Name = "lvTweetsInicio" + usuario.ID
         AddHandler lvTweets.ItemClick, AddressOf LvTweets_ItemClick
 
         svTweets.Content = lvTweets
 
         '---------------------------------
 
-        Dim spAbajo As New StackPanel With {
-            .Orientation = Orientation.Horizontal,
+        Dim gridAbajo As New Grid With {
             .Margin = New Thickness(20, 20, 20, 20),
+            .HorizontalAlignment = HorizontalAlignment.Stretch,
+            .VerticalAlignment = VerticalAlignment.Bottom
+        }
+
+        Dim col1 As New ColumnDefinition
+        Dim col2 As New ColumnDefinition
+
+        col1.Width = New GridLength(1, GridUnitType.Star)
+        col2.Width = New GridLength(100, GridUnitType.Pixel)
+
+        gridAbajo.ColumnDefinitions.Add(col1)
+        gridAbajo.ColumnDefinitions.Add(col2)
+
+        Dim gridAnuncios As New Grid With {
+            .Name = "gridAnunciosInicio" + usuario.ID,
+            .HorizontalAlignment = HorizontalAlignment.Center,
+            .VerticalAlignment = VerticalAlignment.Center,
+            .Visibility = Visibility.Collapsed,
+            .Padding = New Thickness(5, 5, 5, 5),
+            .BorderThickness = New Thickness(1, 1, 1, 1),
+            .Background = New SolidColorBrush(Colors.LightGray),
+            .BorderBrush = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+        }
+        gridAnuncios.SetValue(Grid.ColumnProperty, 0)
+
+        Dim colAnuncios1 As New ColumnDefinition
+        Dim colAnuncios2 As New ColumnDefinition
+
+        colAnuncios1.Width = New GridLength(1, GridUnitType.Auto)
+        colAnuncios2.Width = New GridLength(1, GridUnitType.Auto)
+
+        gridAnuncios.ColumnDefinitions.Add(colAnuncios1)
+        gridAnuncios.ColumnDefinitions.Add(colAnuncios2)
+
+        Dim anuncio As New AdControl With {
+            .AdUnitId = "1100022916",
+            .Width = 728,
+            .Height = 90
+        }
+        anuncio.SetValue(Grid.ColumnProperty, 0)
+        gridAnuncios.Children.Add(anuncio)
+
+        Dim tbBoton As New TextBlock With {
+            .Text = recursos.GetString("ButtonRemoveAds"),
+            .Foreground = New SolidColorBrush(Colors.White)
+        }
+
+        Dim botonQuitarAnuncios As New Button With {
+            .Padding = New Thickness(15, 10, 15, 10),
+            .Margin = New Thickness(10, 0, 5, 0),
+            .Content = tbBoton,
+            .Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+        }
+
+        AddHandler botonQuitarAnuncios.Click, AddressOf BotonQuitarAnunciosClick
+        AddHandler botonQuitarAnuncios.PointerEntered, AddressOf UsuarioEntraBoton
+        AddHandler botonQuitarAnuncios.PointerExited, AddressOf UsuarioSaleBoton
+
+        botonQuitarAnuncios.SetValue(Grid.ColumnProperty, 1)
+        gridAnuncios.Children.Add(botonQuitarAnuncios)
+
+        gridAbajo.Children.Add(gridAnuncios)
+
+        Dim gridAbajoDerecha As New Grid With {
             .HorizontalAlignment = HorizontalAlignment.Right,
             .VerticalAlignment = VerticalAlignment.Bottom
         }
-        spAbajo.SetValue(Grid.RowProperty, 0)
+        gridAbajoDerecha.SetValue(Grid.ColumnProperty, 1)
+
+        Dim colAbajoDerecha1 As New ColumnDefinition
+        Dim colAbajoDerecha2 As New ColumnDefinition
+
+        colAbajoDerecha1.Width = New GridLength(1, GridUnitType.Auto)
+        colAbajoDerecha2.Width = New GridLength(1, GridUnitType.Auto)
+
+        gridAbajoDerecha.ColumnDefinitions.Add(colAbajoDerecha1)
+        gridAbajoDerecha.ColumnDefinitions.Add(colAbajoDerecha2)
 
         Dim prTweetsAbajo As New ProgressRing With {
             .IsActive = True,
@@ -99,10 +175,11 @@ Module InicioXaml
             .Padding = New Thickness(10, 10, 10, 10),
             .Name = "prTweetsInicio" + usuario.ID
         }
+        prTweetsAbajo.SetValue(Grid.ColumnProperty, 0)
 
         svTweets.Tag = New pepeizq.Twitter.Objetos.ScrollViewerTweets(megaUsuario, prTweets, prTweetsAbajo, 0, Nothing, Nothing)
 
-        spAbajo.Children.Add(prTweetsAbajo)
+        gridAbajoDerecha.Children.Add(prTweetsAbajo)
 
         Dim iconoSubir As New FontAwesome.UWP.FontAwesome With {
             .Foreground = New SolidColorBrush(Colors.White),
@@ -119,14 +196,17 @@ Module InicioXaml
             .Visibility = Visibility.Collapsed,
             .Tag = svTweets
         }
+        botonSubir.SetValue(Grid.ColumnProperty, 1)
 
         AddHandler botonSubir.Click, AddressOf BotonSubirClick
         AddHandler botonSubir.PointerEntered, AddressOf UsuarioEntraBoton
         AddHandler botonSubir.PointerExited, AddressOf UsuarioSaleBoton
 
-        spAbajo.Children.Add(botonSubir)
+        gridAbajoDerecha.Children.Add(botonSubir)
 
-        gridTweets.Children.Add(spAbajo)
+        gridAbajo.Children.Add(gridAbajoDerecha)
+
+        gridTweets.Children.Add(gridAbajo)
 
         '---------------------------------
 
@@ -170,7 +250,7 @@ Module InicioXaml
         End Try
 
         If Not licencia Is Nothing Then
-            If Not licencia.ProductLicenses("NoAds2").IsActive Then
+            If Not licencia.ProductLicenses("NoAds").IsActive Then
                 añadirAnuncios = True
             End If
         Else
@@ -184,9 +264,19 @@ Module InicioXaml
             If cosas.Query = 0 Then
                 Dim botonSubir As Button = pagina.FindName("botonSubirArribaInicio" + cosas.MegaUsuario.Usuario.ID)
                 botonSubir.Visibility = Visibility.Visible
+
+                If añadirAnuncios = True Then
+                    Dim gridAnuncios As Grid = pagina.FindName("gridAnunciosInicio" + cosas.MegaUsuario.Usuario.ID)
+                    gridAnuncios.Visibility = Visibility.Visible
+                End If
             ElseIf cosas.Query = 1 Then
                 Dim botonSubir As Button = pagina.FindName("botonSubirArribaMenciones" + cosas.MegaUsuario.Usuario.ID)
                 botonSubir.Visibility = Visibility.Visible
+
+                If añadirAnuncios = True Then
+                    Dim gridAnuncios As Grid = pagina.FindName("gridAnunciosMenciones" + cosas.MegaUsuario.Usuario.ID)
+                    gridAnuncios.Visibility = Visibility.Visible
+                End If
             ElseIf cosas.Query = 2 Then
                 Dim botonSubir As Button = pagina.FindName("botonSubirArribaUsuario")
                 botonSubir.Visibility = Visibility.Visible
@@ -203,9 +293,19 @@ Module InicioXaml
             If cosas.Query = 0 Then
                 Dim botonSubir As Button = pagina.FindName("botonSubirArribaInicio" + cosas.MegaUsuario.Usuario.ID)
                 botonSubir.Visibility = Visibility.Collapsed
+
+                If añadirAnuncios = True Then
+                    Dim gridAnuncios As Grid = pagina.FindName("gridAnunciosInicio" + cosas.MegaUsuario.Usuario.ID)
+                    gridAnuncios.Visibility = Visibility.Collapsed
+                End If
             ElseIf cosas.Query = 1 Then
                 Dim botonSubir As Button = pagina.FindName("botonSubirArribaMenciones" + cosas.MegaUsuario.Usuario.ID)
                 botonSubir.Visibility = Visibility.Collapsed
+
+                If añadirAnuncios = True Then
+                    Dim gridAnuncios As Grid = pagina.FindName("gridAnunciosMenciones" + cosas.MegaUsuario.Usuario.ID)
+                    gridAnuncios.Visibility = Visibility.Collapsed
+                End If
             ElseIf cosas.Query = 2 Then
                 Dim botonSubir As Button = pagina.FindName("botonSubirArribaUsuario")
                 botonSubir.Visibility = Visibility.Collapsed
@@ -306,6 +406,12 @@ Module InicioXaml
 
         svTweets.ChangeView(Nothing, 0, Nothing)
         botonSubir.Visibility = Visibility.Collapsed
+
+    End Sub
+
+    Private Sub BotonQuitarAnunciosClick(sender As Object, e As RoutedEventArgs)
+
+        Anuncios.Quitar()
 
     End Sub
 

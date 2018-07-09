@@ -1,8 +1,5 @@
-﻿Imports Microsoft.Advertising.WinRT.UI
-Imports pepeizq.Twitter
+﻿Imports pepeizq.Twitter
 Imports pepeizq.Twitter.Tweet
-Imports Windows.ApplicationModel.Store
-Imports Windows.Services.Store
 Imports Windows.UI
 Imports Windows.UI.Core
 
@@ -62,26 +59,6 @@ Module TwitterTimeLineInicio
                     End If
                 Next
 
-                Dim licencia As LicenseInformation = Nothing
-
-                Try
-                    licencia = CurrentApp.LicenseInformation
-                Catch ex As Exception
-
-                End Try
-
-                If Not licencia Is Nothing Then
-                    If Not licencia.ProductLicenses("NoAds").IsActive Then
-                        lv.Items.Insert(2, AñadirAnuncio("1100022916"))
-                        lv.Items.Insert(6, AñadirAnuncio("1100022920"))
-                        lv.Items.Insert(11, AñadirAnuncio("1100022962"))
-                    End If
-                Else
-                    lv.Items.Insert(2, AñadirAnuncio("1100022916"))
-                    lv.Items.Insert(6, AñadirAnuncio("1100022920"))
-                    lv.Items.Insert(11, AñadirAnuncio("1100022962"))
-                End If
-
                 pr.IsActive = False
 
                 If Not ultimoTweet = Nothing Then
@@ -89,88 +66,6 @@ Module TwitterTimeLineInicio
                 End If
             End If
         End If
-
-    End Sub
-
-    Public Function AñadirAnuncio(id As String)
-
-        Dim gridAnuncio As New Grid With {
-            .Name = "gridAnuncio" + id,
-            .Padding = New Thickness(10, 10, 10, 10)
-        }
-
-        Dim col1 As New ColumnDefinition
-        Dim col2 As New ColumnDefinition
-
-        col1.Width = New GridLength(1, GridUnitType.Auto)
-        col2.Width = New GridLength(1, GridUnitType.Star)
-
-        gridAnuncio.ColumnDefinitions.Add(col1)
-        gridAnuncio.ColumnDefinitions.Add(col2)
-
-        Dim color1 As New GradientStop With {
-            .Color = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToColor("#e0e0e0"),
-            .Offset = 0.5
-        }
-
-        Dim color2 As New GradientStop With {
-            .Color = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToColor("#d6d6d6"),
-            .Offset = 1.0
-        }
-
-        Dim coleccion As New GradientStopCollection From {
-            color1,
-            color2
-        }
-
-        Dim brush As New LinearGradientBrush With {
-            .StartPoint = New Point(0.5, 0),
-            .EndPoint = New Point(0.5, 1),
-            .GradientStops = coleccion
-        }
-
-        gridAnuncio.Background = brush
-
-        Dim anuncio As New AdControl With {
-            .AdUnitId = id,
-            .Width = 728,
-            .Height = 90,
-            .HorizontalAlignment = HorizontalAlignment.Center
-        }
-
-        anuncio.SetValue(Grid.ColumnProperty, 0)
-        gridAnuncio.Children.Add(anuncio)
-
-        Dim recursos As New Resources.ResourceLoader
-
-        Dim tbBoton As New TextBlock With {
-            .Text = recursos.GetString("ButtonRemoveAds"),
-            .Foreground = New SolidColorBrush(Colors.White)
-        }
-
-        Dim boton As New Button With {
-            .Margin = New Thickness(10, 0, 10, 0),
-            .Padding = New Thickness(15, 10, 15, 10),
-            .HorizontalAlignment = HorizontalAlignment.Left,
-            .Content = tbBoton,
-            .Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
-        }
-
-        AddHandler boton.Click, AddressOf BotonMostrarAnunciosClick
-        AddHandler boton.PointerEntered, AddressOf UsuarioEntraBoton
-        AddHandler boton.PointerExited, AddressOf UsuarioSaleBoton
-
-        boton.SetValue(Grid.ColumnProperty, 1)
-        gridAnuncio.Children.Add(boton)
-
-        Return gridAnuncio
-
-    End Function
-
-    Private Async Sub BotonMostrarAnunciosClick(sender As Object, e As RoutedEventArgs)
-
-        Dim contexto As StoreContext = StoreContext.GetDefault
-        Await contexto.RequestPurchaseAsync("9NVM8JPQ57VT")
 
     End Sub
 

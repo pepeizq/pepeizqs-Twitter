@@ -89,6 +89,12 @@ Module FichaUsuarioXaml
         svTweets.Foreground = New SolidColorBrush(("#" + cosas.Usuario.ColorTexto).ToColor)
         AddHandler svTweets.ViewChanging, AddressOf SvTweets_ViewChanging
 
+        Dim gridAnuncios As Grid = pagina.FindName("gridAnunciosUsuario")
+        gridAnuncios.BorderBrush = New SolidColorBrush(color)
+
+        Dim botonQuitarAnuncios As Button = pagina.FindName("botonQuitarAnunciosUsuario")
+        botonQuitarAnuncios.Background = New SolidColorBrush(color)
+
         '------------------------------------
 
         Dim circuloAvatar As Ellipse = pagina.FindName("ellipseAvatar")

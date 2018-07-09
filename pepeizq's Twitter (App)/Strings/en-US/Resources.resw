@@ -301,7 +301,7 @@
     <value>Remove Ads</value>
   </data>
   <data name="ButtonAddTile" xml:space="preserve">
-    <value>Add Tile</value>
+    <value>Pin Tile</value>
   </data>
   <data name="UserUnblock" xml:space="preserve">
     <value>Unblock User</value>
@@ -401,5 +401,8 @@
   </data>
   <data name="tbSearchUsersTooltip.Text" xml:space="preserve">
     <value>Due to Twitter restrictions, the app can only show the first 20 results of your search</value>
+  </data>
+  <data name="buttonRemoveAds2.Text" xml:space="preserve">
+    <value>Remove Ads</value>
   </data>
 </root>

@@ -13,7 +13,7 @@ Module TwitterPeticiones
         End If
 
         Try
-            Dim enlace As New Uri("https://api.twitter.com/1.1/statuses/home_timeline.json?tweet_mode=extended" + ultimoTweet)
+            Dim enlace As New Uri("https://api.twitter.com/1.1/statuses/home_timeline.json?tweet_mode=extended" + ultimoTweet + "&exclude_replies=true")
             Dim request As New TwitterOAuthRequest
             Dim resultado As String = Await request.EjecutarGetAsync(enlace, megaUsuario.Servicio.twitterDataProvider._tokens)
             Dim parser As New TweetParser
@@ -124,7 +124,7 @@ Module TwitterPeticiones
         End If
 
         Try
-            Dim enlace As New Uri("https://api.twitter.com/1.1/search/tweets.json?q=%23" + hashtag + "&tweet_mode=extended&result_type=recent&count=100")
+            Dim enlace As New Uri("https://api.twitter.com/1.1/search/tweets.json?q=%23" + hashtag + "&tweet_mode=extended&result_type=recent&count=50")
             Dim request As New TwitterOAuthRequest
             Dim resultado As String = Await request.EjecutarGetAsync(enlace, megaUsuario.Servicio.twitterDataProvider._tokens)
             Dim busqueda As pepeizq.Twitter.TweetsBusqueda = JsonConvert.DeserializeObject(Of pepeizq.Twitter.TweetsBusqueda)(resultado)

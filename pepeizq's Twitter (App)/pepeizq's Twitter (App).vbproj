@@ -128,6 +128,7 @@
     <Compile Include="MainPage.xaml.vb">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Modulos\Anuncios.vb" />
     <Compile Include="Modulos\Cliente\FichaBusquedaTweetsXaml.vb" />
     <Compile Include="Modulos\Cliente\FichaBusquedaUsuariosXaml.vb" />
     <Compile Include="Modulos\Conexion\TwitterPeticiones.vb" />

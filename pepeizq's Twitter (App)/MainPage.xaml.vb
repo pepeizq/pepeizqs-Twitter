@@ -574,6 +574,30 @@ Public NotInheritable Class MainPage
 
     End Sub
 
+    Private Sub CbConfigNotificacionesInicioAgrupar_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesInicioAgrupar.Checked
+
+        Configuracion.NotificacionesInicioAgrupar(True)
+
+    End Sub
+
+    Private Sub CbConfigNotificacionesInicioAgrupar_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesInicioAgrupar.Unchecked
+
+        Configuracion.NotificacionesInicioAgrupar(False)
+
+    End Sub
+
+    Private Sub CbConfigNotificacionesMencionesAgrupar_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesMencionesAgrupar.Checked
+
+        Configuracion.NotificacionesMencionesAgrupar(True)
+
+    End Sub
+
+    Private Sub CbConfigNotificacionesMencionesAgrupar_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesMencionesAgrupar.Unchecked
+
+        Configuracion.NotificacionesMencionesAgrupar(False)
+
+    End Sub
+
     Private Sub CbConfigNotificacionesSonido_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesSonido.Checked
 
         Configuracion.NotificacionesSonido(True)
@@ -614,18 +638,6 @@ Public NotInheritable Class MainPage
     Private Sub CbConfigNotificacionesImagen_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesImagen.Unchecked
 
         Configuracion.NotificacionesImagen(False)
-
-    End Sub
-
-    Private Sub CbConfigNotificacionesAgrupar_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesAgrupar.Checked
-
-        Configuracion.NotificacionesAgrupar(True)
-
-    End Sub
-
-    Private Sub CbConfigNotificacionesAgrupar_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesAgrupar.Unchecked
-
-        Configuracion.NotificacionesAgrupar(False)
 
     End Sub
 
@@ -776,6 +788,12 @@ Public NotInheritable Class MainPage
     Private Async Sub BotonFavoritosUsuario_Click(sender As Object, e As RoutedEventArgs) Handles botonFavoritosUsuario.Click
 
         Await Launcher.LaunchUriAsync(botonFavoritosUsuario.Tag)
+
+    End Sub
+
+    Private Sub BotonQuitarAnunciosUsuario_Click(sender As Object, e As RoutedEventArgs) Handles botonQuitarAnunciosUsuario.Click
+
+        Anuncios.Quitar()
 
     End Sub
 
