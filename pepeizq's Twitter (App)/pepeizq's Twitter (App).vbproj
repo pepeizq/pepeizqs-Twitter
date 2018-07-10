@@ -280,6 +280,9 @@
     <PackageReference Include="FontAwesome.UWP">
       <Version>4.7.0.9</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.Advertising.XAML">
+      <Version>10.1805.7001</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory">
       <Version>3.19.8</Version>
     </PackageReference>

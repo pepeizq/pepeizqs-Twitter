@@ -1,9 +1,11 @@
 ﻿Imports FontAwesome.UWP
+Imports Microsoft.Advertising.WinRT.UI
 Imports Microsoft.Toolkit.Uwp.Helpers
 Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports pepeizq.Twitter
 Imports pepeizq.Twitter.Tweet
 Imports Windows.ApplicationModel.DataTransfer
+Imports Windows.ApplicationModel.Store
 Imports Windows.Storage
 Imports Windows.System
 Imports Windows.UI
@@ -89,11 +91,38 @@ Module FichaUsuarioXaml
         svTweets.Foreground = New SolidColorBrush(("#" + cosas.Usuario.ColorTexto).ToColor)
         AddHandler svTweets.ViewChanging, AddressOf SvTweets_ViewChanging
 
-        Dim gridAnuncios As Grid = pagina.FindName("gridAnunciosUsuario")
-        gridAnuncios.BorderBrush = New SolidColorBrush(color)
+        'Dim añadirAnuncios As Boolean = False
+        'Dim licencia As LicenseInformation = Nothing
 
-        Dim botonQuitarAnuncios As Button = pagina.FindName("botonQuitarAnunciosUsuario")
-        botonQuitarAnuncios.Background = New SolidColorBrush(color)
+        'Try
+        '    licencia = CurrentApp.LicenseInformation
+        'Catch ex As Exception
+
+        'End Try
+
+        'If Not licencia Is Nothing Then
+        '    If Not licencia.ProductLicenses("NoAds").IsActive Then
+        '        añadirAnuncios = True
+        '    End If
+        'Else
+        '    añadirAnuncios = True
+        'End If
+
+        'If añadirAnuncios = True Then
+        '    Dim gridAnuncios As Grid = pagina.FindName("gridAnunciosUsuario")
+        '    gridAnuncios.BorderBrush = New SolidColorBrush(color)
+
+        '    Dim botonQuitarAnuncios As Button = pagina.FindName("botonQuitarAnunciosUsuario")
+        '    botonQuitarAnuncios.Background = New SolidColorBrush(color)
+
+        '    Dim anuncio As New AdControl With {
+        '        .AdUnitId = "1100022962",
+        '        .Width = 728,
+        '        .Height = 90
+        '    }
+        '    anuncio.SetValue(Grid.ColumnProperty, 0)
+        '    gridAnuncios.Children.Add(anuncio)
+        'End If
 
         '------------------------------------
 

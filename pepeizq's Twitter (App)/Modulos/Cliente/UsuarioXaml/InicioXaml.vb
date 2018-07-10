@@ -292,18 +292,18 @@ Module InicioXaml
                 Dim botonSubir As Button = pagina.FindName("botonSubirArribaMenciones" + cosas.MegaUsuario.Usuario.ID)
                 botonSubir.Visibility = Visibility.Visible
 
-                If añadirAnuncios = True Then
-                    Dim gridAnuncios As Grid = pagina.FindName("gridAnunciosMenciones" + cosas.MegaUsuario.Usuario.ID)
-                    gridAnuncios.Visibility = Visibility.Visible
-                End If
+                'If añadirAnuncios = True Then
+                '    Dim gridAnuncios As Grid = pagina.FindName("gridAnunciosMenciones" + cosas.MegaUsuario.Usuario.ID)
+                '    gridAnuncios.Visibility = Visibility.Visible
+                'End If
             ElseIf cosas.Query = 2 Then
                 Dim botonSubir As Button = pagina.FindName("botonSubirArribaUsuario")
                 botonSubir.Visibility = Visibility.Visible
 
-                If añadirAnuncios = True Then
-                    Dim gridAnuncios As Grid = pagina.FindName("gridAnunciosUsuario")
-                    gridAnuncios.Visibility = Visibility.Visible
-                End If
+                'If añadirAnuncios = True Then
+                '    Dim gridAnuncios As Grid = pagina.FindName("gridAnunciosUsuario")
+                '    gridAnuncios.Visibility = Visibility.Visible
+                'End If
             ElseIf cosas.Query = 3 Then
                 Dim botonSubir As Button = pagina.FindName("botonSubirArribaBusquedaTweets")
                 botonSubir.Visibility = Visibility.Visible

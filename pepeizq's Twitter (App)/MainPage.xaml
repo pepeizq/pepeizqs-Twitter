@@ -652,7 +652,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
-                            <ads:AdControl Grid.Column="0" AdUnitId="1100022962" Width="728" Height="90"/>
+                            <!--<ads:AdControl Grid.Column="0" AdUnitId="1100022962" Width="728" Height="90"/>-->
                             <Button x:Name="botonQuitarAnunciosUsuario" Grid.Column="1" Padding="15,10" Margin="10,0,5,0" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                                 <Button.Content>
                                     <TextBlock x:Uid="buttonRemoveAds2" Foreground="White"/>
