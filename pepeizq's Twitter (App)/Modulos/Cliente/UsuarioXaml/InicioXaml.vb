@@ -102,55 +102,74 @@ Module InicioXaml
         gridAbajo.ColumnDefinitions.Add(col1)
         gridAbajo.ColumnDefinitions.Add(col2)
 
-        Dim gridAnuncios As New Grid With {
-            .Name = "gridAnunciosInicio" + usuario.ID,
-            .HorizontalAlignment = HorizontalAlignment.Center,
-            .VerticalAlignment = VerticalAlignment.Center,
-            .Visibility = Visibility.Collapsed,
-            .Padding = New Thickness(5, 5, 5, 5),
-            .BorderThickness = New Thickness(1, 1, 1, 1),
-            .Background = New SolidColorBrush(Colors.LightGray),
-            .BorderBrush = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
-        }
-        gridAnuncios.SetValue(Grid.ColumnProperty, 0)
+        Dim añadirAnuncios As Boolean = False
+        Dim licencia As LicenseInformation = Nothing
 
-        Dim colAnuncios1 As New ColumnDefinition
-        Dim colAnuncios2 As New ColumnDefinition
+        Try
+            licencia = CurrentApp.LicenseInformation
+        Catch ex As Exception
 
-        colAnuncios1.Width = New GridLength(1, GridUnitType.Auto)
-        colAnuncios2.Width = New GridLength(1, GridUnitType.Auto)
+        End Try
 
-        gridAnuncios.ColumnDefinitions.Add(colAnuncios1)
-        gridAnuncios.ColumnDefinitions.Add(colAnuncios2)
+        If Not licencia Is Nothing Then
+            If Not licencia.ProductLicenses("NoAds").IsActive Then
+                añadirAnuncios = True
+            End If
+        Else
+            añadirAnuncios = True
+        End If
 
-        Dim anuncio As New AdControl With {
-            .AdUnitId = "1100022916",
-            .Width = 728,
-            .Height = 90
-        }
-        anuncio.SetValue(Grid.ColumnProperty, 0)
-        gridAnuncios.Children.Add(anuncio)
+        If añadirAnuncios = True Then
+            Dim gridAnuncios As New Grid With {
+                .Name = "gridAnunciosInicio" + usuario.ID,
+                .HorizontalAlignment = HorizontalAlignment.Center,
+                .VerticalAlignment = VerticalAlignment.Center,
+                .Visibility = Visibility.Collapsed,
+                .Padding = New Thickness(5, 5, 5, 5),
+                .BorderThickness = New Thickness(1, 1, 1, 1),
+                .Background = New SolidColorBrush(Colors.LightGray),
+                .BorderBrush = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+            }
+            gridAnuncios.SetValue(Grid.ColumnProperty, 0)
 
-        Dim tbBoton As New TextBlock With {
-            .Text = recursos.GetString("ButtonRemoveAds"),
-            .Foreground = New SolidColorBrush(Colors.White)
-        }
+            Dim colAnuncios1 As New ColumnDefinition
+            Dim colAnuncios2 As New ColumnDefinition
 
-        Dim botonQuitarAnuncios As New Button With {
-            .Padding = New Thickness(15, 10, 15, 10),
-            .Margin = New Thickness(10, 0, 5, 0),
-            .Content = tbBoton,
-            .Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
-        }
+            colAnuncios1.Width = New GridLength(1, GridUnitType.Auto)
+            colAnuncios2.Width = New GridLength(1, GridUnitType.Auto)
 
-        AddHandler botonQuitarAnuncios.Click, AddressOf BotonQuitarAnunciosClick
-        AddHandler botonQuitarAnuncios.PointerEntered, AddressOf UsuarioEntraBoton
-        AddHandler botonQuitarAnuncios.PointerExited, AddressOf UsuarioSaleBoton
+            gridAnuncios.ColumnDefinitions.Add(colAnuncios1)
+            gridAnuncios.ColumnDefinitions.Add(colAnuncios2)
 
-        botonQuitarAnuncios.SetValue(Grid.ColumnProperty, 1)
-        gridAnuncios.Children.Add(botonQuitarAnuncios)
+            Dim anuncio As New AdControl With {
+                .AdUnitId = "1100022916",
+                .Width = 728,
+                .Height = 90
+            }
+            anuncio.SetValue(Grid.ColumnProperty, 0)
+            gridAnuncios.Children.Add(anuncio)
 
-        gridAbajo.Children.Add(gridAnuncios)
+            Dim tbBoton As New TextBlock With {
+                .Text = recursos.GetString("ButtonRemoveAds"),
+                .Foreground = New SolidColorBrush(Colors.White)
+            }
+
+            Dim botonQuitarAnuncios As New Button With {
+                .Padding = New Thickness(15, 10, 15, 10),
+                .Margin = New Thickness(10, 0, 5, 0),
+                .Content = tbBoton,
+                .Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+            }
+
+            AddHandler botonQuitarAnuncios.Click, AddressOf BotonQuitarAnunciosClick
+            AddHandler botonQuitarAnuncios.PointerEntered, AddressOf UsuarioEntraBoton
+            AddHandler botonQuitarAnuncios.PointerExited, AddressOf UsuarioSaleBoton
+
+            botonQuitarAnuncios.SetValue(Grid.ColumnProperty, 1)
+            gridAnuncios.Children.Add(botonQuitarAnuncios)
+
+            gridAbajo.Children.Add(gridAnuncios)
+        End If
 
         Dim gridAbajoDerecha As New Grid With {
             .HorizontalAlignment = HorizontalAlignment.Right,
