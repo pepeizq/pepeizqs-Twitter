@@ -41,7 +41,15 @@ Namespace pepeizq.Twitter.Xaml
             }
 
             sp.Children.Add(TweetUsuario.Generar(tweet.Cita, megaUsuario, color))
-            sp.Children.Add(TweetTexto.Generar(tweet.Cita, tweet, color, megaUsuario, False))
+
+            Dim tbTweet As TextBlock = TweetTexto.Generar(tweet.Cita, tweet, color, megaUsuario, False)
+
+            If Not tbTweet Is Nothing Then
+                If tbTweet.Text.Length > 0 Then
+                    sp.Children.Add(tbTweet)
+                End If
+            End If
+
             sp.Children.Add(TweetMediaXaml.Generar(tweet.Cita, color))
 
             Return sp

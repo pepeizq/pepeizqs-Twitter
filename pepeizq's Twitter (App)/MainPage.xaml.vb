@@ -497,35 +497,6 @@ Public NotInheritable Class MainPage
 
     End Sub
 
-    Private Async Sub BotonConfigApiTutorial_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigApiTutorial.Click
-
-        Await Launcher.LaunchUriAsync(New Uri("https://pepeizqapps.com/how-create-your-own-app-in-twitter/"))
-
-    End Sub
-
-    Private Sub BotonConfigApiReset_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigApiReset.Click
-
-        tbConfigConsumerKey.Text = "poGVvY5De5zBqQ4ceqp7jw7cj"
-        tbConfigConsumerSecret.Text = "f8PCcuwFZxYi0r5iG6UaysgxD0NoaCT2RgYG8I41mvjghy58rc"
-
-    End Sub
-
-    Private Sub TbConfigConsumerKey_TextChanged(sender As Object, e As TextChangedEventArgs) Handles tbConfigConsumerKey.TextChanged
-
-        If tbConfigConsumerKey.Text.Trim.Length > 0 Then
-            ApplicationData.Current.LocalSettings.Values("consumerkey") = tbConfigConsumerKey.Text.Trim
-        End If
-
-    End Sub
-
-    Private Sub TbConfigConsumerSecret_TextChanged(sender As Object, e As TextChangedEventArgs) Handles tbConfigConsumerSecret.TextChanged
-
-        If tbConfigConsumerSecret.Text.Trim.Length > 0 Then
-            ApplicationData.Current.LocalSettings.Values("consumersecret") = tbConfigConsumerSecret.Text.Trim
-        End If
-
-    End Sub
-
     Private Sub CbConfigNotificacionesInicioTiempo_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesInicioTiempo.Checked
 
         Configuracion.NotificacionesInicioTiempo(True)
@@ -638,6 +609,35 @@ Public NotInheritable Class MainPage
     Private Sub CbConfigNotificacionesImagen_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesImagen.Unchecked
 
         Configuracion.NotificacionesImagen(False)
+
+    End Sub
+
+    Private Sub BotonConfigApiTutorial_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigApiTutorial.Click
+
+        wvConfigApi.Navigate(New Uri("https://pepeizqapps.com/how-create-your-own-app-in-twitter/"))
+
+    End Sub
+
+    Private Sub BotonConfigApiReset_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigApiReset.Click
+
+        tbConfigConsumerKey.Text = "poGVvY5De5zBqQ4ceqp7jw7cj"
+        tbConfigConsumerSecret.Text = "f8PCcuwFZxYi0r5iG6UaysgxD0NoaCT2RgYG8I41mvjghy58rc"
+
+    End Sub
+
+    Private Sub TbConfigConsumerKey_TextChanged(sender As Object, e As TextChangedEventArgs) Handles tbConfigConsumerKey.TextChanged
+
+        If tbConfigConsumerKey.Text.Trim.Length > 0 Then
+            ApplicationData.Current.LocalSettings.Values("consumerkey") = tbConfigConsumerKey.Text.Trim
+        End If
+
+    End Sub
+
+    Private Sub TbConfigConsumerSecret_TextChanged(sender As Object, e As TextChangedEventArgs) Handles tbConfigConsumerSecret.TextChanged
+
+        If tbConfigConsumerSecret.Text.Trim.Length > 0 Then
+            ApplicationData.Current.LocalSettings.Values("consumersecret") = tbConfigConsumerSecret.Text.Trim
+        End If
 
     End Sub
 

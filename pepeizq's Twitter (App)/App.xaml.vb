@@ -1,9 +1,5 @@
-﻿Imports Windows.ApplicationModel.ExtendedExecution
-
-NotInheritable Class App
+﻿NotInheritable Class App
     Inherits Application
-
-    Dim sesion As ExtendedExecutionSession
 
     Protected Overrides Async Sub OnLaunched(e As LaunchActivatedEventArgs)
         Dim rootFrame As Frame = TryCast(Window.Current.Content, Frame)
@@ -33,27 +29,7 @@ NotInheritable Class App
 
             Window.Current.Activate()
         End If
-
-        If sesion Is Nothing Then
-            Await PrevenirSuspension()
-        End If
     End Sub
-
-    Private Async Function PrevenirSuspension() As Task
-
-        Dim nuevaSesion As New ExtendedExecutionSession With {
-            .Reason = ExtendedExecutionReason.Unspecified
-        }
-
-        Dim resultado As ExtendedExecutionResult = Await nuevaSesion.RequestExtensionAsync
-
-        If resultado = ExtendedExecutionResult.Allowed Then
-            sesion = nuevaSesion
-        Else
-            nuevaSesion.Dispose()
-        End If
-
-    End Function
 
     Private Sub OnNavigationFailed(sender As Object, e As NavigationFailedEventArgs)
 

@@ -397,6 +397,8 @@
                                             </Button.Content>
                                         </Button>
                                     </Grid>
+
+                                    <WebView x:Name="wvConfigApi" MinHeight="600"/>
                                 </StackPanel>
                             </StackPanel>
                         </Grid>

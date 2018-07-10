@@ -63,6 +63,18 @@ Module Configuracion
             NotificacionesMencionesTiempo(ApplicationData.Current.LocalSettings.Values("notificacionMencionesTiempo"))
         End If
 
+        If ApplicationData.Current.LocalSettings.Values("notificacionInicioAgrupar") Is Nothing Then
+            NotificacionesInicioAgrupar(True)
+        Else
+            NotificacionesInicioAgrupar(ApplicationData.Current.LocalSettings.Values("notificacionInicioAgrupar"))
+        End If
+
+        If ApplicationData.Current.LocalSettings.Values("notificacionMencionesAgrupar") Is Nothing Then
+            NotificacionesMencionesAgrupar(False)
+        Else
+            NotificacionesMencionesAgrupar(ApplicationData.Current.LocalSettings.Values("notificacionMencionesAgrupar"))
+        End If
+
         If ApplicationData.Current.LocalSettings.Values("notificacionSonido") Is Nothing Then
             NotificacionesSonido(True)
         Else
@@ -79,12 +91,6 @@ Module Configuracion
             NotificacionesUsuario(True)
         Else
             NotificacionesUsuario(ApplicationData.Current.LocalSettings.Values("notificacionUsuario"))
-        End If
-
-        If ApplicationData.Current.LocalSettings.Values("notificacionAgrupar") Is Nothing Then
-            NotificacionesAgrupar(False)
-        Else
-            NotificacionesAgrupar(ApplicationData.Current.LocalSettings.Values("notificacionAgrupar"))
         End If
 
     End Sub
@@ -258,6 +264,30 @@ Module Configuracion
 
     End Sub
 
+    Public Sub NotificacionesInicioAgrupar(estado As Boolean)
+
+        Dim frame As Frame = Window.Current.Content
+        Dim pagina As Page = frame.Content
+
+        ApplicationData.Current.LocalSettings.Values("notificacionInicioAgrupar") = estado
+
+        Dim cb As CheckBox = pagina.FindName("cbConfigNotificacionesInicioAgrupar")
+        cb.IsChecked = estado
+
+    End Sub
+
+    Public Sub NotificacionesMencionesAgrupar(estado As Boolean)
+
+        Dim frame As Frame = Window.Current.Content
+        Dim pagina As Page = frame.Content
+
+        ApplicationData.Current.LocalSettings.Values("notificacionMencionesAgrupar") = estado
+
+        Dim cb As CheckBox = pagina.FindName("cbConfigNotificacionesMencionesAgrupar")
+        cb.IsChecked = estado
+
+    End Sub
+
     Public Sub NotificacionesSonido(estado As Boolean)
 
         Dim frame As Frame = Window.Current.Content
@@ -311,18 +341,6 @@ Module Configuracion
         ApplicationData.Current.LocalSettings.Values("notificacionUsuario") = estado
 
         Dim cb As CheckBox = pagina.FindName("cbConfigNotificacionesUsuario")
-        cb.IsChecked = estado
-
-    End Sub
-
-    Public Sub NotificacionesAgrupar(estado As Boolean)
-
-        Dim frame As Frame = Window.Current.Content
-        Dim pagina As Page = frame.Content
-
-        ApplicationData.Current.LocalSettings.Values("notificacionAgrupar") = estado
-
-        Dim cb As CheckBox = pagina.FindName("cbConfigNotificacionesAgrupar")
         cb.IsChecked = estado
 
     End Sub

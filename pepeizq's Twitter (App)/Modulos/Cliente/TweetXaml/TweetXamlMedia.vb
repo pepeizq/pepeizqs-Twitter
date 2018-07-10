@@ -241,16 +241,20 @@ Namespace pepeizq.Twitter.Xaml
 
                 grid.Children.Add(pr)
 
-                Dim reproductor As New MediaPlayerElement With {
-                    .Source = MediaSource.CreateFromUri(New Uri(cosas.Enlace)),
-                    .Width = imagen.ActualWidth,
-                    .Height = imagen.ActualHeight,
-                    .MinWidth = 0
-                }
-                reproductor.MediaPlayer.IsLoopingEnabled = True
-                reproductor.MediaPlayer.Play()
+                Try
+                    Dim reproductor As New MediaPlayerElement With {
+                        .Source = MediaSource.CreateFromUri(New Uri(cosas.Enlace)),
+                        .Width = imagen.ActualWidth,
+                        .Height = imagen.ActualHeight,
+                        .MinWidth = 0
+                    }
+                    reproductor.MediaPlayer.IsLoopingEnabled = True
+                    reproductor.MediaPlayer.Play()
 
-                grid.Children.Add(reproductor)
+                    grid.Children.Add(reproductor)
+                Catch ex As Exception
+
+                End Try
             End If
 
         End Sub

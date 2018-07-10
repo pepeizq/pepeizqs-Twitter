@@ -1,109 +1,39 @@
 ﻿Imports pepeizq.Twitter
 Imports pepeizq.Twitter.Tweet
 Imports Windows.ApplicationModel.Core
+Imports Windows.ApplicationModel.ExtendedExecution
 Imports Windows.Storage
 Imports Windows.System.Threading
 Imports Windows.UI.Core
 
 Module TwitterStream
 
-    Public Sub Iniciar(megaUsuario As pepeizq.Twitter.MegaUsuario)
+    Public Async Sub Iniciar(megaUsuario As pepeizq.Twitter.MegaUsuario)
 
-        Dim usuario As TwitterUsuario = megaUsuario.Usuario
+        Dim nuevaSesion As New ExtendedExecutionSession With {
+            .Reason = ExtendedExecutionReason.Unspecified
+        }
 
-        Dim frame As Frame = Window.Current.Content
-        Dim pagina As Page = frame.Content
+        Dim resultado As ExtendedExecutionResult = Await nuevaSesion.RequestExtensionAsync
 
-        Dim lvInicio As ListView = pagina.FindName("lvTweetsInicio" + usuario.ID)
-        Dim lvMenciones As ListView = pagina.FindName("lvTweetsMenciones" + usuario.ID)
+        If resultado = ExtendedExecutionResult.Allowed Then
+            Dim usuario As TwitterUsuario = megaUsuario.Usuario
 
-        '------------------
+            Dim frame As Frame = Window.Current.Content
+            Dim pagina As Page = frame.Content
 
-        Dim periodoHome As TimeSpan = TimeSpan.FromSeconds(70)
-        Dim contadorHome As ThreadPoolTimer = ThreadPoolTimer.CreatePeriodicTimer(Async Sub()
-                                                                                      Try
-                                                                                          Await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (Async Sub()
-                                                                                                                                                                                            Dim listaTweets As New List(Of Tweet)
+            Dim lvInicio As ListView = pagina.FindName("lvTweetsInicio" + usuario.ID)
+            Dim lvMenciones As ListView = pagina.FindName("lvTweetsMenciones" + usuario.ID)
 
-                                                                                                                                                                                            listaTweets = Await TwitterPeticiones.HomeTimeline(listaTweets, megaUsuario, Nothing)
+            '------------------
 
-                                                                                                                                                                                            If listaTweets.Count > 0 Then
-                                                                                                                                                                                                Dim listaTweetsAñadir As New List(Of Tweet)
-
-                                                                                                                                                                                                For Each tweetNuevo As Tweet In listaTweets
-                                                                                                                                                                                                    Dim mostrar As Boolean = True
-
-                                                                                                                                                                                                    For Each item In lvInicio.Items
-                                                                                                                                                                                                        If TypeOf item Is ListViewItem Then
-                                                                                                                                                                                                            Dim lvItem As ListViewItem = item
-                                                                                                                                                                                                            Dim grid As Grid = lvItem.Content
-                                                                                                                                                                                                            Dim tweetAmpliado As pepeizq.Twitter.Objetos.TweetAmpliado = grid.Tag
-                                                                                                                                                                                                            Dim itemTweet As Tweet = tweetAmpliado.Tweet
-
-                                                                                                                                                                                                            If itemTweet.ID = tweetNuevo.ID Then
-                                                                                                                                                                                                                mostrar = False
-                                                                                                                                                                                                            End If
-
-                                                                                                                                                                                                            If Not tweetNuevo.RespuestaUsuarioScreenNombre = Nothing Then
-                                                                                                                                                                                                                mostrar = False
-                                                                                                                                                                                                            End If
-
-                                                                                                                                                                                                            If Not tweetNuevo.Retweet Is Nothing Then
-                                                                                                                                                                                                                If tweetNuevo.Retweet.Usuario.ScreenNombre = megaUsuario.Usuario.ScreenNombre Then
-                                                                                                                                                                                                                    mostrar = False
-                                                                                                                                                                                                                End If
-                                                                                                                                                                                                            End If
-                                                                                                                                                                                                        End If
-                                                                                                                                                                                                    Next
-
-                                                                                                                                                                                                    If mostrar = True Then
-                                                                                                                                                                                                        listaTweetsAñadir.Add(tweetNuevo)
-                                                                                                                                                                                                    End If
-                                                                                                                                                                                                Next
-
-                                                                                                                                                                                                If listaTweetsAñadir.Count > 0 Then
-                                                                                                                                                                                                    Dim segundos As Integer = 0
-
-                                                                                                                                                                                                    If ApplicationData.Current.LocalSettings.Values("notificacionInicioTiempo") = True Then
-                                                                                                                                                                                                        segundos = ApplicationData.Current.LocalSettings.Values("notificacionInicioTiempoSegundos")
-                                                                                                                                                                                                    End If
-
-                                                                                                                                                                                                    If megaUsuario.NotificacionInicio = True Then
-                                                                                                                                                                                                        If listaTweetsAñadir.Count > 1 Then
-                                                                                                                                                                                                            listaTweetsAñadir.Reverse()
-
-                                                                                                                                                                                                            If ApplicationData.Current.LocalSettings.Values("notificacionInicioAgrupar") = True Then
-                                                                                                                                                                                                                Notificaciones.ToastTweets(listaTweetsAñadir.Count, megaUsuario, segundos, 0)
-                                                                                                                                                                                                            End If
-
-                                                                                                                                                                                                            For Each tweetAñadir As Tweet In listaTweetsAñadir
-                                                                                                                                                                                                                If ApplicationData.Current.LocalSettings.Values("notificacionInicioAgrupar") = False Then
-                                                                                                                                                                                                                    Notificaciones.ToastTweet(tweetAñadir, megaUsuario, segundos)
-                                                                                                                                                                                                                End If
-
-                                                                                                                                                                                                                lvInicio.Items.Insert(0, pepeizq.Twitter.Xaml.TweetXaml.Añadir(tweetAñadir, megaUsuario, Nothing))
-                                                                                                                                                                                                            Next
-                                                                                                                                                                                                        Else
-                                                                                                                                                                                                            Notificaciones.ToastTweet(listaTweetsAñadir(0), megaUsuario, segundos)
-                                                                                                                                                                                                            lvInicio.Items.Insert(0, pepeizq.Twitter.Xaml.TweetXaml.Añadir(listaTweetsAñadir(0), megaUsuario, Nothing))
-                                                                                                                                                                                                        End If
-                                                                                                                                                                                                    End If
-                                                                                                                                                                                                End If
-                                                                                                                                                                                            End If
-                                                                                                                                                                                        End Sub))
-                                                                                      Catch ex As Exception
-
-                                                                                      End Try
-                                                                                  End Sub, periodoHome)
-        megaUsuario.StreamHome = contadorHome
-
-        Dim periodoMentions As TimeSpan = TimeSpan.FromSeconds(20)
-        Dim contadorMentions As ThreadPoolTimer = ThreadPoolTimer.CreatePeriodicTimer(Async Sub()
+            Dim periodoHome As TimeSpan = TimeSpan.FromSeconds(70)
+            Dim contadorHome As ThreadPoolTimer = ThreadPoolTimer.CreatePeriodicTimer(Async Sub()
                                                                                           Try
                                                                                               Await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (Async Sub()
                                                                                                                                                                                                 Dim listaTweets As New List(Of Tweet)
 
-                                                                                                                                                                                                listaTweets = Await TwitterPeticiones.MentionsTimeline(listaTweets, megaUsuario, Nothing)
+                                                                                                                                                                                                listaTweets = Await TwitterPeticiones.HomeTimeline(listaTweets, megaUsuario, Nothing)
 
                                                                                                                                                                                                 If listaTweets.Count > 0 Then
                                                                                                                                                                                                     Dim listaTweetsAñadir As New List(Of Tweet)
@@ -111,7 +41,7 @@ Module TwitterStream
                                                                                                                                                                                                     For Each tweetNuevo As Tweet In listaTweets
                                                                                                                                                                                                         Dim mostrar As Boolean = True
 
-                                                                                                                                                                                                        For Each item In lvMenciones.Items
+                                                                                                                                                                                                        For Each item In lvInicio.Items
                                                                                                                                                                                                             If TypeOf item Is ListViewItem Then
                                                                                                                                                                                                                 Dim lvItem As ListViewItem = item
                                                                                                                                                                                                                 Dim grid As Grid = lvItem.Content
@@ -120,6 +50,16 @@ Module TwitterStream
 
                                                                                                                                                                                                                 If itemTweet.ID = tweetNuevo.ID Then
                                                                                                                                                                                                                     mostrar = False
+                                                                                                                                                                                                                End If
+
+                                                                                                                                                                                                                If Not tweetNuevo.RespuestaUsuarioScreenNombre = Nothing Then
+                                                                                                                                                                                                                    mostrar = False
+                                                                                                                                                                                                                End If
+
+                                                                                                                                                                                                                If Not tweetNuevo.Retweet Is Nothing Then
+                                                                                                                                                                                                                    If tweetNuevo.Retweet.Usuario.ScreenNombre = megaUsuario.Usuario.ScreenNombre Then
+                                                                                                                                                                                                                        mostrar = False
+                                                                                                                                                                                                                    End If
                                                                                                                                                                                                                 End If
                                                                                                                                                                                                             End If
                                                                                                                                                                                                         Next
@@ -132,28 +72,35 @@ Module TwitterStream
                                                                                                                                                                                                     If listaTweetsAñadir.Count > 0 Then
                                                                                                                                                                                                         Dim segundos As Integer = 0
 
-                                                                                                                                                                                                        If ApplicationData.Current.LocalSettings.Values("notificacionMencionesTiempo") = True Then
-                                                                                                                                                                                                            segundos = ApplicationData.Current.LocalSettings.Values("notificacionMencionesTiempoSegundos")
+                                                                                                                                                                                                        If ApplicationData.Current.LocalSettings.Values("notificacionInicioTiempo") = True Then
+                                                                                                                                                                                                            segundos = ApplicationData.Current.LocalSettings.Values("notificacionInicioTiempoSegundos")
                                                                                                                                                                                                         End If
 
                                                                                                                                                                                                         If megaUsuario.NotificacionInicio = True Then
                                                                                                                                                                                                             If listaTweetsAñadir.Count > 1 Then
                                                                                                                                                                                                                 listaTweetsAñadir.Reverse()
 
-                                                                                                                                                                                                                If ApplicationData.Current.LocalSettings.Values("notificacionMencionesAgrupar") = True Then
-                                                                                                                                                                                                                    Notificaciones.ToastTweets(listaTweetsAñadir.Count, megaUsuario, segundos, 1)
+                                                                                                                                                                                                                If lvInicio.Items.Count > 0 Then
+                                                                                                                                                                                                                    If ApplicationData.Current.LocalSettings.Values("notificacionInicioAgrupar") = True Then
+                                                                                                                                                                                                                        Notificaciones.ToastTweets(listaTweetsAñadir.Count, megaUsuario, segundos, 0)
+                                                                                                                                                                                                                    End If
                                                                                                                                                                                                                 End If
 
                                                                                                                                                                                                                 For Each tweetAñadir As Tweet In listaTweetsAñadir
-                                                                                                                                                                                                                    If ApplicationData.Current.LocalSettings.Values("notificacionMencionesAgrupar") = False Then
-                                                                                                                                                                                                                        Notificaciones.ToastTweet(tweetAñadir, megaUsuario, segundos)
+                                                                                                                                                                                                                    If lvInicio.Items.Count > 0 Then
+                                                                                                                                                                                                                        If ApplicationData.Current.LocalSettings.Values("notificacionInicioAgrupar") = False Then
+                                                                                                                                                                                                                            Notificaciones.ToastTweet(tweetAñadir, megaUsuario, segundos)
+                                                                                                                                                                                                                        End If
                                                                                                                                                                                                                     End If
 
-                                                                                                                                                                                                                    lvMenciones.Items.Insert(0, pepeizq.Twitter.Xaml.TweetXaml.Añadir(tweetAñadir, megaUsuario, Nothing))
+                                                                                                                                                                                                                    lvInicio.Items.Insert(0, pepeizq.Twitter.Xaml.TweetXaml.Añadir(tweetAñadir, megaUsuario, Nothing))
                                                                                                                                                                                                                 Next
                                                                                                                                                                                                             Else
-                                                                                                                                                                                                                Notificaciones.ToastTweet(listaTweetsAñadir(0), megaUsuario, segundos)
-                                                                                                                                                                                                                lvMenciones.Items.Insert(0, pepeizq.Twitter.Xaml.TweetXaml.Añadir(listaTweetsAñadir(0), megaUsuario, Nothing))
+                                                                                                                                                                                                                If lvInicio.Items.Count > 0 Then
+                                                                                                                                                                                                                    Notificaciones.ToastTweet(listaTweetsAñadir(0), megaUsuario, segundos)
+                                                                                                                                                                                                                End If
+
+                                                                                                                                                                                                                lvInicio.Items.Insert(0, pepeizq.Twitter.Xaml.TweetXaml.Añadir(listaTweetsAñadir(0), megaUsuario, Nothing))
                                                                                                                                                                                                             End If
                                                                                                                                                                                                         End If
                                                                                                                                                                                                     End If
@@ -162,42 +109,120 @@ Module TwitterStream
                                                                                           Catch ex As Exception
 
                                                                                           End Try
-                                                                                      End Sub, periodoMentions)
-        megaUsuario.StreamMentions = contadorMentions
+                                                                                      End Sub, periodoHome)
+            megaUsuario.StreamHome = contadorHome
 
-        Dim periodoBloqueos As TimeSpan = TimeSpan.FromMinutes(2)
-        Dim contadorBloqueos As ThreadPoolTimer = ThreadPoolTimer.CreatePeriodicTimer(Async Sub()
-                                                                                          Try
-                                                                                              Await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (Async Sub()
-                                                                                                                                                                                                Dim listaBloqueos As New List(Of String)
+            Dim periodoMentions As TimeSpan = TimeSpan.FromSeconds(20)
+            Dim contadorMentions As ThreadPoolTimer = ThreadPoolTimer.CreatePeriodicTimer(Async Sub()
+                                                                                              Try
+                                                                                                  Await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (Async Sub()
+                                                                                                                                                                                                    Dim listaTweets As New List(Of Tweet)
 
-                                                                                                                                                                                                listaBloqueos = Await TwitterPeticiones.CogerListaBloqueos(listaBloqueos, megaUsuario)
+                                                                                                                                                                                                    listaTweets = Await TwitterPeticiones.MentionsTimeline(listaTweets, megaUsuario, Nothing)
 
-                                                                                                                                                                                                If listaBloqueos.Count > 0 Then
-                                                                                                                                                                                                    megaUsuario.UsuariosBloqueados = listaBloqueos
-                                                                                                                                                                                                End If
-                                                                                                                                                                                            End Sub))
-                                                                                          Catch ex As Exception
+                                                                                                                                                                                                    If listaTweets.Count > 0 Then
+                                                                                                                                                                                                        Dim listaTweetsAñadir As New List(Of Tweet)
 
-                                                                                          End Try
-                                                                                      End Sub, periodoBloqueos)
+                                                                                                                                                                                                        For Each tweetNuevo As Tweet In listaTweets
+                                                                                                                                                                                                            Dim mostrar As Boolean = True
 
-        Dim periodoMuteos As TimeSpan = TimeSpan.FromMinutes(2)
-        Dim contadorMuteos As ThreadPoolTimer = ThreadPoolTimer.CreatePeriodicTimer(Async Sub()
-                                                                                        Try
-                                                                                            Await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (Async Sub()
-                                                                                                                                                                                              Dim listaMuteados As New List(Of String)
+                                                                                                                                                                                                            For Each item In lvMenciones.Items
+                                                                                                                                                                                                                If TypeOf item Is ListViewItem Then
+                                                                                                                                                                                                                    Dim lvItem As ListViewItem = item
+                                                                                                                                                                                                                    Dim grid As Grid = lvItem.Content
+                                                                                                                                                                                                                    Dim tweetAmpliado As pepeizq.Twitter.Objetos.TweetAmpliado = grid.Tag
+                                                                                                                                                                                                                    Dim itemTweet As Tweet = tweetAmpliado.Tweet
 
-                                                                                                                                                                                              listaMuteados = Await TwitterPeticiones.CogerListaMuteados(listaMuteados, megaUsuario)
+                                                                                                                                                                                                                    If itemTweet.ID = tweetNuevo.ID Then
+                                                                                                                                                                                                                        mostrar = False
+                                                                                                                                                                                                                    End If
+                                                                                                                                                                                                                End If
+                                                                                                                                                                                                            Next
 
-                                                                                                                                                                                              If listaMuteados.Count > 0 Then
-                                                                                                                                                                                                  megaUsuario.UsuariosMuteados = listaMuteados
-                                                                                                                                                                                              End If
-                                                                                                                                                                                          End Sub))
-                                                                                        Catch ex As Exception
+                                                                                                                                                                                                            If mostrar = True Then
+                                                                                                                                                                                                                listaTweetsAñadir.Add(tweetNuevo)
+                                                                                                                                                                                                            End If
+                                                                                                                                                                                                        Next
 
-                                                                                        End Try
-                                                                                    End Sub, periodoMuteos)
+                                                                                                                                                                                                        If listaTweetsAñadir.Count > 0 Then
+                                                                                                                                                                                                            Dim segundos As Integer = 0
+
+                                                                                                                                                                                                            If ApplicationData.Current.LocalSettings.Values("notificacionMencionesTiempo") = True Then
+                                                                                                                                                                                                                segundos = ApplicationData.Current.LocalSettings.Values("notificacionMencionesTiempoSegundos")
+                                                                                                                                                                                                            End If
+
+                                                                                                                                                                                                            If megaUsuario.NotificacionInicio = True Then
+                                                                                                                                                                                                                If listaTweetsAñadir.Count > 1 Then
+                                                                                                                                                                                                                    listaTweetsAñadir.Reverse()
+
+                                                                                                                                                                                                                    If lvMenciones.Items.Count > 0 Then
+                                                                                                                                                                                                                        If ApplicationData.Current.LocalSettings.Values("notificacionMencionesAgrupar") = True Then
+                                                                                                                                                                                                                            Notificaciones.ToastTweets(listaTweetsAñadir.Count, megaUsuario, segundos, 1)
+                                                                                                                                                                                                                        End If
+                                                                                                                                                                                                                    End If
+
+                                                                                                                                                                                                                    For Each tweetAñadir As Tweet In listaTweetsAñadir
+                                                                                                                                                                                                                        If lvMenciones.Items.Count > 0 Then
+                                                                                                                                                                                                                            If ApplicationData.Current.LocalSettings.Values("notificacionMencionesAgrupar") = False Then
+                                                                                                                                                                                                                                Notificaciones.ToastTweet(tweetAñadir, megaUsuario, segundos)
+                                                                                                                                                                                                                            End If
+                                                                                                                                                                                                                        End If
+
+                                                                                                                                                                                                                        lvMenciones.Items.Insert(0, pepeizq.Twitter.Xaml.TweetXaml.Añadir(tweetAñadir, megaUsuario, Nothing))
+                                                                                                                                                                                                                    Next
+                                                                                                                                                                                                                Else
+                                                                                                                                                                                                                    If lvMenciones.Items.Count > 0 Then
+                                                                                                                                                                                                                        Notificaciones.ToastTweet(listaTweetsAñadir(0), megaUsuario, segundos)
+                                                                                                                                                                                                                    End If
+
+                                                                                                                                                                                                                    lvMenciones.Items.Insert(0, pepeizq.Twitter.Xaml.TweetXaml.Añadir(listaTweetsAñadir(0), megaUsuario, Nothing))
+                                                                                                                                                                                                                End If
+                                                                                                                                                                                                            End If
+                                                                                                                                                                                                        End If
+                                                                                                                                                                                                    End If
+                                                                                                                                                                                                End Sub))
+                                                                                              Catch ex As Exception
+
+                                                                                              End Try
+                                                                                          End Sub, periodoMentions)
+            megaUsuario.StreamMentions = contadorMentions
+
+            Dim periodoBloqueos As TimeSpan = TimeSpan.FromMinutes(2)
+            Dim contadorBloqueos As ThreadPoolTimer = ThreadPoolTimer.CreatePeriodicTimer(Async Sub()
+                                                                                              Try
+                                                                                                  Await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (Async Sub()
+                                                                                                                                                                                                    Dim listaBloqueos As New List(Of String)
+
+                                                                                                                                                                                                    listaBloqueos = Await TwitterPeticiones.CogerListaBloqueos(listaBloqueos, megaUsuario)
+
+                                                                                                                                                                                                    If listaBloqueos.Count > 0 Then
+                                                                                                                                                                                                        megaUsuario.UsuariosBloqueados = listaBloqueos
+                                                                                                                                                                                                    End If
+                                                                                                                                                                                                End Sub))
+                                                                                              Catch ex As Exception
+
+                                                                                              End Try
+                                                                                          End Sub, periodoBloqueos)
+
+            Dim periodoMuteos As TimeSpan = TimeSpan.FromMinutes(2)
+            Dim contadorMuteos As ThreadPoolTimer = ThreadPoolTimer.CreatePeriodicTimer(Async Sub()
+                                                                                            Try
+                                                                                                Await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (Async Sub()
+                                                                                                                                                                                                  Dim listaMuteados As New List(Of String)
+
+                                                                                                                                                                                                  listaMuteados = Await TwitterPeticiones.CogerListaMuteados(listaMuteados, megaUsuario)
+
+                                                                                                                                                                                                  If listaMuteados.Count > 0 Then
+                                                                                                                                                                                                      megaUsuario.UsuariosMuteados = listaMuteados
+                                                                                                                                                                                                  End If
+                                                                                                                                                                                              End Sub))
+                                                                                            Catch ex As Exception
+
+                                                                                            End Try
+                                                                                        End Sub, periodoMuteos)
+        Else
+            nuevaSesion.Dispose()
+        End If
 
     End Sub
 

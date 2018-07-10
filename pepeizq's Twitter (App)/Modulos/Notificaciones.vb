@@ -204,11 +204,17 @@ Module Notificaciones
 
     End Sub
 
-    Public Sub ToastTweets(cantidad As Integer, megaUsuario As pepeizq.Twitter.MegaUsuario, segundos As Integer)
+    Public Sub ToastTweets(cantidad As Integer, megaUsuario As pepeizq.Twitter.MegaUsuario, segundos As Integer, tipo As Integer)
 
         Dim recursos As New Resources.ResourceLoader
 
-        Dim textoFinal As String = "@" + megaUsuario.Usuario.ScreenNombre + " " + recursos.GetString("UserNewTweets") + " (" + cantidad.ToString + ")"
+        Dim textoFinal As String = Nothing
+
+        If tipo = 0 Then
+            textoFinal = "@" + megaUsuario.Usuario.ScreenNombre + " " + recursos.GetString("UserNewTweets") + " (" + cantidad.ToString + ")"
+        ElseIf tipo = 1 Then
+            textoFinal = "@" + megaUsuario.Usuario.ScreenNombre + " " + recursos.GetString("UserNewMentions") + " (" + cantidad.ToString + ")"
+        End If
 
         Dim texto As New AdaptiveText With {
            .Text = textoFinal,

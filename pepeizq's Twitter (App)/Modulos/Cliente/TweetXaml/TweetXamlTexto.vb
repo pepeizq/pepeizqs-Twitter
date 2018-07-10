@@ -204,7 +204,7 @@ Namespace pepeizq.Twitter.Xaml
                                     Dim spUsuario As New StackPanel With {
                                         .Tag = New Objetos.UsuarioAmpliado(megaUsuario, Nothing, entidad.Mostrar)
                                     }
-                                    AddHandler spUsuario.Loading, AddressOf SpUsuarioLoaded
+                                    AddHandler spUsuario.Loaded, AddressOf SpUsuarioLoaded
 
                                     ToolTipService.SetToolTip(enlace, spUsuario)
                                     ToolTipService.SetPlacement(enlace, PlacementMode.Bottom)
