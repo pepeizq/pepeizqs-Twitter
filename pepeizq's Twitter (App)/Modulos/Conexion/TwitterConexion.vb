@@ -405,9 +405,9 @@ Module TwitterConexion
 
             i = 0
             For Each item As MenuFlyoutItem In menu.Items
-                Dim usuarioItem As TwitterUsuario = item.Tag
+                Dim cosas As pepeizq.Twitter.Objetos.UsuarioAmpliado = item.Tag
 
-                If usuarioItem.ID = megaUsuario.Usuario.ID Then
+                If cosas.Usuario.ID = megaUsuario.Usuario.ID Then
                     menu.Items.RemoveAt(i)
 
                     Exit For
@@ -423,7 +423,7 @@ Module TwitterConexion
                 End If
             End If
 
-            Dim gridUsuario As Grid = pagina.FindName("gridUsuario" + megaUsuario.Usuario.ScreenNombre)
+            Dim gridUsuario As Grid = pagina.FindName("gridUsuario" + megaUsuario.Usuario.ID)
             gridUsuario.Children.Clear()
 
             Dim helper As New LocalObjectStorageHelper

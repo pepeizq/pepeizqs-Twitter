@@ -615,6 +615,7 @@ Public NotInheritable Class MainPage
     Private Sub BotonConfigApiTutorial_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigApiTutorial.Click
 
         wvConfigApi.Navigate(New Uri("https://pepeizqapps.com/how-create-your-own-app-in-twitter/"))
+        wvConfigApi.MinHeight = 600
 
     End Sub
 
