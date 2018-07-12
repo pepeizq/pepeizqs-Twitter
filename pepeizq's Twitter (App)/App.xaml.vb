@@ -1,4 +1,6 @@
-﻿NotInheritable Class App
+﻿Imports Windows.ApplicationModel.ExtendedExecution
+
+NotInheritable Class App
     Inherits Application
 
     Protected Overrides Async Sub OnLaunched(e As LaunchActivatedEventArgs)
@@ -16,19 +18,28 @@
             Window.Current.Content = rootFrame
         End If
 
-        If e.Kind = ActivationKind.Launch Then
-            If Not e.Arguments = String.Empty Then
-                UsuarioXaml.CambiarCuenta(Nothing, e.Arguments, True)
+        Dim nuevaSesion As New ExtendedExecutionSession With {
+            .Reason = ExtendedExecutionReason.Unspecified
+        }
+
+        Dim resultado As ExtendedExecutionResult = Await nuevaSesion.RequestExtensionAsync
+
+        If resultado = ExtendedExecutionResult.Allowed Then
+            If e.Kind = ActivationKind.Launch Then
+                If Not e.Arguments = String.Empty Then
+                    UsuarioXaml.CambiarCuenta(Nothing, e.Arguments, True)
+                End If
+            End If
+
+            If e.PrelaunchActivated = False Then
+                If rootFrame.Content Is Nothing Then
+                    rootFrame.Navigate(GetType(MainPage), e.Arguments)
+                End If
+
+                Window.Current.Activate()
             End If
         End If
 
-        If e.PrelaunchActivated = False Then
-            If rootFrame.Content Is Nothing Then
-                rootFrame.Navigate(GetType(MainPage), e.Arguments)
-            End If
-
-            Window.Current.Activate()
-        End If
     End Sub
 
     Private Sub OnNavigationFailed(sender As Object, e As NavigationFailedEventArgs)

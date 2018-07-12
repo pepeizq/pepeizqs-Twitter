@@ -282,9 +282,6 @@
   <data name="ButtonDeleteAccount" xml:space="preserve">
     <value>Supprimer le compte</value>
   </data>
-  <data name="CbNotification" xml:space="preserve">
-    <value>Afficher les notifications</value>
-  </data>
   <data name="ButtonRemoveAds" xml:space="preserve">
     <value>Supprimez la pub</value>
   </data>
@@ -359,5 +356,53 @@
   </data>
   <data name="tbConfigApiReset.Text" xml:space="preserve">
     <value>Réinitialiser les clés</value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="Home2.Text" xml:space="preserve">
+    <value>Accueil</value>
+  </data>
+  <data name="Mentions2.Text" xml:space="preserve">
+    <value>Mentions</value>
+  </data>
+  <data name="ClickExpand" xml:space="preserve">
+    <value>Cliquer pour développer</value>
+  </data>
+  <data name="Followers" xml:space="preserve">
+    <value>Abonnés</value>
+  </data>
+  <data name="tbConfigAppTooltipsHelp.Text" xml:space="preserve">
+    <value>Afficher les bulles d&apos;aide</value>
+  </data>
+  <data name="ClickExpandTweet" xml:space="preserve">
+    <value>Cliquer pour développer le Tweet</value>
+  </data>
+  <data name="Search3.Text" xml:space="preserve">
+    <value>Chercher</value>
+  </data>
+  <data name="SearchUsers" xml:space="preserve">
+    <value>Chercher des Utilisateurs</value>
+  </data>
+  <data name="SearchNoResults.Text" xml:space="preserve">
+    <value>Aucun résultat</value>
+  </data>
+  <data name="SearchTweets" xml:space="preserve">
+    <value>Chercher des Tweets</value>
+  </data>
+  <data name="SearchUsersMessage.Text" xml:space="preserve">
+    <value>Entrez l&apos;utilisateur que vous souhaitez rechercher dans la zone de texte</value>
+  </data>
+  <data name="SearchTweetsMessage.Text" xml:space="preserve">
+    <value>Entrez le hashtag avec lequel vous souhaitez rechercher des tweets dans la zone de texte</value>
+  </data>
+  <data name="tbSearchTweetsTooltip.Text" xml:space="preserve">
+    <value>En raison de restrictions sur Twitter, l&apos;application ne peut afficher que les tweets des 7 derniers jours avec le hashtag que vous recherchez.</value>
+  </data>
+  <data name="tbSearchUsersTooltip.Text" xml:space="preserve">
+    <value>En raison de restrictions sur Twitter, l&apos;application ne peut afficher que les 20 premiers résultats de votre recherche</value>
+  </data>
+  <data name="buttonRemoveAds2.Text" xml:space="preserve">
+    <value>Supprimer la pub</value>
   </data>
 </root>
