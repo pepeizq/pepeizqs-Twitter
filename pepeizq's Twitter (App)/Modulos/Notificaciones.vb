@@ -191,7 +191,7 @@ Module Notificaciones
             Try
                 Dim notificacion As ToastNotification = New ToastNotification(tostada.GetXml)
 
-                If Not segundos = Nothing Then
+                If Not segundos = 0 Then
                     notificacion.ExpirationTime = DateTime.Now.AddSeconds(segundos)
                 End If
 
@@ -259,7 +259,7 @@ Module Notificaciones
         Try
             Dim notificacion As ToastNotification = New ToastNotification(tostada.GetXml)
 
-            If Not segundos = Nothing Then
+            If Not segundos = 0 Then
                 notificacion.ExpirationTime = DateTime.Now.AddSeconds(segundos)
             End If
 
