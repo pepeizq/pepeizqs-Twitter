@@ -196,7 +196,7 @@ Namespace pepeizq.Twitter.Xaml
                                 If entidad.Tipo = 1 Then
                                     cosas = New Objetos.UsuarioAmpliado(megaUsuario, Nothing, Nothing)
 
-                                    Dim enlace As New Hyperlink With {
+                                    Dim enlaceUsuario As New Hyperlink With {
                                         .TextDecorations = Nothing,
                                         .Foreground = New SolidColorBrush(color)
                                     }
@@ -206,32 +206,23 @@ Namespace pepeizq.Twitter.Xaml
                                     }
                                     AddHandler spUsuario.Loaded, AddressOf SpUsuarioLoaded
 
-                                    ToolTipService.SetToolTip(enlace, spUsuario)
-                                    ToolTipService.SetPlacement(enlace, PlacementMode.Bottom)
+                                    ToolTipService.SetToolTip(enlaceUsuario, spUsuario)
+                                    ToolTipService.SetPlacement(enlaceUsuario, PlacementMode.Bottom)
 
-                                    AddHandler enlace.Click, AddressOf EnlaceUsuarioClick
+                                    AddHandler enlaceUsuario.Click, AddressOf EnlaceUsuarioClick
 
-                                    enlace.Inlines.Add(contenidoEnlace)
-                                    textoSpan.Inlines.Add(enlace)
+                                    enlaceUsuario.Inlines.Add(contenidoEnlace)
+                                    textoSpan.Inlines.Add(enlaceUsuario)
                                 ElseIf entidad.Tipo = 2 Then
-                                    Dim enlace As New Hyperlink With {
+                                    Dim enlaceHashtag As New Hyperlink With {
                                         .TextDecorations = Nothing,
                                         .Foreground = New SolidColorBrush(color)
                                     }
 
-                                    AddHandler enlace.Click, AddressOf EnlaceHashtagClick
+                                    AddHandler enlaceHashtag.Click, AddressOf EnlaceHashtagClick
 
-                                    enlace.Inlines.Add(contenidoEnlace)
-                                    textoSpan.Inlines.Add(enlace)
-                                Else
-                                    Dim enlace As New Hyperlink With {
-                                        .NavigateUri = New Uri(entidad.Enlace, UriKind.RelativeOrAbsolute),
-                                        .TextDecorations = Nothing,
-                                        .Foreground = New SolidColorBrush(color)
-                                    }
-
-                                    enlace.Inlines.Add(contenidoEnlace)
-                                    textoSpan.Inlines.Add(enlace)
+                                    enlaceHashtag.Inlines.Add(contenidoEnlace)
+                                    textoSpan.Inlines.Add(enlaceHashtag)
                                 End If
                             End If
                         End If
