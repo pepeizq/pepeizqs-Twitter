@@ -133,7 +133,7 @@
     <value>Dom</value>
   </data>
   <data name="MoreThings" xml:space="preserve">
-    <value>Więcej rzeczy</value>
+    <value>Więcej</value>
   </data>
   <data name="Open" xml:space="preserve">
     <value>Otwórz</value>
@@ -146,9 +146,6 @@
   </data>
   <data name="tbConfigNotifications.Text" xml:space="preserve">
     <value>Powiadomienia</value>
-  </data>
-  <data name="tbConfigNotificationsSeconds.Text" xml:space="preserve">
-    <value>sekundy (top 99 sekund)</value>
   </data>
   <data name="tbConfigNotificationsSound.Text" xml:space="preserve">
     <value>Ustaw dźwięk</value>
@@ -192,14 +189,8 @@
   <data name="Retweet" xml:space="preserve">
     <value>Prześlij ponownie</value>
   </data>
-  <data name="RetweetSent" xml:space="preserve">
-    <value>Pomyślnie przesłano ponownie</value>
-  </data>
   <data name="Favorite" xml:space="preserve">
     <value>Ulubiony</value>
-  </data>
-  <data name="FavoriteSent" xml:space="preserve">
-    <value>Pomyślnie dodane</value>
   </data>
   <data name="MoreOptions" xml:space="preserve">
     <value>Więcej opcji</value>
@@ -221,15 +212,6 @@
   </data>
   <data name="tbNumFavoritesUser.Text" xml:space="preserve">
     <value>Lajki</value>
-  </data>
-  <data name="Block" xml:space="preserve">
-    <value>Zablokuj</value>
-  </data>
-  <data name="Report" xml:space="preserve">
-    <value>Zgłoś</value>
-  </data>
-  <data name="Mute" xml:space="preserve">
-    <value>Wycisz</value>
   </data>
   <data name="OEmbedTweet" xml:space="preserve">
     <value>Umieść ten Tweet</value>
@@ -280,7 +262,7 @@
     <value>Aplikacja</value>
   </data>
   <data name="tbConfigAppTweetCard.Text" xml:space="preserve">
-    <value>Załaduj informacje z "Tweet Card", jeśli ma to tweet</value>
+    <value>Załaduj informacje z &quot;Tweet Card&quot;, jeśli ma to tweet</value>
   </data>
   <data name="tbConfigAppLoadMedia.Text" xml:space="preserve">
     <value>Ładuj i wyświetlaj multimedia z tweetów (obrazy, gify i filmy)</value>
@@ -300,16 +282,127 @@
   <data name="ButtonDeleteAccount" xml:space="preserve">
     <value>Usuń konto</value>
   </data>
-  <data name="tbConfigAPIKeys.Text" xml:space="preserve">
-    <value>Zmień klucze tak, aby działały jak kolejna aplikacja na Twitterze (uruchom ponownie aplikację po zmianie kluczy)</value>
-  </data>
-  <data name="tbConfigAPIShow.Text" xml:space="preserve">
-    <value>API Keys</value>
-  </data>
-  <data name="tbConfigCreateNewApp.Text" xml:space="preserve">
-    <value>Utwórz nową aplikację</value>
-  </data>
   <data name="ButtonRemoveAds" xml:space="preserve">
     <value>Usuń reklamy</value>
+  </data>
+  <data name="UserBlock" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="UserReport" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="UserMute" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ButtonAddTile" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="UserUnblock" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="UserUnmute" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="CopyUrl.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Download.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Seconds" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="tbConfigAppLoadMediaPreview.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Width" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="DeleteTweet" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="UserNewMentions" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="UserNewTweets" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="tbConfigNotificationsGroup.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="tbConfigNotificationsGroupTooltip.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="tbConfigAppAutoStartTooltip.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="RetweetBy.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="tbConfigAppTweetRetweets.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="tbConfigApi.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="tbConfigApiWarning.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="tbConfigApiTutorial.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="tbConfigApiReset.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Home2.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Mentions2.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ClickExpand" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Followers" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="tbConfigAppTooltipsHelp.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ClickExpandTweet" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Search3.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SearchUsers" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SearchNoResults.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SearchTweets" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SearchUsersMessage.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SearchTweetsMessage.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="tbSearchTweetsTooltip.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="tbSearchUsersTooltip.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="buttonRemoveAds2.Text" xml:space="preserve">
+    <value></value>
   </data>
 </root>

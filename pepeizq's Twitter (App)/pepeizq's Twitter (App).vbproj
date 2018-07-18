@@ -166,11 +166,11 @@
     </AppxManifest>
     <None Include="pepeizq%27s Twitter %28App%29_StoreKey.pfx" />
     <None Include="pepeizq's Twitter (App)_TemporaryKey.pfx" />
-    <PRIResource Include="Strings\fr-FR\Resources.resw" />
-    <PRIResource Include="Strings\pl-PL\Resources.resw" />
-    <PRIResource Include="Strings\ms-MY\Resources.resw" />
     <PRIResource Include="Strings\zh-CN\Resources.resw" />
     <PRIResource Include="Strings\pt-BR\Resources.resw" />
+    <PRIResource Include="Strings\pl-PL\Resources.resw" />
+    <PRIResource Include="Strings\ms-MY\Resources.resw" />
+    <PRIResource Include="Strings\fr-FR\Resources.resw" />
     <PRIResource Include="Strings\es-ES\Resources.resw" />
     <PRIResource Include="Strings\en-US\Resources.resw" />
   </ItemGroup>

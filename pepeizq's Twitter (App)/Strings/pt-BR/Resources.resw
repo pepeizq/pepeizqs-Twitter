@@ -147,9 +147,6 @@
   <data name="tbConfigNotifications.Text" xml:space="preserve">
     <value>Notificações</value>
   </data>
-  <data name="tbConfigNotificationsSeconds.Text" xml:space="preserve">
-    <value>segundos (máximo de 99 segundos)</value>
-  </data>
   <data name="tbConfigNotificationsSound.Text" xml:space="preserve">
     <value>Definir um som</value>
   </data>
@@ -192,14 +189,8 @@
   <data name="Retweet" xml:space="preserve">
     <value>Retweetar</value>
   </data>
-  <data name="RetweetSent" xml:space="preserve">
-    <value>Retweetado com Sucesso</value>
-  </data>
   <data name="Favorite" xml:space="preserve">
     <value>Favoritar</value>
-  </data>
-  <data name="FavoriteSent" xml:space="preserve">
-    <value>Favoritado com Sucesso</value>
   </data>
   <data name="MoreOptions" xml:space="preserve">
     <value>Mais Opções</value>
@@ -221,15 +212,6 @@
   </data>
   <data name="tbNumFavoritesUser.Text" xml:space="preserve">
     <value>Curtidas</value>
-  </data>
-  <data name="Block" xml:space="preserve">
-    <value>Bloquear</value>
-  </data>
-  <data name="Report" xml:space="preserve">
-    <value>Reportar</value>
-  </data>
-  <data name="Mute" xml:space="preserve">
-    <value>Mutar</value>
   </data>
   <data name="OEmbedTweet" xml:space="preserve">
     <value>Incorpore esse Tweet</value>
@@ -293,5 +275,134 @@
   </data>
   <data name="StoreTags" xml:space="preserve">
     <value>Twitter;Tweet;Retweet;Hashtag</value>
+  </data>
+  <data name="tbConfigNotificationsUser.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ButtonDeleteAccount" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ButtonRemoveAds" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="UserBlock" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="UserReport" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="UserMute" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ButtonAddTile" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="UserUnblock" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="UserUnmute" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="CopyUrl.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Download.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Height" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Seconds" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="tbConfigAppLoadMediaPreview.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Width" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="DeleteTweet" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="UserNewMentions" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="UserNewTweets" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="tbConfigNotificationsGroup.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="tbConfigNotificationsGroupTooltip.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="tbConfigAppAutoStartTooltip.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="RetweetBy.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="tbConfigAppTweetRetweets.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="tbConfigApi.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="tbConfigApiWarning.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="tbConfigApiTutorial.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="tbConfigApiReset.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Notifications" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Home2.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Mentions2.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ClickExpand" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Followers" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="tbConfigAppTooltipsHelp.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ClickExpandTweet" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Search3.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SearchUsers" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SearchNoResults.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SearchTweets" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SearchUsersMessage.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SearchTweetsMessage.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="tbSearchTweetsTooltip.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="tbSearchUsersTooltip.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="buttonRemoveAds2.Text" xml:space="preserve">
+    <value></value>
   </data>
 </root>
