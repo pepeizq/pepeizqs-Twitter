@@ -1,9 +1,9 @@
 ﻿Imports System.Globalization
-Imports Microsoft.Toolkit.Uwp.Helpers
 Imports pepeizq.Twitter.Tweet
 Imports Windows.ApplicationModel.Core
 Imports Windows.Storage
 Imports Windows.System.Threading
+Imports Windows.UI
 Imports Windows.UI.Core
 
 Namespace pepeizq.Twitter.Xaml
@@ -19,12 +19,12 @@ Namespace pepeizq.Twitter.Xaml
                 grid.Padding = New Thickness(0, 15, 0, 10)
 
                 Dim color1 As New GradientStop With {
-                    .Color = ColorHelper.ToColor("#e0e0e0"),
+                    .Color = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToColor("#e0e0e0"),
                     .Offset = 0.5
                 }
 
                 Dim color2 As New GradientStop With {
-                    .Color = ColorHelper.ToColor("#d6d6d6"),
+                    .Color = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToColor("#d6d6d6"),
                     .Offset = 1.0
                 }
 
@@ -135,7 +135,8 @@ Namespace pepeizq.Twitter.Xaml
                 gridInferiorDerecha.SetValue(Grid.ColumnProperty, 2)
 
                 Dim tbTiempo As New TextBlock With {
-                    .FontSize = 12
+                    .FontSize = 12,
+                    .Foreground = New SolidColorBrush(Colors.Black)
                 }
 
                 SumarTiempo(tbTiempo, tweet.Creacion)

@@ -88,7 +88,8 @@ Namespace pepeizq.Twitter.Xaml
                 Dim textoSpanRespuesta As New Span
 
                 Dim fragmento As New Run With {
-                    .Text = recursos.GetString("ReplyingTo") + " "
+                    .Text = recursos.GetString("ReplyingTo") + " ",
+                    .Foreground = New SolidColorBrush(Colors.Black)
                 }
 
                 textoSpanRespuesta.Inlines.Add(fragmento)

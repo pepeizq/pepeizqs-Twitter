@@ -7,9 +7,27 @@ Imports Windows.UI.Core
 
 Module TwitterStream
 
-    Public Sub Iniciar(megaUsuario As pepeizq.Twitter.MegaUsuario)
+    Public Async Sub Iniciar(megaUsuario As pepeizq.Twitter.MegaUsuario)
 
         Dim usuario As TwitterUsuario = megaUsuario.Usuario
+
+        Dim listaBloqueos As New List(Of String)
+
+        listaBloqueos = Await TwitterPeticiones.CogerListaBloqueos(listaBloqueos, megaUsuario)
+
+        If listaBloqueos.Count > 0 Then
+            megaUsuario.UsuariosBloqueados = listaBloqueos
+        End If
+
+        Dim listaMuteados As New List(Of String)
+
+        listaMuteados = Await TwitterPeticiones.CogerListaMuteados(listaMuteados, megaUsuario)
+
+        If listaMuteados.Count > 0 Then
+            megaUsuario.UsuariosMuteados = listaMuteados
+        End If
+
+        '----------------------------------
 
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
@@ -173,32 +191,6 @@ Module TwitterStream
                                                                                           End Sub, periodoMentions)
             megaUsuario.StreamMentions = contadorMentions
         End If
-
-        Dim periodoBloqueos As TimeSpan = TimeSpan.FromMinutes(2)
-        Dim contadorBloqueos As ThreadPoolTimer = ThreadPoolTimer.CreatePeriodicTimer(Async Sub()
-                                                                                          Await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (Async Sub()
-                                                                                                                                                                                            Dim listaBloqueos As New List(Of String)
-
-                                                                                                                                                                                            listaBloqueos = Await TwitterPeticiones.CogerListaBloqueos(listaBloqueos, megaUsuario)
-
-                                                                                                                                                                                            If listaBloqueos.Count > 0 Then
-                                                                                                                                                                                                megaUsuario.UsuariosBloqueados = listaBloqueos
-                                                                                                                                                                                            End If
-                                                                                                                                                                                        End Sub))
-                                                                                      End Sub, periodoBloqueos)
-
-        Dim periodoMuteos As TimeSpan = TimeSpan.FromMinutes(2)
-        Dim contadorMuteos As ThreadPoolTimer = ThreadPoolTimer.CreatePeriodicTimer(Async Sub()
-                                                                                        Await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (Async Sub()
-                                                                                                                                                                                          Dim listaMuteados As New List(Of String)
-
-                                                                                                                                                                                          listaMuteados = Await TwitterPeticiones.CogerListaMuteados(listaMuteados, megaUsuario)
-
-                                                                                                                                                                                          If listaMuteados.Count > 0 Then
-                                                                                                                                                                                              megaUsuario.UsuariosMuteados = listaMuteados
-                                                                                                                                                                                          End If
-                                                                                                                                                                                      End Sub))
-                                                                                    End Sub, periodoMuteos)
 
     End Sub
 

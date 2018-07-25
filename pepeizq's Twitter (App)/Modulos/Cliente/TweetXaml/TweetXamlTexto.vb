@@ -144,7 +144,8 @@ Namespace pepeizq.Twitter.Xaml
                                     End If
 
                                     Dim fragmentoAnterior As New Run With {
-                                       .Text = textoFragmentoAnterior
+                                        .Text = textoFragmentoAnterior,
+                                        .Foreground = New SolidColorBrush(Colors.Black)
                                     }
 
                                     textoSpan.Inlines.Add(fragmentoAnterior)
@@ -182,7 +183,8 @@ Namespace pepeizq.Twitter.Xaml
                                 End If
 
                                 Dim fragmentoAnterior As New Run With {
-                                    .Text = textoFragmentoAnterior
+                                    .Text = textoFragmentoAnterior,
+                                    .Foreground = New SolidColorBrush(Colors.Black)
                                 }
 
                                 textoSpan.Inlines.Add(fragmentoAnterior)
@@ -234,7 +236,8 @@ Namespace pepeizq.Twitter.Xaml
 
                     If textoTweet.Trim.Length >= 0 Then
                         Dim fragmento As New Run With {
-                           .Text = WebUtility.HtmlDecode(textoTweet)
+                            .Text = WebUtility.HtmlDecode(textoTweet),
+                            .Foreground = New SolidColorBrush(Colors.Black)
                         }
 
                         textoSpan.Inlines.Add(fragmento)
@@ -371,13 +374,15 @@ Namespace pepeizq.Twitter.Xaml
 
                 Dim tbNombre As New TextBlock With {
                     .Text = usuario.Nombre,
-                    .Margin = New Thickness(0, 0, 0, 5)
+                    .Margin = New Thickness(0, 0, 0, 5),
+                    .Foreground = New SolidColorBrush(Colors.Black)
                 }
 
                 subSp.Children.Add(tbNombre)
 
                 Dim tbNumSeguidores As New TextBlock With {
-                    .Text = String.Format("{0:n0}", Integer.Parse(usuario.Followers)) + " " + recursos.GetString("Followers")
+                    .Text = String.Format("{0:n0}", Integer.Parse(usuario.Followers)) + " " + recursos.GetString("Followers"),
+                    .Foreground = New SolidColorBrush(Colors.Black)
                 }
 
                 subSp.Children.Add(tbNumSeguidores)

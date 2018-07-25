@@ -78,7 +78,8 @@ Namespace pepeizq.Twitter.Xaml
                 Dim tbBoton As New TextBlock With {
                     .Text = tweet.NumRetweets,
                     .VerticalAlignment = VerticalAlignment.Center,
-                    .Margin = New Thickness(5, 0, 0, 0)
+                    .Margin = New Thickness(5, 0, 0, 0),
+                    .Foreground = New SolidColorBrush(Colors.Black)
                 }
 
                 spBoton.Children.Add(tbBoton)
@@ -122,7 +123,8 @@ Namespace pepeizq.Twitter.Xaml
                 Dim tbBoton As New TextBlock With {
                     .Text = tweet.NumFavoritos,
                     .VerticalAlignment = VerticalAlignment.Center,
-                    .Margin = New Thickness(5, 0, 0, 0)
+                    .Margin = New Thickness(5, 0, 0, 0),
+                    .Foreground = New SolidColorBrush(Colors.Black)
                 }
 
                 spBoton.Children.Add(tbBoton)
@@ -216,7 +218,8 @@ Namespace pepeizq.Twitter.Xaml
                     Dim tbCreacion As New TextBlock With {
                         .Text = fecha,
                         .Margin = New Thickness(40, 0, 0, 0),
-                        .VerticalAlignment = VerticalAlignment.Center
+                        .VerticalAlignment = VerticalAlignment.Center,
+                        .Foreground = New SolidColorBrush(Colors.Black)
                     }
 
                     spBotones.Children.Add(tbCreacion)
@@ -453,7 +456,8 @@ Namespace pepeizq.Twitter.Xaml
             Dim botonCompartirTweet As New MenuFlyoutItem With {
                 .Text = recursos.GetString("ShareTweet"),
                 .Tag = cosas,
-                .Icon = iconoCompartirTweet
+                .Icon = iconoCompartirTweet,
+                .Foreground = New SolidColorBrush(Colors.Black)
             }
 
             AddHandler botonCompartirTweet.Click, AddressOf BotonCompartirTweetClick
@@ -469,7 +473,8 @@ Namespace pepeizq.Twitter.Xaml
             Dim botonCopiarEnlaceTweet As New MenuFlyoutItem With {
                 .Text = recursos.GetString("CopyUrlTweet"),
                 .Tag = cosas,
-                .Icon = iconoCopiarEnlaceTweet
+                .Icon = iconoCopiarEnlaceTweet,
+                .Foreground = New SolidColorBrush(Colors.Black)
             }
 
             AddHandler botonCopiarEnlaceTweet.Click, AddressOf BotonCopiarEnlaceTweetClick
@@ -488,7 +493,8 @@ Namespace pepeizq.Twitter.Xaml
             Dim botonAbrirNavegadorTweet As New MenuFlyoutItem With {
                 .Text = recursos.GetString("OpenWebBrowserTweet"),
                 .Tag = cosas,
-                .Icon = iconoAbrirNavegadorTweet
+                .Icon = iconoAbrirNavegadorTweet,
+                .Foreground = New SolidColorBrush(Colors.Black)
             }
 
             AddHandler botonAbrirNavegadorTweet.Click, AddressOf BotonAbrirNavegadorTweetClick
@@ -504,7 +510,8 @@ Namespace pepeizq.Twitter.Xaml
             Dim botonOEmbedTweet As New MenuFlyoutItem With {
                 .Text = recursos.GetString("OEmbedTweet"),
                 .Tag = cosas,
-                .Icon = iconoOEmbedTweet
+                .Icon = iconoOEmbedTweet,
+                .Foreground = New SolidColorBrush(Colors.Black)
             }
 
             AddHandler botonOEmbedTweet.Click, AddressOf BotonOEmbedTweetClick
@@ -552,7 +559,8 @@ Namespace pepeizq.Twitter.Xaml
 
             Dim tbToolTip As TextBlock = New TextBlock With {
                 .Text = texto,
-                .FontSize = 15
+                .FontSize = 15,
+                .Foreground = New SolidColorBrush(Colors.Black)
             }
 
             ToolTipService.SetToolTip(sp, tbToolTip)

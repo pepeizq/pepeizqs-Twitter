@@ -644,29 +644,12 @@ Public NotInheritable Class MainPage
 
     'MEDIA-----------------------------------------------------------------------------
 
-    Private Sub BotonCerrarImagen_Click(sender As Object, e As RoutedEventArgs) Handles botonCerrarImagen.Click
-
-        botonCerrarImagen.Tag = Nothing
-        gridImagenAmpliada.Visibility = Visibility.Collapsed
-
-        Dim imagenOrigen As ImageEx = imagenAmpliada.Tag
-
-        ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("imagenReducida", imagenAmpliada)
-
-        Dim animacion As ConnectedAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("imagenReducida")
-
-        If Not animacion Is Nothing Then
-            animacion.TryStart(imagenOrigen)
-        End If
-
-    End Sub
-
     Private Async Sub BotonDescargarImagen_Click(sender As Object, e As RoutedEventArgs) Handles botonDescargarImagen.Click
 
         botonDescargarImagen.IsEnabled = False
         prDescargaImagen.Visibility = Visibility.Visible
 
-        Dim enlace As New Uri(tbImagenAmpliada.Text)
+        Dim enlace As New Uri(imagenAmpliada.Source)
 
         Dim picker As New FolderPicker()
 
@@ -691,7 +674,7 @@ Public NotInheritable Class MainPage
     Private Sub BotonCopiarImagen_Click(sender As Object, e As RoutedEventArgs) Handles botonCopiarImagen.Click
 
         Dim paquete As New DataPackage
-        paquete.SetText(tbImagenAmpliada.Text)
+        paquete.SetText(imagenAmpliada.Source)
 
         Clipboard.SetContent(paquete)
 
@@ -802,6 +785,28 @@ Public NotInheritable Class MainPage
 
         svTweetsUsuario.ChangeView(Nothing, 0, Nothing)
         botonSubirArribaUsuario.Visibility = Visibility.Collapsed
+
+    End Sub
+
+    Private Sub NvPrincipal_BackRequested(sender As NavigationView, args As NavigationViewBackRequestedEventArgs) Handles nvPrincipal.BackRequested
+
+        If gridImagenAmpliada.Visibility = Visibility.Visible Then
+            'Dim imagenOrigen As ImageEx = imagenAmpliada.Tag
+
+        'ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("imagenReducida", imagenAmpliada)
+
+        'Dim animacion As ConnectedAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("imagenReducida")
+
+        'If Not animacion Is Nothing Then
+        '    animacion.TryStart(imagenOrigen)
+        'End If
+        End If
+
+        gridImagenAmpliada.Visibility = Visibility.Collapsed
+
+        nvPrincipal.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed
+        nvPrincipal.IsBackEnabled = False
+        nvPrincipal.IsPaneOpen = False
 
     End Sub
 

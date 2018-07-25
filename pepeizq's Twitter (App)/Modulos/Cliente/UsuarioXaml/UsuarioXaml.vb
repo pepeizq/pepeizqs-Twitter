@@ -41,7 +41,8 @@ Module UsuarioXaml
         Dim menu As MenuFlyout = pagina.FindName("botonUsuariosMenu")
         Dim menuItemUsuario As New MenuFlyoutItem With {
             .Text = usuario.Nombre,
-            .Tag = New pepeizq.Twitter.Objetos.UsuarioAmpliado(megaUsuario, usuario, Nothing)
+            .Tag = New pepeizq.Twitter.Objetos.UsuarioAmpliado(megaUsuario, usuario, Nothing),
+            .Foreground = New SolidColorBrush(Colors.Black)
         }
 
         AddHandler menuItemUsuario.Click, AddressOf BotonCambiarCuentaClick

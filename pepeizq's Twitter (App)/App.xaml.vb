@@ -25,18 +25,22 @@ NotInheritable Class App
         Dim resultado As ExtendedExecutionResult = Await nuevaSesion.RequestExtensionAsync
 
         If resultado = ExtendedExecutionResult.Allowed Then
-            If e.Kind = ActivationKind.Launch Then
-                If Not e.Arguments = String.Empty Then
-                    UsuarioXaml.CambiarCuenta(Nothing, e.Arguments, True)
-                End If
-            End If
+            Dim usuarioRespuesta As Boolean = Await Background.BackgroundExecutionManager.RequestAccessKindAsync(resultado, "test")
 
-            If e.PrelaunchActivated = False Then
-                If rootFrame.Content Is Nothing Then
-                    rootFrame.Navigate(GetType(MainPage), e.Arguments)
+            If usuarioRespuesta = True Then
+                If e.Kind = ActivationKind.Launch Then
+                    If Not e.Arguments = String.Empty Then
+                        UsuarioXaml.CambiarCuenta(Nothing, e.Arguments, True)
+                    End If
                 End If
 
-                Window.Current.Activate()
+                If e.PrelaunchActivated = False Then
+                    If rootFrame.Content Is Nothing Then
+                        rootFrame.Navigate(GetType(MainPage), e.Arguments)
+                    End If
+
+                    Window.Current.Activate()
+                End If
             End If
         End If
 

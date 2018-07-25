@@ -91,39 +91,6 @@ Module FichaUsuarioXaml
         svTweets.Foreground = New SolidColorBrush(("#" + cosas.Usuario.ColorTexto).ToColor)
         AddHandler svTweets.ViewChanging, AddressOf SvTweets_ViewChanging
 
-        'Dim añadirAnuncios As Boolean = False
-        'Dim licencia As LicenseInformation = Nothing
-
-        'Try
-        '    licencia = CurrentApp.LicenseInformation
-        'Catch ex As Exception
-
-        'End Try
-
-        'If Not licencia Is Nothing Then
-        '    If Not licencia.ProductLicenses("NoAds").IsActive Then
-        '        añadirAnuncios = True
-        '    End If
-        'Else
-        '    añadirAnuncios = True
-        'End If
-
-        'If añadirAnuncios = True Then
-        '    Dim gridAnuncios As Grid = pagina.FindName("gridAnunciosUsuario")
-        '    gridAnuncios.BorderBrush = New SolidColorBrush(color)
-
-        '    Dim botonQuitarAnuncios As Button = pagina.FindName("botonQuitarAnunciosUsuario")
-        '    botonQuitarAnuncios.Background = New SolidColorBrush(color)
-
-        '    Dim anuncio As New AdControl With {
-        '        .AdUnitId = "1100022962",
-        '        .Width = 728,
-        '        .Height = 90
-        '    }
-        '    anuncio.SetValue(Grid.ColumnProperty, 0)
-        '    gridAnuncios.Children.Add(anuncio)
-        'End If
-
         '------------------------------------
 
         Dim circuloAvatar As Ellipse = pagina.FindName("ellipseAvatar")
@@ -436,14 +403,18 @@ Module FichaUsuarioXaml
                 Dim toolTip As New ToolTip With {
                     .Content = recursos.GetString("UserBlock")
                 }
+
                 ToolTipService.SetToolTip(boton, toolTip)
 
                 Dim iconoFinal As New FontAwesome.UWP.FontAwesome With {
                     .Icon = FontAwesomeIcon.Lock,
                     .Foreground = New SolidColorBrush(Colors.White)
                 }
+
                 boton.Content = iconoFinal
                 lvTweets.Visibility = Visibility.Visible
+
+                cosas.MegaUsuario.UsuariosBloqueados.Remove(cosas.Usuario.ID)
 
                 Dim listaTweets As New List(Of Tweet)
 
@@ -479,13 +450,17 @@ Module FichaUsuarioXaml
                 Dim toolTip As New ToolTip With {
                     .Content = recursos.GetString("UserUnblock")
                 }
+
                 ToolTipService.SetToolTip(boton, toolTip)
 
                 Dim iconoFinal As New FontAwesome.UWP.FontAwesome With {
                     .Icon = FontAwesomeIcon.Unlock,
                     .Foreground = New SolidColorBrush(Colors.White)
                 }
+
                 boton.Content = iconoFinal
+                cosas.MegaUsuario.UsuariosBloqueados.Add(cosas.Usuario.ID)
+
                 lvTweets.Visibility = Visibility.Collapsed
                 lvTweets.Items.Clear()
             End If
@@ -513,13 +488,17 @@ Module FichaUsuarioXaml
                 Dim toolTip As New ToolTip With {
                     .Content = recursos.GetString("UserMute")
                 }
+
                 ToolTipService.SetToolTip(boton, toolTip)
 
                 Dim iconoFinal As New FontAwesome.UWP.FontAwesome With {
                     .Icon = FontAwesomeIcon.VolumeOff,
                     .Foreground = New SolidColorBrush(Colors.White)
                 }
+
                 boton.Content = iconoFinal
+
+                cosas.MegaUsuario.UsuariosMuteados.Remove(cosas.Usuario.ID)
             End If
         Else
             Dim estado As Boolean = False
@@ -530,13 +509,17 @@ Module FichaUsuarioXaml
                 Dim toolTip As New ToolTip With {
                     .Content = recursos.GetString("UserUnmute")
                 }
+
                 ToolTipService.SetToolTip(boton, toolTip)
 
                 Dim iconoFinal As New FontAwesome.UWP.FontAwesome With {
                     .Icon = FontAwesomeIcon.VolumeUp,
                     .Foreground = New SolidColorBrush(Colors.White)
                 }
+
                 boton.Content = iconoFinal
+
+                cosas.MegaUsuario.UsuariosMuteados.Add(cosas.Usuario.ID)
             End If
         End If
 

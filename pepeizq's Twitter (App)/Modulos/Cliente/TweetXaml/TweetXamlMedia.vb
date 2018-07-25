@@ -294,11 +294,10 @@ Namespace pepeizq.Twitter.Xaml
                 color = App.Current.Resources("ColorSecundario")
             End If
 
-            Dim botonCerrar As Button = pagina.FindName("botonCerrarImagen")
-            botonCerrar.Background = New SolidColorBrush(color)
-
-            Dim tbImagenAmpliada As TextBox = pagina.FindName("tbImagenAmpliada")
-            tbImagenAmpliada.Text = datos.Enlace
+            Dim nvPrincipal As NavigationView = pagina.FindName("nvPrincipal")
+            nvPrincipal.IsBackButtonVisible = NavigationViewBackButtonVisible.Visible
+            nvPrincipal.IsBackEnabled = True
+            nvPrincipal.IsPaneOpen = False
 
             Dim botonDescargar As Button = pagina.FindName("botonDescargarImagen")
             botonDescargar.Background = New SolidColorBrush(color)

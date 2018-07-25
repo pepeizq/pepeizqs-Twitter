@@ -23,7 +23,7 @@
         </Grid>
 
         <NavigationView x:Name="nvPrincipal" Grid.Row="1" Loaded="Nv_Loaded" ItemInvoked="Nv_ItemInvoked"
-                        OpenPaneLength="200" AlwaysShowHeader="False" IsSettingsVisible="False">
+                        OpenPaneLength="200" IsSettingsVisible="False" AlwaysShowHeader="False" IsBackButtonVisible="Collapsed">
             <NavigationView.PaneFooter>
                 <StackPanel Orientation="Vertical">
                     <NavigationViewItem x:Name="nvItemUsuarios" Tapped="Nv_ItemFlyout" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Visibility="Collapsed">
@@ -759,19 +759,22 @@
                 </Grid>
 
                 <Grid x:Name="gridImagenAmpliada" Visibility="Collapsed">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="10">
+                        <Border x:Name="bordeImagenAmpliada" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
+                            <controls:ImageEx x:Name="imagenAmpliada" Stretch="None" IsCacheEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ScrollViewer>
 
-                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10,10,10,0">
-                        <Button x:Name="botonCerrarImagen" Padding="10" Width="40" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                    <StackPanel Orientation="Horizontal" Margin="20,10" HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <Button x:Name="botonCopiarImagen" Margin="0,0,10,0" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                            <ToolTipService.ToolTip>
+                                <TextBlock x:Uid="CopyUrl"/>
+                            </ToolTipService.ToolTip>
+
                             <Button.Content>
-                                <fa:FontAwesome Icon="ArrowCircleLeft" Foreground="White"/>
+                                <fa:FontAwesome Icon="Copy" Foreground="White"/>
                             </Button.Content>
                         </Button>
-
-                        <AppBarSeparator Foreground="White"/>
 
                         <Button x:Name="botonDescargarImagen" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                             <ToolTipService.ToolTip>
@@ -784,25 +787,7 @@
                         </Button>
 
                         <ProgressRing x:Name="prDescargaImagen" Margin="10,0,0,0" IsActive="True" Visibility="Collapsed" VerticalAlignment="Center" Width="30" Height="30"/>
-
-                        <Button x:Name="botonCopiarImagen" Margin="10,0,0,0" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                            <ToolTipService.ToolTip>
-                                <TextBlock x:Uid="CopyUrl"/>
-                            </ToolTipService.ToolTip>
-                            
-                            <Button.Content>
-                                <fa:FontAwesome Icon="Copy" Foreground="White"/>
-                            </Button.Content>
-                        </Button>
-
-                        <TextBox x:Name="tbImagenAmpliada" Margin="10,0,0,0" IsReadOnly="True" BorderBrush="White" BorderThickness="1" Padding="10"/>
                     </StackPanel>
-                    
-                    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="10">
-                        <Border x:Name="bordeImagenAmpliada" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
-                            <controls:ImageEx x:Name="imagenAmpliada" Stretch="None" IsCacheEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ScrollViewer>
                 </Grid>
 
                 <Grid x:Name="gridVideoAmpliado" Visibility="Collapsed">

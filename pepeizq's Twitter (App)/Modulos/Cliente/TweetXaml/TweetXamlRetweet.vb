@@ -25,7 +25,8 @@ Namespace pepeizq.Twitter.Xaml
                 .Text = tweet.Usuario.Nombre + " " + recursos.GetString("Retweeted"),
                 .Margin = New Thickness(5, 0, 0, 0),
                 .FontSize = 13,
-                .VerticalAlignment = VerticalAlignment.Center
+                .VerticalAlignment = VerticalAlignment.Center,
+                .Foreground = New SolidColorBrush(Colors.Black)
             }
 
             spRetweet.Children.Add(usuarioRetweet)

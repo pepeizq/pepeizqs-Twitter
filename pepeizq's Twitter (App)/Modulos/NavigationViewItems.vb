@@ -23,7 +23,8 @@ Module NavigationViewItems
         }
 
         Dim tbToolTip As TextBlock = New TextBlock With {
-            .Text = titulo
+            .Text = titulo,
+            .Foreground = New SolidColorBrush(Colors.Black)
         }
 
         ToolTipService.SetToolTip(item, tbToolTip)
