@@ -24,9 +24,6 @@
         <SolidColorBrush x:Key="NavigationViewItemForeground" Color="White"/>
         <SolidColorBrush x:Key="NavigationViewItemForegroundPointerOver" Color="White"/>
         <SolidColorBrush x:Key="NavigationViewItemForegroundPressed" Color="White"/>
-        
-        <!--<SolidColorBrush x:Key="SystemControlForegroundBaseHighBrush" Color="White"/>
-        <SolidColorBrush x:Key="SystemControlForegroundAltHighBrush" Color="White"/>-->
 
         <Color x:Key="ColorPrimario">#0084b4</Color>
         <Color x:Key="ColorSecundario">#329cc3</Color>
