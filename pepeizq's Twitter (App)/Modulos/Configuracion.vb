@@ -97,25 +97,13 @@ Module Configuracion
 
     Public Sub CargarConsumerKey(clave As String)
 
-        Dim frame As Frame = Window.Current.Content
-        Dim pagina As Page = frame.Content
-
         ApplicationData.Current.LocalSettings.Values("consumerkey") = clave
-
-        Dim tbConfigConsumerKey As TextBox = pagina.FindName("tbConfigConsumerKey")
-        tbConfigConsumerKey.Text = clave
 
     End Sub
 
     Public Sub CargarConsumerSecret(clave As String)
 
-        Dim frame As Frame = Window.Current.Content
-        Dim pagina As Page = frame.Content
-
         ApplicationData.Current.LocalSettings.Values("consumersecret") = clave
-
-        Dim tbConfigConsumerSecret As TextBox = pagina.FindName("tbConfigConsumerSecret")
-        tbConfigConsumerSecret.Text = clave
 
     End Sub
 

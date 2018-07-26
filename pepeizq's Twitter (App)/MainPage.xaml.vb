@@ -57,14 +57,23 @@ Public NotInheritable Class MainPage
         nvItemCuenta.Content = sp
 
         nvPrincipal.MenuItems.Add(nvItemCuenta)
+
+        Dim separadorVolver As New NavigationViewItemSeparator With {
+            .Name = "nvSeparadorVolver",
+            .Visibility = Visibility.Collapsed
+        }
+
+        nvPrincipal.MenuItems.Add(separadorVolver)
+        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Back"), FontAwesomeIcon.ArrowLeft, 1, Visibility.Collapsed))
+
         nvPrincipal.MenuItems.Add(New NavigationViewItemSeparator)
-        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Home"), FontAwesomeIcon.Home, 1))
-        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Mentions"), FontAwesomeIcon.Bell, 2))
-        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("WriteTweet"), FontAwesomeIcon.Pencil, 3))
-        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("SearchUsers"), FontAwesomeIcon.Users, 4))
-        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("SearchTweets"), FontAwesomeIcon.Hashtag, 5))
+        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Home"), FontAwesomeIcon.Home, 2, Visibility.Visible))
+        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Mentions"), FontAwesomeIcon.Bell, 3, Visibility.Visible))
+        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("WriteTweet"), FontAwesomeIcon.Pencil, 4, Visibility.Visible))
+        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("SearchUsers"), FontAwesomeIcon.Users, 5, Visibility.Visible))
+        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("SearchTweets"), FontAwesomeIcon.Hashtag, 6, Visibility.Visible))
         nvPrincipal.MenuItems.Add(New NavigationViewItemSeparator)
-        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Config"), FontAwesomeIcon.Cog, 6))
+        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Config"), FontAwesomeIcon.Cog, 7, Visibility.Visible))
 
     End Sub
 
@@ -95,10 +104,39 @@ Public NotInheritable Class MainPage
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
+        Dim nvPrincipal As NavigationView = pagina.FindName("nvPrincipal")
+
+        For Each item2 In nvPrincipal.MenuItems
+            If TypeOf item2 Is NavigationViewItem Then
+                Dim nv As NavigationViewItem = item2
+
+                If TypeOf nv.Content Is TextBlock Then
+                    Dim tb As TextBlock = nv.Content
+
+                    If tb.Text = recursos.GetString("Back") Then
+                        nv.Visibility = Visibility.Collapsed
+                    End If
+                End If
+            End If
+        Next
+
+        Dim separador As NavigationViewItemSeparator = pagina.FindName("nvSeparadorVolver")
+        separador.Visibility = Visibility.Collapsed
+
         If TypeOf args.InvokedItem Is TextBlock Then
             Dim item As TextBlock = args.InvokedItem
 
-            If item.Text = recursos.GetString("Home") Then
+            If item.Text = recursos.GetString("Back") Then
+
+                App.Current.Resources("ButtonBackgroundPointerOver") = App.Current.Resources("ColorPrimario")
+
+                gridImagenAmpliada.Visibility = Visibility.Collapsed
+                gridVideoAmpliado.Visibility = Visibility.Collapsed
+                gridTweetAmpliado.Visibility = Visibility.Collapsed
+                gridUsuarioAmpliado.Visibility = Visibility.Collapsed
+                gridOEmbedAmpliado.Visibility = Visibility.Collapsed
+
+            ElseIf item.Text = recursos.GetString("Home") Then
 
                 If Not usuario Is Nothing Then
                     Dim grid As Grid = pagina.FindName("gridTweets" + usuario.ID)
@@ -326,12 +364,10 @@ Public NotInheritable Class MainPage
         botonConfigCuentas.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
         botonConfigApp.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
         botonConfigNotificaciones.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
-        botonConfigApi.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
 
         spConfigCuentas.Visibility = Visibility.Collapsed
         spConfigApp.Visibility = Visibility.Collapsed
         spConfigNotificaciones.Visibility = Visibility.Collapsed
-        spConfigApi.Visibility = Visibility.Collapsed
 
         boton.Background = New SolidColorBrush(App.Current.Resources("ColorCuarto"))
         sp.Visibility = Visibility.Visible
@@ -353,12 +389,6 @@ Public NotInheritable Class MainPage
     Private Sub BotonConfigNotificaciones_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigNotificaciones.Click
 
         SpConfigVisibilidad(botonConfigNotificaciones, spConfigNotificaciones)
-
-    End Sub
-
-    Private Sub BotonConfigApi_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigApi.Click
-
-        SpConfigVisibilidad(botonConfigApi, spConfigApi)
 
     End Sub
 
@@ -403,7 +433,18 @@ Public NotInheritable Class MainPage
             For Each item In nvPrincipal.MenuItems
                 If TypeOf item Is NavigationViewItem Then
                     Dim nvItem As NavigationViewItem = item
-                    nvItem.Visibility = Visibility.Visible
+
+                    If TypeOf nvItem.Content Is TextBlock Then
+                        Dim tb As TextBlock = nvItem.Content
+
+                        If tb.Text = recursos.GetString("Back") Then
+                            nvItem.Visibility = Visibility.Collapsed
+                        Else
+                            nvItem.Visibility = Visibility.Visible
+                        End If
+                    Else
+                        nvItem.Visibility = Visibility.Visible
+                    End If
                 End If
             Next
         Else
@@ -612,36 +653,6 @@ Public NotInheritable Class MainPage
 
     End Sub
 
-    Private Sub BotonConfigApiTutorial_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigApiTutorial.Click
-
-        wvConfigApi.Navigate(New Uri("https://pepeizqapps.com/how-create-your-own-app-in-twitter/"))
-        wvConfigApi.MinHeight = 600
-
-    End Sub
-
-    Private Sub BotonConfigApiReset_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigApiReset.Click
-
-        tbConfigConsumerKey.Text = "poGVvY5De5zBqQ4ceqp7jw7cj"
-        tbConfigConsumerSecret.Text = "f8PCcuwFZxYi0r5iG6UaysgxD0NoaCT2RgYG8I41mvjghy58rc"
-
-    End Sub
-
-    Private Sub TbConfigConsumerKey_TextChanged(sender As Object, e As TextChangedEventArgs) Handles tbConfigConsumerKey.TextChanged
-
-        If tbConfigConsumerKey.Text.Trim.Length > 0 Then
-            ApplicationData.Current.LocalSettings.Values("consumerkey") = tbConfigConsumerKey.Text.Trim
-        End If
-
-    End Sub
-
-    Private Sub TbConfigConsumerSecret_TextChanged(sender As Object, e As TextChangedEventArgs) Handles tbConfigConsumerSecret.TextChanged
-
-        If tbConfigConsumerSecret.Text.Trim.Length > 0 Then
-            ApplicationData.Current.LocalSettings.Values("consumersecret") = tbConfigConsumerSecret.Text.Trim
-        End If
-
-    End Sub
-
     'MEDIA-----------------------------------------------------------------------------
 
     Private Async Sub BotonDescargarImagen_Click(sender As Object, e As RoutedEventArgs) Handles botonDescargarImagen.Click
@@ -680,31 +691,13 @@ Public NotInheritable Class MainPage
 
     End Sub
 
-    Private Sub BotonCerrarVideo_Click(sender As Object, e As RoutedEventArgs) Handles botonCerrarVideo.Click
-
-        botonCerrarVideo.Tag = Nothing
-        videoAmpliado.MediaPlayer.Pause()
-
-        gridVideoAmpliado.Visibility = Visibility.Collapsed
-
-        Dim imagenOrigen As ImageEx = videoAmpliado.Tag
-
-        ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("videoReducido", videoAmpliado)
-
-        Dim animacion As ConnectedAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("videoReducido")
-
-        If Not animacion Is Nothing Then
-            animacion.TryStart(imagenOrigen)
-        End If
-
-    End Sub
-
     Private Async Sub BotonDescargarVideo_Click(sender As Object, e As RoutedEventArgs) Handles botonDescargarVideo.Click
 
         botonDescargarVideo.IsEnabled = False
         prDescargaVideo.Visibility = Visibility.Visible
 
-        Dim enlace As New Uri(tbVideoAmpliado.Text)
+        Dim fuente As MediaSource = videoAmpliado.Source
+        Dim enlace As New Uri(fuente.Uri.ToString)
 
         Dim picker As New FolderPicker()
 
@@ -728,24 +721,11 @@ Public NotInheritable Class MainPage
 
     Private Sub BotonCopiarVideo_Click(sender As Object, e As RoutedEventArgs) Handles botonCopiarVideo.Click
 
+        Dim fuente As MediaSource = videoAmpliado.Source
         Dim paquete As New DataPackage
-        paquete.SetText(tbVideoAmpliado.Text)
+        paquete.SetText(fuente.Uri.ToString)
 
         Clipboard.SetContent(paquete)
-
-    End Sub
-
-    Private Sub BotonCerrarTweet_Click(sender As Object, e As RoutedEventArgs) Handles botonCerrarTweet.Click
-
-        App.Current.Resources("ButtonBackgroundPointerOver") = App.Current.Resources("ColorPrimario")
-
-        gridTweetAmpliado.Visibility = Visibility.Collapsed
-
-    End Sub
-
-    Private Sub BotonCerrarOEmbed_Click(sender As Object, e As RoutedEventArgs) Handles botonCerrarOEmbed.Click
-
-        gridOEmbedAmpliado.Visibility = Visibility.Collapsed
 
     End Sub
 
@@ -785,28 +765,6 @@ Public NotInheritable Class MainPage
 
         svTweetsUsuario.ChangeView(Nothing, 0, Nothing)
         botonSubirArribaUsuario.Visibility = Visibility.Collapsed
-
-    End Sub
-
-    Private Sub NvPrincipal_BackRequested(sender As NavigationView, args As NavigationViewBackRequestedEventArgs) Handles nvPrincipal.BackRequested
-
-        If gridImagenAmpliada.Visibility = Visibility.Visible Then
-            'Dim imagenOrigen As ImageEx = imagenAmpliada.Tag
-
-        'ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("imagenReducida", imagenAmpliada)
-
-        'Dim animacion As ConnectedAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("imagenReducida")
-
-        'If Not animacion Is Nothing Then
-        '    animacion.TryStart(imagenOrigen)
-        'End If
-        End If
-
-        gridImagenAmpliada.Visibility = Visibility.Collapsed
-
-        nvPrincipal.IsBackButtonVisible = NavigationViewBackButtonVisible.Collapsed
-        nvPrincipal.IsBackEnabled = False
-        nvPrincipal.IsPaneOpen = False
 
     End Sub
 

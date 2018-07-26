@@ -151,10 +151,10 @@
     <value>Définir un son</value>
   </data>
   <data name="tbConfigNotificationsTime.Text" xml:space="preserve">
-    <value>Définir un délai d&apos;expiration</value>
+    <value>Définir un délai d'expiration</value>
   </data>
   <data name="tbConfigNotificationsImage.Text" xml:space="preserve">
-    <value>Ajouter l&apos;en-tête de l&apos;image (si le tweet l&apos;a)</value>
+    <value>Ajouter l'en-tête de l'image (si le tweet l'a)</value>
   </data>
   <data name="SendTweet" xml:space="preserve">
     <value>Envoyer Tweet</value>
@@ -190,10 +190,10 @@
     <value>Retweet</value>
   </data>
   <data name="Favorite" xml:space="preserve">
-    <value>J&apos;aime</value>
+    <value>J'aime</value>
   </data>
   <data name="MoreOptions" xml:space="preserve">
-    <value>Plus d&apos;options</value>
+    <value>Plus d'options</value>
   </data>
   <data name="CopyUrlTweet" xml:space="preserve">
     <value>Copier le lien du Tweet</value>
@@ -211,7 +211,7 @@
     <value>Abonné</value>
   </data>
   <data name="tbNumFavoritesUser.Text" xml:space="preserve">
-    <value>J&apos;aime</value>
+    <value>J'aime</value>
   </data>
   <data name="OEmbedTweet" xml:space="preserve">
     <value>Intégrer ce Tweet</value>
@@ -235,7 +235,7 @@
     <value>Partager le Tweet</value>
   </data>
   <data name="ShareUser" xml:space="preserve">
-    <value>Partager l&apos;utilisateur</value>
+    <value>Partager l'utilisateur</value>
   </data>
   <data name="MoreThings_Contact" xml:space="preserve">
     <value>Contact</value>
@@ -244,7 +244,7 @@
     <value>Aider à traduire</value>
   </data>
   <data name="MoreThings_MoreApps" xml:space="preserve">
-    <value>Plus d&apos;applications</value>
+    <value>Plus d'applications</value>
   </data>
   <data name="MoreThings_ReportBug" xml:space="preserve">
     <value>Signaler un bug</value>
@@ -253,7 +253,7 @@
     <value>Code source</value>
   </data>
   <data name="MoreThings_VoteApp" xml:space="preserve">
-    <value>Votez pour l&apos;application</value>
+    <value>Votez pour l'application</value>
   </data>
   <data name="MoreThings_Back" xml:space="preserve">
     <value>Retour</value>
@@ -262,13 +262,13 @@
     <value>Application</value>
   </data>
   <data name="tbConfigAppTweetCard.Text" xml:space="preserve">
-    <value>Charger des informations à partir de la &quot;Carte de Tweet&quot; lorsque vous développez un tweet (si le tweet l&apos;a)</value>
+    <value>Charger des informations à partir de la "Carte de Tweet" lorsque vous développez un tweet (si le tweet l'a)</value>
   </data>
   <data name="tbConfigAppLoadMedia.Text" xml:space="preserve">
     <value>Chargement et affichage des fichiers multimédia de Tweets (images, gifs et vidéos)</value>
   </data>
   <data name="tbConfigAppAutoStart.Text" xml:space="preserve">
-    <value>Démarrer automatiquement l&apos;application au démarrage de Windows</value>
+    <value>Démarrer automatiquement l'application au démarrage de Windows</value>
   </data>
   <data name="StoreDescription" xml:space="preserve">
     <value>Client Twitter non officiel avec prise en charge de plusieurs comptes</value>
@@ -277,7 +277,7 @@
     <value>Twitter;Tweet;Retweet;Hashtag</value>
   </data>
   <data name="tbConfigNotificationsUser.Text" xml:space="preserve">
-    <value>Inclure l&apos;utilisateur à qui le tweet est adressé</value>
+    <value>Inclure l'utilisateur à qui le tweet est adressé</value>
   </data>
   <data name="ButtonDeleteAccount" xml:space="preserve">
     <value>Supprimer le compte</value>
@@ -286,22 +286,22 @@
     <value>Supprimez la pub</value>
   </data>
   <data name="UserBlock" xml:space="preserve">
-    <value>Bloquer l&apos;utilisateur</value>
+    <value>Bloquer l'utilisateur</value>
   </data>
   <data name="UserReport" xml:space="preserve">
-    <value>Dénoncer l&apos;utilisateur</value>
+    <value>Dénoncer l'utilisateur</value>
   </data>
   <data name="UserMute" xml:space="preserve">
-    <value>Ignorer l&apos;utilisateur</value>
+    <value>Ignorer l'utilisateur</value>
   </data>
   <data name="ButtonAddTile" xml:space="preserve">
     <value>Ajouter une tuile</value>
   </data>
   <data name="UserUnblock" xml:space="preserve">
-    <value>Débloquer l&apos;utilisateur</value>
+    <value>Débloquer l'utilisateur</value>
   </data>
   <data name="UserUnmute" xml:space="preserve">
-    <value>Ne plus ignorer l&apos;utilisateur</value>
+    <value>Ne plus ignorer l'utilisateur</value>
   </data>
   <data name="CopyUrl.Text" xml:space="preserve">
     <value>Copier le lien</value>
@@ -316,7 +316,7 @@
     <value>Secondes</value>
   </data>
   <data name="tbConfigAppLoadMediaPreview.Text" xml:space="preserve">
-    <value>Dimensions maximales de l&apos;aperçu</value>
+    <value>Dimensions maximales de l'aperçu</value>
   </data>
   <data name="Width" xml:space="preserve">
     <value>Largeur</value>
@@ -334,7 +334,7 @@
     <value>Notifications de groupe</value>
   </data>
   <data name="tbConfigNotificationsGroupTooltip.Text" xml:space="preserve">
-    <value>En activant cette option, vous recevrez une seule notification chaque fois que l&apos;application trouve de nouveaux tweets, au lieu d&apos;une notification pour chaque tweet.</value>
+    <value>En activant cette option, vous recevrez une seule notification chaque fois que l'application trouve de nouveaux tweets, au lieu d'une notification pour chaque tweet.</value>
   </data>
   <data name="tbConfigAppAutoStartTooltip.Text" xml:space="preserve">
     <value>Vous pouvez désactiver cette option depuis le Gestionnaire des tâches -&gt; Démarrage</value>
@@ -344,18 +344,6 @@
   </data>
   <data name="tbConfigAppTweetRetweets.Text" xml:space="preserve">
     <value>Charger la liste des utilisateurs qui ont retweeté lorsque vous développez un tweet</value>
-  </data>
-  <data name="tbConfigApi.Text" xml:space="preserve">
-    <value>Clés de l&apos;API</value>
-  </data>
-  <data name="tbConfigApiWarning.Text" xml:space="preserve">
-    <value>Si vous voulez que l&apos;application fonctionne comme si elle était votre propre application Twitter, vous pouvez changer les clés, mais vous devez configurer la nouvelle application comme indiqué dans le tutoriel</value>
-  </data>
-  <data name="tbConfigApiTutorial.Text" xml:space="preserve">
-    <value>Ouvrir le didacticiel</value>
-  </data>
-  <data name="tbConfigApiReset.Text" xml:space="preserve">
-    <value>Réinitialiser les clés</value>
   </data>
   <data name="Notifications" xml:space="preserve">
     <value>Notifications</value>
@@ -373,7 +361,7 @@
     <value>Abonnés</value>
   </data>
   <data name="tbConfigAppTooltipsHelp.Text" xml:space="preserve">
-    <value>Afficher les bulles d&apos;aide</value>
+    <value>Afficher les bulles d'aide</value>
   </data>
   <data name="ClickExpandTweet" xml:space="preserve">
     <value>Cliquer pour développer le Tweet</value>
@@ -391,16 +379,16 @@
     <value>Chercher des Tweets</value>
   </data>
   <data name="SearchUsersMessage.Text" xml:space="preserve">
-    <value>Entrez l&apos;utilisateur que vous souhaitez rechercher dans la zone de texte</value>
+    <value>Entrez l'utilisateur que vous souhaitez rechercher dans la zone de texte</value>
   </data>
   <data name="SearchTweetsMessage.Text" xml:space="preserve">
     <value>Entrez le hashtag avec lequel vous souhaitez rechercher des tweets dans la zone de texte</value>
   </data>
   <data name="tbSearchTweetsTooltip.Text" xml:space="preserve">
-    <value>En raison de restrictions sur Twitter, l&apos;application ne peut afficher que les tweets des 7 derniers jours avec le hashtag que vous recherchez.</value>
+    <value>En raison de restrictions sur Twitter, l'application ne peut afficher que les tweets des 7 derniers jours avec le hashtag que vous recherchez.</value>
   </data>
   <data name="tbSearchUsersTooltip.Text" xml:space="preserve">
-    <value>En raison de restrictions sur Twitter, l&apos;application ne peut afficher que les 20 premiers résultats de votre recherche</value>
+    <value>En raison de restrictions sur Twitter, l'application ne peut afficher que les 20 premiers résultats de votre recherche</value>
   </data>
   <data name="buttonRemoveAds2.Text" xml:space="preserve">
     <value>Supprimer la pub</value>

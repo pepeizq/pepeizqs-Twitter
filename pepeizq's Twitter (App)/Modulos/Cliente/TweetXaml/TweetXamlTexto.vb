@@ -203,13 +203,13 @@ Namespace pepeizq.Twitter.Xaml
                                         .Foreground = New SolidColorBrush(color)
                                     }
 
-                                    Dim spUsuario As New StackPanel With {
-                                        .Tag = New Objetos.UsuarioAmpliado(megaUsuario, Nothing, entidad.Mostrar)
-                                    }
-                                    AddHandler spUsuario.Loaded, AddressOf SpUsuarioLoaded
+                                    'Dim spUsuario As New StackPanel With {
+                                    '    .Tag = New Objetos.UsuarioAmpliado(megaUsuario, Nothing, entidad.Mostrar)
+                                    '}
+                                    'AddHandler spUsuario.Loaded, AddressOf SpUsuarioLoaded
 
-                                    ToolTipService.SetToolTip(enlaceUsuario, spUsuario)
-                                    ToolTipService.SetPlacement(enlaceUsuario, PlacementMode.Bottom)
+                                    'ToolTipService.SetToolTip(enlaceUsuario, spUsuario)
+                                    'ToolTipService.SetPlacement(enlaceUsuario, PlacementMode.Bottom)
 
                                     AddHandler enlaceUsuario.Click, AddressOf EnlaceUsuarioClick
 

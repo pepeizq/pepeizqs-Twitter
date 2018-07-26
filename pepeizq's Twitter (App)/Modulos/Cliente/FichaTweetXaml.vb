@@ -14,6 +14,8 @@ Namespace pepeizq.Twitter.Xaml
 
         Public Async Sub Generar(cosas As Objetos.TweetAmpliado, objetoAnimar As Object)
 
+            Dim recursos As New Resources.ResourceLoader()
+
             Dim tweet As Tweet = Nothing
 
             tweet = Await TwitterPeticiones.CogerTweet(tweet, cosas.MegaUsuario, cosas.Tweet.ID)
@@ -76,8 +78,24 @@ Namespace pepeizq.Twitter.Xaml
 
                 '-----------------------------
 
-                Dim botonCerrar As Button = pagina.FindName("botonCerrarTweet")
-                botonCerrar.Background = New SolidColorBrush(color)
+                Dim nvPrincipal As NavigationView = pagina.FindName("nvPrincipal")
+
+                For Each item In nvPrincipal.MenuItems
+                    If TypeOf item Is NavigationViewItem Then
+                        Dim nv As NavigationViewItem = item
+
+                        If TypeOf nv.Content Is TextBlock Then
+                            Dim tb As TextBlock = nv.Content
+
+                            If tb.Text = recursos.GetString("Back") Then
+                                nv.Visibility = Visibility.Visible
+
+                                Dim separador As NavigationViewItemSeparator = pagina.FindName("nvSeparadorVolver")
+                                separador.Visibility = Visibility.Visible
+                            End If
+                        End If
+                    End If
+                Next
 
                 Dim spIzquierda As StackPanel = pagina.FindName("spTweetIzquierda")
                 spIzquierda.Children.Clear()

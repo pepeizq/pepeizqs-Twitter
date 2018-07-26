@@ -25,7 +25,8 @@ NotInheritable Class App
         Dim resultado As ExtendedExecutionResult = Await nuevaSesion.RequestExtensionAsync
 
         If resultado = ExtendedExecutionResult.Allowed Then
-            Dim usuarioRespuesta As Boolean = Await Background.BackgroundExecutionManager.RequestAccessKindAsync(resultado, "test")
+            Dim recursos As New Resources.ResourceLoader()
+            Dim usuarioRespuesta As Boolean = Await Background.BackgroundExecutionManager.RequestAccessKindAsync(resultado, recursos.GetString("MessageBackground"))
 
             If usuarioRespuesta = True Then
                 If e.Kind = ActivationKind.Launch Then
@@ -41,6 +42,8 @@ NotInheritable Class App
 
                     Window.Current.Activate()
                 End If
+            Else
+                Application.Current.Exit()
             End If
         End If
 

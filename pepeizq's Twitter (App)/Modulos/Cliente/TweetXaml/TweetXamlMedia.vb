@@ -276,6 +276,8 @@ Namespace pepeizq.Twitter.Xaml
 
         Public Sub UsuarioClickeaImagen(sender As Object, e As PointerRoutedEventArgs)
 
+            Dim recursos As New Resources.ResourceLoader()
+
             Dim frame As Frame = Window.Current.Content
             Dim pagina As Page = frame.Content
 
@@ -295,9 +297,23 @@ Namespace pepeizq.Twitter.Xaml
             End If
 
             Dim nvPrincipal As NavigationView = pagina.FindName("nvPrincipal")
-            nvPrincipal.IsBackButtonVisible = NavigationViewBackButtonVisible.Visible
-            nvPrincipal.IsBackEnabled = True
-            nvPrincipal.IsPaneOpen = False
+
+            For Each item In nvPrincipal.MenuItems
+                If TypeOf item Is NavigationViewItem Then
+                    Dim nv As NavigationViewItem = item
+
+                    If TypeOf nv.Content Is TextBlock Then
+                        Dim tb As TextBlock = nv.Content
+
+                        If tb.Text = recursos.GetString("Back") Then
+                            nv.Visibility = Visibility.Visible
+
+                            Dim separador As NavigationViewItemSeparator = pagina.FindName("nvSeparadorVolver")
+                            separador.Visibility = Visibility.Visible
+                        End If
+                    End If
+                End If
+            Next
 
             Dim botonDescargar As Button = pagina.FindName("botonDescargarImagen")
             botonDescargar.Background = New SolidColorBrush(color)
@@ -333,6 +349,8 @@ Namespace pepeizq.Twitter.Xaml
 
         Public Sub UsuarioClickeaVideo(sender As Object, e As PointerRoutedEventArgs)
 
+            Dim recursos As New Resources.ResourceLoader()
+
             Dim frame As Frame = Window.Current.Content
             Dim pagina As Page = frame.Content
 
@@ -351,11 +369,24 @@ Namespace pepeizq.Twitter.Xaml
                 color = App.Current.Resources("ColorSecundario")
             End If
 
-            Dim botonCerrar As Button = pagina.FindName("botonCerrarVideo")
-            botonCerrar.Background = New SolidColorBrush(color)
+            Dim nvPrincipal As NavigationView = pagina.FindName("nvPrincipal")
 
-            Dim tbVideoAmpliado As TextBox = pagina.FindName("tbVideoAmpliado")
-            tbVideoAmpliado.Text = datos.Enlace
+            For Each item In nvPrincipal.MenuItems
+                If TypeOf item Is NavigationViewItem Then
+                    Dim nv As NavigationViewItem = item
+
+                    If TypeOf nv.Content Is TextBlock Then
+                        Dim tb As TextBlock = nv.Content
+
+                        If tb.Text = recursos.GetString("Back") Then
+                            nv.Visibility = Visibility.Visible
+
+                            Dim separador As NavigationViewItemSeparator = pagina.FindName("nvSeparadorVolver")
+                            separador.Visibility = Visibility.Visible
+                        End If
+                    End If
+                End If
+            Next
 
             Dim botonDescargar As Button = pagina.FindName("botonDescargarVideo")
             botonDescargar.Background = New SolidColorBrush(color)

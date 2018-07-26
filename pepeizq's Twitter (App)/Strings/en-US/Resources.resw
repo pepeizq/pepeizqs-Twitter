@@ -294,9 +294,6 @@
   <data name="Notifications" xml:space="preserve">
     <value>Notifications</value>
   </data>
-  <data name="tbConfigApi.Text" xml:space="preserve">
-    <value>API Keys</value>
-  </data>
   <data name="ButtonRemoveAds" xml:space="preserve">
     <value>Remove Ads</value>
   </data>
@@ -351,15 +348,6 @@
   <data name="tbConfigAppTweetRetweets.Text" xml:space="preserve">
     <value>Load list of users who have retweeted when you expand a tweet</value>
   </data>
-  <data name="tbConfigApiWarning.Text" xml:space="preserve">
-    <value>If you want the app to operate as if it were your own Twitter app you can change the keys, but you must configure the new app as specified in the tutorial</value>
-  </data>
-  <data name="tbConfigApiTutorial.Text" xml:space="preserve">
-    <value>Open Tutorial</value>
-  </data>
-  <data name="tbConfigApiReset.Text" xml:space="preserve">
-    <value>Reset Keys</value>
-  </data>
   <data name="Home2.Text" xml:space="preserve">
     <value>Home</value>
   </data>
@@ -404,5 +392,11 @@
   </data>
   <data name="buttonRemoveAds2.Text" xml:space="preserve">
     <value>Remove Ads</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="MessageBackground" xml:space="preserve">
+    <value>In order to receive the tweets in real time you must allow the app to run in the background</value>
   </data>
 </root>

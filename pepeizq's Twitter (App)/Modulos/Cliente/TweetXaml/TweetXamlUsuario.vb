@@ -81,7 +81,7 @@ Namespace pepeizq.Twitter.Xaml
             End If
 
             If Not respuestaUsuarioScreenNombre = Nothing Then
-                cosas = New Objetos.UsuarioAmpliado(megaUsuario, Nothing, Nothing)
+                cosas = New Objetos.UsuarioAmpliado(megaUsuario, Nothing, respuestaUsuarioScreenNombre)
 
                 Dim recursos As New Resources.ResourceLoader
 

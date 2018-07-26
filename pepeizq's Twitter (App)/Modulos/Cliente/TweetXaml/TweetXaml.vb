@@ -9,7 +9,7 @@ Imports Windows.UI.Core
 Namespace pepeizq.Twitter.Xaml
     Module TweetXaml
 
-        Public Function Añadir(tweet As Tweet, megaUsuario As MegaUsuario, color As Windows.UI.Color)
+        Public Function Añadir(tweet As Tweet, megaUsuario As MegaUsuario, color As Color)
 
             Dim grid As New Grid
 
@@ -64,6 +64,7 @@ Namespace pepeizq.Twitter.Xaml
                 '-----------------------------
 
                 Dim gridInferior As New Grid
+                gridInferior.SetValue(Grid.RowProperty, 1)
 
                 Dim col1 As New ColumnDefinition
                 Dim col2 As New ColumnDefinition
@@ -76,7 +77,6 @@ Namespace pepeizq.Twitter.Xaml
                 gridInferior.ColumnDefinitions.Add(col1)
                 gridInferior.ColumnDefinitions.Add(col2)
                 gridInferior.ColumnDefinitions.Add(col3)
-                gridInferior.SetValue(Grid.RowProperty, 1)
 
                 '-----------------------------
 

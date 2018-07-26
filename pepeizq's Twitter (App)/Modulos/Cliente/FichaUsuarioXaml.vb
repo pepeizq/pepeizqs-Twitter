@@ -1,11 +1,9 @@
 ﻿Imports FontAwesome.UWP
-Imports Microsoft.Advertising.WinRT.UI
 Imports Microsoft.Toolkit.Uwp.Helpers
 Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports pepeizq.Twitter
 Imports pepeizq.Twitter.Tweet
 Imports Windows.ApplicationModel.DataTransfer
-Imports Windows.ApplicationModel.Store
 Imports Windows.Storage
 Imports Windows.System
 Imports Windows.UI
@@ -73,6 +71,25 @@ Module FichaUsuarioXaml
         End If
 
         gridUsuario.Visibility = Visibility.Visible
+
+        Dim nvPrincipal As NavigationView = pagina.FindName("nvPrincipal")
+
+        For Each item In nvPrincipal.MenuItems
+            If TypeOf item Is NavigationViewItem Then
+                Dim nv As NavigationViewItem = item
+
+                If TypeOf nv.Content Is TextBlock Then
+                    Dim tb As TextBlock = nv.Content
+
+                    If tb.Text = recursos.GetString("Back") Then
+                        nv.Visibility = Visibility.Visible
+
+                        Dim separador As NavigationViewItemSeparator = pagina.FindName("nvSeparadorVolver")
+                        separador.Visibility = Visibility.Visible
+                    End If
+                End If
+            End If
+        Next
 
         Dim lvTweets As ListView = pagina.FindName("lvTweetsUsuario")
         lvTweets.IsItemClickEnabled = True

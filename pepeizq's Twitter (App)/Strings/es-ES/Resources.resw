@@ -294,9 +294,6 @@
   <data name="Notifications" xml:space="preserve">
     <value>Notificaciones</value>
   </data>
-  <data name="tbConfigApi.Text" xml:space="preserve">
-    <value>Claves de API</value>
-  </data>
   <data name="ButtonRemoveAds" xml:space="preserve">
     <value>Quitar Anuncios</value>
   </data>
@@ -351,15 +348,6 @@
   <data name="tbConfigAppTweetRetweets.Text" xml:space="preserve">
     <value>Cargar lista de usuarios que han hecho retweet cuando amplias un tweet</value>
   </data>
-  <data name="tbConfigApiWarning.Text" xml:space="preserve">
-    <value>Si deseas que la app opere como si fuera tu propia app de Twitter puedes cambiar las claves, pero debes configurar la nueva app como especifico en el tutorial</value>
-  </data>
-  <data name="tbConfigApiTutorial.Text" xml:space="preserve">
-    <value>Abrir Tutorial</value>
-  </data>
-  <data name="tbConfigApiReset.Text" xml:space="preserve">
-    <value>Resetear Claves</value>
-  </data>
   <data name="Home2.Text" xml:space="preserve">
     <value>Inicio</value>
   </data>
@@ -404,5 +392,11 @@
   </data>
   <data name="buttonRemoveAds2.Text" xml:space="preserve">
     <value>Quitar Anuncios</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Volver</value>
+  </data>
+  <data name="MessageBackground" xml:space="preserve">
+    <value>Para poder recibir los tweets en tiempo real debes permitir ejecutar la app en segundo plano</value>
   </data>
 </root>

@@ -4,7 +4,7 @@ Imports Windows.UI.Core
 
 Module NavigationViewItems
 
-    Public Function Generar(titulo As String, simbolo As FontAwesomeIcon, tag As String)
+    Public Function Generar(titulo As String, simbolo As FontAwesomeIcon, tag As String, visiblidad As Visibility)
 
         Dim tb As New TextBlock With {
             .Text = titulo,
@@ -19,7 +19,8 @@ Module NavigationViewItems
             .Content = tb,
             .Icon = icono,
             .Foreground = New SolidColorBrush(Colors.White),
-            .Tag = tag
+            .Tag = tag,
+            .Visibility = visiblidad
         }
 
         Dim tbToolTip As TextBlock = New TextBlock With {

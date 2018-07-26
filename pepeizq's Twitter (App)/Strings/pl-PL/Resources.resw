@@ -262,7 +262,7 @@
     <value>Aplikacja</value>
   </data>
   <data name="tbConfigAppTweetCard.Text" xml:space="preserve">
-    <value>Załaduj informacje z &quot;Tweet Card&quot;, jeśli ma to tweet</value>
+    <value>Załaduj informacje z "Tweet Card", jeśli ma to tweet</value>
   </data>
   <data name="tbConfigAppLoadMedia.Text" xml:space="preserve">
     <value>Ładuj i wyświetlaj multimedia z tweetów (obrazy, gify i filmy)</value>
@@ -286,123 +286,111 @@
     <value>Usuń reklamy</value>
   </data>
   <data name="UserBlock" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="UserReport" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="UserMute" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ButtonAddTile" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="UserUnblock" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="UserUnmute" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="CopyUrl.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Download.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Height" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Seconds" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="tbConfigAppLoadMediaPreview.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Width" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="DeleteTweet" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="UserNewMentions" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="UserNewTweets" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="tbConfigNotificationsGroup.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="tbConfigNotificationsGroupTooltip.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="tbConfigAppAutoStartTooltip.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="RetweetBy.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="tbConfigAppTweetRetweets.Text" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="tbConfigApi.Text" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="tbConfigApiWarning.Text" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="tbConfigApiTutorial.Text" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="tbConfigApiReset.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Notifications" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Home2.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Mentions2.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ClickExpand" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Followers" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="tbConfigAppTooltipsHelp.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="ClickExpandTweet" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="Search3.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="SearchUsers" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="SearchNoResults.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="SearchTweets" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="SearchUsersMessage.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="SearchTweetsMessage.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="tbSearchTweetsTooltip.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="tbSearchUsersTooltip.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="buttonRemoveAds2.Text" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
 </root>

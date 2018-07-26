@@ -80,11 +80,6 @@
                                         <TextBlock x:Uid="tbConfigNotifications" FontSize="16" Foreground="White"/>
                                     </Button.Content>
                                 </Button>
-                                <Button x:Name="botonConfigApi" HorizontalAlignment="Right" Padding="15,10" Background="{StaticResource BrushSecundario}" BorderBrush="{StaticResource BrushCuarto}" BorderThickness="1,1,0,1" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Margin="0,10">
-                                    <Button.Content>
-                                        <TextBlock x:Uid="tbConfigApi" FontSize="16" Foreground="White"/>
-                                    </Button.Content>
-                                </Button>
                             </StackPanel>
 
                             <StackPanel Grid.Column="1" Orientation="Vertical" BorderBrush="{StaticResource BrushCuarto}" BorderThickness="2" Padding="20">
@@ -341,64 +336,6 @@
                                             </StackPanel>
                                         </CheckBox.Content>
                                     </CheckBox>
-                                </StackPanel>
-
-                                <StackPanel x:Name="spConfigApi" Orientation="Vertical" Visibility="Collapsed">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <TextBlock Grid.Column="0" Text="Consumer Key:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                                        <TextBox x:Name="tbConfigConsumerKey" Grid.Column="1"/>
-                                    </Grid>
-
-                                    <Grid Margin="0,15">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <TextBlock Grid.Column="0" Text="Consumer Secret:" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                                        <TextBox x:Name="tbConfigConsumerSecret" Grid.Column="1"/>
-                                    </Grid>
-                                    
-                                    <Grid Padding="15" Background="IndianRed">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <fa:FontAwesome Grid.Column="0" Icon="Exclamation" Margin="5,0" VerticalAlignment="Center" Foreground="White"/>
-                                        <TextBlock x:Uid="tbConfigApiWarning" Grid.Column="1" Margin="10,0" TextWrapping="Wrap" Foreground="White"/>
-                                    </Grid>
-
-                                    <Grid Margin="0,15">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <Button x:Name="botonConfigApiTutorial" Grid.Column="0" Padding="10" Background="{StaticResource BrushSecundario}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                                            <Button.Content>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock x:Uid="tbConfigApiTutorial" Foreground="White"/>
-                                                </StackPanel>
-                                            </Button.Content>
-                                        </Button>
-
-                                        <Button x:Name="botonConfigApiReset" Grid.Column="2" Padding="10" Background="{StaticResource BrushSecundario}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                                            <Button.Content>
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock x:Uid="tbConfigApiReset" Foreground="White"/>
-                                                </StackPanel>
-                                            </Button.Content>
-                                        </Button>
-                                    </Grid>
-
-                                    <WebView x:Name="wvConfigApi"/>
                                 </StackPanel>
                             </StackPanel>
                         </Grid>
@@ -678,18 +615,7 @@
                 </Grid>
 
                 <Grid x:Name="gridTweetAmpliado" Visibility="Collapsed" Padding="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Button x:Name="botonCerrarTweet" Grid.Column="0" Margin="10,20,20,20" Padding="12,10" MinWidth="0" Background="{StaticResource BrushSecundario}" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
-                        <Button.Content>
-                            <fa:FontAwesome Icon="ArrowCircleLeft" Foreground="White"/>
-                        </Button.Content>
-                    </Button>
-
-                    <ScrollViewer Grid.Column="1">
+                    <ScrollViewer>
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -791,19 +717,20 @@
                 </Grid>
 
                 <Grid x:Name="gridVideoAmpliado" Visibility="Collapsed">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+                    <Border x:Name="bordeVideoAmpliado" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
+                        <MediaPlayerElement x:Name="videoAmpliado" AreTransportControlsEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
 
-                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10,10,10,0">
-                        <Button x:Name="botonCerrarVideo" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                    <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <Button x:Name="botonCopiarVideo" Margin="0,0,10,0" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
+                            <ToolTipService.ToolTip>
+                                <TextBlock x:Uid="CopyUrl"/>
+                            </ToolTipService.ToolTip>
+
                             <Button.Content>
-                                <fa:FontAwesome Icon="ArrowCircleLeft" Foreground="White"/>
+                                <fa:FontAwesome Icon="Copy" Foreground="White"/>
                             </Button.Content>
                         </Button>
-
-                        <AppBarSeparator Foreground="White"/>
 
                         <Button x:Name="botonDescargarVideo" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                             <ToolTipService.ToolTip>
@@ -816,38 +743,11 @@
                         </Button>
 
                         <ProgressRing x:Name="prDescargaVideo" Margin="10,0,0,0" IsActive="True" Visibility="Collapsed" VerticalAlignment="Center" Width="30" Height="30"/>
-
-                        <Button x:Name="botonCopiarVideo" Margin="10,0,0,0" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                            <ToolTipService.ToolTip>
-                                <TextBlock x:Uid="CopyUrl"/>
-                            </ToolTipService.ToolTip>
-                            
-                            <Button.Content>
-                                <fa:FontAwesome Icon="Copy" Foreground="White"/>
-                            </Button.Content>
-                        </Button>
-
-                        <TextBox x:Name="tbVideoAmpliado" Margin="10,0,0,0" IsReadOnly="True" BorderBrush="White" BorderThickness="1" Padding="10"/>
                     </StackPanel>
-                    
-                    <Border x:Name="bordeVideoAmpliado" Grid.Row="1" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
-                        <MediaPlayerElement x:Name="videoAmpliado" AreTransportControlsEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
                 </Grid>
 
-                <Grid x:Name="gridOEmbedAmpliado" Visibility="Collapsed">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <Button x:Name="botonCerrarOEmbed" Grid.Row="0" Margin="20" Padding="10" Background="{StaticResource BrushSecundario}" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="1" BorderBrush="{StaticResource BrushCuarto}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Style="{ThemeResource ButtonRevealStyle}">
-                        <Button.Content>
-                            <fa:FontAwesome Icon="ArrowCircleLeft" Foreground="White"/>
-                        </Button.Content>
-                    </Button>
-
-                    <TextBox x:Name="tbOEmbed" Grid.Row="1" TextWrapping="Wrap" AcceptsReturn="True" Margin="20,0,20,20"/>
+                <Grid x:Name="gridOEmbedAmpliado" Visibility="Collapsed" Padding="20">
+                    <TextBox x:Name="tbOEmbed" TextWrapping="Wrap" AcceptsReturn="True"/>
                 </Grid>
             </Grid>
         </NavigationView>         
