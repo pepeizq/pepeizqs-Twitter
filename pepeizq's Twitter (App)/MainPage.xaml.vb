@@ -221,67 +221,53 @@ Public NotInheritable Class MainPage
         GridVisibilidad(gridPrincipal, Nothing)
         nvPrincipal.IsPaneOpen = False
 
-        If NetworkInterface.GetIsNetworkAvailable = True Then
-            Dim helper As New LocalObjectStorageHelper
+        Dim helper As New LocalObjectStorageHelper
 
-            Dim listaUsuarios As New List(Of TwitterUsuario)
+        Dim listaUsuarios As New List(Of TwitterUsuario)
 
-            If helper.KeyExists("listaUsuarios5") Then
-                listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios5")
-            End If
+        If helper.KeyExists("listaUsuarios5") Then
+            listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios5")
+        End If
 
-            Dim i As Integer = 0
+        Dim i As Integer = 0
 
-            If listaUsuarios.Count > 0 Then
-                UsuarioXaml.GenerarListaUsuarios(listaUsuarios)
+        If listaUsuarios.Count > 0 Then
+            UsuarioXaml.GenerarListaUsuarios(listaUsuarios)
 
-                Dim listaSalto As JumpList = Await JumpList.LoadCurrentAsync
-                listaSalto.Items.Clear()
+            Dim listaSalto As JumpList = Await JumpList.LoadCurrentAsync
+            listaSalto.Items.Clear()
 
-                For Each usuario In listaUsuarios
-                    Dim megaUsuario As pepeizq.Twitter.MegaUsuario = Nothing
+            For Each usuario In listaUsuarios
+                Dim megaUsuario As pepeizq.Twitter.MegaUsuario = Nothing
 
-                    Try
-                        megaUsuario = Await TwitterConexion.Iniciar(usuario)
-                    Catch ex As Exception
+                Try
+                    megaUsuario = Await TwitterConexion.Iniciar(usuario)
+                Catch ex As Exception
 
-                    End Try
+                End Try
 
-                    If Not megaUsuario Is Nothing Then
-                        Dim visibilidad As New Visibility
+                If Not megaUsuario Is Nothing Then
+                    Dim visibilidad As New Visibility
 
-                        If i = 0 Then
-                            visibilidad = Visibility.Visible
-                        Else
-                            visibilidad = Visibility.Collapsed
-                        End If
-
-                        UsuarioXaml.GenerarCadaUsuario(megaUsuario, visibilidad)
-
-                        Dim itemSalto As JumpListItem = JumpListItem.CreateWithArguments(megaUsuario.Usuario.ScreenNombre, megaUsuario.Usuario.Nombre)
-                        itemSalto.Logo = New Uri("ms-appx:///Assets/logo2.png")
-                        listaSalto.Items.Add(itemSalto)
-
-                        i += 1
+                    If i = 0 Then
+                        visibilidad = Visibility.Visible
+                    Else
+                        visibilidad = Visibility.Collapsed
                     End If
-                Next
 
-                Await listaSalto.SaveAsync
+                    UsuarioXaml.GenerarCadaUsuario(megaUsuario, visibilidad)
 
-            ElseIf listaUsuarios.Count = 0 Then
-                For Each item In nvPrincipal.MenuItems
-                    If TypeOf item Is NavigationViewItem Then
-                        Dim nvItem As NavigationViewItem = item
-                        nvItem.Visibility = Visibility.Collapsed
-                    End If
-                Next
+                    Dim itemSalto As JumpListItem = JumpListItem.CreateWithArguments(megaUsuario.Usuario.ScreenNombre, megaUsuario.Usuario.Nombre)
+                    itemSalto.Logo = New Uri("ms-appx:///Assets/logo2.png")
+                    listaSalto.Items.Add(itemSalto)
 
-                GridVisibilidad(gridConfig, recursos.GetString("Config"))
-                SpConfigVisibilidad(botonConfigCuentas, spConfigCuentas)
-            End If
+                    i += 1
+                End If
+            Next
 
-            tbNumeroCuentas.Text = listaUsuarios.Count.ToString + "/25"
-        Else
+            Await listaSalto.SaveAsync
+
+        ElseIf listaUsuarios.Count = 0 Then
             For Each item In nvPrincipal.MenuItems
                 If TypeOf item Is NavigationViewItem Then
                     Dim nvItem As NavigationViewItem = item
@@ -292,6 +278,22 @@ Public NotInheritable Class MainPage
             GridVisibilidad(gridConfig, recursos.GetString("Config"))
             SpConfigVisibilidad(botonConfigCuentas, spConfigCuentas)
         End If
+
+        tbNumeroCuentas.Text = listaUsuarios.Count.ToString + "/25"
+
+        'If NetworkInterface.GetIsNetworkAvailable = True Then
+
+        'Else
+        '    For Each item In nvPrincipal.MenuItems
+        '        If TypeOf item Is NavigationViewItem Then
+        '            Dim nvItem As NavigationViewItem = item
+        '            nvItem.Visibility = Visibility.Collapsed
+        '        End If
+        '    Next
+
+        '    GridVisibilidad(gridConfig, recursos.GetString("Config"))
+        '    SpConfigVisibilidad(botonConfigCuentas, spConfigCuentas)
+        'End If
 
         '--------------------------------------------------------
 
