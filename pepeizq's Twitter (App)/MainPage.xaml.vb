@@ -1,7 +1,5 @@
-﻿Imports System.Net.NetworkInformation
-Imports FontAwesome.UWP
+﻿Imports FontAwesome.UWP
 Imports Microsoft.Toolkit.Uwp.Helpers
-Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports pepeizq.Twitter
 Imports Windows.ApplicationModel.DataTransfer
 Imports Windows.Media.Core
@@ -13,7 +11,6 @@ Imports Windows.System
 Imports Windows.UI
 Imports Windows.UI.Core
 Imports Windows.UI.StartScreen
-Imports Windows.UI.Xaml.Media.Animation
 Imports Windows.UI.Xaml.Shapes
 
 Public NotInheritable Class MainPage
@@ -38,13 +35,13 @@ Public NotInheritable Class MainPage
             .Name = "elipseCuentaSeleccionada",
             .Width = 30,
             .Height = 30,
-            .Margin = New Thickness(0, 0, 9, 0)
+            .Margin = New Thickness(15, 0, 10, 0)
         }
 
         sp.Children.Add(elipseCuentaSeleccionada)
 
         Dim tbCuentaSeleccionada As New TextBlock With {
-            .Foreground = New SolidColorBrush(Colors.White),
+            .Foreground = New SolidColorBrush(App.Current.Resources("ColorPrimario")),
             .VerticalAlignment = VerticalAlignment.Center,
             .Name = "tbCuentaSeleccionada"
         }
@@ -754,12 +751,6 @@ Public NotInheritable Class MainPage
     Private Async Sub BotonFavoritosUsuario_Click(sender As Object, e As RoutedEventArgs) Handles botonFavoritosUsuario.Click
 
         Await Launcher.LaunchUriAsync(botonFavoritosUsuario.Tag)
-
-    End Sub
-
-    Private Sub BotonQuitarAnunciosUsuario_Click(sender As Object, e As RoutedEventArgs) Handles botonQuitarAnunciosUsuario.Click
-
-        Anuncios.Quitar()
 
     End Sub
 

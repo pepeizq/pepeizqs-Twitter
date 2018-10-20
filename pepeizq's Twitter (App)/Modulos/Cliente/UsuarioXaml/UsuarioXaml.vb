@@ -15,7 +15,8 @@ Module UsuarioXaml
 
         Dim tbUsuarios As New TextBlock With {
             .Text = recursos.GetString("AccountChange"),
-            .Foreground = New SolidColorBrush(Colors.White)
+            .Foreground = New SolidColorBrush(App.Current.Resources("ColorPrimario")),
+            .Margin = New Thickness(-4, 0, 10, 0)
         }
 
         Dim nvItemUsuarios As NavigationViewItem = pagina.FindName("nvItemUsuarios")

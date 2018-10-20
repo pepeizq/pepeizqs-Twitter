@@ -6,7 +6,6 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:extensions="using:Microsoft.Toolkit.Uwp.UI.Extensions"
     xmlns:fa="using:FontAwesome.UWP"
-    xmlns:ads="using:Microsoft.Advertising.WinRT.UI"
   
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -19,16 +18,16 @@
         </Grid.RowDefinitions>
 
         <Grid x:Name="gridTitulo" Grid.Row="0" Background="{StaticResource GridTituloBackground}">
-            <TextBlock x:Name="tbTitulo" Margin="50,0,0,0" FontSize="13" Foreground="White" VerticalAlignment="Center"/>
+            <TextBlock x:Name="tbTitulo" Margin="15,0,0,0" FontSize="13" Foreground="White" VerticalAlignment="Center"/>
         </Grid>
 
         <NavigationView x:Name="nvPrincipal" Grid.Row="1" Loaded="Nv_Loaded" ItemInvoked="Nv_ItemInvoked"
-                        OpenPaneLength="200" IsSettingsVisible="False" AlwaysShowHeader="False" IsBackButtonVisible="Collapsed">
+                        AlwaysShowHeader="False" IsSettingsVisible="False" PaneDisplayMode="Top" IsBackButtonVisible="Collapsed">
             <NavigationView.PaneFooter>
-                <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
                     <NavigationViewItem x:Name="nvItemUsuarios" Tapped="Nv_ItemFlyout" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton" Visibility="Collapsed">
                         <NavigationViewItem.Icon>
-                            <fa:FontAwesome Icon="ChevronUp"/>
+                            <fa:FontAwesome Icon="ChevronDown" Foreground="{StaticResource BrushPrimario}"/>
                         </NavigationViewItem.Icon>
                         <FlyoutBase.AttachedFlyout>
                             <MenuFlyout x:Name="botonUsuariosMenu" Placement="Top"/>
@@ -582,21 +581,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
-
-                        <Grid x:Name="gridAnunciosUsuario" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" Padding="5" Background="LightGray" BorderThickness="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-
-                            <!--<ads:AdControl Grid.Column="0" AdUnitId="1100022962" Width="728" Height="90"/>-->
-                            <Button x:Name="botonQuitarAnunciosUsuario" Grid.Column="1" Padding="15,10" Margin="10,0,5,0" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
-                                <Button.Content>
-                                    <TextBlock x:Uid="buttonRemoveAds2" Foreground="White"/>
-                                </Button.Content>    
-                            </Button> 
-                        </Grid>
-
+                      
                         <Grid Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>

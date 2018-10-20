@@ -1,5 +1,4 @@
 ﻿Imports FontAwesome.UWP
-Imports Microsoft.Advertising.WinRT.UI
 Imports pepeizq.Twitter
 Imports pepeizq.Twitter.Tweet
 Imports Windows.ApplicationModel.Store
@@ -102,75 +101,6 @@ Module InicioXaml
         gridAbajo.ColumnDefinitions.Add(col1)
         gridAbajo.ColumnDefinitions.Add(col2)
 
-        Dim añadirAnuncios As Boolean = False
-        Dim licencia As LicenseInformation = Nothing
-
-        Try
-            licencia = CurrentApp.LicenseInformation
-        Catch ex As Exception
-
-        End Try
-
-        If Not licencia Is Nothing Then
-            If Not licencia.ProductLicenses("NoAds").IsActive Then
-                añadirAnuncios = True
-            End If
-        Else
-            añadirAnuncios = True
-        End If
-
-        If añadirAnuncios = True Then
-            Dim gridAnuncios As New Grid With {
-                .Name = "gridAnunciosInicio" + usuario.ID,
-                .HorizontalAlignment = HorizontalAlignment.Center,
-                .VerticalAlignment = VerticalAlignment.Center,
-                .Visibility = Visibility.Collapsed,
-                .Padding = New Thickness(5, 5, 5, 5),
-                .BorderThickness = New Thickness(1, 1, 1, 1),
-                .Background = New SolidColorBrush(Colors.LightGray),
-                .BorderBrush = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
-            }
-            gridAnuncios.SetValue(Grid.ColumnProperty, 0)
-
-            Dim colAnuncios1 As New ColumnDefinition
-            Dim colAnuncios2 As New ColumnDefinition
-
-            colAnuncios1.Width = New GridLength(1, GridUnitType.Auto)
-            colAnuncios2.Width = New GridLength(1, GridUnitType.Auto)
-
-            gridAnuncios.ColumnDefinitions.Add(colAnuncios1)
-            gridAnuncios.ColumnDefinitions.Add(colAnuncios2)
-
-            Dim anuncio As New AdControl With {
-                .AdUnitId = "1100022916",
-                .Width = 728,
-                .Height = 90
-            }
-            anuncio.SetValue(Grid.ColumnProperty, 0)
-            gridAnuncios.Children.Add(anuncio)
-
-            Dim tbBoton As New TextBlock With {
-                .Text = recursos.GetString("ButtonRemoveAds"),
-                .Foreground = New SolidColorBrush(Colors.White)
-            }
-
-            Dim botonQuitarAnuncios As New Button With {
-                .Padding = New Thickness(15, 10, 15, 10),
-                .Margin = New Thickness(10, 0, 5, 0),
-                .Content = tbBoton,
-                .Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
-            }
-
-            AddHandler botonQuitarAnuncios.Click, AddressOf BotonQuitarAnunciosClick
-            AddHandler botonQuitarAnuncios.PointerEntered, AddressOf UsuarioEntraBoton
-            AddHandler botonQuitarAnuncios.PointerExited, AddressOf UsuarioSaleBoton
-
-            botonQuitarAnuncios.SetValue(Grid.ColumnProperty, 1)
-            gridAnuncios.Children.Add(botonQuitarAnuncios)
-
-            gridAbajo.Children.Add(gridAnuncios)
-        End If
-
         Dim gridAbajoDerecha As New Grid With {
             .HorizontalAlignment = HorizontalAlignment.Right,
             .VerticalAlignment = VerticalAlignment.Bottom
@@ -259,23 +189,6 @@ Module InicioXaml
 
         lv.Tag = cosas.MegaUsuario
 
-        Dim añadirAnuncios As Boolean = False
-        Dim licencia As LicenseInformation = Nothing
-
-        Try
-            licencia = CurrentApp.LicenseInformation
-        Catch ex As Exception
-
-        End Try
-
-        If Not licencia Is Nothing Then
-            If Not licencia.ProductLicenses("NoAds").IsActive Then
-                añadirAnuncios = True
-            End If
-        Else
-            añadirAnuncios = True
-        End If
-
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
@@ -283,27 +196,12 @@ Module InicioXaml
             If cosas.Query = 0 Then
                 Dim botonSubir As Button = pagina.FindName("botonSubirArribaInicio" + cosas.MegaUsuario.Usuario.ID)
                 botonSubir.Visibility = Visibility.Visible
-
-                If añadirAnuncios = True Then
-                    Dim gridAnuncios As Grid = pagina.FindName("gridAnunciosInicio" + cosas.MegaUsuario.Usuario.ID)
-                    gridAnuncios.Visibility = Visibility.Visible
-                End If
             ElseIf cosas.Query = 1 Then
                 Dim botonSubir As Button = pagina.FindName("botonSubirArribaMenciones" + cosas.MegaUsuario.Usuario.ID)
                 botonSubir.Visibility = Visibility.Visible
-
-                'If añadirAnuncios = True Then
-                '    Dim gridAnuncios As Grid = pagina.FindName("gridAnunciosMenciones" + cosas.MegaUsuario.Usuario.ID)
-                '    gridAnuncios.Visibility = Visibility.Visible
-                'End If
             ElseIf cosas.Query = 2 Then
                 Dim botonSubir As Button = pagina.FindName("botonSubirArribaUsuario")
                 botonSubir.Visibility = Visibility.Visible
-
-                'If añadirAnuncios = True Then
-                '    Dim gridAnuncios As Grid = pagina.FindName("gridAnunciosUsuario")
-                '    gridAnuncios.Visibility = Visibility.Visible
-                'End If
             ElseIf cosas.Query = 3 Then
                 Dim botonSubir As Button = pagina.FindName("botonSubirArribaBusquedaTweets")
                 botonSubir.Visibility = Visibility.Visible
@@ -312,27 +210,12 @@ Module InicioXaml
             If cosas.Query = 0 Then
                 Dim botonSubir As Button = pagina.FindName("botonSubirArribaInicio" + cosas.MegaUsuario.Usuario.ID)
                 botonSubir.Visibility = Visibility.Collapsed
-
-                If añadirAnuncios = True Then
-                    Dim gridAnuncios As Grid = pagina.FindName("gridAnunciosInicio" + cosas.MegaUsuario.Usuario.ID)
-                    gridAnuncios.Visibility = Visibility.Collapsed
-                End If
             ElseIf cosas.Query = 1 Then
                 Dim botonSubir As Button = pagina.FindName("botonSubirArribaMenciones" + cosas.MegaUsuario.Usuario.ID)
                 botonSubir.Visibility = Visibility.Collapsed
-
-                If añadirAnuncios = True Then
-                    Dim gridAnuncios As Grid = pagina.FindName("gridAnunciosMenciones" + cosas.MegaUsuario.Usuario.ID)
-                    gridAnuncios.Visibility = Visibility.Collapsed
-                End If
             ElseIf cosas.Query = 2 Then
                 Dim botonSubir As Button = pagina.FindName("botonSubirArribaUsuario")
                 botonSubir.Visibility = Visibility.Collapsed
-
-                If añadirAnuncios = True Then
-                    Dim gridAnuncios As Grid = pagina.FindName("gridAnunciosUsuario")
-                    gridAnuncios.Visibility = Visibility.Collapsed
-                End If
             ElseIf cosas.Query = 3 Then
                 Dim botonSubir As Button = pagina.FindName("botonSubirArribaBusquedaTweets")
                 botonSubir.Visibility = Visibility.Collapsed
@@ -425,12 +308,6 @@ Module InicioXaml
 
         svTweets.ChangeView(Nothing, 0, Nothing)
         botonSubir.Visibility = Visibility.Collapsed
-
-    End Sub
-
-    Private Sub BotonQuitarAnunciosClick(sender As Object, e As RoutedEventArgs)
-
-        Anuncios.Quitar()
 
     End Sub
 

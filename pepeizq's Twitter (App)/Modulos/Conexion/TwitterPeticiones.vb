@@ -422,7 +422,7 @@ Module TwitterPeticiones
 
             Dim enlace As New Uri("https://upload.twitter.com/1.1/media/upload.json")
             Dim request As New TwitterOAuthRequest
-            id = Await request.ExecutePostMultipartAsync(enlace, megaUsuario.Servicio.twitterDataProvider._tokens, limite, buffer)
+            id = Await request.EjecutarPostMultipartAsync(enlace, megaUsuario.Servicio.twitterDataProvider._tokens, limite, buffer)
         Catch ex As Exception
 
         End Try
