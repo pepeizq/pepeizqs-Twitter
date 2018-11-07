@@ -1,7 +1,5 @@
 ﻿Imports FontAwesome.UWP
-Imports Microsoft.Advertising.WinRT.UI
 Imports pepeizq.Twitter
-Imports Windows.ApplicationModel.Store
 Imports Windows.UI
 Imports Windows.UI.Core
 
