@@ -33,9 +33,10 @@ Public NotInheritable Class MainPage
 
         Dim elipseCuentaSeleccionada As New Ellipse With {
             .Name = "elipseCuentaSeleccionada",
-            .Width = 30,
-            .Height = 30,
-            .Margin = New Thickness(15, 0, 10, 0)
+            .Width = 28,
+            .Height = 28,
+            .Margin = New Thickness(15, 0, 10, 0),
+            .VerticalAlignment = VerticalAlignment.Center
         }
 
         sp.Children.Add(elipseCuentaSeleccionada)
