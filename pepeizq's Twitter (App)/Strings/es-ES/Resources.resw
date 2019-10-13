@@ -399,4 +399,7 @@
   <data name="MessageBackground" xml:space="preserve">
     <value>Para poder recibir los tweets en tiempo real debes permitir ejecutar la app en segundo plano</value>
   </data>
+  <data name="tbConfigFollowDeals.Text" xml:space="preserve">
+    <value>Seguir @pepeizqdeals en cada cuenta</value>
+  </data>
 </root>

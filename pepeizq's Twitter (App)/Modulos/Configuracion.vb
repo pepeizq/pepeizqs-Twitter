@@ -1,4 +1,5 @@
-﻿Imports Windows.Storage
+﻿Imports Microsoft.Toolkit.Uwp.Helpers
+Imports Windows.Storage
 
 Module Configuracion
 
@@ -91,6 +92,12 @@ Module Configuracion
             NotificacionesUsuario(True)
         Else
             NotificacionesUsuario(ApplicationData.Current.LocalSettings.Values("notificacionUsuario"))
+        End If
+
+        If ApplicationData.Current.LocalSettings.Values("seguirDeals") Is Nothing Then
+            SeguirDeals(True, True)
+        Else
+            SeguirDeals(ApplicationData.Current.LocalSettings.Values("seguirDeals"), True)
         End If
 
     End Sub
@@ -321,7 +328,7 @@ Module Configuracion
 
     End Sub
 
-    Public Sub NotificacionesUsuario(estado As Boolean)
+    Public Async Sub NotificacionesUsuario(estado As Boolean)
 
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
@@ -330,6 +337,31 @@ Module Configuracion
 
         Dim cb As CheckBox = pagina.FindName("cbConfigNotificacionesUsuario")
         cb.IsChecked = estado
+
+        Dim helper As New LocalObjectStorageHelper
+
+        Dim listaNotificaciones As New List(Of String)
+
+        If helper.KeyExists("listaNotificaciones") Then
+            listaNotificaciones = Await helper.ReadFileAsync(Of List(Of String))("listaNotificaciones")
+        End If
+
+        listaNotificaciones.Clear()
+        Await helper.SaveFileAsync(Of List(Of String))("listaNotificaciones", listaNotificaciones)
+
+    End Sub
+
+    Public Sub SeguirDeals(estado As Boolean, inicio As Boolean)
+
+        ApplicationData.Current.LocalSettings.Values("seguirDeals") = estado
+
+        If inicio = True Then
+            Dim frame As Frame = Window.Current.Content
+            Dim pagina As Page = frame.Content
+
+            Dim cb As CheckBox = pagina.FindName("cbConfigSeguirDeals")
+            cb.IsChecked = estado
+        End If
 
     End Sub
 

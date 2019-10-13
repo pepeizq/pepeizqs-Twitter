@@ -94,6 +94,7 @@
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
 
                                         <Button x:Name="botonAñadirCuenta" Grid.Column="0" Padding="10" Background="{StaticResource BrushSecundario}" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
@@ -104,6 +105,12 @@
                                         </Button>
 
                                         <TextBlock x:Name="tbNumeroCuentas" Grid.Column="1" Margin="20,0" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                                        <CheckBox x:Name="cbConfigSeguirDeals" Grid.Column="2">
+                                            <CheckBox.Content>
+                                                <TextBlock x:Uid="tbConfigFollowDeals"/>
+                                            </CheckBox.Content>    
+                                        </CheckBox> 
                                     </Grid>
 
                                     <Border Margin="0,20" BorderBrush="{StaticResource BrushSecundario}" BorderThickness="1"/>
@@ -676,7 +683,11 @@
                         </Border>
                     </ScrollViewer>
 
-                    <StackPanel Orientation="Horizontal" Margin="20,10" HorizontalAlignment="Right" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal" Padding="20" HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <StackPanel.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.5"/>
+                        </StackPanel.Background>
+                        
                         <Button x:Name="botonCopiarImagen" Margin="0,0,10,0" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                             <ToolTipService.ToolTip>
                                 <TextBlock x:Uid="CopyUrl"/>
@@ -706,7 +717,11 @@
                         <MediaPlayerElement x:Name="videoAmpliado" AreTransportControlsEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
 
-                    <StackPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal" Padding="20" HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <StackPanel.Background>
+                            <SolidColorBrush Color="Black" Opacity="0.5"/>
+                        </StackPanel.Background>
+                        
                         <Button x:Name="botonCopiarVideo" Margin="0,0,10,0" Padding="10" BorderThickness="1" BorderBrush="White" PointerEntered="UsuarioEntraBoton" PointerExited="UsuarioSaleBoton">
                             <ToolTipService.ToolTip>
                                 <TextBlock x:Uid="CopyUrl"/>

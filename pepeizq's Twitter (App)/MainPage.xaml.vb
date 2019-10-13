@@ -128,6 +128,10 @@ Public NotInheritable Class MainPage
 
                 App.Current.Resources("ButtonBackgroundPointerOver") = App.Current.Resources("ColorPrimario")
 
+                If videoAmpliado.IsLoaded = True Then
+                    videoAmpliado.MediaPlayer.Pause()
+                End If
+
                 gridImagenAmpliada.Visibility = Visibility.Collapsed
                 gridVideoAmpliado.Visibility = Visibility.Collapsed
                 gridTweetAmpliado.Visibility = Visibility.Collapsed
@@ -229,69 +233,63 @@ Public NotInheritable Class MainPage
 
         Dim i As Integer = 0
 
-        If listaUsuarios.Count > 0 Then
-            UsuarioXaml.GenerarListaUsuarios(listaUsuarios)
+        If Not listaUsuarios Is Nothing Then
+            If listaUsuarios.Count > 0 Then
+                UsuarioXaml.GenerarListaUsuarios(listaUsuarios)
 
-            Dim listaSalto As JumpList = Await JumpList.LoadCurrentAsync
-            listaSalto.Items.Clear()
+                Dim listaSalto As JumpList = Await JumpList.LoadCurrentAsync
+                listaSalto.Items.Clear()
 
-            For Each usuario In listaUsuarios
-                Dim megaUsuario As pepeizq.Twitter.MegaUsuario = Nothing
+                For Each usuario In listaUsuarios
+                    Dim megaUsuario As pepeizq.Twitter.MegaUsuario = Nothing
 
-                Try
-                    megaUsuario = Await TwitterConexion.Iniciar(usuario)
-                Catch ex As Exception
+                    Try
+                        megaUsuario = Await TwitterConexion.Iniciar(usuario)
+                    Catch ex As Exception
 
-                End Try
+                    End Try
 
-                If Not megaUsuario Is Nothing Then
-                    Dim visibilidad As New Visibility
+                    If Not megaUsuario Is Nothing Then
+                        Dim visibilidad As New Visibility
 
-                    If i = 0 Then
-                        visibilidad = Visibility.Visible
-                    Else
-                        visibilidad = Visibility.Collapsed
+                        If i = 0 Then
+                            visibilidad = Visibility.Visible
+                        Else
+                            visibilidad = Visibility.Collapsed
+                        End If
+
+                        If cbConfigSeguirDeals.IsChecked = True Then
+                            Await TwitterPeticiones.SeguirUsuario(False, megaUsuario, "1030738433105387520")
+                        End If
+
+                        UsuarioXaml.GenerarCadaUsuario(megaUsuario, visibilidad)
+
+                        Dim itemSalto As JumpListItem = JumpListItem.CreateWithArguments(megaUsuario.Usuario.ScreenNombre, megaUsuario.Usuario.Nombre)
+                        itemSalto.Logo = New Uri("ms-appx:///Assets/logo2.png")
+                        listaSalto.Items.Add(itemSalto)
+
+                        i += 1
                     End If
+                Next
 
-                    UsuarioXaml.GenerarCadaUsuario(megaUsuario, visibilidad)
+                Await listaSalto.SaveAsync
 
-                    Dim itemSalto As JumpListItem = JumpListItem.CreateWithArguments(megaUsuario.Usuario.ScreenNombre, megaUsuario.Usuario.Nombre)
-                    itemSalto.Logo = New Uri("ms-appx:///Assets/logo2.png")
-                    listaSalto.Items.Add(itemSalto)
+            ElseIf listaUsuarios.Count = 0 Then
+                For Each item In nvPrincipal.MenuItems
+                    If TypeOf item Is NavigationViewItem Then
+                        Dim nvItem As NavigationViewItem = item
+                        nvItem.Visibility = Visibility.Collapsed
+                    End If
+                Next
 
-                    i += 1
-                End If
-            Next
+                GridVisibilidad(gridConfig, recursos.GetString("Config"))
+                SpConfigVisibilidad(botonConfigCuentas, spConfigCuentas)
+            End If
 
-            Await listaSalto.SaveAsync
-
-        ElseIf listaUsuarios.Count = 0 Then
-            For Each item In nvPrincipal.MenuItems
-                If TypeOf item Is NavigationViewItem Then
-                    Dim nvItem As NavigationViewItem = item
-                    nvItem.Visibility = Visibility.Collapsed
-                End If
-            Next
-
-            GridVisibilidad(gridConfig, recursos.GetString("Config"))
-            SpConfigVisibilidad(botonConfigCuentas, spConfigCuentas)
+            tbNumeroCuentas.Text = listaUsuarios.Count.ToString + "/25"
+        Else
+            tbNumeroCuentas.Text = "0/25"
         End If
-
-        tbNumeroCuentas.Text = listaUsuarios.Count.ToString + "/25"
-
-        'If NetworkInterface.GetIsNetworkAvailable = True Then
-
-        'Else
-        '    For Each item In nvPrincipal.MenuItems
-        '        If TypeOf item Is NavigationViewItem Then
-        '            Dim nvItem As NavigationViewItem = item
-        '            nvItem.Visibility = Visibility.Collapsed
-        '        End If
-        '    Next
-
-        '    GridVisibilidad(gridConfig, recursos.GetString("Config"))
-        '    SpConfigVisibilidad(botonConfigCuentas, spConfigCuentas)
-        'End If
 
         '--------------------------------------------------------
 
@@ -457,6 +455,18 @@ Public NotInheritable Class MainPage
                 End If
             Next
         End If
+
+    End Sub
+
+    Private Sub CbConfigSeguirDeals_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigSeguirDeals.Checked
+
+        Configuracion.SeguirDeals(cbConfigSeguirDeals.IsChecked, False)
+
+    End Sub
+
+    Private Sub CbConfigSeguirDeals_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigSeguirDeals.Unchecked
+
+        Configuracion.SeguirDeals(cbConfigSeguirDeals.IsChecked, False)
 
     End Sub
 

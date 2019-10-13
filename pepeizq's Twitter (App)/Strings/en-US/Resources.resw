@@ -399,4 +399,7 @@
   <data name="MessageBackground" xml:space="preserve">
     <value>In order to receive the tweets in real time you must allow the app to run in the background</value>
   </data>
+  <data name="tbConfigFollowDeals.Text" xml:space="preserve">
+    <value>Follow @pepeizqdeals in each account</value>
+  </data>
 </root>
