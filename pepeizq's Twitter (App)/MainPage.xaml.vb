@@ -128,9 +128,11 @@ Public NotInheritable Class MainPage
 
                 App.Current.Resources("ButtonBackgroundPointerOver") = App.Current.Resources("ColorPrimario")
 
-                If videoAmpliado.IsLoaded = True Then
+                Try
                     videoAmpliado.MediaPlayer.Pause()
-                End If
+                Catch ex As Exception
+
+                End Try
 
                 gridImagenAmpliada.Visibility = Visibility.Collapsed
                 gridVideoAmpliado.Visibility = Visibility.Collapsed
