@@ -18,191 +18,197 @@ Public NotInheritable Class MainPage
 
     Private Sub Nv_Loaded(sender As Object, e As RoutedEventArgs)
 
-        Dim recursos As New Resources.ResourceLoader()
+        'Dim recursos As New Resources.ResourceLoader()
 
-        Dim nvItemCuenta As New NavigationViewItem With {
-            .Margin = New Thickness(-8, 0, 0, 0),
-            .BorderThickness = New Thickness(0, 0, 0, 0)
-        }
+        'Dim nvItemCuenta As New NavigationViewItem With {
+        '    .Margin = New Thickness(-8, 0, 0, 0),
+        '    .BorderThickness = New Thickness(0, 0, 0, 0)
+        '}
 
-        Dim sp As New StackPanel With {
-            .Name = "spCuentaSeleccionada",
-            .Orientation = Orientation.Horizontal,
-            .Padding = New Thickness(2, 0, 2, 0)
-        }
+        'Dim sp As New StackPanel With {
+        '    .Name = "spCuentaSeleccionada",
+        '    .Orientation = Orientation.Horizontal,
+        '    .Padding = New Thickness(2, 0, 2, 0)
+        '}
 
-        Dim elipseCuentaSeleccionada As New Ellipse With {
-            .Name = "elipseCuentaSeleccionada",
-            .Width = 28,
-            .Height = 28,
-            .Margin = New Thickness(15, 0, 10, 0),
-            .VerticalAlignment = VerticalAlignment.Center
-        }
+        'Dim elipseCuentaSeleccionada As New Ellipse With {
+        '    .Name = "elipseCuentaSeleccionada",
+        '    .Width = 28,
+        '    .Height = 28,
+        '    .Margin = New Thickness(15, 0, 10, 0),
+        '    .VerticalAlignment = VerticalAlignment.Center
+        '}
 
-        sp.Children.Add(elipseCuentaSeleccionada)
+        'sp.Children.Add(elipseCuentaSeleccionada)
 
-        Dim tbCuentaSeleccionada As New TextBlock With {
-            .Foreground = New SolidColorBrush(App.Current.Resources("ColorPrimario")),
-            .VerticalAlignment = VerticalAlignment.Center,
-            .Name = "tbCuentaSeleccionada"
-        }
+        'Dim tbCuentaSeleccionada As New TextBlock With {
+        '    .Foreground = New SolidColorBrush(App.Current.Resources("ColorPrimario")),
+        '    .VerticalAlignment = VerticalAlignment.Center,
+        '    .Name = "tbCuentaSeleccionada"
+        '}
 
-        sp.Children.Add(tbCuentaSeleccionada)
+        'sp.Children.Add(tbCuentaSeleccionada)
 
-        AddHandler nvItemCuenta.PointerEntered, AddressOf UsuarioEntraBoton
-        AddHandler nvItemCuenta.PointerExited, AddressOf UsuarioSaleBoton
+        'AddHandler nvItemCuenta.PointerEntered, AddressOf UsuarioEntraBoton
+        'AddHandler nvItemCuenta.PointerExited, AddressOf UsuarioSaleBoton
 
-        nvItemCuenta.Content = sp
+        'nvItemCuenta.Content = sp
 
-        nvPrincipal.MenuItems.Add(nvItemCuenta)
+        'nvPrincipal.MenuItems.Add(nvItemCuenta)
 
-        Dim separadorVolver As New NavigationViewItemSeparator With {
-            .Name = "nvSeparadorVolver",
-            .Visibility = Visibility.Collapsed
-        }
+        'Dim separadorVolver As New NavigationViewItemSeparator With {
+        '    .Name = "nvSeparadorVolver",
+        '    .Visibility = Visibility.Collapsed
+        '}
 
-        nvPrincipal.MenuItems.Add(separadorVolver)
-        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Back"), FontAwesomeIcon.ArrowLeft, 1, Visibility.Collapsed))
+        'nvPrincipal.MenuItems.Add(separadorVolver)
+        'nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Back"), FontAwesomeIcon.ArrowLeft, 1, Visibility.Collapsed))
 
-        nvPrincipal.MenuItems.Add(New NavigationViewItemSeparator)
-        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Home"), FontAwesomeIcon.Home, 2, Visibility.Visible))
-        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Mentions"), FontAwesomeIcon.Bell, 3, Visibility.Visible))
-        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("WriteTweet"), FontAwesomeIcon.Pencil, 4, Visibility.Visible))
-        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("SearchUsers"), FontAwesomeIcon.Users, 5, Visibility.Visible))
-        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("SearchTweets"), FontAwesomeIcon.Hashtag, 6, Visibility.Visible))
-        nvPrincipal.MenuItems.Add(New NavigationViewItemSeparator)
-        nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Config"), FontAwesomeIcon.Cog, 7, Visibility.Visible))
+        'nvPrincipal.MenuItems.Add(New NavigationViewItemSeparator)
+        'nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Home"), FontAwesomeIcon.Home, 2, Visibility.Visible))
+        'nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Mentions"), FontAwesomeIcon.Bell, 3, Visibility.Visible))
+        'nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("WriteTweet"), FontAwesomeIcon.Pencil, 4, Visibility.Visible))
+        'nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("SearchUsers"), FontAwesomeIcon.Users, 5, Visibility.Visible))
+        'nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("SearchTweets"), FontAwesomeIcon.Hashtag, 6, Visibility.Visible))
+        'nvPrincipal.MenuItems.Add(New NavigationViewItemSeparator)
+        'nvPrincipal.MenuItems.Add(NavigationViewItems.Generar(recursos.GetString("Config"), FontAwesomeIcon.Cog, 7, Visibility.Visible))
 
     End Sub
 
     Private Sub Nv_ItemInvoked(sender As NavigationView, args As NavigationViewItemInvokedEventArgs)
 
-        Dim usuario As TwitterUsuario = Nothing
-
-        If TypeOf nvItemUsuarios.Tag Is TwitterUsuario Then
-            usuario = nvItemUsuarios.Tag
-        ElseIf TypeOf nvitemUsuarios.Tag Is pepeizq.Twitter.MegaUsuario Then
-            Dim megaUsuario As pepeizq.Twitter.MegaUsuario = nvItemUsuarios.Tag
-            usuario = megaUsuario.Usuario
-        End If
-
-        gridConfig.Visibility = Visibility.Collapsed
-        gridBusquedaUsuarios.Visibility = Visibility.Collapsed
-        gridBusquedaTweets.Visibility = Visibility.Collapsed
-        gridImagenAmpliada.Visibility = Visibility.Collapsed
-        gridVideoAmpliado.Visibility = Visibility.Collapsed
-        gridUsuarioAmpliado.Visibility = Visibility.Collapsed
-        gridTweetAmpliado.Visibility = Visibility.Collapsed
-        gridOEmbedAmpliado.Visibility = Visibility.Collapsed
-
-        App.Current.Resources("ButtonBackgroundPointerOver") = App.Current.Resources("ColorPrimario")
-
-        Dim recursos As New Resources.ResourceLoader()
-
-        Dim frame As Frame = Window.Current.Content
-        Dim pagina As Page = frame.Content
-
-        Dim nvPrincipal As NavigationView = pagina.FindName("nvPrincipal")
-
-        For Each item2 In nvPrincipal.MenuItems
-            If TypeOf item2 Is NavigationViewItem Then
-                Dim nv As NavigationViewItem = item2
-
-                If TypeOf nv.Content Is TextBlock Then
-                    Dim tb As TextBlock = nv.Content
-
-                    If tb.Text = recursos.GetString("Back") Then
-                        nv.Visibility = Visibility.Collapsed
-                    End If
-                End If
-            End If
-        Next
-
-        Dim separador As NavigationViewItemSeparator = pagina.FindName("nvSeparadorVolver")
-        separador.Visibility = Visibility.Collapsed
-
         If TypeOf args.InvokedItem Is TextBlock Then
             Dim item As TextBlock = args.InvokedItem
 
-            If item.Text = recursos.GetString("Back") Then
 
-                App.Current.Resources("ButtonBackgroundPointerOver") = App.Current.Resources("ColorPrimario")
-
-                Try
-                    videoAmpliado.MediaPlayer.Pause()
-                Catch ex As Exception
-
-                End Try
-
-                gridImagenAmpliada.Visibility = Visibility.Collapsed
-                gridVideoAmpliado.Visibility = Visibility.Collapsed
-                gridTweetAmpliado.Visibility = Visibility.Collapsed
-                gridUsuarioAmpliado.Visibility = Visibility.Collapsed
-                gridOEmbedAmpliado.Visibility = Visibility.Collapsed
-
-            ElseIf item.Text = recursos.GetString("Home") Then
-
-                If Not usuario Is Nothing Then
-                    Dim grid As Grid = pagina.FindName("gridTweets" + usuario.ID)
-
-                    If Not grid Is Nothing Then
-                        UsuarioXaml.GridVisibilidad(grid, usuario)
-                    End If
-                End If
-
-            ElseIf item.Text = recursos.GetString("Mentions") Then
-
-                If Not usuario Is Nothing Then
-                    Dim grid As Grid = pagina.FindName("gridMenciones" + usuario.ID)
-
-                    If Not grid Is Nothing Then
-                        UsuarioXaml.GridVisibilidad(grid, usuario)
-                    End If
-                End If
-
-            ElseIf item.Text = recursos.GetString("WriteTweet") Then
-
-                If Not usuario Is Nothing Then
-                    Dim grid As Grid = pagina.FindName("gridEscribir" + usuario.ID)
-
-                    If Not grid Is Nothing Then
-                        UsuarioXaml.GridVisibilidad(grid, usuario)
-                    End If
-                End If
-
-            ElseIf item.Text = recursos.GetString("SearchUsers") Then
-
-                If Not usuario Is Nothing Then
-                    GridVisibilidad(gridBusquedaUsuarios, Nothing)
-                    pepeizq.Twitter.Xaml.BusquedaUsuarios.Generar()
-                End If
-
-            ElseIf item.Text = recursos.GetString("SearchTweets") Then
-
-                If Not usuario Is Nothing Then
-                    GridVisibilidad(gridBusquedaTweets, Nothing)
-                    pepeizq.Twitter.Xaml.BusquedaTweets.Generar()
-                End If
-
-            ElseIf item.Text = recursos.GetString("Config") Then
-
-                GridVisibilidad(gridConfig, Nothing)
-                SpConfigVisibilidad(botonConfigCuentas, spConfigCuentas)
-
-            End If
-        ElseIf TypeOf args.InvokedItem Is StackPanel Then
-            Dim item As StackPanel = args.InvokedItem
-
-            If Not item Is Nothing Then
-
-                Dim usuarioAmpliado As pepeizq.Twitter.Objetos.UsuarioAmpliado = item.Tag
-
-                If Not usuarioAmpliado Is Nothing Then
-                    FichaUsuarioXaml.Generar(usuarioAmpliado, Nothing)
-                End If
-
-            End If
         End If
+
+        'Dim usuario As TwitterUsuario = Nothing
+
+        'If TypeOf nvItemUsuarios.Tag Is TwitterUsuario Then
+        '    usuario = nvItemUsuarios.Tag
+        'ElseIf TypeOf nvitemUsuarios.Tag Is pepeizq.Twitter.MegaUsuario Then
+        '    Dim megaUsuario As pepeizq.Twitter.MegaUsuario = nvItemUsuarios.Tag
+        '    usuario = megaUsuario.Usuario
+        'End If
+
+        'gridConfig.Visibility = Visibility.Collapsed
+        'gridBusquedaUsuarios.Visibility = Visibility.Collapsed
+        'gridBusquedaTweets.Visibility = Visibility.Collapsed
+        'gridImagenAmpliada.Visibility = Visibility.Collapsed
+        'gridVideoAmpliado.Visibility = Visibility.Collapsed
+        'gridUsuarioAmpliado.Visibility = Visibility.Collapsed
+        'gridTweetAmpliado.Visibility = Visibility.Collapsed
+        'gridOEmbedAmpliado.Visibility = Visibility.Collapsed
+
+        'App.Current.Resources("ButtonBackgroundPointerOver") = App.Current.Resources("ColorPrimario")
+
+        'Dim recursos As New Resources.ResourceLoader()
+
+        'Dim frame As Frame = Window.Current.Content
+        'Dim pagina As Page = frame.Content
+
+        'Dim nvPrincipal As NavigationView = pagina.FindName("nvPrincipal")
+
+        'For Each item2 In nvPrincipal.MenuItems
+        '    If TypeOf item2 Is NavigationViewItem Then
+        '        Dim nv As NavigationViewItem = item2
+
+        '        If TypeOf nv.Content Is TextBlock Then
+        '            Dim tb As TextBlock = nv.Content
+
+        '            If tb.Text = recursos.GetString("Back") Then
+        '                nv.Visibility = Visibility.Collapsed
+        '            End If
+        '        End If
+        '    End If
+        'Next
+
+        'Dim separador As NavigationViewItemSeparator = pagina.FindName("nvSeparadorVolver")
+        'separador.Visibility = Visibility.Collapsed
+
+        'If TypeOf args.InvokedItem Is TextBlock Then
+        '    Dim item As TextBlock = args.InvokedItem
+
+        '    If item.Text = recursos.GetString("Back") Then
+
+        '        App.Current.Resources("ButtonBackgroundPointerOver") = App.Current.Resources("ColorPrimario")
+
+        '        Try
+        '            videoAmpliado.MediaPlayer.Pause()
+        '        Catch ex As Exception
+
+        '        End Try
+
+        '        gridImagenAmpliada.Visibility = Visibility.Collapsed
+        '        gridVideoAmpliado.Visibility = Visibility.Collapsed
+        '        gridTweetAmpliado.Visibility = Visibility.Collapsed
+        '        gridUsuarioAmpliado.Visibility = Visibility.Collapsed
+        '        gridOEmbedAmpliado.Visibility = Visibility.Collapsed
+
+        '    ElseIf item.Text = recursos.GetString("Home") Then
+
+        '        If Not usuario Is Nothing Then
+        '            Dim grid As Grid = pagina.FindName("gridTweets" + usuario.ID)
+
+        '            If Not grid Is Nothing Then
+        '                UsuarioXaml.GridVisibilidad(grid, usuario)
+        '            End If
+        '        End If
+
+        '    ElseIf item.Text = recursos.GetString("Mentions") Then
+
+        '        If Not usuario Is Nothing Then
+        '            Dim grid As Grid = pagina.FindName("gridMenciones" + usuario.ID)
+
+        '            If Not grid Is Nothing Then
+        '                UsuarioXaml.GridVisibilidad(grid, usuario)
+        '            End If
+        '        End If
+
+        '    ElseIf item.Text = recursos.GetString("WriteTweet") Then
+
+        '        If Not usuario Is Nothing Then
+        '            Dim grid As Grid = pagina.FindName("gridEscribir" + usuario.ID)
+
+        '            If Not grid Is Nothing Then
+        '                UsuarioXaml.GridVisibilidad(grid, usuario)
+        '            End If
+        '        End If
+
+        '    ElseIf item.Text = recursos.GetString("SearchUsers") Then
+
+        '        If Not usuario Is Nothing Then
+        '            GridVisibilidad(gridBusquedaUsuarios, Nothing)
+        '            pepeizq.Twitter.Xaml.BusquedaUsuarios.Generar()
+        '        End If
+
+        '    ElseIf item.Text = recursos.GetString("SearchTweets") Then
+
+        '        If Not usuario Is Nothing Then
+        '            GridVisibilidad(gridBusquedaTweets, Nothing)
+        '            pepeizq.Twitter.Xaml.BusquedaTweets.Generar()
+        '        End If
+
+        '    ElseIf item.Text = recursos.GetString("Config") Then
+
+        '        GridVisibilidad(gridConfig, Nothing)
+        '        SpConfigVisibilidad(botonConfigCuentas, spConfigCuentas)
+
+        '    End If
+        'ElseIf TypeOf args.InvokedItem Is StackPanel Then
+        '    Dim item As StackPanel = args.InvokedItem
+
+        '    If Not item Is Nothing Then
+
+        '        Dim usuarioAmpliado As pepeizq.Twitter.Objetos.UsuarioAmpliado = item.Tag
+
+        '        If Not usuarioAmpliado Is Nothing Then
+        '            FichaUsuarioXaml.Generar(usuarioAmpliado, Nothing)
+        '        End If
+
+        '    End If
+        'End If
 
     End Sub
 
@@ -218,561 +224,564 @@ Public NotInheritable Class MainPage
         'Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = "en-US"
 
         Configuracion.Iniciar()
-        MasCosas.Generar()
+        Conexion.Cargar()
+        Interfaz.Pestañas.Cargar()
 
-        Dim recursos As New Resources.ResourceLoader
+        'MasCosas.Generar()
 
-        GridVisibilidad(gridPrincipal, Nothing)
-        nvPrincipal.IsPaneOpen = False
+        'Dim recursos As New Resources.ResourceLoader
+
+        'GridVisibilidad(gridPrincipal, Nothing)
+        'nvPrincipal.IsPaneOpen = False
 
         Dim helper As New LocalObjectStorageHelper
 
-        Dim listaUsuarios As New List(Of TwitterUsuario)
+        'Dim listaUsuarios As New List(Of TwitterUsuario)
 
-        If helper.KeyExists("listaUsuarios5") Then
-            listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios5")
-        End If
+        'If helper.KeyExists("listaUsuarios5") Then
+        '    listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios5")
+        'End If
 
-        Dim i As Integer = 0
+        'Dim i As Integer = 0
 
-        If Not listaUsuarios Is Nothing Then
-            If listaUsuarios.Count > 0 Then
-                UsuarioXaml.GenerarListaUsuarios(listaUsuarios)
+        'If Not listaUsuarios Is Nothing Then
+        '    If listaUsuarios.Count > 0 Then
+        '        UsuarioXaml.GenerarListaUsuarios(listaUsuarios)
 
-                Dim listaSalto As JumpList = Await JumpList.LoadCurrentAsync
-                listaSalto.Items.Clear()
+        '        Dim listaSalto As JumpList = Await JumpList.LoadCurrentAsync
+        '        listaSalto.Items.Clear()
 
-                For Each usuario In listaUsuarios
-                    Dim megaUsuario As pepeizq.Twitter.MegaUsuario = Nothing
+        '        For Each usuario In listaUsuarios
+        '            Dim megaUsuario As pepeizq.Twitter.MegaUsuario = Nothing
 
-                    Try
-                        megaUsuario = Await TwitterConexion.Iniciar(usuario)
-                    Catch ex As Exception
+        '            Try
+        '                megaUsuario = Await TwitterConexion.Iniciar(usuario)
+        '            Catch ex As Exception
 
-                    End Try
+        '            End Try
 
-                    If Not megaUsuario Is Nothing Then
-                        Dim visibilidad As New Visibility
+        '            If Not megaUsuario Is Nothing Then
+        '                Dim visibilidad As New Visibility
 
-                        If i = 0 Then
-                            visibilidad = Visibility.Visible
-                        Else
-                            visibilidad = Visibility.Collapsed
-                        End If
+        '                If i = 0 Then
+        '                    visibilidad = Visibility.Visible
+        '                Else
+        '                    visibilidad = Visibility.Collapsed
+        '                End If
 
-                        If cbConfigSeguirDeals.IsChecked = True Then
-                            Await TwitterPeticiones.SeguirUsuario(False, megaUsuario, "1030738433105387520")
-                        End If
+        '                If cbConfigSeguirDeals.IsChecked = True Then
+        '                    Await TwitterPeticiones.SeguirUsuario(False, megaUsuario, "1030738433105387520")
+        '                End If
 
-                        UsuarioXaml.GenerarCadaUsuario(megaUsuario, visibilidad)
+        '                UsuarioXaml.GenerarCadaUsuario(megaUsuario, visibilidad)
 
-                        Dim itemSalto As JumpListItem = JumpListItem.CreateWithArguments(megaUsuario.Usuario.ScreenNombre, megaUsuario.Usuario.Nombre)
-                        itemSalto.Logo = New Uri("ms-appx:///Assets/logo2.png")
-                        listaSalto.Items.Add(itemSalto)
+        '                Dim itemSalto As JumpListItem = JumpListItem.CreateWithArguments(megaUsuario.Usuario.ScreenNombre, megaUsuario.Usuario.Nombre)
+        '                itemSalto.Logo = New Uri("ms-appx:///Assets/logo2.png")
+        '                listaSalto.Items.Add(itemSalto)
 
-                        i += 1
-                    End If
-                Next
+        '                i += 1
+        '            End If
+        '        Next
 
-                Await listaSalto.SaveAsync
+        '        Await listaSalto.SaveAsync
 
-            ElseIf listaUsuarios.Count = 0 Then
-                For Each item In nvPrincipal.MenuItems
-                    If TypeOf item Is NavigationViewItem Then
-                        Dim nvItem As NavigationViewItem = item
-                        nvItem.Visibility = Visibility.Collapsed
-                    End If
-                Next
+        '    ElseIf listaUsuarios.Count = 0 Then
+        '        For Each item In nvPrincipal.MenuItems
+        '            If TypeOf item Is NavigationViewItem Then
+        '                Dim nvItem As NavigationViewItem = item
+        '                nvItem.Visibility = Visibility.Collapsed
+        '            End If
+        '        Next
 
-                GridVisibilidad(gridConfig, recursos.GetString("Config"))
-                SpConfigVisibilidad(botonConfigCuentas, spConfigCuentas)
-            End If
+        '        GridVisibilidad(gridConfig, recursos.GetString("Config"))
+        '        SpConfigVisibilidad(botonConfigCuentas, spConfigCuentas)
+        '    End If
 
-            tbNumeroCuentas.Text = listaUsuarios.Count.ToString + "/25"
-        Else
-            tbNumeroCuentas.Text = "0/25"
-        End If
+        '    tbNumeroCuentas.Text = listaUsuarios.Count.ToString + "/25"
+        'Else
+        '    tbNumeroCuentas.Text = "0/25"
+        'End If
 
-        '--------------------------------------------------------
+        ''--------------------------------------------------------
 
-        Dim transpariencia As New UISettings
-        TransparienciaEfectosFinal(transpariencia.AdvancedEffectsEnabled)
-        AddHandler transpariencia.AdvancedEffectsEnabledChanged, AddressOf TransparienciaEfectosCambia
-
-    End Sub
-
-    Private Sub TransparienciaEfectosCambia(sender As UISettings, e As Object)
-
-        TransparienciaEfectosFinal(sender.AdvancedEffectsEnabled)
+        'Dim transpariencia As New UISettings
+        'TransparienciaEfectosFinal(transpariencia.AdvancedEffectsEnabled)
+        'AddHandler transpariencia.AdvancedEffectsEnabledChanged, AddressOf TransparienciaEfectosCambia
 
     End Sub
 
-    Private Async Sub TransparienciaEfectosFinal(estado As Boolean)
+    'Private Sub TransparienciaEfectosCambia(sender As UISettings, e As Object)
 
-        Await Dispatcher.RunAsync(CoreDispatcherPriority.High, Sub()
-                                                                   If estado = True Then
-                                                                       gridConfig.Background = App.Current.Resources("GridAcrilico")
-                                                                       gridImagenAmpliada.Background = App.Current.Resources("GridAcrilico")
-                                                                       gridVideoAmpliado.Background = App.Current.Resources("GridAcrilico")
-                                                                       gridOEmbedAmpliado.Background = App.Current.Resources("GridAcrilico")
-                                                                   Else
-                                                                       gridConfig.Background = New SolidColorBrush(Colors.LightGray)
-                                                                       gridImagenAmpliada.Background = New SolidColorBrush(Colors.LightGray)
-                                                                       gridVideoAmpliado.Background = New SolidColorBrush(Colors.LightGray)
-                                                                       gridOEmbedAmpliado.Background = New SolidColorBrush(Colors.LightGray)
-                                                                   End If
-                                                               End Sub)
+    '    TransparienciaEfectosFinal(sender.AdvancedEffectsEnabled)
 
-    End Sub
+    'End Sub
 
-    Public Sub GridVisibilidad(grid As Grid, tag As String)
+    'Private Async Sub TransparienciaEfectosFinal(estado As Boolean)
 
-        If Not tag = String.Empty Then
-            tbTitulo.Text = Package.Current.DisplayName + " (" + Package.Current.Id.Version.Major.ToString + "." + Package.Current.Id.Version.Minor.ToString + "." + Package.Current.Id.Version.Build.ToString + "." + Package.Current.Id.Version.Revision.ToString + ")"
-            tbTitulo.Text = tbTitulo.Text + " - " + tag
-        End If
+    '    Await Dispatcher.RunAsync(CoreDispatcherPriority.High, Sub()
+    '                                                               If estado = True Then
+    '                                                                   gridConfig.Background = App.Current.Resources("GridAcrilico")
+    '                                                                   gridImagenAmpliada.Background = App.Current.Resources("GridAcrilico")
+    '                                                                   gridVideoAmpliado.Background = App.Current.Resources("GridAcrilico")
+    '                                                                   gridOEmbedAmpliado.Background = App.Current.Resources("GridAcrilico")
+    '                                                               Else
+    '                                                                   gridConfig.Background = New SolidColorBrush(Colors.LightGray)
+    '                                                                   gridImagenAmpliada.Background = New SolidColorBrush(Colors.LightGray)
+    '                                                                   gridVideoAmpliado.Background = New SolidColorBrush(Colors.LightGray)
+    '                                                                   gridOEmbedAmpliado.Background = New SolidColorBrush(Colors.LightGray)
+    '                                                               End If
+    '                                                           End Sub)
 
-        gridConfig.Visibility = Visibility.Collapsed
-        gridBusquedaUsuarios.Visibility = Visibility.Collapsed
-        gridBusquedaTweets.Visibility = Visibility.Collapsed
-        gridImagenAmpliada.Visibility = Visibility.Collapsed
-        gridVideoAmpliado.Visibility = Visibility.Collapsed
-        gridUsuarioAmpliado.Visibility = Visibility.Collapsed
-        gridTweetAmpliado.Visibility = Visibility.Collapsed
-        gridOEmbedAmpliado.Visibility = Visibility.Collapsed
+    'End Sub
 
-        grid.Visibility = Visibility.Visible
+    'Public Sub GridVisibilidad(grid As Grid, tag As String)
 
-    End Sub
+    '    If Not tag = String.Empty Then
+    '        tbTitulo.Text = Package.Current.DisplayName + " (" + Package.Current.Id.Version.Major.ToString + "." + Package.Current.Id.Version.Minor.ToString + "." + Package.Current.Id.Version.Build.ToString + "." + Package.Current.Id.Version.Revision.ToString + ")"
+    '        tbTitulo.Text = tbTitulo.Text + " - " + tag
+    '    End If
 
-    Private Sub UsuarioEntraBoton(sender As Object, e As PointerRoutedEventArgs)
+    '    gridConfig.Visibility = Visibility.Collapsed
+    '    gridBusquedaUsuarios.Visibility = Visibility.Collapsed
+    '    gridBusquedaTweets.Visibility = Visibility.Collapsed
+    '    gridImagenAmpliada.Visibility = Visibility.Collapsed
+    '    gridVideoAmpliado.Visibility = Visibility.Collapsed
+    '    gridUsuarioAmpliado.Visibility = Visibility.Collapsed
+    '    gridTweetAmpliado.Visibility = Visibility.Collapsed
+    '    gridOEmbedAmpliado.Visibility = Visibility.Collapsed
 
-        Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
+    '    grid.Visibility = Visibility.Visible
 
-    End Sub
+    'End Sub
 
-    Private Sub UsuarioSaleBoton(sender As Object, e As PointerRoutedEventArgs)
+    'Private Sub UsuarioEntraBoton(sender As Object, e As PointerRoutedEventArgs)
 
-        Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
+    '    Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
 
-    End Sub
+    'End Sub
 
-    'CONFIG-----------------------------------------------------------------------------
+    'Private Sub UsuarioSaleBoton(sender As Object, e As PointerRoutedEventArgs)
 
-    Public Sub SpConfigVisibilidad(boton As Button, sp As StackPanel)
+    '    Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
 
-        botonConfigCuentas.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
-        botonConfigApp.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
-        botonConfigNotificaciones.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+    'End Sub
 
-        spConfigCuentas.Visibility = Visibility.Collapsed
-        spConfigApp.Visibility = Visibility.Collapsed
-        spConfigNotificaciones.Visibility = Visibility.Collapsed
+    ''CONFIG-----------------------------------------------------------------------------
 
-        boton.Background = New SolidColorBrush(App.Current.Resources("ColorCuarto"))
-        sp.Visibility = Visibility.Visible
+    'Public Sub SpConfigVisibilidad(boton As Button, sp As StackPanel)
 
-    End Sub
+    '    botonConfigCuentas.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+    '    botonConfigApp.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
+    '    botonConfigNotificaciones.Background = New SolidColorBrush(App.Current.Resources("ColorSecundario"))
 
-    Private Sub BotonConfigCuentas_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigCuentas.Click
+    '    spConfigCuentas.Visibility = Visibility.Collapsed
+    '    spConfigApp.Visibility = Visibility.Collapsed
+    '    spConfigNotificaciones.Visibility = Visibility.Collapsed
 
-        SpConfigVisibilidad(botonConfigCuentas, spConfigCuentas)
+    '    boton.Background = New SolidColorBrush(App.Current.Resources("ColorCuarto"))
+    '    sp.Visibility = Visibility.Visible
 
-    End Sub
+    'End Sub
 
-    Private Sub BotonConfigApp_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigApp.Click
+    'Private Sub BotonConfigCuentas_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigCuentas.Click
 
-        SpConfigVisibilidad(botonConfigApp, spConfigApp)
+    '    SpConfigVisibilidad(botonConfigCuentas, spConfigCuentas)
 
-    End Sub
+    'End Sub
 
-    Private Sub BotonConfigNotificaciones_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigNotificaciones.Click
+    'Private Sub BotonConfigApp_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigApp.Click
 
-        SpConfigVisibilidad(botonConfigNotificaciones, spConfigNotificaciones)
+    '    SpConfigVisibilidad(botonConfigApp, spConfigApp)
 
-    End Sub
+    'End Sub
 
-    Private Async Sub BotonAñadirCuenta_Click(sender As Object, e As RoutedEventArgs) Handles botonAñadirCuenta.Click
+    'Private Sub BotonConfigNotificaciones_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigNotificaciones.Click
 
-        Dim recursos As New Resources.ResourceLoader
-        Dim helper As New LocalObjectStorageHelper
+    '    SpConfigVisibilidad(botonConfigNotificaciones, spConfigNotificaciones)
 
-        Dim listaUsuarios As New List(Of TwitterUsuario)
+    'End Sub
 
-        If helper.KeyExists("listaUsuarios5") Then
-            listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios5")
-        End If
+    'Private Async Sub BotonAñadirCuenta_Click(sender As Object, e As RoutedEventArgs) Handles botonAñadirCuenta.Click
 
-        Dim visibilidad As New Visibility
+    '    'Dim recursos As New Resources.ResourceLoader
+    '    'Dim helper As New LocalObjectStorageHelper
 
-        If listaUsuarios.Count = 0 Then
-            visibilidad = Visibility.Visible
-        Else
-            visibilidad = Visibility.Collapsed
-        End If
+    '    'Dim listaUsuarios As New List(Of TwitterUsuario)
 
-        Dim megaUsuario As pepeizq.Twitter.MegaUsuario = Await TwitterConexion.Iniciar(Nothing)
+    '    'If helper.KeyExists("listaUsuarios5") Then
+    '    '    listaUsuarios = helper.Read(Of List(Of TwitterUsuario))("listaUsuarios5")
+    '    'End If
 
-        If Not megaUsuario Is Nothing Then
-            UsuarioXaml.GenerarCadaUsuario(megaUsuario, visibilidad)
-        End If
+    '    'Dim visibilidad As New Visibility
 
-        tbNumeroCuentas.Text = lvConfigUsuarios.Items.Count.ToString + "/25"
+    '    'If listaUsuarios.Count = 0 Then
+    '    '    visibilidad = Visibility.Visible
+    '    'Else
+    '    '    visibilidad = Visibility.Collapsed
+    '    'End If
 
-        If lvConfigUsuarios.Items.Count > 0 Then
-            If lvConfigUsuarios.Items.Count > 1 Then
-                nvItemUsuarios.Visibility = Visibility.Visible
-            Else
-                nvItemUsuarios.Visibility = Visibility.Collapsed
-            End If
+    '    'Dim megaUsuario As pepeizq.Twitter.MegaUsuario = Await TwitterConexion.Iniciar(Nothing)
 
-            If lvConfigUsuarios.Items.Count > 25 Then
-                botonAñadirCuenta.IsEnabled = False
-            End If
+    '    'If Not megaUsuario Is Nothing Then
+    '    '    UsuarioXaml.GenerarCadaUsuario(megaUsuario, visibilidad)
+    '    'End If
 
-            For Each item In nvPrincipal.MenuItems
-                If TypeOf item Is NavigationViewItem Then
-                    Dim nvItem As NavigationViewItem = item
+    '    'tbNumeroCuentas.Text = lvConfigUsuarios.Items.Count.ToString + "/25"
 
-                    If TypeOf nvItem.Content Is TextBlock Then
-                        Dim tb As TextBlock = nvItem.Content
+    '    'If lvConfigUsuarios.Items.Count > 0 Then
+    '    '    If lvConfigUsuarios.Items.Count > 1 Then
+    '    '        nvItemUsuarios.Visibility = Visibility.Visible
+    '    '    Else
+    '    '        nvItemUsuarios.Visibility = Visibility.Collapsed
+    '    '    End If
 
-                        If tb.Text = recursos.GetString("Back") Then
-                            nvItem.Visibility = Visibility.Collapsed
-                        Else
-                            nvItem.Visibility = Visibility.Visible
-                        End If
-                    Else
-                        nvItem.Visibility = Visibility.Visible
-                    End If
-                End If
-            Next
-        Else
-            nvItemUsuarios.Visibility = Visibility.Collapsed
+    '    '    If lvConfigUsuarios.Items.Count > 25 Then
+    '    '        botonAñadirCuenta.IsEnabled = False
+    '    '    End If
 
-            For Each item In nvPrincipal.MenuItems
-                If TypeOf item Is NavigationViewItem Then
-                    Dim nvItem As NavigationViewItem = item
-                    nvItem.Visibility = Visibility.Collapsed
-                End If
-            Next
-        End If
+    '    '    For Each item In nvPrincipal.MenuItems
+    '    '        If TypeOf item Is NavigationViewItem Then
+    '    '            Dim nvItem As NavigationViewItem = item
 
-    End Sub
+    '    '            If TypeOf nvItem.Content Is TextBlock Then
+    '    '                Dim tb As TextBlock = nvItem.Content
 
-    Private Sub CbConfigSeguirDeals_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigSeguirDeals.Checked
+    '    '                If tb.Text = recursos.GetString("Back") Then
+    '    '                    nvItem.Visibility = Visibility.Collapsed
+    '    '                Else
+    '    '                    nvItem.Visibility = Visibility.Visible
+    '    '                End If
+    '    '            Else
+    '    '                nvItem.Visibility = Visibility.Visible
+    '    '            End If
+    '    '        End If
+    '    '    Next
+    '    'Else
+    '    '    nvItemUsuarios.Visibility = Visibility.Collapsed
 
-        Configuracion.SeguirDeals(cbConfigSeguirDeals.IsChecked, False)
+    '    '    For Each item In nvPrincipal.MenuItems
+    '    '        If TypeOf item Is NavigationViewItem Then
+    '    '            Dim nvItem As NavigationViewItem = item
+    '    '            nvItem.Visibility = Visibility.Collapsed
+    '    '        End If
+    '    '    Next
+    '    'End If
 
-    End Sub
+    'End Sub
 
-    Private Sub CbConfigSeguirDeals_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigSeguirDeals.Unchecked
+    'Private Sub CbConfigSeguirDeals_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigSeguirDeals.Checked
 
-        Configuracion.SeguirDeals(cbConfigSeguirDeals.IsChecked, False)
+    '    Configuracion.SeguirDeals(cbConfigSeguirDeals.IsChecked, False)
 
-    End Sub
+    'End Sub
 
-    Private Sub BotonConfigAppAutoArranque_Checked(sender As Object, e As RoutedEventArgs) Handles botonConfigAppAutoArranque.Click
+    'Private Sub CbConfigSeguirDeals_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigSeguirDeals.Unchecked
 
-        Configuracion.AutoArranque()
+    '    Configuracion.SeguirDeals(cbConfigSeguirDeals.IsChecked, False)
 
-    End Sub
+    'End Sub
 
-    Private Sub CbConfigAppTooltipsAyuda_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppTooltipsAyuda.Checked
+    'Private Sub BotonConfigAppAutoArranque_Checked(sender As Object, e As RoutedEventArgs) Handles botonConfigAppAutoArranque.Click
 
-        Configuracion.CargarTooltipsAyuda(True)
+    '    Configuracion.AutoArranque()
 
-    End Sub
+    'End Sub
 
-    Private Sub CbConfigAppTooltipsAyuda_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppTooltipsAyuda.Unchecked
+    'Private Sub CbConfigAppTooltipsAyuda_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppTooltipsAyuda.Checked
 
-        Configuracion.CargarTooltipsAyuda(False)
+    '    Configuracion.CargarTooltipsAyuda(True)
 
-    End Sub
+    'End Sub
 
-    Private Sub CbConfigAppCargarMedia_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppCargarMedia.Checked
+    'Private Sub CbConfigAppTooltipsAyuda_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppTooltipsAyuda.Unchecked
 
-        Configuracion.CargarMedia(True)
+    '    Configuracion.CargarTooltipsAyuda(False)
 
-    End Sub
+    'End Sub
 
-    Private Sub CbConfigAppCargarMedia_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppCargarMedia.Unchecked
+    'Private Sub CbConfigAppCargarMedia_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppCargarMedia.Checked
 
-        Configuracion.CargarMedia(False)
+    '    Configuracion.CargarMedia(True)
 
-    End Sub
+    'End Sub
 
-    Private Sub SliderMediaVistaPreviaAlto_ValueChanged(sender As Object, e As RangeBaseValueChangedEventArgs) Handles sliderMediaVistaPreviaAlto.ValueChanged
+    'Private Sub CbConfigAppCargarMedia_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppCargarMedia.Unchecked
 
-        Dim recursos As New Resources.ResourceLoader
+    '    Configuracion.CargarMedia(False)
 
-        If Not sliderMediaVistaPreviaAlto.Value = 1 Then
-            ApplicationData.Current.LocalSettings.Values("mediaVistaPreviaAlto") = sliderMediaVistaPreviaAlto.Value
+    'End Sub
 
-            tbMediaVistaPreviaAlto.Text = sliderMediaVistaPreviaAlto.Value.ToString + "px (" + recursos.GetString("Height") + ")"
-        End If
+    'Private Sub SliderMediaVistaPreviaAlto_ValueChanged(sender As Object, e As RangeBaseValueChangedEventArgs) Handles sliderMediaVistaPreviaAlto.ValueChanged
 
-    End Sub
+    '    Dim recursos As New Resources.ResourceLoader
 
-    Private Sub SliderMediaVistaPreviaAncho_ValueChanged(sender As Object, e As RangeBaseValueChangedEventArgs) Handles sliderMediaVistaPreviaAncho.ValueChanged
+    '    If Not sliderMediaVistaPreviaAlto.Value = 1 Then
+    '        ApplicationData.Current.LocalSettings.Values("mediaVistaPreviaAlto") = sliderMediaVistaPreviaAlto.Value
 
-        Dim recursos As New Resources.ResourceLoader
+    '        tbMediaVistaPreviaAlto.Text = sliderMediaVistaPreviaAlto.Value.ToString + "px (" + recursos.GetString("Height") + ")"
+    '    End If
 
-        If Not sliderMediaVistaPreviaAncho.Value = 1 Then
-            ApplicationData.Current.LocalSettings.Values("mediaVistaPreviaAncho") = sliderMediaVistaPreviaAncho.Value
+    'End Sub
 
-            tbMediaVistaPreviaAncho.Text = sliderMediaVistaPreviaAncho.Value.ToString + "px (" + recursos.GetString("Width") + ")"
-        End If
+    'Private Sub SliderMediaVistaPreviaAncho_ValueChanged(sender As Object, e As RangeBaseValueChangedEventArgs) Handles sliderMediaVistaPreviaAncho.ValueChanged
 
-    End Sub
+    '    Dim recursos As New Resources.ResourceLoader
 
-    Private Sub CbConfigAppTweetRetweets_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppTweetRetweets.Checked
+    '    If Not sliderMediaVistaPreviaAncho.Value = 1 Then
+    '        ApplicationData.Current.LocalSettings.Values("mediaVistaPreviaAncho") = sliderMediaVistaPreviaAncho.Value
 
-        Configuracion.CargarTweetRetweets(True)
+    '        tbMediaVistaPreviaAncho.Text = sliderMediaVistaPreviaAncho.Value.ToString + "px (" + recursos.GetString("Width") + ")"
+    '    End If
 
-    End Sub
+    'End Sub
 
-    Private Sub CbConfigAppTweetRetweets_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppTweetRetweets.Unchecked
+    'Private Sub CbConfigAppTweetRetweets_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppTweetRetweets.Checked
 
-        Configuracion.CargarTweetRetweets(False)
+    '    Configuracion.CargarTweetRetweets(True)
 
-    End Sub
+    'End Sub
 
-    Private Sub CbConfigAppTweetCard_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppTweetCard.Checked
+    'Private Sub CbConfigAppTweetRetweets_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppTweetRetweets.Unchecked
 
-        Configuracion.CargarTweetCard(True)
+    '    Configuracion.CargarTweetRetweets(False)
 
-    End Sub
+    'End Sub
 
-    Private Sub CbConfigAppTweetCard_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppTweetCard.Unchecked
+    'Private Sub CbConfigAppTweetCard_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppTweetCard.Checked
 
-        Configuracion.CargarTweetCard(False)
+    '    Configuracion.CargarTweetCard(True)
 
-    End Sub
+    'End Sub
 
-    Private Sub CbConfigNotificacionesInicioTiempo_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesInicioTiempo.Checked
+    'Private Sub CbConfigAppTweetCard_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigAppTweetCard.Unchecked
 
-        Configuracion.NotificacionesInicioTiempo(True)
+    '    Configuracion.CargarTweetCard(False)
 
-    End Sub
+    'End Sub
 
-    Private Sub CbConfigNotificacionesInicioTiempo_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesInicioTiempo.Unchecked
+    'Private Sub CbConfigNotificacionesInicioTiempo_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesInicioTiempo.Checked
 
-        Configuracion.NotificacionesInicioTiempo(False)
+    '    Configuracion.NotificacionesInicioTiempo(True)
 
-    End Sub
+    'End Sub
 
-    Private Sub SliderNotificacionesInicioTiempo_ValueChanged(sender As Object, e As RangeBaseValueChangedEventArgs) Handles sliderNotificacionesInicioTiempo.ValueChanged
+    'Private Sub CbConfigNotificacionesInicioTiempo_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesInicioTiempo.Unchecked
 
-        Dim recursos As New Resources.ResourceLoader
+    '    Configuracion.NotificacionesInicioTiempo(False)
 
-        If Not sliderNotificacionesInicioTiempo.Value = 5 Then
-            ApplicationData.Current.LocalSettings.Values("notificacionInicioTiempoSegundos") = sliderNotificacionesInicioTiempo.Value
+    'End Sub
 
-            tbConfigNotificacionesInicioTiempo.Text = sliderNotificacionesInicioTiempo.Value.ToString + " " + recursos.GetString("Seconds")
-        End If
+    'Private Sub SliderNotificacionesInicioTiempo_ValueChanged(sender As Object, e As RangeBaseValueChangedEventArgs) Handles sliderNotificacionesInicioTiempo.ValueChanged
 
-    End Sub
+    '    Dim recursos As New Resources.ResourceLoader
 
-    Private Sub CbConfigNotificacionesMencionesTiempo_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesMencionesTiempo.Checked
+    '    If Not sliderNotificacionesInicioTiempo.Value = 5 Then
+    '        ApplicationData.Current.LocalSettings.Values("notificacionInicioTiempoSegundos") = sliderNotificacionesInicioTiempo.Value
 
-        Configuracion.NotificacionesMencionesTiempo(True)
+    '        tbConfigNotificacionesInicioTiempo.Text = sliderNotificacionesInicioTiempo.Value.ToString + " " + recursos.GetString("Seconds")
+    '    End If
 
-    End Sub
+    'End Sub
 
-    Private Sub CbConfigNotificacionesMencionesTiempo_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesMencionesTiempo.Unchecked
+    'Private Sub CbConfigNotificacionesMencionesTiempo_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesMencionesTiempo.Checked
 
-        Configuracion.NotificacionesMencionesTiempo(False)
+    '    Configuracion.NotificacionesMencionesTiempo(True)
 
-    End Sub
+    'End Sub
 
-    Private Sub SliderNotificacionesMencionesTiempo_ValueChanged(sender As Object, e As RangeBaseValueChangedEventArgs) Handles sliderNotificacionesMencionesTiempo.ValueChanged
+    'Private Sub CbConfigNotificacionesMencionesTiempo_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesMencionesTiempo.Unchecked
 
-        Dim recursos As New Resources.ResourceLoader
+    '    Configuracion.NotificacionesMencionesTiempo(False)
 
-        If Not sliderNotificacionesMencionesTiempo.Value = 5 Then
-            ApplicationData.Current.LocalSettings.Values("notificacionMencionesTiempoSegundos") = sliderNotificacionesMencionesTiempo.Value
+    'End Sub
 
-            tbConfigNotificacionesMencionesTiempo.Text = sliderNotificacionesMencionesTiempo.Value.ToString + " " + recursos.GetString("Seconds")
-        End If
+    'Private Sub SliderNotificacionesMencionesTiempo_ValueChanged(sender As Object, e As RangeBaseValueChangedEventArgs) Handles sliderNotificacionesMencionesTiempo.ValueChanged
 
-    End Sub
+    '    Dim recursos As New Resources.ResourceLoader
 
-    Private Sub CbConfigNotificacionesInicioAgrupar_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesInicioAgrupar.Checked
+    '    If Not sliderNotificacionesMencionesTiempo.Value = 5 Then
+    '        ApplicationData.Current.LocalSettings.Values("notificacionMencionesTiempoSegundos") = sliderNotificacionesMencionesTiempo.Value
 
-        Configuracion.NotificacionesInicioAgrupar(True)
+    '        tbConfigNotificacionesMencionesTiempo.Text = sliderNotificacionesMencionesTiempo.Value.ToString + " " + recursos.GetString("Seconds")
+    '    End If
 
-    End Sub
+    'End Sub
 
-    Private Sub CbConfigNotificacionesInicioAgrupar_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesInicioAgrupar.Unchecked
+    'Private Sub CbConfigNotificacionesInicioAgrupar_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesInicioAgrupar.Checked
 
-        Configuracion.NotificacionesInicioAgrupar(False)
+    '    Configuracion.NotificacionesInicioAgrupar(True)
 
-    End Sub
+    'End Sub
 
-    Private Sub CbConfigNotificacionesMencionesAgrupar_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesMencionesAgrupar.Checked
+    'Private Sub CbConfigNotificacionesInicioAgrupar_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesInicioAgrupar.Unchecked
 
-        Configuracion.NotificacionesMencionesAgrupar(True)
+    '    Configuracion.NotificacionesInicioAgrupar(False)
 
-    End Sub
+    'End Sub
 
-    Private Sub CbConfigNotificacionesMencionesAgrupar_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesMencionesAgrupar.Unchecked
+    'Private Sub CbConfigNotificacionesMencionesAgrupar_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesMencionesAgrupar.Checked
 
-        Configuracion.NotificacionesMencionesAgrupar(False)
+    '    Configuracion.NotificacionesMencionesAgrupar(True)
 
-    End Sub
+    'End Sub
 
-    Private Sub CbConfigNotificacionesSonido_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesSonido.Checked
+    'Private Sub CbConfigNotificacionesMencionesAgrupar_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesMencionesAgrupar.Unchecked
 
-        Configuracion.NotificacionesSonido(True)
+    '    Configuracion.NotificacionesMencionesAgrupar(False)
 
-    End Sub
+    'End Sub
 
-    Private Sub CbConfigNotificacionesSonido_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesSonido.Unchecked
+    'Private Sub CbConfigNotificacionesSonido_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesSonido.Checked
 
-        Configuracion.NotificacionesSonido(False)
+    '    Configuracion.NotificacionesSonido(True)
 
-    End Sub
+    'End Sub
 
-    Private Sub CbConfigNotificacionesSonidoElegido_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbConfigNotificacionesSonidoElegido.SelectionChanged
+    'Private Sub CbConfigNotificacionesSonido_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesSonido.Unchecked
 
-        Dim cbItem As ComboBoxItem = cbConfigNotificacionesSonidoElegido.SelectedItem
-        ApplicationData.Current.LocalSettings.Values("notificacionSonidoElegido") = cbItem.Tag
+    '    Configuracion.NotificacionesSonido(False)
 
-    End Sub
+    'End Sub
 
-    Private Sub BotonConfigNotificacionesSonido_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigNotificacionesSonido.Click
+    'Private Sub CbConfigNotificacionesSonidoElegido_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cbConfigNotificacionesSonidoElegido.SelectionChanged
 
-        Dim cbItem As ComboBoxItem = cbConfigNotificacionesSonidoElegido.SelectedItem
+    '    Dim cbItem As ComboBoxItem = cbConfigNotificacionesSonidoElegido.SelectedItem
+    '    ApplicationData.Current.LocalSettings.Values("notificacionSonidoElegido") = cbItem.Tag
 
-        Dim sonido As New MediaPlayer With {
-            .Source = MediaSource.CreateFromUri(New Uri(cbItem.Tag))
-        }
+    'End Sub
 
-        sonido.Play()
+    'Private Sub BotonConfigNotificacionesSonido_Click(sender As Object, e As RoutedEventArgs) Handles botonConfigNotificacionesSonido.Click
 
-    End Sub
+    '    Dim cbItem As ComboBoxItem = cbConfigNotificacionesSonidoElegido.SelectedItem
 
-    Private Sub CbConfigNotificacionesImagen_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesImagen.Checked
+    '    Dim sonido As New MediaPlayer With {
+    '        .Source = MediaSource.CreateFromUri(New Uri(cbItem.Tag))
+    '    }
 
-        Configuracion.NotificacionesImagen(True)
+    '    sonido.Play()
 
-    End Sub
+    'End Sub
 
-    Private Sub CbConfigNotificacionesImagen_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesImagen.Unchecked
+    'Private Sub CbConfigNotificacionesImagen_Checked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesImagen.Checked
 
-        Configuracion.NotificacionesImagen(False)
+    '    Configuracion.NotificacionesImagen(True)
 
-    End Sub
+    'End Sub
 
-    'MEDIA-----------------------------------------------------------------------------
+    'Private Sub CbConfigNotificacionesImagen_Unchecked(sender As Object, e As RoutedEventArgs) Handles cbConfigNotificacionesImagen.Unchecked
 
-    Private Async Sub BotonDescargarImagen_Click(sender As Object, e As RoutedEventArgs) Handles botonDescargarImagen.Click
+    '    Configuracion.NotificacionesImagen(False)
 
-        botonDescargarImagen.IsEnabled = False
-        prDescargaImagen.Visibility = Visibility.Visible
+    'End Sub
 
-        Dim enlace As New Uri(imagenAmpliada.Source)
+    ''MEDIA-----------------------------------------------------------------------------
 
-        Dim picker As New FolderPicker()
+    'Private Async Sub BotonDescargarImagen_Click(sender As Object, e As RoutedEventArgs) Handles botonDescargarImagen.Click
 
-        picker.FileTypeFilter.Add("*")
-        picker.ViewMode = PickerViewMode.List
+    '    botonDescargarImagen.IsEnabled = False
+    '    prDescargaImagen.Visibility = Visibility.Visible
 
-        Try
-            Dim carpeta As StorageFolder = Await picker.PickSingleFolderAsync()
-            Dim fichero As StorageFile = Await carpeta.CreateFileAsync("twitter.jpg", CreationCollisionOption.ReplaceExisting)
-            Dim descargador As New BackgroundDownloader
-            Dim descarga As DownloadOperation = descargador.CreateDownload(enlace, fichero)
-            Await descarga.StartAsync
-        Catch ex As Exception
+    '    Dim enlace As New Uri(imagenAmpliada.Source)
 
-        End Try
+    '    Dim picker As New FolderPicker()
 
-        prDescargaImagen.Visibility = Visibility.Collapsed
-        botonDescargarImagen.IsEnabled = True
+    '    picker.FileTypeFilter.Add("*")
+    '    picker.ViewMode = PickerViewMode.List
 
-    End Sub
+    '    Try
+    '        Dim carpeta As StorageFolder = Await picker.PickSingleFolderAsync()
+    '        Dim fichero As StorageFile = Await carpeta.CreateFileAsync("twitter.jpg", CreationCollisionOption.ReplaceExisting)
+    '        Dim descargador As New BackgroundDownloader
+    '        Dim descarga As DownloadOperation = descargador.CreateDownload(enlace, fichero)
+    '        Await descarga.StartAsync
+    '    Catch ex As Exception
 
-    Private Sub BotonCopiarImagen_Click(sender As Object, e As RoutedEventArgs) Handles botonCopiarImagen.Click
+    '    End Try
 
-        Dim paquete As New DataPackage
-        paquete.SetText(imagenAmpliada.Source)
+    '    prDescargaImagen.Visibility = Visibility.Collapsed
+    '    botonDescargarImagen.IsEnabled = True
 
-        Clipboard.SetContent(paquete)
+    'End Sub
 
-    End Sub
+    'Private Sub BotonCopiarImagen_Click(sender As Object, e As RoutedEventArgs) Handles botonCopiarImagen.Click
 
-    Private Async Sub BotonDescargarVideo_Click(sender As Object, e As RoutedEventArgs) Handles botonDescargarVideo.Click
+    '    Dim paquete As New DataPackage
+    '    paquete.SetText(imagenAmpliada.Source)
 
-        botonDescargarVideo.IsEnabled = False
-        prDescargaVideo.Visibility = Visibility.Visible
+    '    Clipboard.SetContent(paquete)
 
-        Dim fuente As MediaSource = videoAmpliado.Source
-        Dim enlace As New Uri(fuente.Uri.ToString)
+    'End Sub
 
-        Dim picker As New FolderPicker()
+    'Private Async Sub BotonDescargarVideo_Click(sender As Object, e As RoutedEventArgs) Handles botonDescargarVideo.Click
 
-        picker.FileTypeFilter.Add("*")
-        picker.ViewMode = PickerViewMode.List
+    '    botonDescargarVideo.IsEnabled = False
+    '    prDescargaVideo.Visibility = Visibility.Visible
 
-        Try
-            Dim carpeta As StorageFolder = Await picker.PickSingleFolderAsync()
-            Dim fichero As StorageFile = Await carpeta.CreateFileAsync("twitter.mp4", CreationCollisionOption.ReplaceExisting)
-            Dim descargador As New BackgroundDownloader
-            Dim descarga As DownloadOperation = descargador.CreateDownload(enlace, fichero)
-            Await descarga.StartAsync
-        Catch ex As Exception
+    '    Dim fuente As MediaSource = videoAmpliado.Source
+    '    Dim enlace As New Uri(fuente.Uri.ToString)
 
-        End Try
+    '    Dim picker As New FolderPicker()
 
-        prDescargaVideo.Visibility = Visibility.Collapsed
-        botonDescargarVideo.IsEnabled = True
+    '    picker.FileTypeFilter.Add("*")
+    '    picker.ViewMode = PickerViewMode.List
 
-    End Sub
+    '    Try
+    '        Dim carpeta As StorageFolder = Await picker.PickSingleFolderAsync()
+    '        Dim fichero As StorageFile = Await carpeta.CreateFileAsync("twitter.mp4", CreationCollisionOption.ReplaceExisting)
+    '        Dim descargador As New BackgroundDownloader
+    '        Dim descarga As DownloadOperation = descargador.CreateDownload(enlace, fichero)
+    '        Await descarga.StartAsync
+    '    Catch ex As Exception
 
-    Private Sub BotonCopiarVideo_Click(sender As Object, e As RoutedEventArgs) Handles botonCopiarVideo.Click
+    '    End Try
 
-        Dim fuente As MediaSource = videoAmpliado.Source
-        Dim paquete As New DataPackage
-        paquete.SetText(fuente.Uri.ToString)
+    '    prDescargaVideo.Visibility = Visibility.Collapsed
+    '    botonDescargarVideo.IsEnabled = True
 
-        Clipboard.SetContent(paquete)
+    'End Sub
 
-    End Sub
+    'Private Sub BotonCopiarVideo_Click(sender As Object, e As RoutedEventArgs) Handles botonCopiarVideo.Click
 
-    'USUARIO-----------------------------------------------------------------------------
+    '    Dim fuente As MediaSource = videoAmpliado.Source
+    '    Dim paquete As New DataPackage
+    '    paquete.SetText(fuente.Uri.ToString)
 
-    Private Async Sub BotonEnlaceUsuario_Click(sender As Object, e As RoutedEventArgs) Handles botonEnlaceUsuario.Click
+    '    Clipboard.SetContent(paquete)
 
-        Await Launcher.LaunchUriAsync(botonEnlaceUsuario.Tag)
+    'End Sub
 
-    End Sub
+    ''USUARIO-----------------------------------------------------------------------------
 
-    Private Async Sub BotonNumTweetsUsuario_Click(sender As Object, e As RoutedEventArgs) Handles botonNumTweetsUsuario.Click
+    'Private Async Sub BotonEnlaceUsuario_Click(sender As Object, e As RoutedEventArgs) Handles botonEnlaceUsuario.Click
 
-        Await Launcher.LaunchUriAsync(botonNumTweetsUsuario.Tag)
+    '    Await Launcher.LaunchUriAsync(botonEnlaceUsuario.Tag)
 
-    End Sub
+    'End Sub
 
-    Private Async Sub BotonSeguidoresUsuario_Click(sender As Object, e As RoutedEventArgs) Handles botonSeguidoresUsuario.Click
+    'Private Async Sub BotonNumTweetsUsuario_Click(sender As Object, e As RoutedEventArgs) Handles botonNumTweetsUsuario.Click
 
-        Await Launcher.LaunchUriAsync(botonSeguidoresUsuario.Tag)
+    '    Await Launcher.LaunchUriAsync(botonNumTweetsUsuario.Tag)
 
-    End Sub
+    'End Sub
 
-    Private Async Sub BotonFavoritosUsuario_Click(sender As Object, e As RoutedEventArgs) Handles botonFavoritosUsuario.Click
+    'Private Async Sub BotonSeguidoresUsuario_Click(sender As Object, e As RoutedEventArgs) Handles botonSeguidoresUsuario.Click
 
-        Await Launcher.LaunchUriAsync(botonFavoritosUsuario.Tag)
+    '    Await Launcher.LaunchUriAsync(botonSeguidoresUsuario.Tag)
 
-    End Sub
+    'End Sub
 
-    Private Sub BotonSubirArribaUsuario_Click(sender As Object, e As RoutedEventArgs) Handles botonSubirArribaUsuario.Click
+    'Private Async Sub BotonFavoritosUsuario_Click(sender As Object, e As RoutedEventArgs) Handles botonFavoritosUsuario.Click
 
-        svTweetsUsuario.ChangeView(Nothing, 0, Nothing)
-        botonSubirArribaUsuario.Visibility = Visibility.Collapsed
+    '    Await Launcher.LaunchUriAsync(botonFavoritosUsuario.Tag)
 
-    End Sub
+    'End Sub
+
+    'Private Sub BotonSubirArribaUsuario_Click(sender As Object, e As RoutedEventArgs) Handles botonSubirArribaUsuario.Click
+
+    '    svTweetsUsuario.ChangeView(Nothing, 0, Nothing)
+    '    botonSubirArribaUsuario.Visibility = Visibility.Collapsed
+
+    'End Sub
 
 End Class
 

@@ -116,51 +116,55 @@
     <Compile Include="App.xaml.vb">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Clases\UsuarioBloqueos.vb" />
-    <Compile Include="Clases\MegaUsuario.vb" />
-    <Compile Include="Clases\Objetos\BusquedaUsuario.vb" />
-    <Compile Include="Clases\Objetos\EnviarTweet.vb" />
-    <Compile Include="Clases\Objetos\MediaDatos.vb" />
-    <Compile Include="Clases\Objetos\SeguirUsuarioBoton.vb" />
-    <Compile Include="Clases\Objetos\TweetAmpliado.vb" />
-    <Compile Include="Clases\Objetos\TweetXamlBoton.vb" />
-    <Compile Include="Clases\Objetos\ScrollViewerTweets.vb" />
-    <Compile Include="Clases\Objetos\TextoTweetEntidad.vb" />
-    <Compile Include="Clases\Objetos\UsuarioAmpliado.vb" />
-    <Compile Include="Clases\OEmbed.vb" />
-    <Compile Include="Clases\TweetsBusqueda.vb" />
-    <Compile Include="Clases\UsuarioMuteados.vb" />
+    <Compile Include="Antiguo\Clases\UsuarioBloqueos.vb" />
+    <Compile Include="Antiguo\Clases\MegaUsuario.vb" />
+    <Compile Include="Antiguo\Clases\Objetos\BusquedaUsuario.vb" />
+    <Compile Include="Antiguo\Clases\Objetos\EnviarTweet.vb" />
+    <Compile Include="Antiguo\Clases\Objetos\MediaDatos.vb" />
+    <Compile Include="Antiguo\Clases\Objetos\SeguirUsuarioBoton.vb" />
+    <Compile Include="Antiguo\Clases\Objetos\TweetAmpliado.vb" />
+    <Compile Include="Antiguo\Clases\Objetos\TweetXamlBoton.vb" />
+    <Compile Include="Antiguo\Clases\Objetos\ScrollViewerTweets.vb" />
+    <Compile Include="Antiguo\Clases\Objetos\TextoTweetEntidad.vb" />
+    <Compile Include="Antiguo\Clases\Objetos\UsuarioAmpliado.vb" />
+    <Compile Include="Antiguo\Clases\OEmbed.vb" />
+    <Compile Include="Antiguo\Clases\TweetsBusqueda.vb" />
+    <Compile Include="Antiguo\Clases\UsuarioMuteados.vb" />
     <Compile Include="MainPage.xaml.vb">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Modulos\Cliente\FichaBusquedaTweetsXaml.vb" />
-    <Compile Include="Modulos\Cliente\FichaBusquedaUsuariosXaml.vb" />
-    <Compile Include="Modulos\Conexion\TwitterPeticiones.vb" />
-    <Compile Include="Modulos\Configuracion.vb" />
+    <Compile Include="Antiguo\Modulos\Cliente\FichaBusquedaTweetsXaml.vb" />
+    <Compile Include="Antiguo\Modulos\Cliente\FichaBusquedaUsuariosXaml.vb" />
+    <Compile Include="Antiguo\Modulos\Conexion\TwitterPeticiones.vb" />
+    <Compile Include="Antiguo\Modulos\Configuracion.vb" />
+    <Compile Include="Modulos\Conexion.vb" />
     <Compile Include="Modulos\Decompiladores.vb" />
-    <Compile Include="Modulos\MasCosas.vb" />
-    <Compile Include="Modulos\NavigationViewItems.vb" />
+    <Compile Include="Antiguo\Modulos\MasCosas.vb" />
+    <Compile Include="Antiguo\Modulos\NavigationViewItems.vb" />
+    <Compile Include="Modulos\Interfaz\EfectosHover.vb" />
+    <Compile Include="Modulos\Interfaz\Pestañas.vb" />
+    <Compile Include="Modulos\Interfaz\Usuario.vb" />
     <Compile Include="Modulos\Notificaciones.vb" />
-    <Compile Include="Modulos\Conexion\TwitterConexion.vb" />
-    <Compile Include="Modulos\Conexion\TwitterStream.vb" />
-    <Compile Include="Modulos\Conexion\TwitterTimeLineInicio.vb" />
-    <Compile Include="Modulos\Conexion\TwitterTimeLineMenciones.vb" />
-    <Compile Include="Modulos\Cliente\FichaOEmbedXaml.vb" />
-    <Compile Include="Modulos\Cliente\FichaTweetXaml.vb" />
-    <Compile Include="Modulos\Cliente\FichaUsuarioXaml.vb" />
-    <Compile Include="Modulos\Cliente\TweetXaml\TweetXaml.vb" />
-    <Compile Include="Modulos\Cliente\TweetXaml\TweetXamlAvatar.vb" />
-    <Compile Include="Modulos\Cliente\TweetXaml\TweetXamlBotones.vb" />
-    <Compile Include="Modulos\Cliente\TweetXaml\TweetXamlEnviarTweet.vb" />
-    <Compile Include="Modulos\Cliente\TweetXaml\TweetXamlMedia.vb" />
-    <Compile Include="Modulos\Cliente\TweetXaml\TweetXamlCita.vb" />
-    <Compile Include="Modulos\Cliente\TweetXaml\TweetXamlRetweet.vb" />
-    <Compile Include="Modulos\Cliente\TweetXaml\TweetXamlTexto.vb" />
-    <Compile Include="Modulos\Cliente\TweetXaml\TweetXamlUsuario.vb" />
-    <Compile Include="Modulos\Cliente\UsuarioXaml\UsuarioXaml.vb" />
-    <Compile Include="Modulos\Cliente\UsuarioXaml\EscribirXaml.vb" />
-    <Compile Include="Modulos\Cliente\UsuarioXaml\InicioXaml.vb" />
-    <Compile Include="Modulos\Cliente\UsuarioXaml\MencionesXaml.vb" />
+    <Compile Include="Antiguo\Modulos\Conexion\TwitterConexion.vb" />
+    <Compile Include="Antiguo\Modulos\Conexion\TwitterStream.vb" />
+    <Compile Include="Antiguo\Modulos\Conexion\TwitterTimeLineInicio.vb" />
+    <Compile Include="Antiguo\Modulos\Conexion\TwitterTimeLineMenciones.vb" />
+    <Compile Include="Antiguo\Modulos\Cliente\FichaOEmbedXaml.vb" />
+    <Compile Include="Antiguo\Modulos\Cliente\FichaTweetXaml.vb" />
+    <Compile Include="Antiguo\Modulos\Cliente\FichaUsuarioXaml.vb" />
+    <Compile Include="Antiguo\Modulos\Cliente\TweetXaml\TweetXaml.vb" />
+    <Compile Include="Antiguo\Modulos\Cliente\TweetXaml\TweetXamlAvatar.vb" />
+    <Compile Include="Antiguo\Modulos\Cliente\TweetXaml\TweetXamlBotones.vb" />
+    <Compile Include="Antiguo\Modulos\Cliente\TweetXaml\TweetXamlEnviarTweet.vb" />
+    <Compile Include="Antiguo\Modulos\Cliente\TweetXaml\TweetXamlMedia.vb" />
+    <Compile Include="Antiguo\Modulos\Cliente\TweetXaml\TweetXamlCita.vb" />
+    <Compile Include="Antiguo\Modulos\Cliente\TweetXaml\TweetXamlRetweet.vb" />
+    <Compile Include="Antiguo\Modulos\Cliente\TweetXaml\TweetXamlTexto.vb" />
+    <Compile Include="Antiguo\Modulos\Cliente\TweetXaml\TweetXamlUsuario.vb" />
+    <Compile Include="Antiguo\Modulos\Cliente\UsuarioXaml\UsuarioXaml.vb" />
+    <Compile Include="Antiguo\Modulos\Cliente\UsuarioXaml\EscribirXaml.vb" />
+    <Compile Include="Antiguo\Modulos\Cliente\UsuarioXaml\InicioXaml.vb" />
+    <Compile Include="Antiguo\Modulos\Cliente\UsuarioXaml\MencionesXaml.vb" />
     <Compile Include="Modulos\Tiles.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
   </ItemGroup>
@@ -170,11 +174,6 @@
     </AppxManifest>
     <None Include="pepeizq%27s Twitter %28App%29_StoreKey.pfx" />
     <None Include="pepeizq's Twitter (App)_TemporaryKey.pfx" />
-    <PRIResource Include="Strings\zh-CN\Resources.resw" />
-    <PRIResource Include="Strings\pt-BR\Resources.resw" />
-    <PRIResource Include="Strings\pl-PL\Resources.resw" />
-    <PRIResource Include="Strings\ms-MY\Resources.resw" />
-    <PRIResource Include="Strings\fr-FR\Resources.resw" />
     <PRIResource Include="Strings\es-ES\Resources.resw" />
     <PRIResource Include="Strings\en-US\Resources.resw" />
   </ItemGroup>
@@ -281,17 +280,11 @@
     <Import Include="Windows.UI.Xaml.Navigation" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="FontAwesome.UWP">
-      <Version>4.7.0.9</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Advertising.XAML">
-      <Version>10.1811.22001</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory">
-      <Version>5.2.2</Version>
+    <PackageReference Include="FontAwesome5">
+      <Version>2.0.8</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.9</Version>
+      <Version>6.2.10</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Services.Store.Engagement">
       <Version>10.1901.28001</Version>
@@ -300,25 +293,28 @@
       <Version>10.1705.16001</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Services">
-      <Version>5.1.1</Version>
+      <Version>6.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp">
-      <Version>5.1.1</Version>
+      <Version>6.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
-      <Version>5.1.1</Version>
+      <Version>6.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Services">
-      <Version>5.1.1</Version>
+      <Version>6.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI">
-      <Version>5.1.1</Version>
+      <Version>6.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
-      <Version>5.1.1</Version>
+      <Version>6.1.1</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.2</Version>
+      <Version>12.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="TweetinviAPI">
+      <Version>5.0.3</Version>
     </PackageReference>
     <PackageReference Include="Unicode.net">
       <Version>0.1.2</Version>
@@ -333,9 +329,7 @@
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="pepeizqs Twitter Nuget">
-      <HintPath>..\..\pepeizq's Twitter (Nuget)\pepeizq's Twitter (Nuget)\bin\Release\pepeizqs Twitter Nuget.dll</HintPath>
-    </Reference>
+    <Folder Include="Clases\" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

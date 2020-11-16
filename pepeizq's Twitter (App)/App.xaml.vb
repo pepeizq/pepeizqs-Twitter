@@ -1,4 +1,6 @@
-﻿Imports Windows.ApplicationModel.ExtendedExecution
+﻿Imports Windows.ApplicationModel.Core
+Imports Windows.ApplicationModel.ExtendedExecution
+Imports Windows.UI
 
 NotInheritable Class App
     Inherits Application
@@ -18,33 +20,14 @@ NotInheritable Class App
             Window.Current.Content = rootFrame
         End If
 
-        Dim nuevaSesion As New ExtendedExecutionSession With {
-            .Reason = ExtendedExecutionReason.Unspecified
-        }
-
-        Dim resultado As ExtendedExecutionResult = Await nuevaSesion.RequestExtensionAsync
-
-        If resultado = ExtendedExecutionResult.Allowed Then
-            Dim recursos As New Resources.ResourceLoader()
-            Dim usuarioRespuesta As Boolean = Await Background.BackgroundExecutionManager.RequestAccessKindAsync(resultado, recursos.GetString("MessageBackground"))
-
-            If usuarioRespuesta = True Then
-                If e.Kind = ActivationKind.Launch Then
-                    If Not e.Arguments = String.Empty Then
-                        UsuarioXaml.CambiarCuenta(Nothing, e.Arguments, True)
-                    End If
-                End If
-
-                If e.PrelaunchActivated = False Then
-                    If rootFrame.Content Is Nothing Then
-                        rootFrame.Navigate(GetType(MainPage), e.Arguments)
-                    End If
-
-                    Window.Current.Activate()
-                End If
-            Else
-                Application.Current.Exit()
+        If e.PrelaunchActivated = False Then
+            If rootFrame.Content Is Nothing Then
+                rootFrame.Navigate(GetType(MainPage), e.Arguments)
             End If
+
+            Window.Current.Activate()
+
+            BarraAcrilica()
         End If
 
     End Sub
@@ -79,6 +62,15 @@ NotInheritable Class App
 
         rootFrame.Navigate(GetType(MainPage), payload)
         Window.Current.Activate()
+    End Sub
+
+    Private Sub BarraAcrilica()
+
+        CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = True
+        Dim barra As ApplicationViewTitleBar = ApplicationView.GetForCurrentView().TitleBar
+        barra.ButtonBackgroundColor = Colors.Transparent
+        barra.ButtonInactiveBackgroundColor = Colors.Transparent
+
     End Sub
 
 End Class
