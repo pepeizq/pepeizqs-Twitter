@@ -10,16 +10,24 @@ Module Conexion
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
+        Dim tbUsuario As TextBox = pagina.FindName("tbUsuario")
+        RemoveHandler tbUsuario.TextChanged, AddressOf Interfaz.Usuario_Texto_Cambia
+        AddHandler tbUsuario.TextChanged, AddressOf Interfaz.Usuario_Texto_Cambia
+
+        Dim pbUsuarioContraseña As PasswordBox = pagina.FindName("pbUsuarioContraseña")
+        RemoveHandler pbUsuarioContraseña.PasswordChanging, AddressOf Interfaz.Contraseña_Texto_Cambia
+        AddHandler pbUsuarioContraseña.PasswordChanging, AddressOf Interfaz.Contraseña_Texto_Cambia
+
         Dim botonAñadirUsuario As Button = pagina.FindName("botonAñadirUsuario")
 
         RemoveHandler botonAñadirUsuario.Click, AddressOf GuardarUsuario
         AddHandler botonAñadirUsuario.Click, AddressOf GuardarUsuario
 
-        RemoveHandler botonAñadirUsuario.PointerEntered, AddressOf Interfaz.Entra_IconoNombre
-        AddHandler botonAñadirUsuario.PointerEntered, AddressOf Interfaz.Entra_IconoNombre
+        RemoveHandler botonAñadirUsuario.PointerEntered, AddressOf Interfaz.Entra_Sp_IconoNombre
+        AddHandler botonAñadirUsuario.PointerEntered, AddressOf Interfaz.Entra_Sp_IconoNombre
 
-        RemoveHandler botonAñadirUsuario.PointerExited, AddressOf Interfaz.Sale_IconoNombre
-        AddHandler botonAñadirUsuario.PointerExited, AddressOf Interfaz.Sale_IconoNombre
+        RemoveHandler botonAñadirUsuario.PointerExited, AddressOf Interfaz.Sale_Sp_IconoNombre
+        AddHandler botonAñadirUsuario.PointerExited, AddressOf Interfaz.Sale_Sp_IconoNombre
 
         Dim spUsuariosGuardados As StackPanel = pagina.FindName("spUsuariosGuardados")
 
@@ -27,8 +35,10 @@ Module Conexion
         Dim listaUsuarios As IReadOnlyList(Of PasswordCredential) = caja.FindAllByResource(Package.Current.DisplayName)
 
         If listaUsuarios.Count > 0 Then
-            spUsuariosGuardados.Visibility = Visibility.Visible
+            Dim gridCarga As Grid = pagina.FindName("gridCarga")
+            Interfaz.Pestañas.Visibilidad_Pestañas(gridCarga)
 
+            spUsuariosGuardados.Visibility = Visibility.Visible
             CargarListaUsuarios()
         Else
             spUsuariosGuardados.Visibility = Visibility.Collapsed
@@ -146,6 +156,8 @@ Module Conexion
 
         Dim wvTwitter As WebView = sender
 
+        Dim mostrarConfig As Boolean = True
+
         If wvTwitter.Source.AbsoluteUri.Contains("https://api.twitter.com/oauth/authorize") Then
             Try
                 Dim usuario As String = "document.getElementById('username_or_email').value = '" + credencial.UserName + "'"
@@ -161,24 +173,37 @@ Module Conexion
 
             Dim html As String = Await wvTwitter.InvokeScriptAsync("eval", New String() {"document.documentElement.outerHTML;"})
 
-            If html.Contains("<code>") Then
-                Dim int As Integer = html.IndexOf("<code>")
-                Dim temp As String = html.Remove(0, int + 6)
+            If Not html = Nothing Then
+                If html.Contains("<code>") Then
+                    Dim int As Integer = html.IndexOf("<code>")
+                    Dim temp As String = html.Remove(0, int + 6)
 
-                Dim int2 As Integer = temp.IndexOf("</code>")
-                Dim temp2 As String = temp.Remove(int2, temp.Length - int2)
+                    Dim int2 As Integer = temp.IndexOf("</code>")
+                    Dim temp2 As String = temp.Remove(int2, temp.Length - int2)
 
-                tbCodigo.Text = temp2
+                    tbCodigo.Text = temp2
 
-                Dim usuarioCredenciales As ITwitterCredentials = Await appCliente.Auth.RequestCredentialsFromVerifierCodeAsync(tbCodigo.Text, peticion)
+                    Dim usuarioCredenciales As ITwitterCredentials = Await appCliente.Auth.RequestCredentialsFromVerifierCodeAsync(tbCodigo.Text, peticion)
 
-                Dim usuarioCliente As New TwitterClient(usuarioCredenciales)
+                    Dim usuarioCliente As New TwitterClient(usuarioCredenciales)
 
-                Dim usuario As IAuthenticatedUser = Await usuarioCliente.Users.GetAuthenticatedUserAsync
+                    Dim usuario As IAuthenticatedUser = Await usuarioCliente.Users.GetAuthenticatedUserAsync
 
-                Notificaciones.Toast(usuario.Name)
+                    If Not usuario Is Nothing Then
+                        mostrarConfig = False
+                        Interfaz.Usuario.CargarDatos(usuario)
+                    End If
+                End If
             End If
 
+            If mostrarConfig = True Then
+                Dim gridConfig As Grid = pagina.FindName("gridConfig")
+                Interfaz.Pestañas.Visibilidad_Pestañas(gridConfig)
+
+                Dim botonConfiguracionUsuarios As Button = pagina.FindName("botonConfiguracionUsuarios")
+                Dim gridConfiguracionUsuarios As Grid = pagina.FindName("gridConfiguracionUsuarios")
+                Interfaz.Pestañas.Visibilidad_Pestañas_Config(botonConfiguracionUsuarios, gridConfiguracionUsuarios)
+            End If
         End If
 
     End Sub

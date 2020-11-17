@@ -21,80 +21,87 @@
             <TextBlock x:Name="tbTitulo" Text="test" Margin="15,0,0,0" FontSize="12" Foreground="White" VerticalAlignment="Center"/>
         </Grid>
 
-        <NavigationView x:Name="nvPrincipal" Grid.Row="1" Background="{StaticResource AcrilicoFondo}" ItemInvoked="Nv_ItemInvoked"
+        <NavigationView x:Name="nvPrincipal" Grid.Row="1" Background="{StaticResource AcrilicoFondo}" ItemInvoked="Nv_ItemInvoked" Loaded="Nv_Loaded"
                         PaneDisplayMode="Top" AlwaysShowHeader="False" IsSettingsVisible="False" IsBackButtonVisible="Collapsed">
 
-            <NavigationView.MenuItems>
-                <NavigationViewItem>
-                    <TextBlock Text="test 1"/>
-                </NavigationViewItem>
-                <NavigationViewItem>
-                    <TextBlock Text="test 2"/>
-                </NavigationViewItem>
-            </NavigationView.MenuItems>
+            <NavigationView.Resources>
+                <SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground" Color="Transparent" />
+            </NavigationView.Resources>
+
 
             <Grid Padding="20">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                
-                <StackPanel Grid.Row="0" Orientation="Horizontal" Padding="20,0,20,20">
-                    <Button x:Name="botonConfiguracionUsuarios" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" BorderBrush="White" BorderThickness="0">
-                        <Button.Content>
-                            <TextBlock x:Uid="Users" Foreground="White" FontSize="18"/>
-                        </Button.Content>
-                    </Button>
-                </StackPanel>
-
-                <Grid Grid.Row="1" Padding="40" BorderBrush="{StaticResource BrushPrimario}" BorderThickness="1">
-                    <Grid.Background>
-                        <SolidColorBrush Color="{StaticResource ColorCuarto}" Opacity="0.8"/>
-                    </Grid.Background>
-
-                    <Grid x:Name="gridConfiguracionUsuarios" Visibility="Collapsed">
-                        <ScrollViewer VerticalScrollBarVisibility="Visible">
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock x:Uid="AddUser" Foreground="White" Margin="0,0,0,10" FontSize="17"/>
-                                <Grid MinWidth="500" BorderBrush="White" BorderThickness="0,1,0,0" Margin="0,0,0,30"/>
-
-                                <StackPanel Orientation="Horizontal" Margin="10,0,10,0">
-                                    <TextBlock x:Uid="User" VerticalAlignment="Center" Foreground="White"/>
-                                    <TextBox x:Name="tbUsuario" Margin="20,0,50,0" MinWidth="250" VerticalAlignment="Center" RequestedTheme="Dark" BorderBrush="White" BorderThickness="1"/>
-                                    <TextBlock x:Uid="Password" VerticalAlignment="Center" Foreground="White"/>
-                                    <PasswordBox x:Name="pbUsuarioContraseña" Margin="20,0,60,0" MinWidth="250" VerticalAlignment="Center" RequestedTheme="Dark" BorderBrush="White" BorderThickness="1"/>
-
-                                    <Button x:Name="botonAñadirUsuario" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10">
-                                        <Button.Content>
-                                            <StackPanel Orientation="Horizontal">
-                                                <iconos:FontAwesome Icon="Solid_UserPlus" Foreground="White"/>
-                                                <TextBlock x:Uid="Add" Foreground="White" Margin="15,0,0,0"/>
-                                            </StackPanel>
-                                        </Button.Content>
-                                    </Button>
-                                </StackPanel>
-
-                                <StackPanel x:Name="spUsuariosGuardados" Orientation="Vertical" Margin="0,50,0,0">
-                                    <TextBlock x:Uid="SavedUsers" Foreground="White" Margin="0,0,0,10" FontSize="17"/>
-                                    <Grid MinWidth="500" BorderBrush="White" BorderThickness="0,1,0,0" Margin="0,0,0,30"/>
-
-                                    <StackPanel x:Name="spUsuariosGuardadosLista" Orientation="Vertical" Margin="10,0,10,0"/>
-                                </StackPanel>
-
-                            </StackPanel>
-                        </ScrollViewer>
-                    </Grid>
+                <Grid x:Name="gridUsuario">
+                    
                 </Grid>
                 
+                <Grid x:Name="gridCarga">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <ProgressRing Width="60" Height="60" IsActive="True" Foreground="White" HorizontalAlignment="Center"/>
+                        <TextBlock x:Uid="Loading" Foreground="White" FontSize="17" Margin="0,20,0,0" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Grid>
+                
+                <Grid x:Name="gridConfig">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                <StackPanel x:Name="spConexion" Visibility="Collapsed" Grid.Row="1" Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal" Padding="0,0,0,20">
-                        <TextBox x:Name="tbConexionCodigo" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Padding="20,0,20,20">
+                        <Button x:Name="botonConfiguracionUsuarios" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" BorderBrush="White" BorderThickness="0">
+                            <Button.Content>
+                                <TextBlock x:Uid="Users" Foreground="White" FontSize="18"/>
+                            </Button.Content>
+                        </Button>
                     </StackPanel>
 
-                    <WebView x:Name="wvConexionCodigo" MinWidth="700" MinHeight="700"/>
-                </StackPanel>
+                    <Grid Grid.Row="1" Padding="40" BorderBrush="{StaticResource BrushPrimario}" BorderThickness="1">
+                        <Grid.Background>
+                            <SolidColorBrush Color="{StaticResource ColorCuarto}" Opacity="0.8"/>
+                        </Grid.Background>
 
+                        <Grid x:Name="gridConfiguracionUsuarios" Visibility="Collapsed">
+                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock x:Uid="AddUser" Foreground="White" Margin="0,0,0,10" FontSize="17"/>
+                                    <Grid MinWidth="500" BorderBrush="White" BorderThickness="0,1,0,0" Margin="0,0,0,30"/>
+
+                                    <StackPanel Orientation="Horizontal" Margin="10,0,10,0">
+                                        <TextBlock x:Uid="User" VerticalAlignment="Center" Foreground="White"/>
+                                        <TextBox x:Name="tbUsuario" Margin="20,0,50,0" MinWidth="250" VerticalAlignment="Center" RequestedTheme="Dark" BorderBrush="White" BorderThickness="1"/>
+                                        <TextBlock x:Uid="Password" VerticalAlignment="Center" Foreground="White"/>
+                                        <PasswordBox x:Name="pbUsuarioContraseña" Margin="20,0,60,0" MinWidth="250" VerticalAlignment="Center" RequestedTheme="Dark" BorderBrush="White" BorderThickness="1"/>
+
+                                        <Button x:Name="botonAñadirUsuario" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" IsEnabled="False">
+                                            <Button.Content>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <iconos:FontAwesome Icon="Solid_UserPlus" Foreground="White"/>
+                                                    <TextBlock x:Uid="Add" Foreground="White" Margin="15,0,0,0"/>
+                                                </StackPanel>
+                                            </Button.Content>
+                                        </Button>
+                                    </StackPanel>
+
+                                    <StackPanel x:Name="spUsuariosGuardados" Orientation="Vertical" Margin="0,50,0,0">
+                                        <TextBlock x:Uid="SavedUsers" Foreground="White" Margin="0,0,0,10" FontSize="17"/>
+                                        <Grid MinWidth="500" BorderBrush="White" BorderThickness="0,1,0,0" Margin="0,0,0,30"/>
+
+                                        <StackPanel x:Name="spUsuariosGuardadosLista" Orientation="Vertical" Margin="10,0,10,0"/>
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Grid>
+                    </Grid>
+
+                    <StackPanel x:Name="spConexion" Visibility="Collapsed" Grid.Row="1" Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal" Padding="0,0,0,20">
+                            <TextBox x:Name="tbConexionCodigo" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                        </StackPanel>
+
+                        <WebView x:Name="wvConexionCodigo" MinWidth="700" MinHeight="700"/>
+                    </StackPanel>
+                </Grid>
             </Grid>
         </NavigationView>
 

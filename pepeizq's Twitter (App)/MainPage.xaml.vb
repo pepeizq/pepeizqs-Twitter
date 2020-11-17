@@ -1,6 +1,4 @@
-﻿Imports FontAwesome.UWP
-Imports Microsoft.Toolkit.Uwp.Helpers
-Imports pepeizq.Twitter
+﻿Imports Microsoft.Toolkit.Uwp.Helpers
 Imports Windows.ApplicationModel.DataTransfer
 Imports Windows.Media.Core
 Imports Windows.Media.Playback
@@ -18,43 +16,51 @@ Public NotInheritable Class MainPage
 
     Private Sub Nv_Loaded(sender As Object, e As RoutedEventArgs)
 
-        'Dim recursos As New Resources.ResourceLoader()
+        Dim recursos As New Resources.ResourceLoader()
 
-        'Dim nvItemCuenta As New NavigationViewItem With {
-        '    .Margin = New Thickness(-8, 0, 0, 0),
-        '    .BorderThickness = New Thickness(0, 0, 0, 0)
-        '}
+        Dim nvItemCuenta As New NavigationViewItem With {
+            .Margin = New Thickness(-8, 0, 0, 0),
+            .BorderThickness = New Thickness(0, 0, 0, 0),
+            .Visibility = Visibility.Collapsed,
+            .Name = "nvItemCuenta"
+        }
 
-        'Dim sp As New StackPanel With {
-        '    .Name = "spCuentaSeleccionada",
-        '    .Orientation = Orientation.Horizontal,
-        '    .Padding = New Thickness(2, 0, 2, 0)
-        '}
+        Dim sp As New StackPanel With {
+            .Name = "spCuentaSeleccionada",
+            .Orientation = Orientation.Horizontal,
+            .Padding = New Thickness(2, 0, 2, 0)
+        }
 
-        'Dim elipseCuentaSeleccionada As New Ellipse With {
-        '    .Name = "elipseCuentaSeleccionada",
-        '    .Width = 28,
-        '    .Height = 28,
-        '    .Margin = New Thickness(15, 0, 10, 0),
-        '    .VerticalAlignment = VerticalAlignment.Center
-        '}
+        Dim elipseCuentaSeleccionada As New Ellipse With {
+            .Name = "elipseCuentaSeleccionada",
+            .Width = 28,
+            .Height = 28,
+            .Margin = New Thickness(15, 0, 10, 0),
+            .VerticalAlignment = VerticalAlignment.Center
+        }
 
-        'sp.Children.Add(elipseCuentaSeleccionada)
+        sp.Children.Add(elipseCuentaSeleccionada)
 
-        'Dim tbCuentaSeleccionada As New TextBlock With {
-        '    .Foreground = New SolidColorBrush(App.Current.Resources("ColorPrimario")),
-        '    .VerticalAlignment = VerticalAlignment.Center,
-        '    .Name = "tbCuentaSeleccionada"
-        '}
+        Dim tbCuentaSeleccionada As New TextBlock With {
+            .Foreground = New SolidColorBrush(App.Current.Resources("ColorPrimario")),
+            .VerticalAlignment = VerticalAlignment.Center,
+            .Name = "tbCuentaSeleccionada"
+        }
 
-        'sp.Children.Add(tbCuentaSeleccionada)
+        sp.Children.Add(tbCuentaSeleccionada)
 
-        'AddHandler nvItemCuenta.PointerEntered, AddressOf UsuarioEntraBoton
-        'AddHandler nvItemCuenta.PointerExited, AddressOf UsuarioSaleBoton
+        AddHandler nvItemCuenta.PointerEntered, AddressOf Interfaz.Entra_NVItem_Ellipse
+        AddHandler nvItemCuenta.PointerExited, AddressOf Interfaz.Sale_NVItem_Ellipse
 
-        'nvItemCuenta.Content = sp
+        nvItemCuenta.Content = sp
 
-        'nvPrincipal.MenuItems.Add(nvItemCuenta)
+        nvPrincipal.MenuItems.Add(nvItemCuenta)
+
+        nvPrincipal.MenuItems.Add(Interfaz.NavigationViewItems.Generar(recursos.GetString("Config"), FontAwesome5.EFontAwesomeIcon.Solid_Cog))
+
+
+
+
 
         'Dim separadorVolver As New NavigationViewItemSeparator With {
         '    .Name = "nvSeparadorVolver",
@@ -77,10 +83,23 @@ Public NotInheritable Class MainPage
 
     Private Sub Nv_ItemInvoked(sender As NavigationView, args As NavigationViewItemInvokedEventArgs)
 
+        Dim recursos As New Resources.ResourceLoader()
+
+        If TypeOf args.InvokedItem Is StackPanel Then
+            Dim sp As StackPanel = args.InvokedItem
+
+            If sp.Name = "spCuentaSeleccionada" Then
+                Interfaz.Pestañas.Visibilidad_Pestañas(gridUsuario)
+            End If
+        End If
+
         If TypeOf args.InvokedItem Is TextBlock Then
             Dim item As TextBlock = args.InvokedItem
 
-
+            If item.Text = recursos.GetString("Config") Then
+                Interfaz.Pestañas.Visibilidad_Pestañas(gridConfig)
+                Interfaz.Pestañas.Visibilidad_Pestañas_Config(botonConfiguracionUsuarios, gridConfiguracionUsuarios)
+            End If
         End If
 
         'Dim usuario As TwitterUsuario = Nothing
@@ -103,7 +122,7 @@ Public NotInheritable Class MainPage
 
         'App.Current.Resources("ButtonBackgroundPointerOver") = App.Current.Resources("ColorPrimario")
 
-        'Dim recursos As New Resources.ResourceLoader()
+
 
         'Dim frame As Frame = Window.Current.Content
         'Dim pagina As Page = frame.Content

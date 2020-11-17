@@ -27,11 +27,29 @@
             Dim botonUsuarios As Button = pagina.FindName("botonConfiguracionUsuarios")
             Dim gridUsuarios As Grid = pagina.FindName("gridConfiguracionUsuarios")
 
-            Visibilidad_Config(botonUsuarios, gridUsuarios)
+            Visibilidad_Pestañas_Config(botonUsuarios, gridUsuarios)
 
         End Sub
 
-        Public Sub Visibilidad_Config(botonMostrar As Button, gridMostrar As Grid)
+        Public Sub Visibilidad_Pestañas(gridMostrar As Grid)
+
+            Dim frame As Frame = Window.Current.Content
+            Dim pagina As Page = frame.Content
+
+            Dim gridUsuario As Grid = pagina.FindName("gridUsuario")
+            gridUsuario.Visibility = Visibility.Collapsed
+
+            Dim gridCarga As Grid = pagina.FindName("gridCarga")
+            gridCarga.Visibility = Visibility.Collapsed
+
+            Dim gridConfig As Grid = pagina.FindName("gridConfig")
+            gridConfig.Visibility = Visibility.Collapsed
+
+            gridMostrar.Visibility = Visibility.Visible
+
+        End Sub
+
+        Public Sub Visibilidad_Pestañas_Config(botonMostrar As Button, gridMostrar As Grid)
 
             Dim frame As Frame = Window.Current.Content
             Dim pagina As Page = frame.Content

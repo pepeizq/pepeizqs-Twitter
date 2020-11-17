@@ -123,8 +123,14 @@
   <data name="AddUser.Text" xml:space="preserve">
     <value>Añadir Usuario</value>
   </data>
+  <data name="Config" xml:space="preserve">
+    <value>Configuración</value>
+  </data>
   <data name="ConnectTwitter" xml:space="preserve">
     <value>Conectar a Twitter</value>
+  </data>
+  <data name="Loading.Text" xml:space="preserve">
+    <value>Cargando</value>
   </data>
   <data name="Password.Text" xml:space="preserve">
     <value>Contraseña</value>
