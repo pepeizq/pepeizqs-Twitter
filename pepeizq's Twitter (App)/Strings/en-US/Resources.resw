@@ -132,8 +132,17 @@
   <data name="Loading.Text" xml:space="preserve">
     <value>Loading</value>
   </data>
+  <data name="Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
   <data name="Password.Text" xml:space="preserve">
     <value>Password</value>
+  </data>
+  <data name="Refresh.Text" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="Retweeted" xml:space="preserve">
+    <value>Retweeted by</value>
   </data>
   <data name="SavedUsers.Text" xml:space="preserve">
     <value>Saved Users</value>

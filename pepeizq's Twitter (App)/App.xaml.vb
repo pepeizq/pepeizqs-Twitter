@@ -1,12 +1,12 @@
 ﻿Imports Windows.ApplicationModel.Core
-Imports Windows.ApplicationModel.ExtendedExecution
 Imports Windows.UI
 
 NotInheritable Class App
     Inherits Application
 
-    Protected Overrides Async Sub OnLaunched(e As LaunchActivatedEventArgs)
+    Protected Overrides Sub OnLaunched(e As LaunchActivatedEventArgs)
         Dim rootFrame As Frame = TryCast(Window.Current.Content, Frame)
+        Dim ejecutar As Boolean = True
 
         If rootFrame Is Nothing Then
             rootFrame = New Frame()
@@ -14,20 +14,22 @@ NotInheritable Class App
             AddHandler rootFrame.NavigationFailed, AddressOf OnNavigationFailed
 
             If e.PreviousExecutionState = ApplicationExecutionState.Terminated Then
-                ' TODO: Cargar el estado de la aplicación suspendida previamente
+                ejecutar = False
             End If
 
             Window.Current.Content = rootFrame
         End If
 
         If e.PrelaunchActivated = False Then
-            If rootFrame.Content Is Nothing Then
-                rootFrame.Navigate(GetType(MainPage), e.Arguments)
+            If ejecutar = True Then
+                If rootFrame.Content Is Nothing Then
+                    rootFrame.Navigate(GetType(MainPage), e.Arguments)
+                End If
+
+                Window.Current.Activate()
+
+                BarraAcrilica()
             End If
-
-            Window.Current.Activate()
-
-            BarraAcrilica()
         End If
 
     End Sub

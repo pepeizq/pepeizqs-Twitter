@@ -156,7 +156,7 @@ Module Conexion
 
         Dim wvTwitter As WebView = sender
 
-        Dim mostrarConfig As Boolean = True
+        Dim mostrarConfig As Boolean = False
 
         If wvTwitter.Source.AbsoluteUri.Contains("https://api.twitter.com/oauth/authorize") Then
             Try
@@ -185,25 +185,34 @@ Module Conexion
 
                     Dim usuarioCredenciales As ITwitterCredentials = Await appCliente.Auth.RequestCredentialsFromVerifierCodeAsync(tbCodigo.Text, peticion)
 
-                    Dim usuarioCliente As New TwitterClient(usuarioCredenciales)
+                    If Not usuarioCredenciales Is Nothing Then
+                        Dim usuarioCliente As New TwitterClient(usuarioCredenciales)
 
-                    Dim usuario As IAuthenticatedUser = Await usuarioCliente.Users.GetAuthenticatedUserAsync
+                        If Not usuarioCliente Is Nothing Then
+                            Dim usuario As IAuthenticatedUser = Await usuarioCliente.Users.GetAuthenticatedUserAsync
 
-                    If Not usuario Is Nothing Then
-                        mostrarConfig = False
-                        Interfaz.Usuario.CargarDatos(usuario)
+                            If Not usuario Is Nothing Then
+                                Interfaz.Usuario.CargarDatos(usuarioCliente, usuario)
+                            Else
+                                mostrarConfig = True
+                            End If
+                        Else
+                            mostrarConfig = True
+                        End If
+                    Else
+                        mostrarConfig = True
                     End If
                 End If
             End If
+        End If
 
-            If mostrarConfig = True Then
-                Dim gridConfig As Grid = pagina.FindName("gridConfig")
-                Interfaz.Pestañas.Visibilidad_Pestañas(gridConfig)
+        If mostrarConfig = True Then
+            Dim gridConfig As Grid = pagina.FindName("gridConfig")
+            Interfaz.Pestañas.Visibilidad_Pestañas(gridConfig)
 
-                Dim botonConfiguracionUsuarios As Button = pagina.FindName("botonConfiguracionUsuarios")
-                Dim gridConfiguracionUsuarios As Grid = pagina.FindName("gridConfiguracionUsuarios")
-                Interfaz.Pestañas.Visibilidad_Pestañas_Config(botonConfiguracionUsuarios, gridConfiguracionUsuarios)
-            End If
+            Dim botonConfiguracionUsuarios As Button = pagina.FindName("botonConfiguracionUsuarios")
+            Dim gridConfiguracionUsuarios As Grid = pagina.FindName("gridConfiguracionUsuarios")
+            Interfaz.Pestañas.Visibilidad_Pestañas_Config(botonConfiguracionUsuarios, gridConfiguracionUsuarios)
         End If
 
     End Sub

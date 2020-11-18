@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.Toolkit.Uwp.UI.Animations
+Imports Microsoft.Toolkit.Uwp.UI.Controls
 Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Shapes
 
@@ -106,6 +107,46 @@ Namespace Interfaz
 
             Dim icono As Ellipse = sp.Children(0)
             icono.Saturation(1).Scale(1, 1, icono.ActualWidth / 2, icono.ActualHeight / 2).Start()
+
+            Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
+
+        End Sub
+
+        Public Sub Entra_Boton_Ellipse(sender As Object, e As PointerRoutedEventArgs)
+
+            Dim boton As Button = sender
+            Dim icono As Ellipse = boton.Content
+            icono.Saturation(1).Scale(1.1, 1.1, icono.ActualWidth / 2, icono.ActualHeight / 2).Start()
+
+            Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
+
+        End Sub
+
+        Public Sub Sale_Boton_Ellipse(sender As Object, e As PointerRoutedEventArgs)
+
+            Dim boton As Button = sender
+            Dim icono As Ellipse = boton.Content
+            icono.Saturation(1).Scale(1, 1, icono.ActualWidth / 2, icono.ActualHeight / 2).Start()
+
+            Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
+
+        End Sub
+
+        Public Sub Entra_Boton_Imagen(sender As Object, e As PointerRoutedEventArgs)
+
+            Dim grid As Grid = sender
+            Dim imagen As ImageEx = grid.Children(0)
+            imagen.Saturation(1).Scale(1.02, 1.02, imagen.ActualWidth / 2, imagen.ActualHeight / 2).Start()
+
+            Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
+
+        End Sub
+
+        Public Sub Sale_Boton_Imagen(sender As Object, e As PointerRoutedEventArgs)
+
+            Dim grid As Grid = sender
+            Dim imagen As ImageEx = grid.Children(0)
+            imagen.Saturation(1).Scale(1, 1, imagen.ActualWidth / 2, imagen.ActualHeight / 2).Start()
 
             Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
 

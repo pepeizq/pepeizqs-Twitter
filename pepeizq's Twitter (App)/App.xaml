@@ -17,6 +17,5 @@
 
         <AcrylicBrush x:Key="AcrilicoFondo" BackgroundSource="HostBackdrop" TintColor="{StaticResource ColorPrimario}" FallbackColor="{StaticResource ColorCuarto}" TintOpacity=".8"/>
 
-
     </Application.Resources>
 </Application>

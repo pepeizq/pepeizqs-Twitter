@@ -2,10 +2,8 @@
 Imports Windows.Storage
 Imports Windows.UI.Notifications
 Imports Windows.UI.Popups
-Imports pepeizq.Twitter
-Imports pepeizq.Twitter.Tweet
 Imports System.Text
-Imports Microsoft.Toolkit.Uwp.Helpers
+Imports Tweetinvi.Models
 
 Module Notificaciones
 
@@ -59,162 +57,159 @@ Module Notificaciones
 
     End Sub
 
-    'Public Sub ToastTweet(tweet As Tweet, megaUsuario As pepeizq.Twitter.MegaUsuario, segundos As Integer)
+    Public Sub ToastTweet(tweet As ITweet, segundos As Integer)
 
-    '    Dim mostrar As Boolean = True
+        Dim mostrar As Boolean = True
 
-    '    If Not ApplicationData.Current.LocalSettings.Values("ultimoTweet") = Nothing Then
-    '        If ApplicationData.Current.LocalSettings.Values("ultimoTweet") = tweet.ID Then
-    '            mostrar = False
-    '        End If
-    '    End If
+        If Not ApplicationData.Current.LocalSettings.Values("ultimoTweet") = Nothing Then
+            If ApplicationData.Current.LocalSettings.Values("ultimoTweet") = tweet.Id Then
+                mostrar = False
+            End If
+        End If
 
-    '    If mostrar = True Then
-    '        ApplicationData.Current.LocalSettings.Values("ultimoTweet") = tweet.ID
+        If mostrar = True Then
+            ApplicationData.Current.LocalSettings.Values("ultimoTweet") = tweet.Id
 
-    '        Dim tb As TextBlock = pepeizq.Twitter.Xaml.TweetTexto.Generar(tweet, Nothing, Nothing, megaUsuario, True)
+            Dim tb As TextBlock = Interfaz.Tweet.Texto(tweet)
 
-    '        If Not tb.Text = String.Empty Then
-    '            Dim textoTweet As New AdaptiveText With {
-    '                .Text = tb.Text,
-    '                .HintMaxLines = 4
-    '            }
+            If Not tb.Text = String.Empty Then
+                Dim textoTweet As New AdaptiveText With {
+                    .Text = tb.Text,
+                    .HintMaxLines = 4
+                }
 
-    '            Dim cuenta As String = Nothing
+                Dim cuenta As String = Nothing
 
-    '            If tweet.Retweet Is Nothing Then
-    '                cuenta = tweet.Usuario.Nombre
-    '            Else
-    '                cuenta = tweet.Retweet.Usuario.Nombre
-    '            End If
+                If tweet.IsRetweet = False Then
+                    cuenta = tweet.CreatedBy.Name
+                Else
+                    cuenta = tweet.RetweetedTweet.CreatedBy.Name
+                End If
 
-    '            Dim textoCuenta As New AdaptiveText With {
-    '                .Text = cuenta,
-    '                .HintMaxLines = 1
-    '            }
+                Dim textoCuenta As New AdaptiveText With {
+                    .Text = cuenta,
+                    .HintMaxLines = 1
+                }
 
-    '            Dim avatarUrl As String = Nothing
+                Dim avatarUrl As String = Nothing
 
-    '            If tweet.Retweet Is Nothing Then
-    '                avatarUrl = tweet.Usuario.ImagenAvatar
-    '            Else
-    '                avatarUrl = tweet.Retweet.Usuario.ImagenAvatar
-    '            End If
+                If tweet.IsRetweet = False Then
+                    avatarUrl = tweet.CreatedBy.ProfileImageUrl
+                Else
+                    avatarUrl = tweet.RetweetedTweet.CreatedBy.ProfileImageUrl
+                End If
 
-    '            Dim logo As New ToastGenericAppLogo With {
-    '                .Source = avatarUrl,
-    '                .HintCrop = ToastGenericAppLogoCrop.Circle
-    '            }
+                Dim logo As New ToastGenericAppLogo With {
+                    .Source = avatarUrl,
+                    .HintCrop = ToastGenericAppLogoCrop.Circle
+                }
 
-    '            Dim hero As ToastGenericHeroImage = Nothing
+                Dim hero As ToastGenericHeroImage = Nothing
 
-    '            If Not ApplicationData.Current.LocalSettings.Values("notificacionImagen") Is Nothing Then
-    '                If ApplicationData.Current.LocalSettings.Values("notificacionImagen") = True Then
-    '                    If Not tweet.Entidades.Media Is Nothing Then
-    '                        Dim tweetMedia As TweetMedia() = tweet.Entidades.Media
+                If Not tweet.Entities Is Nothing Then
+                    Dim tweetMedia As List(Of Entities.IMediaEntity) = tweet.Media
 
-    '                        If Not tweetMedia(0).Enlace = Nothing Then
-    '                            hero = New ToastGenericHeroImage With {
-    '                                .Source = tweetMedia(0).Enlace
-    '                            }
-    '                        End If
-    '                    End If
-    '                End If
-    '            End If
+                    If tweetMedia.Count > 0 Then
+                        If Not tweetMedia(0).ExpandedURL = Nothing Then
+                            hero = New ToastGenericHeroImage With {
+                                .Source = tweetMedia(0).ExpandedURL
+                            }
+                        End If
+                    End If
+                End If
 
-    '            Dim atribucion As ToastGenericAttributionText = Nothing
+                Dim atribucion As ToastGenericAttributionText = Nothing
 
-    '            If ApplicationData.Current.LocalSettings.Values("notificacionUsuario") = True Then
-    '                atribucion = New ToastGenericAttributionText With {
-    '                    .Text = "@" + megaUsuario.Usuario.ScreenNombre
-    '                }
-    '            End If
+                'If ApplicationData.Current.LocalSettings.Values("notificacionUsuario") = True Then
+                '    atribucion = New ToastGenericAttributionText With {
+                '        .Text = "@" + megaUsuario.Usuario.ScreenNombre
+                '    }
+                'End If
 
-    '            Dim contenido As New ToastBindingGeneric With {
-    '                .AppLogoOverride = logo
-    '            }
+                Dim contenido As New ToastBindingGeneric With {
+                    .AppLogoOverride = logo
+                }
 
-    '            If Not atribucion Is Nothing Then
-    '                contenido.Attribution = atribucion
-    '            End If
+                If Not atribucion Is Nothing Then
+                    contenido.Attribution = atribucion
+                End If
 
-    '            contenido.Children.Add(textoTweet)
-    '            contenido.Children.Add(textoCuenta)
+                contenido.Children.Add(textoTweet)
+                contenido.Children.Add(textoCuenta)
 
-    '            If Not hero Is Nothing Then
-    '                contenido.HeroImage = hero
-    '            End If
+                If Not hero Is Nothing Then
+                    contenido.HeroImage = hero
+                End If
 
-    '            Dim tostadaVisual As New ToastVisual With {
-    '                .BindingGeneric = contenido
-    '            }
+                Dim tostadaVisual As New ToastVisual With {
+                    .BindingGeneric = contenido
+                }
 
-    '            Dim recursos As New Resources.ResourceLoader
+                Dim recursos As New Resources.ResourceLoader
 
-    '            Dim botonAbrir As ToastButton = Nothing
+                Dim botonAbrir As ToastButton = Nothing
 
-    '            If Not tweet.Entidades.Enlaces Is Nothing Then
-    '                Dim urlFinal As String = Nothing
+                If Not tweet.Entities.Urls Is Nothing Then
+                    Dim urlFinal As String = Nothing
 
-    '                For Each url In tweet.Entidades.Enlaces
-    '                    If Not url Is Nothing Then
-    '                        urlFinal = url.Enlace.ToString
-    '                    End If
-    '                Next
+                    For Each url In tweet.Entities.Urls
+                        If Not url Is Nothing Then
+                            urlFinal = url.ExpandedURL
+                        End If
+                    Next
 
-    '                If Not urlFinal = Nothing Then
-    '                    botonAbrir = New ToastButton(recursos.GetString("Open"), urlFinal) With {
-    '                        .ActivationType = ToastActivationType.Protocol
-    '                    }
-    '                End If
-    '            End If
+                    If Not urlFinal = Nothing Then
+                        botonAbrir = New ToastButton(recursos.GetString("Open"), urlFinal)
+                    End If
+                End If
 
-    '            Dim tostadaAcciones As New ToastActionsCustom
+                Dim tostadaAcciones As New ToastActionsCustom
 
-    '            If Not botonAbrir Is Nothing Then
-    '                tostadaAcciones.Buttons.Add(botonAbrir)
-    '            End If
+                If Not botonAbrir Is Nothing Then
+                    tostadaAcciones.Buttons.Add(botonAbrir)
+                End If
 
-    '            Dim tostadaAudio As New ToastAudio
+                Dim tostadaAudio As New ToastAudio
 
-    '            If ApplicationData.Current.LocalSettings.Values("notificacionSonido") = False Then
-    '                tostadaAudio.Silent = True
-    '            Else
-    '                tostadaAudio.Silent = False
+                If ApplicationData.Current.LocalSettings.Values("notificacionSonido") = False Then
+                    tostadaAudio.Silent = True
+                Else
+                    tostadaAudio.Silent = False
 
-    '                If ApplicationData.Current.LocalSettings.Values("notificacionSonidoElegido") = Nothing Then
-    '                    tostadaAudio.Src = New Uri("ms-winsoundevent:Notification.Default")
-    '                Else
-    '                    tostadaAudio.Src = New Uri(ApplicationData.Current.LocalSettings.Values("notificacionSonidoElegido"))
-    '                End If
-    '            End If
+                    If ApplicationData.Current.LocalSettings.Values("notificacionSonidoElegido") = Nothing Then
+                        tostadaAudio.Src = New Uri("ms-winsoundevent:Notification.Default")
+                    Else
+                        tostadaAudio.Src = New Uri(ApplicationData.Current.LocalSettings.Values("notificacionSonidoElegido"))
+                    End If
+                End If
 
-    '            Dim bytesTexto() As Byte = Encoding.Default.GetBytes(tweet.TextoCompleto)
-    '            Dim textoFinal As String = Encoding.UTF8.GetString(bytesTexto)
+                Dim bytesTexto() As Byte = Encoding.Default.GetBytes(tweet.FullText)
+                Dim textoFinal As String = Encoding.UTF8.GetString(bytesTexto)
 
-    '            Dim tostada As New ToastContent With {
-    '                .Launch = textoFinal,
-    '                .Visual = tostadaVisual,
-    '                .Actions = tostadaAcciones,
-    '                .Audio = tostadaAudio
-    '            }
+                Dim tostada As New ToastContent With {
+                    .Launch = textoFinal,
+                    .Visual = tostadaVisual,
+                    .Actions = tostadaAcciones,
+                    .Audio = tostadaAudio,
+                    .ActivationType = ToastActivationType.Background
+                }
 
-    '            Try
-    '                Dim notificacion As ToastNotification = New ToastNotification(tostada.GetXml)
+                Try
+                    Dim notificacion As ToastNotification = New ToastNotification(tostada.GetXml)
 
-    '                If Not segundos = 0 Then
-    '                    notificacion.ExpirationTime = DateTime.Now.AddSeconds(segundos)
-    '                End If
+                    If Not segundos = 0 Then
+                        notificacion.ExpirationTime = DateTime.Now.AddSeconds(segundos)
+                    End If
 
-    '                Dim notificador As ToastNotifier = ToastNotificationManager.CreateToastNotifier()
-    '                notificador.Show(notificacion)
-    '            Catch ex As Exception
+                    Dim notificador As ToastNotifier = ToastNotificationManager.CreateToastNotifier()
+                    notificador.Show(notificacion)
+                Catch ex As Exception
 
-    '            End Try
-    '        End If
-    '    End If
+                End Try
+            End If
+        End If
 
-    'End Sub
+    End Sub
 
     'Public Sub ToastTweets(cantidad As Integer, megaUsuario As pepeizq.Twitter.MegaUsuario, segundos As Integer, tipo As Integer)
 

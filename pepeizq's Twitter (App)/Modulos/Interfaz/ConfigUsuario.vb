@@ -3,7 +3,7 @@ Imports Windows.Storage
 Imports Windows.UI
 
 Namespace Interfaz
-    Module Config_Usuario
+    Module ConfigUsuario
 
         Public Function AñadirListaGuardados(nombre As String)
 

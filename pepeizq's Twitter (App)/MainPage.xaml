@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
 
         <Grid x:Name="gridTitulo" Grid.Row="0" Background="{StaticResource AcrilicoFondo}">
-            <TextBlock x:Name="tbTitulo" Text="test" Margin="15,0,0,0" FontSize="12" Foreground="White" VerticalAlignment="Center"/>
+            <TextBlock x:Name="tbTitulo" Margin="15,0,0,0" FontSize="12" Foreground="White" VerticalAlignment="Center"/>
         </Grid>
 
         <NavigationView x:Name="nvPrincipal" Grid.Row="1" Background="{StaticResource AcrilicoFondo}" ItemInvoked="Nv_ItemInvoked" Loaded="Nv_Loaded"
@@ -28,10 +28,72 @@
                 <SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground" Color="Transparent" />
             </NavigationView.Resources>
 
-
             <Grid Padding="20">
                 <Grid x:Name="gridUsuario">
-                    
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel x:Name="spUsuarioBotones" Grid.Row="0" Orientation="Horizontal" Padding="10,0,10,10">
+                        <StackPanel.Transitions>
+                            <TransitionCollection>
+                                <EdgeUIThemeTransition Edge="Top"/>
+                            </TransitionCollection>
+                        </StackPanel.Transitions>
+
+                        <Button x:Name="botonUsuarioTweets" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" BorderBrush="White" BorderThickness="0">
+                            <Button.Content>
+                                <iconos:FontAwesome Icon="Solid_Home" Foreground="White"/>
+                            </Button.Content>
+                        </Button>
+
+                        <Button x:Name="botonUsuarioImagen" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" BorderBrush="White" BorderThickness="0" Margin="10,0,0,0" Visibility="Collapsed">
+                            <Button.Content>
+                                <iconos:FontAwesome Icon="Solid_Image" Foreground="White"/>
+                            </Button.Content>
+                        </Button>
+                    </StackPanel>
+
+                    <Grid Grid.Row="1">
+                        <Grid x:Name="gridUsuarioTweets" Visibility="Collapsed">
+                            <ScrollViewer x:Name="svUsuarioTweets" VerticalScrollBarVisibility="Visible">
+                                <ScrollViewer.Resources>
+                                    <SolidColorBrush x:Key="ScrollBarThumbFill" Color="White"/>
+                                    <SolidColorBrush x:Key="ScrollBarThumbFillPointerOver" Color="White"/>
+                                </ScrollViewer.Resources>
+
+                                <StackPanel x:Name="spUsuarioTweets" Orientation="Vertical"/>
+                            </ScrollViewer>
+
+                            <StackPanel x:Name="spActualizarUsuarioTweets" Orientation="Vertical" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
+                                <Button x:Name="botonActualizarUsuarioTweets" Style="{ThemeResource ButtonRevealStyle}" Padding="12" BorderThickness="1" BorderBrush="{StaticResource BrushPrimario}">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconos:FontAwesome Icon="Solid_Sync" Foreground="White"/>
+                                            <TextBlock x:Uid="Refresh" Foreground="White" Margin="10,0,0,0"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="20" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                <ProgressRing x:Name="prUsuarioTweets" IsActive="True" Padding="10" Margin="0,0,15,0" Foreground="White" Visibility="Collapsed"/>
+
+                                <Button x:Name="botonSubirArribaUsuarioTweets" Style="{ThemeResource ButtonRevealStyle}" Padding="12" BorderThickness="1" BorderBrush="{StaticResource BrushPrimario}" Visibility="Collapsed">
+                                    <Button.Content>
+                                        <iconos:FontAwesome Icon="Solid_ArrowCircleUp" Foreground="White"/>
+                                    </Button.Content>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid x:Name="gridUsuarioImagen" Visibility="Collapsed">
+                            <ScrollViewer HorizontalScrollMode="Auto" VerticalScrollBarVisibility="Auto" Padding="0,20,20,0">
+                                <controls:ImageEx x:Name="imagenUsuario" IsCacheEnabled="True" Stretch="None" BorderBrush="{StaticResource BrushPrimario}" BorderThickness="1"/>
+                            </ScrollViewer>
+                        </Grid>
+                    </Grid>
                 </Grid>
                 
                 <Grid x:Name="gridCarga">
