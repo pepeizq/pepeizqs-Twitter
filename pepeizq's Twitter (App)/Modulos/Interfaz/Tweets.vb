@@ -1,20 +1,31 @@
-﻿Imports System.Globalization
-Imports System.Net
+﻿Imports System.Net
 Imports Microsoft.Toolkit.Uwp.UI.Controls
+Imports Tweetinvi
 Imports Tweetinvi.Models
 Imports Windows.ApplicationModel.Core
+Imports Windows.ApplicationModel.DataTransfer
+Imports Windows.Media.Core
+Imports Windows.Networking.BackgroundTransfer
+Imports Windows.Storage
+Imports Windows.Storage.Pickers
+Imports Windows.System
 Imports Windows.System.Threading
 Imports Windows.UI
 Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Documents
+Imports Windows.UI.Xaml.Media.Animation
 Imports Windows.UI.Xaml.Shapes
 
 Namespace Interfaz
-    Module Tweet
+    Module Tweets
 
-        Public Function Generar(tweet As ITweet)
+        Public cliente_ As TwitterClient
+
+        Public Function GenerarTweet(cliente As TwitterClient, tweet As ITweet)
 
             If Not tweet Is Nothing Then
+                cliente_ = cliente
+
                 Dim colorFondo As New SolidColorBrush With {
                     .Color = App.Current.Resources("ColorCuarto"),
                     .Opacity = 0.8
@@ -75,7 +86,7 @@ Namespace Interfaz
 
                 spIzquierda.SetValue(Grid.ColumnProperty, 0)
 
-                spIzquierda.Children.Add(Avatar(tweet))
+                spIzquierda.Children.Add(Avatar(cliente, tweet))
 
                 gridInferior.Children.Add(spIzquierda)
 
@@ -87,7 +98,7 @@ Namespace Interfaz
 
                 spInferiorCentro.SetValue(Grid.ColumnProperty, 1)
 
-                spInferiorCentro.Children.Add(Usuario(tweet))
+                spInferiorCentro.Children.Add(Usuario(cliente, tweet))
 
                 Dim tbTweet As TextBlock = Texto(tweet)
 
@@ -99,15 +110,14 @@ Namespace Interfaz
 
                 If Not tweet.QuotedTweet Is Nothing Then
                     If tweet.IsRetweet = False Then
-                        spInferiorCentro.Children.Add(Cita(tweet))
+                        spInferiorCentro.Children.Add(Cita(cliente, tweet))
                     Else
-                        spInferiorCentro.Children.Add(Cita(tweet.RetweetedTweet))
+                        spInferiorCentro.Children.Add(Cita(cliente, tweet.RetweetedTweet))
                     End If
                 End If
 
                 spInferiorCentro.Children.Add(Media(tweet))
 
-                'spInferiorCentro.Children.Add(TweetBotones.Generar(tweet, grid, megaUsuario, 0, color))
                 'spInferiorCentro.Children.Add(TweetEnviarTweet.Generar(tweet, megaUsuario, Visibility.Collapsed, color))
 
                 gridInferior.Children.Add(spInferiorCentro)
@@ -121,14 +131,24 @@ Namespace Interfaz
 
                 gridInferiorDerecha.SetValue(Grid.ColumnProperty, 2)
 
+                Dim spDerecha As New StackPanel With {
+                    .Orientation = Orientation.Vertical
+                }
+
                 Dim tbTiempo As New TextBlock With {
-                    .FontSize = 12,
-                    .Foreground = New SolidColorBrush(Colors.White)
+                    .FontSize = 13,
+                    .Foreground = New SolidColorBrush(Colors.White),
+                    .HorizontalAlignment = HorizontalAlignment.Right,
+                    .Margin = New Thickness(0, 0, 5, 0)
                 }
 
                 SumarTiempo(tbTiempo, tweet.CreatedAt.LocalDateTime)
 
-                gridInferiorDerecha.Children.Add(tbTiempo)
+                spDerecha.Children.Add(tbTiempo)
+
+                spDerecha.Children.Add(Botones(cliente, tweet))
+
+                gridInferiorDerecha.Children.Add(spDerecha)
 
                 '-----------------------------
 
@@ -137,6 +157,9 @@ Namespace Interfaz
                 '-----------------------------
 
                 grid.Children.Add(gridInferior)
+
+                AddHandler grid.PointerEntered, AddressOf Entra_Tweet
+                AddHandler grid.PointerExited, AddressOf Sale_Tweet
 
                 Return grid
             End If
@@ -220,7 +243,7 @@ Namespace Interfaz
 
         End Function
 
-        Private Function Avatar(tweet As ITweet)
+        Private Function Avatar(cliente As TwitterClient, tweet As ITweet)
 
             Dim botonAvatar As New Button With {
                 .Background = New SolidColorBrush(Colors.Transparent),
@@ -250,10 +273,10 @@ Namespace Interfaz
                 .Width = 40
             }
 
-            'botonAvatar.Tag = New Objetos.UsuarioAmpliado(megaUsuario, tweet.Usuario, Nothing)
+            botonAvatar.Tag = New ClienteyTweet(cliente, tweet)
             botonAvatar.Content = circulo
 
-            'AddHandler botonAvatar.Click, AddressOf UsuarioPulsaBoton
+            AddHandler botonAvatar.Click, AddressOf OtroUsuario.CargarClick
             AddHandler botonAvatar.PointerEntered, AddressOf Entra_Boton_Ellipse
             AddHandler botonAvatar.PointerExited, AddressOf Sale_Boton_Ellipse
 
@@ -261,7 +284,7 @@ Namespace Interfaz
 
         End Function
 
-        Private Function Usuario(tweet As ITweet)
+        Private Function Usuario(cliente As TwitterClient, tweet As ITweet)
 
             Dim sp As New StackPanel With {
                 .Orientation = Orientation.Horizontal
@@ -270,7 +293,8 @@ Namespace Interfaz
             Dim botonUsuario As New Button With {
                 .Padding = New Thickness(0, 0, 0, 0),
                 .Background = New SolidColorBrush(Colors.Transparent),
-                .BorderThickness = New Thickness(0, 0, 0, 0)
+                .BorderThickness = New Thickness(0, 0, 0, 0),
+                .Style = App.Current.Resources("ButtonRevealStyle")
             }
 
             Dim spUsuario As New StackPanel With {
@@ -294,11 +318,11 @@ Namespace Interfaz
             If tweet.IsRetweet = False Then
                 tb1.Text = tweet.CreatedBy.Name
                 tb2.Text = "@" + tweet.CreatedBy.ScreenName
-                'botonUsuario.Tag = New Objetos.UsuarioAmpliado(megaUsuario, tweet.Usuario, Nothing)
+                botonUsuario.Tag = New ClienteyTweet(cliente, tweet)
             Else
                 tb1.Text = tweet.RetweetedTweet.CreatedBy.Name
                 tb2.Text = "@" + tweet.RetweetedTweet.CreatedBy.ScreenName
-                'botonUsuario.Tag = New Objetos.UsuarioAmpliado(megaUsuario, tweet.Retweet.Usuario, Nothing)
+                botonUsuario.Tag = New ClienteyTweet(cliente, tweet.RetweetedTweet)
             End If
 
             spUsuario.Children.Add(tb1)
@@ -306,9 +330,9 @@ Namespace Interfaz
 
             botonUsuario.Content = spUsuario
 
-            'AddHandler botonUsuario.Click, AddressOf UsuarioPulsaBoton
-            'AddHandler botonUsuario.PointerEntered, AddressOf UsuarioEntraBoton
-            'AddHandler botonUsuario.PointerExited, AddressOf UsuarioSaleBoton
+            AddHandler botonUsuario.Click, AddressOf CargarClick
+            AddHandler botonUsuario.PointerEntered, AddressOf Entra_Basico
+            AddHandler botonUsuario.PointerExited, AddressOf Sale_Basico
 
             sp.Children.Add(botonUsuario)
 
@@ -528,22 +552,12 @@ Namespace Interfaz
                             }
 
                             If entidad.textoEnlace.Contains("@") Then
-                                'cosas = New Objetos.UsuarioAmpliado(megaUsuario, Nothing, Nothing)
-
                                 Dim enlaceUsuario As New Hyperlink With {
                                     .TextDecorations = Nothing,
                                     .Foreground = New SolidColorBrush(App.Current.Resources("ColorTerciario"))
                                 }
 
-                                'Dim spUsuario As New StackPanel With {
-                                '    .Tag = New Objetos.UsuarioAmpliado(megaUsuario, Nothing, entidad.Mostrar)
-                                '}
-                                'AddHandler spUsuario.Loaded, AddressOf SpUsuarioLoaded
-
-                                'ToolTipService.SetToolTip(enlaceUsuario, spUsuario)
-                                'ToolTipService.SetPlacement(enlaceUsuario, PlacementMode.Bottom)
-
-                                'AddHandler enlaceUsuario.Click, AddressOf EnlaceUsuarioClick
+                                AddHandler enlaceUsuario.Click, AddressOf OtroUsuario.CargarClick2
 
                                 enlaceUsuario.Inlines.Add(contenidoEnlace)
                                 textoSpan.Inlines.Add(enlaceUsuario)
@@ -620,7 +634,7 @@ Namespace Interfaz
 
         End Function
 
-        Private Function Cita(tweet As ITweet)
+        Private Function Cita(cliente As TwitterClient, tweet As ITweet)
 
             Dim sp As New StackPanel With {
                 .Background = New SolidColorBrush(App.Current.Resources("ColorCuarto")),
@@ -630,7 +644,7 @@ Namespace Interfaz
                 .BorderThickness = New Thickness(1, 1, 1, 1)
             }
 
-            sp.Children.Add(Usuario(tweet.QuotedTweet))
+            sp.Children.Add(Usuario(cliente, tweet.QuotedTweet))
 
             Dim tbTweet As TextBlock = Texto(tweet.QuotedTweet)
 
@@ -712,6 +726,7 @@ Namespace Interfaz
 
                             Try
                                 imagenMedia.Source = New BitmapImage(New Uri(imagenUrl))
+                                imagenMedia.Tag = imagenUrl
                             Catch ex As Exception
 
                             End Try
@@ -721,28 +736,27 @@ Namespace Interfaz
                                 AddHandler gridMedia.PointerEntered, AddressOf Entra_Boton_Imagen
                                 AddHandler gridMedia.PointerExited, AddressOf Sale_Boton_Imagen
                             ElseIf objetoString = "video" Then
-                                'Dim listaVideos As TweetVideoVariante() = itemMedia.Video.Variantes
-                                'Dim listaOrdenada As New List(Of TweetVideoVariante)
+                                Dim listaVideos As Entities.ExtendedEntities.IVideoEntityVariant() = itemMedia.VideoDetails.Variants
+                                Dim listaOrdenada As New List(Of Entities.ExtendedEntities.IVideoEntityVariant)
 
-                                'For Each item In listaVideos
-                                '    listaOrdenada.Add(item)
-                                'Next
+                                For Each item In listaVideos
+                                    listaOrdenada.Add(item)
+                                Next
 
-                                'listaOrdenada.Sort(Function(x, y) y.Bitrate.CompareTo(x.Bitrate))
+                                listaOrdenada.Sort(Function(x, y) y.Bitrate.CompareTo(x.Bitrate))
 
-                                'datos.Enlace = listaOrdenada(0).Enlace
+                                gridMedia.Tag = listaOrdenada(0).URL
 
-                                'AddHandler gridMedia.PointerPressed, AddressOf UsuarioClickeaVideo
-                                'AddHandler gridMedia.PointerEntered, AddressOf UsuarioEntraVideo
-                                'AddHandler gridMedia.PointerExited, AddressOf UsuarioSaleVideo
+                                AddHandler gridMedia.PointerPressed, AddressOf AbrirVideo
+                                AddHandler gridMedia.PointerEntered, AddressOf Entra_Boton_Imagen
+                                AddHandler gridMedia.PointerExited, AddressOf Sale_Boton_Imagen
                             ElseIf objetoString = "animated_gif" Then
-                                'datos.Enlace = itemMedia.Video.Variantes(0).Enlace
-                                'AddHandler gridMedia.PointerPressed, AddressOf UsuarioClickeaVideo
-                                'AddHandler gridMedia.PointerEntered, AddressOf UsuarioEntraVideo
-                                'AddHandler gridMedia.PointerExited, AddressOf UsuarioSaleVideo
+                                gridMedia.Tag = itemMedia.VideoDetails.Variants(0).URL
+                                AddHandler gridMedia.PointerPressed, AddressOf AbrirVideo
+                                AddHandler gridMedia.PointerEntered, AddressOf Entra_Video
+                                AddHandler gridMedia.PointerExited, AddressOf Sale_Video
                             End If
 
-                            'gridMedia.Tag = datos
                             gridMedia.Children.Add(imagenMedia)
 
                             Dim gridTipo As New Grid With {
@@ -800,20 +814,489 @@ Namespace Interfaz
             Dim frame As Frame = Window.Current.Content
             Dim pagina As Page = frame.Content
 
-            Dim spUsuarioBotones As StackPanel = pagina.FindName("spUsuarioBotones")
-            spUsuarioBotones.Visibility = Visibility.Visible
+            Dim gridUsuarioBotones As Grid = pagina.FindName("gridUsuarioBotones")
+            gridUsuarioBotones.Visibility = Visibility.Visible
 
             Dim botonImagen As Button = pagina.FindName("botonUsuarioImagen")
             botonImagen.Visibility = Visibility.Visible
 
-            Dim gridTweets As Grid = pagina.FindName("gridUsuarioImagen")
-            Pestañas.Visibilidad_Pestañas_Usuario(botonImagen, gridTweets)
+            Dim gridImagen As Grid = pagina.FindName("gridUsuarioImagen")
+            Pestañas.Visibilidad_Pestañas_Usuario(botonImagen, gridImagen)
 
             Dim gridMedia As Grid = sender
             Dim imagenOrigen As ImageEx = gridMedia.Children(0)
 
+            ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("imagenAmpliada", gridMedia)
+
+            Dim animacion As ConnectedAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("imagenAmpliada")
+
+            If Not animacion Is Nothing Then
+                animacion.TryStart(gridImagen)
+            End If
+
             Dim imagenMostrar As ImageEx = pagina.FindName("imagenUsuario")
             imagenMostrar.Source = imagenOrigen.Source
+            imagenMostrar.Tag = imagenOrigen.Tag
+
+            Dim botonCopiar As Button = pagina.FindName("botonUsuarioImagenCopiar")
+            RemoveHandler botonCopiar.Click, AddressOf CopiarImagen
+            AddHandler botonCopiar.Click, AddressOf CopiarImagen
+
+            RemoveHandler botonCopiar.PointerEntered, AddressOf Entra_Boton_Icono
+            AddHandler botonCopiar.PointerEntered, AddressOf Entra_Boton_Icono
+
+            RemoveHandler botonCopiar.PointerExited, AddressOf Sale_Boton_Icono
+            AddHandler botonCopiar.PointerExited, AddressOf Sale_Boton_Icono
+
+            Dim botonDescargar As Button = pagina.FindName("botonUsuarioImagenDescargar")
+            RemoveHandler botonDescargar.Click, AddressOf DescargarImagen
+            AddHandler botonDescargar.Click, AddressOf DescargarImagen
+
+            RemoveHandler botonDescargar.PointerEntered, AddressOf Entra_Boton_Icono
+            AddHandler botonDescargar.PointerEntered, AddressOf Entra_Boton_Icono
+
+            RemoveHandler botonDescargar.PointerExited, AddressOf Sale_Boton_Icono
+            AddHandler botonDescargar.PointerExited, AddressOf Sale_Boton_Icono
+
+        End Sub
+
+        Private Sub CopiarImagen(sender As Object, e As RoutedEventArgs)
+
+            Dim frame As Frame = Window.Current.Content
+            Dim pagina As Page = frame.Content
+
+            Dim imagen As ImageEx = pagina.FindName("imagenUsuario")
+
+            Dim paquete As New DataPackage
+            paquete.SetText(imagen.Tag.ToString)
+            Clipboard.SetContent(paquete)
+
+        End Sub
+
+        Private Async Sub DescargarImagen(sender As Object, e As RoutedEventArgs)
+
+            Dim frame As Frame = Window.Current.Content
+            Dim pagina As Page = frame.Content
+
+            Dim imagen As ImageEx = pagina.FindName("imagenUsuario")
+
+            Dim boton As Button = sender
+            boton.IsEnabled = False
+
+            Dim enlace As New Uri(imagen.Tag.ToString)
+
+            Dim picker As New FolderPicker()
+
+            picker.FileTypeFilter.Add("*")
+            picker.ViewMode = PickerViewMode.List
+
+            Try
+                Dim carpeta As StorageFolder = Await picker.PickSingleFolderAsync()
+                Dim fichero As StorageFile = Await carpeta.CreateFileAsync("twitter.jpg", CreationCollisionOption.ReplaceExisting)
+                Dim descargador As New BackgroundDownloader
+                Dim descarga As DownloadOperation = descargador.CreateDownload(enlace, fichero)
+                Await descarga.StartAsync
+            Catch ex As Exception
+
+            End Try
+
+            boton.IsEnabled = True
+
+        End Sub
+
+        Private Sub AbrirVideo(sender As Object, e As RoutedEventArgs)
+
+            Dim frame As Frame = Window.Current.Content
+            Dim pagina As Page = frame.Content
+
+            Dim gridUsuarioBotones As Grid = pagina.FindName("gridUsuarioBotones")
+            gridUsuarioBotones.Visibility = Visibility.Visible
+
+            Dim botonVideo As Button = pagina.FindName("botonUsuarioVideo")
+            botonVideo.Visibility = Visibility.Visible
+
+            Dim gridVideo As Grid = pagina.FindName("gridUsuarioVideo")
+            Pestañas.Visibilidad_Pestañas_Usuario(botonVideo, gridVideo)
+
+            Dim gridMedia As Grid = sender
+            Dim enlaceVideo As String = gridMedia.Tag
+
+            Dim videoReproductor As MediaPlayerElement = pagina.FindName("videoUsuario")
+
+            Try
+                videoReproductor.Source = MediaSource.CreateFromUri(New Uri(enlaceVideo))
+                videoReproductor.Tag = enlaceVideo
+                videoReproductor.MediaPlayer.Play()
+            Catch ex As Exception
+
+            End Try
+
+            Dim botonCopiar As Button = pagina.FindName("botonUsuarioVideoCopiar")
+            RemoveHandler botonCopiar.Click, AddressOf CopiarVideo
+            AddHandler botonCopiar.Click, AddressOf CopiarVideo
+
+            RemoveHandler botonCopiar.PointerEntered, AddressOf Entra_Boton_Icono
+            AddHandler botonCopiar.PointerEntered, AddressOf Entra_Boton_Icono
+
+            RemoveHandler botonCopiar.PointerExited, AddressOf Sale_Boton_Icono
+            AddHandler botonCopiar.PointerExited, AddressOf Sale_Boton_Icono
+
+            Dim botonDescargar As Button = pagina.FindName("botonUsuarioVideoDescargar")
+            RemoveHandler botonDescargar.Click, AddressOf DescargarVideo
+            AddHandler botonDescargar.Click, AddressOf DescargarVideo
+
+            RemoveHandler botonDescargar.PointerEntered, AddressOf Entra_Boton_Icono
+            AddHandler botonDescargar.PointerEntered, AddressOf Entra_Boton_Icono
+
+            RemoveHandler botonDescargar.PointerExited, AddressOf Sale_Boton_Icono
+            AddHandler botonDescargar.PointerExited, AddressOf Sale_Boton_Icono
+
+        End Sub
+
+        Private Sub CopiarVideo(sender As Object, e As RoutedEventArgs)
+
+            Dim frame As Frame = Window.Current.Content
+            Dim pagina As Page = frame.Content
+
+            Dim video As MediaPlayerElement = pagina.FindName("videoUsuario")
+            Dim fuente As MediaSource = video.Source
+
+            Dim paquete As New DataPackage
+            paquete.SetText(fuente.Uri.ToString)
+            Clipboard.SetContent(paquete)
+
+        End Sub
+
+        Private Async Sub DescargarVideo(sender As Object, e As RoutedEventArgs)
+
+            Dim frame As Frame = Window.Current.Content
+            Dim pagina As Page = frame.Content
+
+            Dim boton As Button = sender
+            boton.IsEnabled = False
+
+            Dim video As MediaPlayerElement = pagina.FindName("videoUsuario")
+            Dim fuente As MediaSource = video.Source
+            Dim enlace As New Uri(fuente.Uri.ToString)
+
+            Dim picker As New FolderPicker()
+
+            picker.FileTypeFilter.Add("*")
+            picker.ViewMode = PickerViewMode.List
+
+            Try
+                Dim carpeta As StorageFolder = Await picker.PickSingleFolderAsync()
+                Dim fichero As StorageFile = Await carpeta.CreateFileAsync("twitter.mp4", CreationCollisionOption.ReplaceExisting)
+                Dim descargador As New BackgroundDownloader
+                Dim descarga As DownloadOperation = descargador.CreateDownload(enlace, fichero)
+                Await descarga.StartAsync
+            Catch ex As Exception
+
+            End Try
+
+            boton.IsEnabled = True
+
+        End Sub
+
+        Private Sub Entra_Tweet(sender As Object, e As PointerRoutedEventArgs)
+
+            Dim grid As Grid = sender
+            Dim subgrid As Grid = grid.Children(1)
+            Dim subgrid2 As Grid = subgrid.Children(subgrid.Children.Count - 1)
+            Dim sp As StackPanel = subgrid2.Children(0)
+            Dim spBotones As StackPanel = sp.Children(1)
+            spBotones.Visibility = Visibility.Visible
+
+        End Sub
+
+        Private Sub Sale_Tweet(sender As Object, e As PointerRoutedEventArgs)
+
+            Dim grid As Grid = sender
+            Dim subgrid As Grid = grid.Children(1)
+            Dim subgrid2 As Grid = subgrid.Children(subgrid.Children.Count - 1)
+            Dim sp As StackPanel = subgrid2.Children(0)
+            Dim spBotones As StackPanel = sp.Children(1)
+            spBotones.Visibility = Visibility.Collapsed
+
+        End Sub
+
+        Private Function Botones(cliente As TwitterClient, tweet As ITweet)
+
+            Dim spBotones As New StackPanel With {
+                .Orientation = Orientation.Vertical,
+                .Margin = New Thickness(10, 25, 0, 0),
+                .Visibility = Visibility.Collapsed
+            }
+
+            Dim iconoRetweet As New FontAwesome5.FontAwesome With {
+                .Icon = FontAwesome5.EFontAwesomeIcon.Solid_Retweet,
+                .Foreground = New SolidColorBrush(Colors.White)
+            }
+
+            If tweet.Retweeted = True Then
+                iconoRetweet.Foreground = New SolidColorBrush(Colors.LightGreen)
+            End If
+
+            Dim botonRetweet As New Button With {
+                .Padding = New Thickness(5, 5, 5, 5),
+                .Margin = New Thickness(0, 0, 0, 0),
+                .Background = New SolidColorBrush(Colors.Transparent),
+                .BorderThickness = New Thickness(0, 0, 0, 0),
+                .Style = App.Current.Resources("ButtonRevealStyle"),
+                .Content = iconoRetweet,
+                .Tag = New ClienteyTweet(cliente, tweet),
+                .HorizontalAlignment = HorizontalAlignment.Center
+            }
+
+            AddHandler botonRetweet.Click, AddressOf RetweetClick
+            AddHandler botonRetweet.PointerEntered, AddressOf Entra_Boton_Icono
+            AddHandler botonRetweet.PointerExited, AddressOf Sale_Boton_Icono
+
+            spBotones.Children.Add(botonRetweet)
+
+            '------------------------------------------
+
+            Dim iconoFavorito As New FontAwesome5.FontAwesome With {
+                .Icon = FontAwesome5.EFontAwesomeIcon.Solid_Heart,
+                .Foreground = New SolidColorBrush(Colors.White)
+            }
+
+            If tweet.Favorited = True Then
+                iconoFavorito.Foreground = New SolidColorBrush(Colors.IndianRed)
+            End If
+
+            Dim botonFavorito As New Button With {
+                .Padding = New Thickness(5, 5, 5, 5),
+                .Margin = New Thickness(0, 10, 0, 0),
+                .Background = New SolidColorBrush(Colors.Transparent),
+                .BorderThickness = New Thickness(0, 0, 0, 0),
+                .Style = App.Current.Resources("ButtonRevealStyle"),
+                .Content = iconoFavorito,
+                .Tag = New ClienteyTweet(cliente, tweet),
+                .HorizontalAlignment = HorizontalAlignment.Center
+            }
+
+            AddHandler botonFavorito.Click, AddressOf FavoritoClick
+            AddHandler botonFavorito.PointerEntered, AddressOf Entra_Boton_Icono
+            AddHandler botonFavorito.PointerExited, AddressOf Sale_Boton_Icono
+
+            spBotones.Children.Add(botonFavorito)
+
+            '------------------------------------------
+
+            Dim iconoMasOpciones As New FontAwesome5.FontAwesome With {
+                .Icon = FontAwesome5.EFontAwesomeIcon.Solid_EllipsisH,
+                .Foreground = New SolidColorBrush(Colors.White)
+            }
+
+            Dim botonMasOpciones As New Button With {
+                .Padding = New Thickness(5, 5, 5, 5),
+                .Margin = New Thickness(0, 10, 0, 0),
+                .Background = New SolidColorBrush(Colors.Transparent),
+                .BorderThickness = New Thickness(0, 0, 0, 0),
+                .Style = App.Current.Resources("ButtonRevealStyle"),
+                .Content = iconoMasOpciones,
+                .Tag = New ClienteyTweet(cliente, tweet),
+                .HorizontalAlignment = HorizontalAlignment.Center
+            }
+
+            AddHandler botonMasOpciones.Click, AddressOf MasOpcionesClick
+            AddHandler botonMasOpciones.PointerEntered, AddressOf Entra_Boton_Icono
+            AddHandler botonMasOpciones.PointerExited, AddressOf Sale_Boton_Icono
+
+            spBotones.Children.Add(botonMasOpciones)
+
+            Return spBotones
+
+        End Function
+
+        Private Async Sub RetweetClick(sender As Object, e As RoutedEventArgs)
+
+            Dim boton As Button = sender
+            Dim icono As FontAwesome5.FontAwesome = boton.Content
+            Dim clienteyTweet As ClienteyTweet = boton.Tag
+
+            Dim cliente As TwitterClient = clienteyTweet.cliente
+            Dim tweet As ITweet = clienteyTweet.tweet
+
+            If tweet.Retweeted = False Then
+                icono.Foreground = New SolidColorBrush(Colors.LightGreen)
+                Await cliente.Tweets.PublishRetweetAsync(tweet.Id)
+            Else
+                icono.Foreground = New SolidColorBrush(Colors.White)
+                Await cliente.Tweets.DestroyRetweetAsync(tweet.Id)
+            End If
+
+        End Sub
+
+        Private Async Sub FavoritoClick(sender As Object, e As RoutedEventArgs)
+
+            Dim boton As Button = sender
+            Dim icono As FontAwesome5.FontAwesome = boton.Content
+            Dim clienteyTweet As ClienteyTweet = boton.Tag
+
+            Dim cliente As TwitterClient = clienteyTweet.cliente
+            Dim tweet As ITweet = clienteyTweet.tweet
+
+            If tweet.Favorited = False Then
+                icono.Foreground = New SolidColorBrush(Colors.IndianRed)
+                Await cliente.Tweets.FavoriteTweetAsync(tweet.Id)
+            Else
+                icono.Foreground = New SolidColorBrush(Colors.White)
+                Await cliente.Tweets.UnfavoriteTweetAsync(tweet.Id)
+            End If
+
+        End Sub
+
+        Private Sub MasOpcionesClick(sender As Object, e As RoutedEventArgs)
+
+            Dim recursos As New Resources.ResourceLoader
+
+            Dim boton As Button = sender
+            Dim clienteyTweet As ClienteyTweet = boton.Tag
+
+            Dim menu As New MenuFlyout With {
+                .Placement = FlyoutPlacementMode.Bottom,
+                .ShowMode = FlyoutShowMode.Transient
+            }
+
+            Dim iconoCompartirTweet As New FontAwesome5.FontAwesome With {
+                .Icon = FontAwesome5.EFontAwesomeIcon.Solid_ShareAlt,
+                .Foreground = New SolidColorBrush(Colors.Black)
+            }
+
+            Dim botonCompartirTweet As New MenuFlyoutItem With {
+                .Text = recursos.GetString("ShareTweet"),
+                .Icon = iconoCompartirTweet,
+                .Foreground = New SolidColorBrush(Colors.Black),
+                .Tag = clienteyTweet
+            }
+
+            AddHandler botonCompartirTweet.Click, AddressOf CompartirTweetClick
+            AddHandler botonCompartirTweet.PointerEntered, AddressOf Entra_MFItem_Icono
+            AddHandler botonCompartirTweet.PointerExited, AddressOf Sale_MFItem_Icono
+            menu.Items.Add(botonCompartirTweet)
+
+            Dim iconoCopiarEnlaceTweet As New FontAwesome5.FontAwesome With {
+                .Icon = FontAwesome5.EFontAwesomeIcon.Solid_Copy,
+                .Foreground = New SolidColorBrush(Colors.Black)
+            }
+
+            Dim botonCopiarEnlaceTweet As New MenuFlyoutItem With {
+                .Text = recursos.GetString("CopyUrl2"),
+                .Icon = iconoCopiarEnlaceTweet,
+                .Foreground = New SolidColorBrush(Colors.Black),
+                .Tag = clienteyTweet
+            }
+
+            AddHandler botonCopiarEnlaceTweet.Click, AddressOf CopiarEnlaceTweetClick
+            AddHandler botonCopiarEnlaceTweet.PointerEntered, AddressOf Entra_MFItem_Icono
+            AddHandler botonCopiarEnlaceTweet.PointerExited, AddressOf Sale_MFItem_Icono
+            menu.Items.Add(botonCopiarEnlaceTweet)
+
+            Dim separador As New MenuFlyoutSeparator
+            menu.Items.Add(separador)
+
+            Dim iconoAbrirNavegadorTweet As New FontAwesome5.FontAwesome With {
+                .Icon = FontAwesome5.EFontAwesomeIcon.Brands_Edge,
+                .Foreground = New SolidColorBrush(Colors.Black)
+            }
+
+            Dim botonAbrirNavegadorTweet As New MenuFlyoutItem With {
+                .Text = recursos.GetString("OpenWebBrowser"),
+                .Icon = iconoAbrirNavegadorTweet,
+                .Foreground = New SolidColorBrush(Colors.Black),
+                .Tag = clienteyTweet
+            }
+
+            AddHandler botonAbrirNavegadorTweet.Click, AddressOf AbrirNavegadorTweetClick
+            AddHandler botonAbrirNavegadorTweet.PointerEntered, AddressOf Entra_MFItem_Icono
+            AddHandler botonAbrirNavegadorTweet.PointerExited, AddressOf Sale_MFItem_Icono
+            menu.Items.Add(botonAbrirNavegadorTweet)
+
+            FlyoutBase.SetAttachedFlyout(boton, menu)
+            menu.ShowAt(boton)
+
+        End Sub
+
+        Private Sub CompartirTweetClick(sender As Object, e As RoutedEventArgs)
+
+            Dim boton As MenuFlyoutItem = sender
+            Dim clienteyTweet As ClienteyTweet = boton.Tag
+
+            Dim cliente As TwitterClient = clienteyTweet.cliente
+            Dim tweet As ITweet = clienteyTweet.tweet
+
+            If tweet.IsRetweet = False Then
+                ApplicationData.Current.LocalSettings.Values("TweetCompartirTitulo") = "@" + tweet.CreatedBy.ScreenName
+                ApplicationData.Current.LocalSettings.Values("TweetCompartirDescripcion") = WebUtility.HtmlDecode(tweet.FullText)
+                ApplicationData.Current.LocalSettings.Values("TweetCompartirEnlace") = "https://twitter.com/" + tweet.CreatedBy.ScreenName + "/status/" + tweet.Id.ToString
+            Else
+                ApplicationData.Current.LocalSettings.Values("TweetCompartirTitulo") = "@" + tweet.RetweetedTweet.CreatedBy.ScreenName
+                ApplicationData.Current.LocalSettings.Values("TweetCompartirDescripcion") = WebUtility.HtmlDecode(tweet.RetweetedTweet.FullText)
+                ApplicationData.Current.LocalSettings.Values("TweetCompartirEnlace") = "https://twitter.com/" + tweet.RetweetedTweet.CreatedBy.ScreenName + "/status/" + tweet.RetweetedTweet.Id.ToString
+            End If
+
+            Dim datos As DataTransferManager = DataTransferManager.GetForCurrentView()
+            AddHandler datos.DataRequested, AddressOf DatosCompartirClick
+
+            DataTransferManager.ShowShareUI()
+
+        End Sub
+
+        Private Sub DatosCompartirClick(sender As Object, e As DataRequestedEventArgs)
+
+            Dim request As DataRequest = e.Request
+
+            request.Data.Properties.Title = ApplicationData.Current.LocalSettings.Values("TweetCompartirTitulo")
+            request.Data.Properties.Description = ApplicationData.Current.LocalSettings.Values("TweetCompartirDescripcion")
+            request.Data.SetWebLink(New Uri(ApplicationData.Current.LocalSettings.Values("TweetCompartirEnlace")))
+
+        End Sub
+
+        Private Sub CopiarEnlaceTweetClick(sender As Object, e As RoutedEventArgs)
+
+            Dim boton As MenuFlyoutItem = sender
+            Dim clienteyTweet As ClienteyTweet = boton.Tag
+
+            Dim cliente As TwitterClient = clienteyTweet.cliente
+            Dim tweet As ITweet = clienteyTweet.tweet
+
+            Dim texto As New DataPackage
+
+            If tweet.IsRetweet = False Then
+                texto.SetText("https://twitter.com/" + tweet.CreatedBy.ScreenName + "/status/" + tweet.Id.ToString)
+            Else
+                texto.SetText("https://twitter.com/" + tweet.RetweetedTweet.CreatedBy.ScreenName + "/status/" + tweet.RetweetedTweet.Id.ToString)
+            End If
+
+            Clipboard.SetContent(texto)
+
+        End Sub
+
+        Private Async Sub AbrirNavegadorTweetClick(sender As Object, e As RoutedEventArgs)
+
+            Dim boton As MenuFlyoutItem = sender
+            Dim clienteyTweet As ClienteyTweet = boton.Tag
+
+            Dim cliente As TwitterClient = clienteyTweet.cliente
+            Dim tweet As ITweet = clienteyTweet.tweet
+
+            Dim texto As New DataPackage
+
+            If tweet.IsRetweet = False Then
+                Try
+                    Await Launcher.LaunchUriAsync(New Uri("https://twitter.com/" + tweet.CreatedBy.ScreenName + "/status/" + tweet.Id.ToString))
+                Catch ex As Exception
+
+                End Try
+            Else
+                Try
+                    Await Launcher.LaunchUriAsync(New Uri("https://twitter.com/" + tweet.RetweetedTweet.CreatedBy.ScreenName + "/status/" + tweet.RetweetedTweet.Id.ToString))
+                Catch ex As Exception
+
+                End Try
+            End If
 
         End Sub
 
@@ -831,6 +1314,18 @@ Namespace Interfaz
             Me.posicion2 = posicion2
             Me.textoMostrar = textomostrar
             Me.textoEnlace = textoenlace
+        End Sub
+
+    End Class
+
+    Public Class ClienteyTweet
+
+        Public cliente As TwitterClient
+        Public tweet As ITweet
+
+        Public Sub New(ByVal cliente As TwitterClient, ByVal tweet As ITweet)
+            Me.cliente = cliente
+            Me.tweet = tweet
         End Sub
 
     End Class

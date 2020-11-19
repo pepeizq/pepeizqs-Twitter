@@ -51,7 +51,7 @@ Namespace Interfaz
 
             If Not tweets Is Nothing Then
                 For Each tweet In tweets
-                    spTweets.Children.Add(Interfaz.Tweet.Generar(tweet))
+                    spTweets.Children.Add(Interfaz.Tweets.GenerarTweet(cliente, tweet))
                 Next
             End If
 
@@ -141,7 +141,7 @@ Namespace Interfaz
                     Next
 
                     If añadir = True Then
-                        spTweets.Children.Insert(0, Interfaz.Tweet.Generar(tweet))
+                        spTweets.Children.Insert(0, Interfaz.Tweets.GenerarTweet(cliente, tweet))
                         Notificaciones.ToastTweet(tweet, 30)
                     End If
                 Next
@@ -187,7 +187,7 @@ Namespace Interfaz
                     Next
 
                     If añadir = True Then
-                        spTweets.Children.Insert(0, Interfaz.Tweet.Generar(tweet))
+                        spTweets.Children.Insert(0, Interfaz.Tweets.GenerarTweet(cliente, tweet))
                     End If
                 Next
             End If
@@ -213,15 +213,15 @@ Namespace Interfaz
             Dim pagina As Page = frame.Content
 
             Dim botonSubir As Button = pagina.FindName("botonSubirArribaUsuarioTweets")
-            Dim spUsuarioBotones As StackPanel = pagina.FindName("spUsuarioBotones")
+            Dim gridUsuarioBotones As Grid = pagina.FindName("gridUsuarioBotones")
 
             Dim sv As ScrollViewer = sender
 
             If sv.VerticalOffset > 50 Then
-                spUsuarioBotones.Visibility = Visibility.Collapsed
+                gridUsuarioBotones.Visibility = Visibility.Collapsed
                 botonSubir.Visibility = Visibility.Visible
             Else
-                spUsuarioBotones.Visibility = Visibility.Visible
+                gridUsuarioBotones.Visibility = Visibility.Visible
                 botonSubir.Visibility = Visibility.Collapsed
             End If
 
@@ -263,7 +263,7 @@ Namespace Interfaz
                             Next
 
                             If añadir = True Then
-                                spTweets.Children.Add(Interfaz.Tweet.Generar(tweet))
+                                spTweets.Children.Add(Interfaz.Tweets.GenerarTweet(cliente, tweet))
                             End If
                         Next
                     End If
@@ -285,8 +285,8 @@ Namespace Interfaz
             Dim frame As Frame = Window.Current.Content
             Dim pagina As Page = frame.Content
 
-            Dim spUsuarioBotones As StackPanel = pagina.FindName("spUsuarioBotones")
-            spUsuarioBotones.Visibility = Visibility.Visible
+            Dim gridUsuarioBotones As Grid = pagina.FindName("gridUsuarioBotones")
+            gridUsuarioBotones.Visibility = Visibility.Visible
 
         End Sub
 

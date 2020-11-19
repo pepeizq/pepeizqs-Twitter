@@ -19,6 +19,17 @@
             RemoveHandler botonTweets.PointerExited, AddressOf Sale_Boton_Icono
             AddHandler botonTweets.PointerExited, AddressOf Sale_Boton_Icono
 
+            Dim botonOtroUsuarioTweets As Button = pagina.FindName("botonOtroUsuarioTweets")
+
+            RemoveHandler botonOtroUsuarioTweets.Click, AddressOf Visibilidad_OtroUsuario_Tweets
+            AddHandler botonOtroUsuarioTweets.Click, AddressOf Visibilidad_OtroUsuario_Tweets
+
+            RemoveHandler botonOtroUsuarioTweets.PointerEntered, AddressOf Entra_Boton_Ellipse
+            AddHandler botonOtroUsuarioTweets.PointerEntered, AddressOf Entra_Boton_Ellipse
+
+            RemoveHandler botonOtroUsuarioTweets.PointerExited, AddressOf Sale_Boton_Ellipse
+            AddHandler botonOtroUsuarioTweets.PointerExited, AddressOf Sale_Boton_Ellipse
+
             Dim botonImagen As Button = pagina.FindName("botonUsuarioImagen")
 
             RemoveHandler botonImagen.Click, AddressOf Visibilidad_Usuario_Imagen
@@ -29,6 +40,17 @@
 
             RemoveHandler botonImagen.PointerExited, AddressOf Sale_Boton_Icono
             AddHandler botonImagen.PointerExited, AddressOf Sale_Boton_Icono
+
+            Dim botonVideo As Button = pagina.FindName("botonUsuarioVideo")
+
+            RemoveHandler botonVideo.Click, AddressOf Visibilidad_Usuario_Video
+            AddHandler botonVideo.Click, AddressOf Visibilidad_Usuario_Video
+
+            RemoveHandler botonVideo.PointerEntered, AddressOf Entra_Boton_Icono
+            AddHandler botonVideo.PointerEntered, AddressOf Entra_Boton_Icono
+
+            RemoveHandler botonVideo.PointerExited, AddressOf Sale_Boton_Icono
+            AddHandler botonVideo.PointerExited, AddressOf Sale_Boton_Icono
 
             '------------------------------------------------------
 
@@ -59,6 +81,18 @@
 
         End Sub
 
+        Private Sub Visibilidad_OtroUsuario_Tweets(ByVal sender As Object, ByVal e As RoutedEventArgs)
+
+            Dim frame As Frame = Window.Current.Content
+            Dim pagina As Page = frame.Content
+
+            Dim boton As Button = pagina.FindName("botonOtroUsuarioTweets")
+            Dim grid As Grid = pagina.FindName("gridOtroUsuarioTweets")
+
+            Visibilidad_Pestañas_Usuario(boton, grid)
+
+        End Sub
+
         Private Sub Visibilidad_Usuario_Imagen(ByVal sender As Object, ByVal e As RoutedEventArgs)
 
             Dim frame As Frame = Window.Current.Content
@@ -66,6 +100,18 @@
 
             Dim boton As Button = pagina.FindName("botonUsuarioImagen")
             Dim grid As Grid = pagina.FindName("gridUsuarioImagen")
+
+            Visibilidad_Pestañas_Usuario(boton, grid)
+
+        End Sub
+
+        Private Sub Visibilidad_Usuario_Video(ByVal sender As Object, ByVal e As RoutedEventArgs)
+
+            Dim frame As Frame = Window.Current.Content
+            Dim pagina As Page = frame.Content
+
+            Dim boton As Button = pagina.FindName("botonUsuarioVideo")
+            Dim grid As Grid = pagina.FindName("gridUsuarioVideo")
 
             Visibilidad_Pestañas_Usuario(boton, grid)
 
@@ -116,15 +162,54 @@
             Dim gridTweets As Grid = pagina.FindName("gridUsuarioTweets")
             gridTweets.Visibility = Visibility.Collapsed
 
+            Dim botonOtroUsuarioTweets As Button = pagina.FindName("botonOtroUsuarioTweets")
+            botonOtroUsuarioTweets.BorderThickness = New Thickness(0, 0, 0, 0)
+
+            Dim gridOtroUsuarioTweets As Grid = pagina.FindName("gridOtroUsuarioTweets")
+            gridOtroUsuarioTweets.Visibility = Visibility.Collapsed
+
             Dim botonImagen As Button = pagina.FindName("botonUsuarioImagen")
             botonImagen.BorderThickness = New Thickness(0, 0, 0, 0)
 
             Dim gridImagen As Grid = pagina.FindName("gridUsuarioImagen")
             gridImagen.Visibility = Visibility.Collapsed
 
+            Dim spImagenBotones As StackPanel = pagina.FindName("spUsuarioImagenBotones")
+            spImagenBotones.Visibility = Visibility.Collapsed
+
+            Dim botonVideo As Button = pagina.FindName("botonUsuarioVideo")
+            botonVideo.BorderThickness = New Thickness(0, 0, 0, 0)
+
+            Dim gridVideo As Grid = pagina.FindName("gridUsuarioVideo")
+            gridVideo.Visibility = Visibility.Collapsed
+
+            Dim spVideoBotones As StackPanel = pagina.FindName("spUsuarioVideoBotones")
+            spVideoBotones.Visibility = Visibility.Collapsed
+
+            '--------------------------------------------------------
 
             botonMostrar.BorderThickness = New Thickness(0, 0, 0, 1)
             gridMostrar.Visibility = Visibility.Visible
+
+            '--------------------------------------------------------
+
+            If gridMostrar.Name = "gridUsuarioImagen" Then
+                spImagenBotones.Visibility = Visibility.Visible
+            ElseIf gridMostrar.Name = "gridUsuarioVideo" Then
+                spVideoBotones.Visibility = Visibility.Visible
+            End If
+
+            Dim videoReproductor As MediaPlayerElement = pagina.FindName("videoUsuario")
+
+            If gridMostrar.Name = "gridUsuarioVideo" Then
+                If Not videoReproductor.MediaPlayer Is Nothing Then
+                    videoReproductor.MediaPlayer.Play()
+                End If
+            Else
+                If Not videoReproductor.MediaPlayer Is Nothing Then
+                    videoReproductor.MediaPlayer.Pause()
+                End If
+            End If
 
         End Sub
 
@@ -139,6 +224,7 @@
             Dim gridUsuarios As Grid = pagina.FindName("gridConfiguracionUsuarios")
             gridUsuarios.Visibility = Visibility.Collapsed
 
+            '--------------------------------------------------------
 
             botonMostrar.BorderThickness = New Thickness(0, 0, 0, 1)
             gridMostrar.Visibility = Visibility.Visible

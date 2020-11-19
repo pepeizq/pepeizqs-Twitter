@@ -35,26 +35,122 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <StackPanel x:Name="spUsuarioBotones" Grid.Row="0" Orientation="Horizontal" Padding="10,0,10,10">
-                        <StackPanel.Transitions>
+                    <Grid x:Name="gridUsuarioBotones" Grid.Row="0" Padding="10,0,10,10">
+                        <Grid.Transitions>
                             <TransitionCollection>
-                                <EdgeUIThemeTransition Edge="Top"/>
+                                <PaneThemeTransition Edge="Top"/>
                             </TransitionCollection>
-                        </StackPanel.Transitions>
+                        </Grid.Transitions>
+                        
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
 
-                        <Button x:Name="botonUsuarioTweets" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" BorderBrush="White" BorderThickness="0">
-                            <Button.Content>
-                                <iconos:FontAwesome Icon="Solid_Home" Foreground="White"/>
-                            </Button.Content>
-                        </Button>
+                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                            <Button x:Name="botonUsuarioTweets" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" BorderBrush="White" BorderThickness="0">
+                                <ToolTipService.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock x:Uid="Home"/>
+                                    </StackPanel>
+                                </ToolTipService.ToolTip>
 
-                        <Button x:Name="botonUsuarioImagen" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" BorderBrush="White" BorderThickness="0" Margin="10,0,0,0" Visibility="Collapsed">
-                            <Button.Content>
-                                <iconos:FontAwesome Icon="Solid_Image" Foreground="White"/>
-                            </Button.Content>
-                        </Button>
-                    </StackPanel>
+                                <Button.Content>
+                                    <iconos:FontAwesome Icon="Solid_Home" Foreground="White"/>
+                                </Button.Content>
+                            </Button>
 
+                            <Button x:Name="botonOtroUsuarioTweets" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" BorderBrush="White" BorderThickness="0" Margin="10,0,0,0" Visibility="Collapsed">
+                                <ToolTipService.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock x:Name="tbOtroUsuarioTweets"/>
+                                    </StackPanel>
+                                </ToolTipService.ToolTip>
+
+                                <Button.Content>
+                                    <Ellipse x:Name="ellipseOtroUsuarioTweets" Width="30" Height="30"/>
+                                </Button.Content>
+                            </Button>
+
+                            <Button x:Name="botonUsuarioImagen" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" BorderBrush="White" BorderThickness="0" Margin="10,0,0,0" Visibility="Collapsed">
+                                <ToolTipService.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock x:Uid="Image"/>
+                                    </StackPanel>
+                                </ToolTipService.ToolTip>
+
+                                <Button.Content>
+                                    <iconos:FontAwesome Icon="Solid_Image" Foreground="White"/>
+                                </Button.Content>
+                            </Button>
+
+                            <Button x:Name="botonUsuarioVideo" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" BorderBrush="White" BorderThickness="0" Margin="10,0,0,0" Visibility="Collapsed">
+                                <ToolTipService.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock x:Uid="Image"/>
+                                    </StackPanel>
+                                </ToolTipService.ToolTip>
+
+                                <Button.Content>
+                                    <iconos:FontAwesome Icon="Solid_Video" Foreground="White"/>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+
+                        <StackPanel x:Name="spUsuarioImagenBotones" Grid.Column="2" Orientation="Horizontal" Visibility="Collapsed">
+                            <Button x:Name="botonUsuarioImagenCopiar" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" BorderBrush="White" BorderThickness="0">
+                                <ToolTipService.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock x:Uid="CopyUrl"/>
+                                    </StackPanel>
+                                </ToolTipService.ToolTip>
+
+                                <Button.Content>
+                                    <iconos:FontAwesome Icon="Solid_Copy" Foreground="White"/>
+                                </Button.Content>
+                            </Button>
+
+                            <Button x:Name="botonUsuarioImagenDescargar" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" BorderBrush="White" BorderThickness="0" Margin="10,0,0,0">
+                                <ToolTipService.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock x:Uid="Download"/>
+                                    </StackPanel>
+                                </ToolTipService.ToolTip>
+
+                                <Button.Content>
+                                    <iconos:FontAwesome Icon="Solid_Download" Foreground="White"/>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+
+                        <StackPanel x:Name="spUsuarioVideoBotones" Grid.Column="2" Orientation="Horizontal" Visibility="Collapsed">
+                            <Button x:Name="botonUsuarioVideoCopiar" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" BorderBrush="White" BorderThickness="0">
+                                <ToolTipService.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock x:Uid="CopyUrl"/>
+                                    </StackPanel>
+                                </ToolTipService.ToolTip>
+
+                                <Button.Content>
+                                    <iconos:FontAwesome Icon="Solid_Copy" Foreground="White"/>
+                                </Button.Content>
+                            </Button>
+
+                            <Button x:Name="botonUsuarioVideoDescargar" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" BorderBrush="White" BorderThickness="0" Margin="10,0,0,0">
+                                <ToolTipService.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock x:Uid="Download"/>
+                                    </StackPanel>
+                                </ToolTipService.ToolTip>
+
+                                <Button.Content>
+                                    <iconos:FontAwesome Icon="Solid_Download" Foreground="White"/>
+                                </Button.Content>
+                            </Button>
+                        </StackPanel> 
+                    </Grid>
+                   
                     <Grid Grid.Row="1">
                         <Grid x:Name="gridUsuarioTweets" Visibility="Collapsed">
                             <ScrollViewer x:Name="svUsuarioTweets" VerticalScrollBarVisibility="Visible">
@@ -87,11 +183,77 @@
                                 </Button>
                             </StackPanel>
                         </Grid>
+                        
+                        <Grid x:Name="gridOtroUsuarioTweets" Visibility="Collapsed">
+                            <ScrollViewer x:Name="svOtroUsuarioTweets" VerticalScrollBarVisibility="Visible">
+                                <ScrollViewer.Resources>
+                                    <SolidColorBrush x:Key="ScrollBarThumbFill" Color="White"/>
+                                    <SolidColorBrush x:Key="ScrollBarThumbFillPointerOver" Color="White"/>
+                                </ScrollViewer.Resources>
+
+                                <StackPanel Orientation="Vertical">
+                                    <Grid x:Name="gridOtroUsuarioPerfil" Margin="0,0,30,20" Padding="25" BorderBrush="{StaticResource BrushPrimario}" BorderThickness="1">
+                                        <Grid.Background>
+                                            <SolidColorBrush Color="{StaticResource ColorCuarto}" Opacity="0.8"/>
+                                        </Grid.Background>
+                                        
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Ellipse x:Name="ellipseOtroUsuarioPerfil" Grid.Column="0" Width="40" Height="40" VerticalAlignment="Top"/>
+
+                                        <StackPanel Grid.Column="1" Orientation="Vertical" Margin="20,0">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock x:Name="tbOtroUsuarioPerfilNombre" Foreground="White"/>
+                                                <TextBlock x:Name="tbOtroUsuarioPerfilScreenNombre" Foreground="White" Margin="10,0,0,0" FontSize="13"/>
+                                            </StackPanel>
+
+                                            <TextBlock x:Name="tbOtroUsuarioPerfilDescripcion" Foreground="White" Margin="0,15,0,0" TextWrapping="Wrap"/>
+
+                                            <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                                                <TextBlock x:Uid="Followers" Foreground="White"/>
+                                                <TextBlock x:Name="tbOtroUsuarioPerfilSeguidores" Foreground="White" Margin="10,0,0,0"/>
+                                            </StackPanel> 
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="2" Orientation="Vertical">
+                                            
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <StackPanel x:Name="spOtroUsuarioTweets" Orientation="Vertical"/>
+
+                                    <Grid x:Name="gridCargaOtroUsuarioTweets" Margin="40">
+                                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <ProgressRing Width="60" Height="60" IsActive="True" Foreground="White" HorizontalAlignment="Center"/>
+                                            <TextBlock x:Uid="Loading" Foreground="White" FontSize="17" Margin="0,20,0,0" HorizontalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </StackPanel>
+                            </ScrollViewer>
+
+                            <StackPanel Orientation="Horizontal" Margin="20" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                <ProgressRing x:Name="prOtroUsuarioTweets" IsActive="True" Padding="10" Margin="0,0,15,0" Foreground="White" Visibility="Collapsed"/>
+
+                                <Button x:Name="botonSubirArribaOtroUsuarioTweets" Style="{ThemeResource ButtonRevealStyle}" Padding="12" BorderThickness="1" BorderBrush="{StaticResource BrushPrimario}" Visibility="Collapsed">
+                                    <Button.Content>
+                                        <iconos:FontAwesome Icon="Solid_ArrowCircleUp" Foreground="White"/>
+                                    </Button.Content>
+                                </Button>
+                            </StackPanel>
+                        </Grid> 
 
                         <Grid x:Name="gridUsuarioImagen" Visibility="Collapsed">
                             <ScrollViewer HorizontalScrollMode="Auto" VerticalScrollBarVisibility="Auto" Padding="0,20,20,0">
-                                <controls:ImageEx x:Name="imagenUsuario" IsCacheEnabled="True" Stretch="None" BorderBrush="{StaticResource BrushPrimario}" BorderThickness="1"/>
+                                <controls:ImageEx x:Name="imagenUsuario" IsCacheEnabled="True" Stretch="None"/>
                             </ScrollViewer>
+                        </Grid>
+
+                        <Grid x:Name="gridUsuarioVideo" Visibility="Collapsed">
+                            <MediaPlayerElement x:Name="videoUsuario" AreTransportControlsEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{StaticResource BrushPrimario}"/>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -861,7 +1023,7 @@
 
                 <Grid x:Name="gridVideoAmpliado" Visibility="Collapsed">
                     <Border x:Name="bordeVideoAmpliado" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10">
-                        <MediaPlayerElement x:Name="videoAmpliado" AreTransportControlsEnabled="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        
                     </Border>
 
                     <StackPanel Orientation="Horizontal" Padding="20" HorizontalAlignment="Right" VerticalAlignment="Top">

@@ -70,7 +70,7 @@ Module Notificaciones
         If mostrar = True Then
             ApplicationData.Current.LocalSettings.Values("ultimoTweet") = tweet.Id
 
-            Dim tb As TextBlock = Interfaz.Tweet.Texto(tweet)
+            Dim tb As TextBlock = Interfaz.Tweets.Texto(tweet)
 
             If Not tb.Text = String.Empty Then
                 Dim textoTweet As New AdaptiveText With {
@@ -110,9 +110,9 @@ Module Notificaciones
                     Dim tweetMedia As List(Of Entities.IMediaEntity) = tweet.Media
 
                     If tweetMedia.Count > 0 Then
-                        If Not tweetMedia(0).ExpandedURL = Nothing Then
+                        If Not tweetMedia(0).MediaURLHttps = Nothing Then
                             hero = New ToastGenericHeroImage With {
-                                .Source = tweetMedia(0).ExpandedURL
+                                .Source = tweetMedia(0).MediaURLHttps
                             }
                         End If
                     End If

@@ -129,11 +129,32 @@
   <data name="ConnectTwitter" xml:space="preserve">
     <value>Conectar a Twitter</value>
   </data>
+  <data name="CopyUrl.Text" xml:space="preserve">
+    <value>Copiar Enlace</value>
+  </data>
+  <data name="CopyUrl2" xml:space="preserve">
+    <value>Copiar Enlace</value>
+  </data>
+  <data name="Download.Text" xml:space="preserve">
+    <value>Descargar</value>
+  </data>
+  <data name="Followers.Text" xml:space="preserve">
+    <value>Seguidores</value>
+  </data>
+  <data name="Home.Text" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
+  <data name="Image.Text" xml:space="preserve">
+    <value>Imagen</value>
+  </data>
   <data name="Loading.Text" xml:space="preserve">
     <value>Cargando</value>
   </data>
   <data name="Open" xml:space="preserve">
     <value>Abrir</value>
+  </data>
+  <data name="OpenWebBrowser" xml:space="preserve">
+    <value>Abrir Navegador Web</value>
   </data>
   <data name="Password.Text" xml:space="preserve">
     <value>Contraseña</value>
@@ -146,6 +167,9 @@
   </data>
   <data name="SavedUsers.Text" xml:space="preserve">
     <value>Usuarios Guardados</value>
+  </data>
+  <data name="ShareTweet" xml:space="preserve">
+    <value>Compartir Tweet</value>
   </data>
   <data name="User.Text" xml:space="preserve">
     <value>Usuario</value>
