@@ -19,6 +19,28 @@
             RemoveHandler botonTweets.PointerExited, AddressOf Sale_Boton_Icono
             AddHandler botonTweets.PointerExited, AddressOf Sale_Boton_Icono
 
+            Dim botonEscribir As Button = pagina.FindName("botonEscribir")
+
+            RemoveHandler botonEscribir.Click, AddressOf Visibilidad_Usuario_Escribir
+            AddHandler botonEscribir.Click, AddressOf Visibilidad_Usuario_Escribir
+
+            RemoveHandler botonEscribir.PointerEntered, AddressOf Entra_Boton_Icono
+            AddHandler botonEscribir.PointerEntered, AddressOf Entra_Boton_Icono
+
+            RemoveHandler botonEscribir.PointerExited, AddressOf Sale_Boton_Icono
+            AddHandler botonEscribir.PointerExited, AddressOf Sale_Boton_Icono
+
+            Dim botonBusqueda As Button = pagina.FindName("botonBusqueda")
+
+            RemoveHandler botonBusqueda.Click, AddressOf Visibilidad_Usuario_Busqueda
+            AddHandler botonBusqueda.Click, AddressOf Visibilidad_Usuario_Busqueda
+
+            RemoveHandler botonBusqueda.PointerEntered, AddressOf Entra_Boton_Icono
+            AddHandler botonBusqueda.PointerEntered, AddressOf Entra_Boton_Icono
+
+            RemoveHandler botonBusqueda.PointerExited, AddressOf Sale_Boton_Icono
+            AddHandler botonBusqueda.PointerExited, AddressOf Sale_Boton_Icono
+
             Dim botonOtroUsuarioTweets As Button = pagina.FindName("botonOtroUsuarioTweets")
 
             RemoveHandler botonOtroUsuarioTweets.Click, AddressOf Visibilidad_OtroUsuario_Tweets
@@ -65,6 +87,17 @@
             RemoveHandler botonUsuarios.PointerExited, AddressOf Sale_Basico
             AddHandler botonUsuarios.PointerExited, AddressOf Sale_Basico
 
+            Dim botonNotificaciones As Button = pagina.FindName("botonConfiguracionNotificaciones")
+
+            RemoveHandler botonNotificaciones.Click, AddressOf Visibilidad_Config_Notificaciones
+            AddHandler botonNotificaciones.Click, AddressOf Visibilidad_Config_Notificaciones
+
+            RemoveHandler botonNotificaciones.PointerEntered, AddressOf Entra_Basico
+            AddHandler botonNotificaciones.PointerEntered, AddressOf Entra_Basico
+
+            RemoveHandler botonNotificaciones.PointerExited, AddressOf Sale_Basico
+            AddHandler botonNotificaciones.PointerExited, AddressOf Sale_Basico
+
         End Sub
 
         '------------------------------------------------------
@@ -76,6 +109,30 @@
 
             Dim boton As Button = pagina.FindName("botonUsuarioTweets")
             Dim grid As Grid = pagina.FindName("gridUsuarioTweets")
+
+            Visibilidad_Pestañas_Usuario(boton, grid)
+
+        End Sub
+
+        Private Sub Visibilidad_Usuario_Escribir(ByVal sender As Object, ByVal e As RoutedEventArgs)
+
+            Dim frame As Frame = Window.Current.Content
+            Dim pagina As Page = frame.Content
+
+            Dim boton As Button = pagina.FindName("botonEscribir")
+            Dim grid As Grid = pagina.FindName("gridEscribir")
+
+            Visibilidad_Pestañas_Usuario(boton, grid)
+
+        End Sub
+
+        Private Sub Visibilidad_Usuario_Busqueda(ByVal sender As Object, ByVal e As RoutedEventArgs)
+
+            Dim frame As Frame = Window.Current.Content
+            Dim pagina As Page = frame.Content
+
+            Dim boton As Button = pagina.FindName("botonBusqueda")
+            Dim grid As Grid = pagina.FindName("gridBusqueda")
 
             Visibilidad_Pestañas_Usuario(boton, grid)
 
@@ -131,6 +188,18 @@
 
         End Sub
 
+        Private Sub Visibilidad_Config_Notificaciones(ByVal sender As Object, ByVal e As RoutedEventArgs)
+
+            Dim frame As Frame = Window.Current.Content
+            Dim pagina As Page = frame.Content
+
+            Dim boton As Button = pagina.FindName("botonConfiguracionNotificaciones")
+            Dim grid As Grid = pagina.FindName("gridConfiguracionNotificaciones")
+
+            Visibilidad_Pestañas_Config(boton, grid)
+
+        End Sub
+
         '------------------------------------------------------
 
         Public Sub Visibilidad_Pestañas(gridMostrar As Grid)
@@ -161,6 +230,18 @@
 
             Dim gridTweets As Grid = pagina.FindName("gridUsuarioTweets")
             gridTweets.Visibility = Visibility.Collapsed
+
+            Dim botonEscribir As Button = pagina.FindName("botonEscribir")
+            botonEscribir.BorderThickness = New Thickness(0, 0, 0, 0)
+
+            Dim gridEscribir As Grid = pagina.FindName("gridEscribir")
+            gridEscribir.Visibility = Visibility.Collapsed
+
+            Dim botonBusqueda As Button = pagina.FindName("botonBusqueda")
+            botonBusqueda.BorderThickness = New Thickness(0, 0, 0, 0)
+
+            Dim gridBusqueda As Grid = pagina.FindName("gridBusqueda")
+            gridBusqueda.Visibility = Visibility.Collapsed
 
             Dim botonOtroUsuarioTweets As Button = pagina.FindName("botonOtroUsuarioTweets")
             botonOtroUsuarioTweets.BorderThickness = New Thickness(0, 0, 0, 0)
@@ -223,6 +304,12 @@
 
             Dim gridUsuarios As Grid = pagina.FindName("gridConfiguracionUsuarios")
             gridUsuarios.Visibility = Visibility.Collapsed
+
+            Dim botonNotificaciones As Button = pagina.FindName("botonConfiguracionNotificaciones")
+            botonNotificaciones.BorderThickness = New Thickness(0, 0, 0, 0)
+
+            Dim gridNotificaciones As Grid = pagina.FindName("gridConfiguracionNotificaciones")
+            gridNotificaciones.Visibility = Visibility.Collapsed
 
             '--------------------------------------------------------
 

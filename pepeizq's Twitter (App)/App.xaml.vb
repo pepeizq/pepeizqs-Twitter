@@ -58,14 +58,20 @@ NotInheritable Class App
         End If
 
         Dim payload As String = String.Empty
+        Dim abrir As Boolean = True
 
         If args.Kind = ActivationKind.StartupTask Then
             Dim startupArgs As StartupTaskActivatedEventArgs = args
             payload = ActivationKind.StartupTask.ToString()
+        ElseIf args.Kind = ActivationKind.ToastNotification Then
+            abrir = False
         End If
 
-        rootFrame.Navigate(GetType(MainPage), payload)
-        Window.Current.Activate()
+        If abrir = True Then
+            rootFrame.Navigate(GetType(MainPage), payload)
+            Window.Current.Activate()
+        End If
+
     End Sub
 
     Private Sub BarraAcrilica()

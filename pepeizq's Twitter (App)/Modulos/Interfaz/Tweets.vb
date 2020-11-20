@@ -126,13 +126,15 @@ Namespace Interfaz
 
                 Dim gridInferiorDerecha As New Grid With {
                     .HorizontalAlignment = HorizontalAlignment.Right,
-                    .Margin = New Thickness(0, 5, 25, 0)
+                    .Margin = New Thickness(10, 5, 25, 0),
+                    .Width = 50
                 }
 
                 gridInferiorDerecha.SetValue(Grid.ColumnProperty, 2)
 
                 Dim spDerecha As New StackPanel With {
-                    .Orientation = Orientation.Vertical
+                    .Orientation = Orientation.Vertical,
+                    .HorizontalAlignment = HorizontalAlignment.Right
                 }
 
                 Dim tbTiempo As New TextBlock With {
@@ -338,64 +340,54 @@ Namespace Interfaz
 
             '-------------------------------------
 
-            'Dim respuestaUsuarioScreenNombre As String = Nothing
+            Dim respuestaUsuarioScreenNombre As String = Nothing
 
-            'If tweet.Retweet Is Nothing Then
-            '    If Not tweet.RespuestaUsuarioScreenNombre = Nothing Then
-            '        respuestaUsuarioScreenNombre = tweet.RespuestaUsuarioScreenNombre
-            '    End If
-            'Else
-            '    If Not tweet.Retweet.RespuestaUsuarioScreenNombre = Nothing Then
-            '        respuestaUsuarioScreenNombre = tweet.Retweet.RespuestaUsuarioScreenNombre
-            '    End If
-            'End If
+            If tweet.IsRetweet = False Then
+                If Not tweet.InReplyToScreenName = Nothing Then
+                    respuestaUsuarioScreenNombre = tweet.InReplyToScreenName
+                End If
+            Else
+                If Not tweet.RetweetedTweet.InReplyToScreenName = Nothing Then
+                    respuestaUsuarioScreenNombre = tweet.RetweetedTweet.InReplyToScreenName
+                End If
+            End If
 
-            'If Not respuestaUsuarioScreenNombre = Nothing Then
-            '    cosas = New Objetos.UsuarioAmpliado(megaUsuario, Nothing, respuestaUsuarioScreenNombre)
+            If Not respuestaUsuarioScreenNombre = Nothing Then
+                Dim recursos As New Resources.ResourceLoader
 
-            '    Dim recursos As New Resources.ResourceLoader
+                Dim textoSpanRespuesta As New Span
 
-            '    Dim textoSpanRespuesta As New Span
+                Dim fragmento As New Run With {
+                    .Text = recursos.GetString("ReplyingTo") + " ",
+                    .Foreground = New SolidColorBrush(Colors.White)
+                }
 
-            '    Dim fragmento As New Run With {
-            '        .Text = recursos.GetString("ReplyingTo") + " ",
-            '        .Foreground = New SolidColorBrush(Colors.Black)
-            '    }
+                textoSpanRespuesta.Inlines.Add(fragmento)
 
-            '    textoSpanRespuesta.Inlines.Add(fragmento)
+                Dim contenidoEnlace As New Run With {
+                    .Text = "@" + respuestaUsuarioScreenNombre
+                }
 
-            '    Dim contenidoEnlace As New Run With {
-            '        .Text = "@" + respuestaUsuarioScreenNombre
-            '    }
+                Dim enlace As New Hyperlink With {
+                    .TextDecorations = Nothing,
+                    .Foreground = New SolidColorBrush(Colors.White)
+                }
 
-            '    Dim colorRespuesta As New Color
+                AddHandler enlace.Click, AddressOf CargarClick2
 
-            '    If color = App.Current.Resources("ColorSecundario") Then
-            '        colorRespuesta = App.Current.Resources("ColorCuarto")
-            '    Else
-            '        colorRespuesta = color
-            '    End If
+                enlace.Inlines.Add(contenidoEnlace)
+                textoSpanRespuesta.Inlines.Add(enlace)
 
-            '    Dim enlace As New Hyperlink With {
-            '        .TextDecorations = Nothing,
-            '        .Foreground = New SolidColorBrush(colorRespuesta)
-            '    }
+                Dim tbRespuesta As New TextBlock With {
+                    .TextWrapping = TextWrapping.Wrap,
+                    .Margin = New Thickness(10, 5, 5, 5),
+                    .FontSize = 13,
+                    .VerticalAlignment = VerticalAlignment.Center
+                }
 
-            '    AddHandler enlace.Click, AddressOf EnlaceClick
-
-            '    enlace.Inlines.Add(contenidoEnlace)
-            '    textoSpanRespuesta.Inlines.Add(enlace)
-
-            '    Dim tbRespuesta As New TextBlock With {
-            '        .TextWrapping = TextWrapping.Wrap,
-            '        .Margin = New Thickness(10, 5, 5, 5),
-            '        .FontSize = 13,
-            '        .VerticalAlignment = VerticalAlignment.Center
-            '    }
-
-            '    tbRespuesta.Inlines.Add(textoSpanRespuesta)
-            '    sp.Children.Add(tbRespuesta)
-            'End If
+                tbRespuesta.Inlines.Add(textoSpanRespuesta)
+                sp.Children.Add(tbRespuesta)
+            End If
 
             Return sp
 
@@ -639,7 +631,7 @@ Namespace Interfaz
             Dim sp As New StackPanel With {
                 .Background = New SolidColorBrush(App.Current.Resources("ColorCuarto")),
                 .Margin = New Thickness(5, 15, 5, 5),
-                .Padding = New Thickness(15, 15, 15, 15),
+                .Padding = New Thickness(15, 15, 15, 0),
                 .BorderBrush = New SolidColorBrush(App.Current.Resources("ColorPrimario")),
                 .BorderThickness = New Thickness(1, 1, 1, 1)
             }
@@ -674,9 +666,8 @@ Namespace Interfaz
 
             If Not listaMedia Is Nothing Then
                 If listaMedia.Count > 0 Then
-                    Dim spMedia As New StackPanel With {
-                        .Orientation = Orientation.Horizontal,
-                        .Margin = New Thickness(5, 15, 0, 5)
+                    Dim gvMedia As New GridView With {
+                        .Margin = New Thickness(5, 15, 0, 0)
                     }
 
                     For Each itemMedia In listaMedia
@@ -695,7 +686,7 @@ Namespace Interfaz
                                 .BorderBrush = New SolidColorBrush(App.Current.Resources("ColorPrimario")),
                                 .BorderThickness = New Thickness(1, 1, 1, 1),
                                 .HorizontalAlignment = HorizontalAlignment.Left,
-                                .Margin = New Thickness(0, 0, 10, 0)
+                                .Margin = New Thickness(0, 0, 5, 5)
                             }
 
                             Dim pantalla As DisplayInformation = DisplayInformation.GetForCurrentView()
@@ -710,8 +701,8 @@ Namespace Interfaz
                                 imagenMedia.MaxWidth = tamañoPantalla.Width / 4
                                 imagenMedia.MaxHeight = tamañoPantalla.Height / 1.8
                             ElseIf listaMedia.Count > 1 Then
-                                imagenMedia.MaxWidth = tamañoPantalla.Width / 6
-                                imagenMedia.MaxHeight = tamañoPantalla.Height / 2
+                                imagenMedia.MaxWidth = tamañoPantalla.Width / 6.5
+                                imagenMedia.MaxHeight = tamañoPantalla.Height / 3
                             End If
 
                             Dim imagenUrl As String = String.Empty
@@ -732,6 +723,9 @@ Namespace Interfaz
                             End Try
 
                             If objetoString = "photo" Then
+                                ToolTipService.SetToolTip(gridMedia, recursos.GetString("ClickExpandImage"))
+                                ToolTipService.SetPlacement(gridMedia, PlacementMode.Bottom)
+
                                 AddHandler gridMedia.PointerPressed, AddressOf AbrirImagen
                                 AddHandler gridMedia.PointerEntered, AddressOf Entra_Boton_Imagen
                                 AddHandler gridMedia.PointerExited, AddressOf Sale_Boton_Imagen
@@ -747,11 +741,18 @@ Namespace Interfaz
 
                                 gridMedia.Tag = listaOrdenada(0).URL
 
+                                ToolTipService.SetToolTip(gridMedia, recursos.GetString("ClickExpandVideo"))
+                                ToolTipService.SetPlacement(gridMedia, PlacementMode.Bottom)
+
                                 AddHandler gridMedia.PointerPressed, AddressOf AbrirVideo
                                 AddHandler gridMedia.PointerEntered, AddressOf Entra_Boton_Imagen
                                 AddHandler gridMedia.PointerExited, AddressOf Sale_Boton_Imagen
                             ElseIf objetoString = "animated_gif" Then
                                 gridMedia.Tag = itemMedia.VideoDetails.Variants(0).URL
+
+                                ToolTipService.SetToolTip(gridMedia, recursos.GetString("ClickExpandGif"))
+                                ToolTipService.SetPlacement(gridMedia, PlacementMode.Bottom)
+
                                 AddHandler gridMedia.PointerPressed, AddressOf AbrirVideo
                                 AddHandler gridMedia.PointerEntered, AddressOf Entra_Video
                                 AddHandler gridMedia.PointerExited, AddressOf Sale_Video
@@ -791,17 +792,12 @@ Namespace Interfaz
 
                             gridMedia.Children.Add(gridTipo)
 
-                            'If ApplicationData.Current.LocalSettings.Values("tooltipsayuda") = True Then
-                            '    ToolTipService.SetToolTip(gridMedia, recursos.GetString("ClickExpand"))
-                            '    ToolTipService.SetPlacement(gridMedia, PlacementMode.Bottom)
-                            'End If
-
-                            spMedia.Children.Add(gridMedia)
+                            gvMedia.Items.Add(gridMedia)
                         End If
                     Next
 
-                    If spMedia.Children.Count > 0 Then
-                        Return spMedia
+                    If gvMedia.Items.Count > 0 Then
+                        Return gvMedia
                     End If
                 End If
             End If
@@ -1257,10 +1253,10 @@ Namespace Interfaz
         Private Sub CopiarEnlaceTweetClick(sender As Object, e As RoutedEventArgs)
 
             Dim boton As MenuFlyoutItem = sender
-            Dim clienteyTweet As ClienteyTweet = boton.Tag
+            Dim cosas As ClienteyTweet = boton.Tag
 
-            Dim cliente As TwitterClient = clienteyTweet.cliente
-            Dim tweet As ITweet = clienteyTweet.tweet
+            Dim cliente As TwitterClient = cosas.cliente
+            Dim tweet As ITweet = cosas.tweet
 
             Dim texto As New DataPackage
 
@@ -1277,12 +1273,10 @@ Namespace Interfaz
         Private Async Sub AbrirNavegadorTweetClick(sender As Object, e As RoutedEventArgs)
 
             Dim boton As MenuFlyoutItem = sender
-            Dim clienteyTweet As ClienteyTweet = boton.Tag
+            Dim cosas As ClienteyTweet = boton.Tag
 
-            Dim cliente As TwitterClient = clienteyTweet.cliente
-            Dim tweet As ITweet = clienteyTweet.tweet
-
-            Dim texto As New DataPackage
+            Dim cliente As TwitterClient = cosas.cliente
+            Dim tweet As ITweet = cosas.tweet
 
             If tweet.IsRetweet = False Then
                 Try

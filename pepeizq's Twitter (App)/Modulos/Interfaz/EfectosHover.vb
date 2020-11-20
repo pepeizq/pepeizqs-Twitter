@@ -54,7 +54,7 @@ Namespace Interfaz
 
             Dim boton As Button = sender
             Dim icono As FontAwesome5.FontAwesome = boton.Content
-            icono.Saturation(1).Scale(1.1, 1.1, boton.ActualWidth / 2, boton.ActualHeight / 2).Start()
+            icono.Saturation(1).Scale(1.1, 1.1, icono.ActualWidth / 2, icono.ActualHeight / 2).Start()
 
             Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
 
@@ -64,7 +64,7 @@ Namespace Interfaz
 
             Dim boton As Button = sender
             Dim icono As FontAwesome5.FontAwesome = boton.Content
-            icono.Saturation(1).Scale(1, 1, boton.ActualWidth / 2, boton.ActualHeight / 2).Start()
+            icono.Saturation(1).Scale(1, 1, icono.ActualWidth / 2, icono.ActualHeight / 2).Start()
 
             Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
 
@@ -235,6 +235,26 @@ Namespace Interfaz
             Dim item As MenuFlyoutItem = sender
             Dim icono As FontAwesome5.FontAwesome = item.Icon
             icono.Saturation(1).Scale(1, 1, icono.ActualWidth / 2, icono.ActualHeight / 2).Start()
+
+            Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
+
+        End Sub
+
+        Public Sub Entra_Boton_Texto(sender As Object, e As PointerRoutedEventArgs)
+
+            Dim boton As Button = sender
+            Dim tb As TextBlock = boton.Content
+            tb.Saturation(1).Scale(1.1, 1.1, boton.ActualWidth / 2, boton.ActualHeight / 2).Start()
+
+            Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
+
+        End Sub
+
+        Public Sub Sale_Boton_Texto(sender As Object, e As PointerRoutedEventArgs)
+
+            Dim boton As Button = sender
+            Dim tb As TextBlock = boton.Content
+            tb.Saturation(1).Scale(1, 1, boton.ActualWidth / 2, boton.ActualHeight / 2).Start()
 
             Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
 

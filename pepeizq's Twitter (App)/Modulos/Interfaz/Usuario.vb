@@ -9,7 +9,13 @@ Imports Windows.UI.Xaml.Shapes
 Namespace Interfaz
     Module Usuario
 
+        Public usuario_ As IAuthenticatedUser
+
         Public Async Sub CargarDatos(cliente As TwitterClient, usuario As IAuthenticatedUser)
+
+            usuario_ = usuario
+
+            Busqueda.Cargar()
 
             Dim frame As Frame = Window.Current.Content
             Dim pagina As Page = frame.Content
@@ -127,6 +133,7 @@ Namespace Interfaz
 
             End Try
 
+            Dim i As Integer = 0
             If Not tweets Is Nothing Then
                 For Each tweet In tweets
                     Dim añadir As Boolean = True
@@ -141,7 +148,8 @@ Namespace Interfaz
                     Next
 
                     If añadir = True Then
-                        spTweets.Children.Insert(0, Interfaz.Tweets.GenerarTweet(cliente, tweet))
+                        spTweets.Children.Insert(i, Interfaz.Tweets.GenerarTweet(cliente, tweet))
+                        i += 1
                         Notificaciones.ToastTweet(tweet, 30)
                     End If
                 Next

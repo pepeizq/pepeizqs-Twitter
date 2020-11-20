@@ -123,6 +123,18 @@
   <data name="AddUser.Text" xml:space="preserve">
     <value>Add User</value>
   </data>
+  <data name="BlockUser" xml:space="preserve">
+    <value>Block User</value>
+  </data>
+  <data name="ClickExpandGif" xml:space="preserve">
+    <value>Click to expand the gif</value>
+  </data>
+  <data name="ClickExpandImage" xml:space="preserve">
+    <value>Click to expand the image</value>
+  </data>
+  <data name="ClickExpandVideo" xml:space="preserve">
+    <value>Click to open the video</value>
+  </data>
   <data name="Config" xml:space="preserve">
     <value>Configuration</value>
   </data>
@@ -138,8 +150,17 @@
   <data name="Download.Text" xml:space="preserve">
     <value>Download</value>
   </data>
+  <data name="Follow" xml:space="preserve">
+    <value>Follow</value>
+  </data>
   <data name="Followers.Text" xml:space="preserve">
     <value>Followers</value>
+  </data>
+  <data name="Followers2" xml:space="preserve">
+    <value>Followers</value>
+  </data>
+  <data name="Following" xml:space="preserve">
+    <value>Following</value>
   </data>
   <data name="Home.Text" xml:space="preserve">
     <value>Home</value>
@@ -149,6 +170,9 @@
   </data>
   <data name="Loading.Text" xml:space="preserve">
     <value>Loading</value>
+  </data>
+  <data name="Notifications.Text" xml:space="preserve">
+    <value>Notifications</value>
   </data>
   <data name="Open" xml:space="preserve">
     <value>Open</value>
@@ -162,19 +186,37 @@
   <data name="Refresh.Text" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="ReplyingTo" xml:space="preserve">
+    <value>Replying to</value>
+  </data>
   <data name="Retweeted" xml:space="preserve">
     <value>Retweeted by</value>
   </data>
   <data name="SavedUsers.Text" xml:space="preserve">
     <value>Saved Users</value>
   </data>
+  <data name="Search.Text" xml:space="preserve">
+    <value>Search</value>
+  </data>
   <data name="ShareTweet" xml:space="preserve">
     <value>Share Tweet</value>
+  </data>
+  <data name="ShareUser" xml:space="preserve">
+    <value>Share User</value>
+  </data>
+  <data name="UnblockUser" xml:space="preserve">
+    <value>Unblock User</value>
   </data>
   <data name="User.Text" xml:space="preserve">
     <value>User</value>
   </data>
   <data name="Users.Text" xml:space="preserve">
     <value>Users</value>
+  </data>
+  <data name="VerifiedAccount.Text" xml:space="preserve">
+    <value>Verified Account</value>
+  </data>
+  <data name="Write.Text" xml:space="preserve">
+    <value>Write a Tweet</value>
   </data>
 </root>

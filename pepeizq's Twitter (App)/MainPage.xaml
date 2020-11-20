@@ -61,6 +61,30 @@
                                 </Button.Content>
                             </Button>
 
+                            <Button x:Name="botonEscribir" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" BorderBrush="White" BorderThickness="0" Margin="10,0,0,0">
+                                <ToolTipService.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock x:Uid="Write"/>
+                                    </StackPanel>
+                                </ToolTipService.ToolTip>
+
+                                <Button.Content>
+                                    <iconos:FontAwesome Icon="Solid_Pen" Foreground="White"/>
+                                </Button.Content>
+                            </Button>
+
+                            <Button x:Name="botonBusqueda" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" BorderBrush="White" BorderThickness="0" Margin="10,0,0,0">
+                                <ToolTipService.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock x:Uid="Search"/>
+                                    </StackPanel>
+                                </ToolTipService.ToolTip>
+
+                                <Button.Content>
+                                    <iconos:FontAwesome Icon="Solid_Search" Foreground="White"/>
+                                </Button.Content>
+                            </Button>
+
                             <Button x:Name="botonOtroUsuarioTweets" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" BorderBrush="White" BorderThickness="0" Margin="10,0,0,0" Visibility="Collapsed">
                                 <ToolTipService.ToolTip>
                                     <StackPanel>
@@ -183,7 +207,45 @@
                                 </Button>
                             </StackPanel>
                         </Grid>
-                        
+
+                        <Grid x:Name="gridEscribir" Visibility="Collapsed">
+                            
+                        </Grid>
+
+                        <Grid x:Name="gridBusqueda" Visibility="Collapsed">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0" Padding="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Button x:Name="botonBusquedaBuscar" Grid.Row="0" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="15,12" BorderBrush="White" BorderThickness="0">
+                                    <Button.Content>
+                                        <StackPanel Orientation="Horizontal">
+                                            <iconos:FontAwesome Icon="Solid_Search" Foreground="White"/>
+                                            <TextBlock x:Uid="Search" Foreground="White" Margin="10,0,0,0"/>
+                                        </StackPanel>
+                                    </Button.Content>
+                                </Button>
+
+                                <TextBox x:Name="tbBusqueda" Grid.Column="1" Margin="30,0,00,0" VerticalAlignment="Center" RequestedTheme="Dark" BorderBrush="White" BorderThickness="1"/>
+                            </Grid>
+
+                            <controls:AdaptiveGridView x:Name="gvResultadosBusqueda" Grid.Row="1" Padding="10"/>
+
+                            <Grid x:Name="gridCargaBusqueda" Grid.Row="1" Padding="10" Visibility="Collapsed">
+                                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <ProgressRing Width="60" Height="60" IsActive="True" Foreground="White" HorizontalAlignment="Center"/>
+                                    <TextBlock x:Uid="Loading" Foreground="White" FontSize="17" Margin="0,20,0,0" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+
                         <Grid x:Name="gridOtroUsuarioTweets" Visibility="Collapsed">
                             <ScrollViewer x:Name="svOtroUsuarioTweets" VerticalScrollBarVisibility="Visible">
                                 <ScrollViewer.Resources>
@@ -213,14 +275,32 @@
 
                                             <TextBlock x:Name="tbOtroUsuarioPerfilDescripcion" Foreground="White" Margin="0,15,0,0" TextWrapping="Wrap"/>
 
-                                            <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
-                                                <TextBlock x:Uid="Followers" Foreground="White"/>
-                                                <TextBlock x:Name="tbOtroUsuarioPerfilSeguidores" Foreground="White" Margin="10,0,0,0"/>
+                                            <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                                                <iconos:FontAwesome x:Name="iconoOtroUsuarioVerificado" Icon="Solid_CheckCircle" Foreground="White" Margin="0,0,15,0">
+                                                    <ToolTipService.ToolTip>
+                                                        <StackPanel>
+                                                            <TextBlock x:Uid="VerifiedAccount"/>
+                                                        </StackPanel>
+                                                    </ToolTipService.ToolTip>
+                                                </iconos:FontAwesome> 
+                                                
+                                                <TextBlock x:Uid="Followers" Foreground="White" VerticalAlignment="Center"/>
+                                                <TextBlock x:Name="tbOtroUsuarioPerfilSeguidores" Foreground="White" Margin="10,0,0,0" VerticalAlignment="Center"/>
                                             </StackPanel> 
                                         </StackPanel>
 
-                                        <StackPanel Grid.Column="2" Orientation="Vertical">
-                                            
+                                        <StackPanel Grid.Column="2" Orientation="Vertical" Margin="0,0,20,0" VerticalAlignment="Center">
+                                            <Button x:Name="botonOtroUsuarioSeguir" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" BorderBrush="White" BorderThickness="0">
+                                                <Button.Content>
+                                                    <TextBlock x:Name="tbOtroUsuarioSeguir" Foreground="White"/>
+                                                </Button.Content>
+                                            </Button>
+
+                                            <Button x:Name="botonOtroUsuarioMasOpciones" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" BorderBrush="White" BorderThickness="0" Margin="0,15,0,0" HorizontalAlignment="Center">
+                                                <Button.Content>
+                                                    <iconos:FontAwesome Icon="Solid_EllipsisH" Foreground="White"/>
+                                                </Button.Content>
+                                            </Button>
                                         </StackPanel>
                                     </Grid>
 
@@ -244,7 +324,7 @@
                                     </Button.Content>
                                 </Button>
                             </StackPanel>
-                        </Grid> 
+                        </Grid>
 
                         <Grid x:Name="gridUsuarioImagen" Visibility="Collapsed">
                             <ScrollViewer HorizontalScrollMode="Auto" VerticalScrollBarVisibility="Auto" Padding="0,20,20,0">
@@ -271,10 +351,16 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0" Orientation="Horizontal" Padding="20,0,20,20">
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Padding="10,0,10,10">
                         <Button x:Name="botonConfiguracionUsuarios" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" BorderBrush="White" BorderThickness="0">
                             <Button.Content>
                                 <TextBlock x:Uid="Users" Foreground="White" FontSize="18"/>
+                            </Button.Content>
+                        </Button>
+
+                        <Button x:Name="botonConfiguracionNotificaciones" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" BorderBrush="White" BorderThickness="0" Margin="10,0,0,0">
+                            <Button.Content>
+                                <TextBlock x:Uid="Notifications" Foreground="White" FontSize="18"/>
                             </Button.Content>
                         </Button>
                     </StackPanel>
@@ -316,6 +402,10 @@
                                 </StackPanel>
                             </ScrollViewer>
                         </Grid>
+
+                        <Grid x:Name="gridConfiguracionNotificaciones" Visibility="Collapsed">
+                            
+                        </Grid> 
                     </Grid>
 
                     <StackPanel x:Name="spConexion" Visibility="Collapsed" Grid.Row="1" Orientation="Vertical">

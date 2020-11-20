@@ -159,7 +159,9 @@ Module Notificaciones
                     Next
 
                     If Not urlFinal = Nothing Then
-                        botonAbrir = New ToastButton(recursos.GetString("Open"), urlFinal)
+                        botonAbrir = New ToastButton(recursos.GetString("Open"), urlFinal) With {
+                            .ActivationType = ToastActivationType.Protocol
+                        }
                     End If
                 End If
 
@@ -191,7 +193,7 @@ Module Notificaciones
                     .Visual = tostadaVisual,
                     .Actions = tostadaAcciones,
                     .Audio = tostadaAudio,
-                    .ActivationType = ToastActivationType.Background
+                    .ActivationType = ToastActivationType.Foreground
                 }
 
                 Try
