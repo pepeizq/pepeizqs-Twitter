@@ -136,16 +136,17 @@
     <Compile Include="Antiguo\Modulos\Cliente\FichaBusquedaTweetsXaml.vb" />
     <Compile Include="Antiguo\Modulos\Cliente\FichaBusquedaUsuariosXaml.vb" />
     <Compile Include="Antiguo\Modulos\Conexion\TwitterPeticiones.vb" />
-    <Compile Include="Antiguo\Modulos\Configuracion.vb" />
+    <Compile Include="Modulos\Configuracion\Notificaciones.vb" />
     <Compile Include="Modulos\Conexion.vb" />
     <Compile Include="Modulos\Decompiladores.vb" />
     <Compile Include="Antiguo\Modulos\MasCosas.vb" />
     <Compile Include="Antiguo\Modulos\NavigationViewItems.vb" />
     <Compile Include="Modulos\Interfaz\Busqueda.vb" />
     <Compile Include="Modulos\Interfaz\EfectosHover.vb" />
+    <Compile Include="Modulos\Interfaz\Enviar.vb" />
     <Compile Include="Modulos\Interfaz\OtroUsuario.vb" />
     <Compile Include="Modulos\Interfaz\Pestañas.vb" />
-    <Compile Include="Modulos\Interfaz\ConfigUsuario.vb" />
+    <Compile Include="Modulos\Configuracion\Usuario.vb" />
     <Compile Include="Modulos\Interfaz\NavigationViewItems.vb" />
     <Compile Include="Modulos\Interfaz\Tweets.vb" />
     <Compile Include="Modulos\Interfaz\Usuario.vb" />
@@ -171,6 +172,7 @@
     <Compile Include="Antiguo\Modulos\Cliente\UsuarioXaml\InicioXaml.vb" />
     <Compile Include="Antiguo\Modulos\Cliente\UsuarioXaml\MencionesXaml.vb" />
     <Compile Include="Modulos\Tiles.vb" />
+    <Compile Include="Modulos\Trial.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
   </ItemGroup>
   <ItemGroup>

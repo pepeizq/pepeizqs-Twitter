@@ -2,8 +2,8 @@
 Imports Windows.Storage
 Imports Windows.UI
 
-Namespace Interfaz
-    Module ConfigUsuario
+Namespace Configuracion
+    Module Usuario
 
         Public Function AñadirListaGuardados(nombre As String)
 
@@ -59,8 +59,8 @@ Namespace Interfaz
 
             AddHandler cb.Checked, AddressOf Usuario_Conectar
             AddHandler cb.Unchecked, AddressOf Usuario_Desconectar
-            AddHandler cb.PointerEntered, AddressOf Entra_Basico
-            AddHandler cb.PointerExited, AddressOf Sale_Basico
+            AddHandler cb.PointerEntered, AddressOf Interfaz.Entra_Basico
+            AddHandler cb.PointerExited, AddressOf Interfaz.Sale_Basico
 
             If Not ApplicationData.Current.LocalSettings.Values("idUsuario") = Nothing Then
                 If nombre = ApplicationData.Current.LocalSettings.Values("idUsuario") Then
@@ -90,8 +90,8 @@ Namespace Interfaz
             }
 
             AddHandler botonBorrar.Click, AddressOf Usuario_Borrar
-            AddHandler botonBorrar.PointerEntered, AddressOf Entra_Boton_Icono
-            AddHandler botonBorrar.PointerExited, AddressOf Sale_Boton_Icono
+            AddHandler botonBorrar.PointerEntered, AddressOf Interfaz.Entra_Boton_Icono
+            AddHandler botonBorrar.PointerExited, AddressOf Interfaz.Sale_Boton_Icono
 
             botonBorrar.SetValue(Grid.ColumnProperty, 3)
             grid.Children.Add(botonBorrar)

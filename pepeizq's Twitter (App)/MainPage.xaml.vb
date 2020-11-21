@@ -242,9 +242,13 @@ Public NotInheritable Class MainPage
         'Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = "es-ES"
         'Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = "en-US"
 
-        Configuracion.Iniciar()
+        tbTitulo.Text = Package.Current.DisplayName + " (" + Package.Current.Id.Version.Major.ToString + "." + Package.Current.Id.Version.Minor.ToString + "." + Package.Current.Id.Version.Build.ToString + "." + Package.Current.Id.Version.Revision.ToString + ")"
+
+        Trial.Cargar()
+        Configuracion.Notificaciones.Cargar()
         Conexion.Cargar()
         Interfaz.Pestañas.Cargar()
+        Interfaz.Enviar.Cargar()
 
         'MasCosas.Generar()
 

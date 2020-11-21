@@ -126,6 +126,9 @@
   <data name="BlockUser" xml:space="preserve">
     <value>Bloquear Usuario</value>
   </data>
+  <data name="BuyApp.Text" xml:space="preserve">
+    <value>Comprar App</value>
+  </data>
   <data name="ClickExpandGif" xml:space="preserve">
     <value>Haz click para expandir el gif</value>
   </data>
@@ -137,6 +140,21 @@
   </data>
   <data name="Config" xml:space="preserve">
     <value>Configuración</value>
+  </data>
+  <data name="ConfigMessage.Text" xml:space="preserve">
+    <value>Estas opciones se aplicarán a todos los usuarios de Twitter</value>
+  </data>
+  <data name="ConfigNotifications1.Text" xml:space="preserve">
+    <value>¿Quieres que las notificaciones desaparezcan del Centro de Actividades pasado un tiempo?</value>
+  </data>
+  <data name="ConfigNotifications2.Text" xml:space="preserve">
+    <value>¿Durante cuánto tiempo quieres que las notificaciones permanezcan en el Centro de Actividades?</value>
+  </data>
+  <data name="ConfigNotifications3.Text" xml:space="preserve">
+    <value>¿Quieres reproducir un sonido cuando recibas una notificación?</value>
+  </data>
+  <data name="ConfigNotifications4.Text" xml:space="preserve">
+    <value>Elige un sonido</value>
   </data>
   <data name="ConnectTwitter" xml:space="preserve">
     <value>Conectar a Twitter</value>
@@ -171,6 +189,9 @@
   <data name="Loading.Text" xml:space="preserve">
     <value>Cargando</value>
   </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
   <data name="Notifications.Text" xml:space="preserve">
     <value>Notificaciones</value>
   </data>
@@ -183,8 +204,14 @@
   <data name="Password.Text" xml:space="preserve">
     <value>Contraseña</value>
   </data>
+  <data name="PlaySound.Text" xml:space="preserve">
+    <value>Reproducir Sonido</value>
+  </data>
   <data name="Refresh.Text" xml:space="preserve">
     <value>Actualizar</value>
+  </data>
+  <data name="Reply" xml:space="preserve">
+    <value>Responder</value>
   </data>
   <data name="ReplyingTo" xml:space="preserve">
     <value>Respondiendo a</value>
@@ -198,11 +225,20 @@
   <data name="Search.Text" xml:space="preserve">
     <value>Buscar</value>
   </data>
+  <data name="Seconds" xml:space="preserve">
+    <value>segundos</value>
+  </data>
+  <data name="Send.Text" xml:space="preserve">
+    <value>Enviar</value>
+  </data>
   <data name="ShareTweet" xml:space="preserve">
     <value>Compartir Tweet</value>
   </data>
   <data name="ShareUser" xml:space="preserve">
     <value>Compartir Usuario</value>
+  </data>
+  <data name="TrialMessageNotifications.Text" xml:space="preserve">
+    <value>Debes comprar la app si quieres que aparezcan las notificaciones</value>
   </data>
   <data name="UnblockUser" xml:space="preserve">
     <value>Desbloquear Usuario</value>
@@ -218,5 +254,8 @@
   </data>
   <data name="Write.Text" xml:space="preserve">
     <value>Escribe un Tweet</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Si</value>
   </data>
 </root>

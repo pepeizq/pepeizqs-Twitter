@@ -209,7 +209,28 @@
                         </Grid>
 
                         <Grid x:Name="gridEscribir" Visibility="Collapsed">
-                            
+                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                <ScrollViewer.Resources>
+                                    <SolidColorBrush x:Key="ScrollBarThumbFill" Color="White"/>
+                                    <SolidColorBrush x:Key="ScrollBarThumbFillPointerOver" Color="White"/>
+                                </ScrollViewer.Resources>
+
+                                <StackPanel Orientation="Vertical">
+                                    <StackPanel x:Name="spEscribirTweetOrigen" Visibility="Collapsed" Margin="0,0,0,20"/>
+
+                                    <TextBox x:Name="tbEscribirMensaje" TextWrapping="Wrap" RequestedTheme="Dark" AcceptsReturn="True"/>
+
+                                    <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                                        <Button x:Name="botonEnviarMensaje" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="15,12" BorderBrush="White" BorderThickness="0">
+                                            <Button.Content>
+                                                <TextBlock x:Uid="Send" Foreground="White"/>
+                                            </Button.Content>
+                                        </Button>
+                                        
+                                        
+                                    </StackPanel>
+                                </StackPanel>
+                            </ScrollViewer>
                         </Grid>
 
                         <Grid x:Name="gridBusqueda" Visibility="Collapsed">
@@ -237,7 +258,7 @@
                             </Grid>
 
                             <controls:AdaptiveGridView x:Name="gvResultadosBusqueda" Grid.Row="1" Padding="10"/>
-
+                                
                             <Grid x:Name="gridCargaBusqueda" Grid.Row="1" Padding="10" Visibility="Collapsed">
                                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <ProgressRing Width="60" Height="60" IsActive="True" Foreground="White" HorizontalAlignment="Center"/>
@@ -254,9 +275,9 @@
                                 </ScrollViewer.Resources>
 
                                 <StackPanel Orientation="Vertical">
-                                    <Grid x:Name="gridOtroUsuarioPerfil" Margin="0,0,30,20" Padding="25" BorderBrush="{StaticResource BrushPrimario}" BorderThickness="1">
+                                    <Grid x:Name="gridOtroUsuarioPerfil" Margin="0,0,30,20" Padding="20" BorderBrush="{StaticResource BrushPrimario}" BorderThickness="1">
                                         <Grid.Background>
-                                            <SolidColorBrush Color="{StaticResource ColorCuarto}" Opacity="0.8"/>
+                                            <SolidColorBrush Color="{StaticResource ColorCuarto}" Opacity="1"/>
                                         </Grid.Background>
                                         
                                         <Grid.ColumnDefinitions>
@@ -404,7 +425,78 @@
                         </Grid>
 
                         <Grid x:Name="gridConfiguracionNotificaciones" Visibility="Collapsed">
-                            
+                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                <StackPanel Orientation="Vertical">
+                                    <Grid x:Name="gridMensajeTrialNotificaciones" Visibility="Collapsed" Margin="0,0,0,40">
+                                        <controls:DropShadowPanel Color="{StaticResource ColorCajaRojaSombra}" ShadowOpacity="0.5" BlurRadius="20">
+                                            <Grid Padding="15" Background="{StaticResource ColorCajaRojaFondo}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <iconos:FontAwesome Grid.Column="0" Margin="0,0,10,0" Icon="Solid_ExclamationCircle" VerticalAlignment="Center" Foreground="White"/>
+                                                <TextBlock Grid.Column="1" x:Uid="TrialMessageNotifications" Margin="10,0,40,0" TextWrapping="Wrap" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                                                <Button x:Name="botonComprarApp" Grid.Column="2" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10">
+                                                    <Button.Content>
+                                                        <TextBlock x:Uid="BuyApp" Foreground="White"/>
+                                                    </Button.Content>
+                                                </Button>
+                                            </Grid>
+                                        </controls:DropShadowPanel>
+                                    </Grid>
+
+                                    <StackPanel Orientation="Horizontal" Padding="0,10">
+                                        <iconos:FontAwesome Icon="Solid_InfoCircle" VerticalAlignment="Center" Foreground="White"/>
+                                        <TextBlock x:Uid="ConfigMessage" Margin="15,0,0,0" TextWrapping="Wrap" Foreground="White" VerticalAlignment="Center"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Vertical" Padding="0,10" Margin="0,30,0,0">
+                                        <TextBlock x:Uid="ConfigNotifications1" Foreground="White"/>
+                                        <ToggleSwitch x:Name="tsNotificacionesTiempo" Margin="0,15,0,0" Foreground="White" RequestedTheme="Dark"/>
+                                    </StackPanel>
+
+                                    <StackPanel x:Name="spConfigNotificacionesTiempo" Orientation="Vertical" Padding="0,10" Margin="0,10,0,0">
+                                        <TextBlock x:Uid="ConfigNotifications2" Foreground="White"/>
+
+                                        <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                                            <Slider x:Name="sliderNotificacionesTiempo" Foreground="White" RequestedTheme="Dark" Width="300" HorizontalAlignment="Left" Maximum="120" VerticalAlignment="Center"/>
+                                            <TextBlock x:Name="tbNotificacionesTiempo" Foreground="White" Margin="15,0,0,0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Vertical" Padding="0,10" Margin="0,30,0,0">
+                                        <TextBlock x:Uid="ConfigNotifications3" Foreground="White"/>
+                                        <ToggleSwitch x:Name="tsNotificacionesSonido" Margin="0,15,0,0" Foreground="White" RequestedTheme="Dark"/>
+                                    </StackPanel>
+
+                                    <StackPanel x:Name="spConfigNotificacionesSonido" Orientation="Vertical" Padding="0,10" Margin="0,10,0,0">
+                                        <TextBlock x:Uid="ConfigNotifications4" Foreground="White"/>
+
+                                        <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                                            <ComboBox x:Name="cbConfigNotificacionesSonidoElegir" VerticalAlignment="Center" RequestedTheme="Dark" Foreground="White">
+                                                <ComboBoxItem Content="Twitter.Default" Tag="ms-appx:///Assets/Sonidos/Twitter.Default.mp3"/>
+                                                <ComboBoxItem Content="Windows.Default" Tag="ms-winsoundevent:Notification.Default"/>
+                                                <ComboBoxItem Content="Windows.IM" Tag="ms-winsoundevent:Notification.IM"/>
+                                                <ComboBoxItem Content="Windows.Mail" Tag="ms-winsoundevent:Notification.Mail"/>
+                                                <ComboBoxItem Content="Windows.Reminder" Tag="ms-winsoundevent:Notification.Reminder"/>
+                                                <ComboBoxItem Content="Windows.SMS" Tag="ms-winsoundevent:Notification.SMS"/>
+                                            </ComboBox>
+
+                                            <Button x:Name="botonConfigNotificacionesSonido" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" Margin="15,0,0,0">
+                                                <Button.Content>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <iconos:FontAwesome Icon="Solid_PlayCircle" Margin="0,0,15,0" VerticalAlignment="Center" Foreground="White"/>
+                                                        <TextBlock x:Uid="PlaySound" Foreground="White"/>
+                                                    </StackPanel>
+                                                </Button.Content>
+                                            </Button>
+                                        </StackPanel>
+                                    </StackPanel> 
+                                </StackPanel>
+                            </ScrollViewer> 
                         </Grid> 
                     </Grid>
 

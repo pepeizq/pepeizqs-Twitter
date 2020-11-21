@@ -57,7 +57,7 @@ Module Notificaciones
 
     End Sub
 
-    Public Sub ToastTweet(tweet As ITweet, segundos As Integer)
+    Public Sub ToastTweet(tweet As ITweet)
 
         Dim mostrar As Boolean = True
 
@@ -173,15 +173,15 @@ Module Notificaciones
 
                 Dim tostadaAudio As New ToastAudio
 
-                If ApplicationData.Current.LocalSettings.Values("notificacionSonido") = False Then
+                If ApplicationData.Current.LocalSettings.Values("notificaciones_sonido") = 0 Then
                     tostadaAudio.Silent = True
                 Else
                     tostadaAudio.Silent = False
 
-                    If ApplicationData.Current.LocalSettings.Values("notificacionSonidoElegido") = Nothing Then
+                    If ApplicationData.Current.LocalSettings.Values("notificaciones_sonido_elegir") = Nothing Then
                         tostadaAudio.Src = New Uri("ms-winsoundevent:Notification.Default")
                     Else
-                        tostadaAudio.Src = New Uri(ApplicationData.Current.LocalSettings.Values("notificacionSonidoElegido"))
+                        tostadaAudio.Src = New Uri(ApplicationData.Current.LocalSettings.Values("notificaciones_sonido_elegir"))
                     End If
                 End If
 
@@ -199,8 +199,14 @@ Module Notificaciones
                 Try
                     Dim notificacion As ToastNotification = New ToastNotification(tostada.GetXml)
 
-                    If Not segundos = 0 Then
-                        notificacion.ExpirationTime = DateTime.Now.AddSeconds(segundos)
+                    If ApplicationData.Current.LocalSettings.Values("notificaciones_tiempo") = 1 Then
+                        Dim segundos As Integer = ApplicationData.Current.LocalSettings.Values("notificaciones_tiempo_segundos")
+
+                        If Not segundos = Nothing Then
+                            If segundos > 0 Then
+                                notificacion.ExpirationTime = DateTime.Now.AddSeconds(segundos)
+                            End If
+                        End If
                     End If
 
                     Dim notificador As ToastNotifier = ToastNotificationManager.CreateToastNotifier()

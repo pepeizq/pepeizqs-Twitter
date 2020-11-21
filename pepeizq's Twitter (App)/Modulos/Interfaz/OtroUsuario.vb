@@ -26,7 +26,7 @@ Namespace Interfaz
             Dim contenido As Run = enlace.Inlines(0)
             Dim usuario As String = contenido.Text
 
-            Dim cliente As TwitterClient = Interfaz.Tweets.cliente_
+            Dim cliente As TwitterClient = Interfaz.Usuario.cliente_
 
             Cargar(cliente, Nothing, usuario)
 
@@ -37,7 +37,7 @@ Namespace Interfaz
             Dim boton As Button = sender
             Dim usuario As String = boton.Tag
 
-            Dim cliente As TwitterClient = Interfaz.Tweets.cliente_
+            Dim cliente As TwitterClient = Interfaz.Usuario.cliente_
 
             Cargar(cliente, Nothing, usuario)
 
@@ -177,7 +177,7 @@ Namespace Interfaz
                         Next
 
                         If añadir = True Then
-                            spTweets.Children.Add(Interfaz.Tweets.GenerarTweet(cliente, tweet))
+                            spTweets.Children.Add(Interfaz.Tweets.GenerarTweet(cliente, tweet, True))
                         End If
                     Next
                 End If
@@ -262,7 +262,7 @@ Namespace Interfaz
                             Next
 
                             If añadir = True Then
-                                spTweets.Children.Add(Interfaz.Tweets.GenerarTweet(cliente, tweet))
+                                spTweets.Children.Add(Interfaz.Tweets.GenerarTweet(cliente, tweet, True))
                             End If
                         Next
                     End If
@@ -327,7 +327,7 @@ Namespace Interfaz
 
             If Not tweets Is Nothing Then
                 For Each tweet In tweets
-                    spTweets.Children.Add(Interfaz.Tweets.GenerarTweet(cosas.cliente, tweet))
+                    spTweets.Children.Add(Interfaz.Tweets.GenerarTweet(cosas.cliente, tweet, True))
                 Next
             End If
 
@@ -496,7 +496,7 @@ Namespace Interfaz
 
                 If Not tweets Is Nothing Then
                     For Each tweet In tweets
-                        spTweets.Children.Add(Interfaz.Tweets.GenerarTweet(cliente, tweet))
+                        spTweets.Children.Add(Interfaz.Tweets.GenerarTweet(cliente, tweet, True))
                     Next
                 End If
 
@@ -550,7 +550,7 @@ Namespace Interfaz
 
                 If Not tweets Is Nothing Then
                     For Each tweet In tweets
-                        spTweets.Children.Add(Interfaz.Tweets.GenerarTweet(cliente, tweet))
+                        spTweets.Children.Add(Interfaz.Tweets.GenerarTweet(cliente, tweet, True))
                     Next
                 End If
 
@@ -588,7 +588,7 @@ Namespace Interfaz
                         Next
 
                         If añadir = True Then
-                            spOtroUsuarioTweets.Children.Add(Interfaz.Tweets.GenerarTweet(cliente, tweet))
+                            spOtroUsuarioTweets.Children.Add(Interfaz.Tweets.GenerarTweet(cliente, tweet, True))
                         End If
                     Next
                 End If

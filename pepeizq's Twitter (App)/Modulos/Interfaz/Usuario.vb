@@ -2,6 +2,7 @@
 Imports Tweetinvi.Events
 Imports Tweetinvi.Models
 Imports Windows.ApplicationModel.Core
+Imports Windows.Storage
 Imports Windows.System.Threading
 Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Shapes
@@ -9,12 +10,15 @@ Imports Windows.UI.Xaml.Shapes
 Namespace Interfaz
     Module Usuario
 
+        Public cliente_ As TwitterClient
         Public usuario_ As IAuthenticatedUser
 
         Public Async Sub CargarDatos(cliente As TwitterClient, usuario As IAuthenticatedUser)
 
+            cliente_ = cliente
             usuario_ = usuario
 
+            Enviar.Cargar()
             Busqueda.Cargar()
 
             Dim frame As Frame = Window.Current.Content
@@ -57,7 +61,7 @@ Namespace Interfaz
 
             If Not tweets Is Nothing Then
                 For Each tweet In tweets
-                    spTweets.Children.Add(Interfaz.Tweets.GenerarTweet(cliente, tweet))
+                    spTweets.Children.Add(Interfaz.Tweets.GenerarTweet(cliente, tweet, True))
                 Next
             End If
 
@@ -116,6 +120,8 @@ Namespace Interfaz
 
         Private Async Sub ActualizarTweets(cliente As TwitterClient)
 
+            Dim config As ApplicationDataContainer = ApplicationData.Current.LocalSettings
+
             Dim frame As Frame = Window.Current.Content
             Dim pagina As Page = frame.Content
 
@@ -148,9 +154,12 @@ Namespace Interfaz
                     Next
 
                     If añadir = True Then
-                        spTweets.Children.Insert(i, Interfaz.Tweets.GenerarTweet(cliente, tweet))
+                        spTweets.Children.Insert(i, Interfaz.Tweets.GenerarTweet(cliente, tweet, True))
                         i += 1
-                        Notificaciones.ToastTweet(tweet, 30)
+
+                        If config.Values("Estado_App") = 1 Then
+                            Notificaciones.ToastTweet(tweet)
+                        End If
                     End If
                 Next
             End If
@@ -195,7 +204,7 @@ Namespace Interfaz
                     Next
 
                     If añadir = True Then
-                        spTweets.Children.Insert(0, Interfaz.Tweets.GenerarTweet(cliente, tweet))
+                        spTweets.Children.Insert(0, Interfaz.Tweets.GenerarTweet(cliente, tweet, True))
                     End If
                 Next
             End If
@@ -271,7 +280,7 @@ Namespace Interfaz
                             Next
 
                             If añadir = True Then
-                                spTweets.Children.Add(Interfaz.Tweets.GenerarTweet(cliente, tweet))
+                                spTweets.Children.Add(Interfaz.Tweets.GenerarTweet(cliente, tweet, True))
                             End If
                         Next
                     End If

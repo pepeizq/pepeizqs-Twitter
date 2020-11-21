@@ -11,12 +11,12 @@ Module Conexion
         Dim pagina As Page = frame.Content
 
         Dim tbUsuario As TextBox = pagina.FindName("tbUsuario")
-        RemoveHandler tbUsuario.TextChanged, AddressOf Interfaz.Usuario_Texto_Cambia
-        AddHandler tbUsuario.TextChanged, AddressOf Interfaz.Usuario_Texto_Cambia
+        RemoveHandler tbUsuario.TextChanged, AddressOf Configuracion.Usuario_Texto_Cambia
+        AddHandler tbUsuario.TextChanged, AddressOf Configuracion.Usuario_Texto_Cambia
 
         Dim pbUsuarioContraseña As PasswordBox = pagina.FindName("pbUsuarioContraseña")
-        RemoveHandler pbUsuarioContraseña.PasswordChanging, AddressOf Interfaz.Contraseña_Texto_Cambia
-        AddHandler pbUsuarioContraseña.PasswordChanging, AddressOf Interfaz.Contraseña_Texto_Cambia
+        RemoveHandler pbUsuarioContraseña.PasswordChanging, AddressOf Configuracion.Contraseña_Texto_Cambia
+        AddHandler pbUsuarioContraseña.PasswordChanging, AddressOf Configuracion.Contraseña_Texto_Cambia
 
         Dim botonAñadirUsuario As Button = pagina.FindName("botonAñadirUsuario")
 
@@ -58,7 +58,7 @@ Module Conexion
         spUsuariosGuardadosLista.Children.Clear()
 
         For Each usuario In listaUsuarios
-            spUsuariosGuardadosLista.Children.Add(Interfaz.AñadirListaGuardados(usuario.UserName))
+            spUsuariosGuardadosLista.Children.Add(Configuracion.AñadirListaGuardados(usuario.UserName))
         Next
 
     End Sub

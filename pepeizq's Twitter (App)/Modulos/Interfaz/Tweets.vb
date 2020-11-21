@@ -19,12 +19,10 @@ Imports Windows.UI.Xaml.Shapes
 Namespace Interfaz
     Module Tweets
 
-        Public cliente_ As TwitterClient
-
-        Public Function GenerarTweet(cliente As TwitterClient, tweet As ITweet)
+        Public Function GenerarTweet(cliente As TwitterClient, tweet As ITweet, ampliar As Boolean)
 
             If Not tweet Is Nothing Then
-                cliente_ = cliente
+                Dim recursos As New Resources.ResourceLoader
 
                 Dim colorFondo As New SolidColorBrush With {
                     .Color = App.Current.Resources("ColorCuarto"),
@@ -81,12 +79,67 @@ Namespace Interfaz
                 '-----------------------------
 
                 Dim spIzquierda As New StackPanel With {
-                    .Orientation = Orientation.Vertical
+                    .Orientation = Orientation.Vertical,
+                    .HorizontalAlignment = HorizontalAlignment.Center
                 }
 
                 spIzquierda.SetValue(Grid.ColumnProperty, 0)
 
                 spIzquierda.Children.Add(Avatar(cliente, tweet))
+
+                If ampliar = True Then
+                    Dim iconoResponder As New FontAwesome5.FontAwesome With {
+                        .Foreground = New SolidColorBrush(Colors.White),
+                        .Icon = FontAwesome5.EFontAwesomeIcon.Solid_Comment
+                    }
+
+                    Dim botonResponder As New Button With {
+                        .Padding = New Thickness(0, 0, 0, 0),
+                        .Background = New SolidColorBrush(Colors.Transparent),
+                        .BorderThickness = New Thickness(0, 0, 0, 0),
+                        .Style = App.Current.Resources("ButtonRevealStyle"),
+                        .Content = iconoResponder,
+                        .Visibility = Visibility.Collapsed,
+                        .Margin = New Thickness(0, 20, 5, 0),
+                        .Tag = tweet,
+                        .HorizontalAlignment = HorizontalAlignment.Center
+                    }
+
+                    ToolTipService.SetToolTip(botonResponder, recursos.GetString("Reply"))
+                    ToolTipService.SetPlacement(botonResponder, PlacementMode.Bottom)
+
+                    AddHandler botonResponder.Click, AddressOf Enviar.Responder
+                    AddHandler botonResponder.PointerEntered, AddressOf Entra_Boton_Icono
+                    AddHandler botonResponder.PointerExited, AddressOf Sale_Boton_Icono
+
+                    spIzquierda.Children.Add(botonResponder)
+
+                    Dim iconoAmpliar As New FontAwesome5.FontAwesome With {
+                        .Foreground = New SolidColorBrush(Colors.White),
+                        .Icon = FontAwesome5.EFontAwesomeIcon.Solid_Eye
+                    }
+
+                    Dim botonAmpliar As New Button With {
+                        .Padding = New Thickness(0, 0, 0, 0),
+                        .Background = New SolidColorBrush(Colors.Transparent),
+                        .BorderThickness = New Thickness(0, 0, 0, 0),
+                        .Style = App.Current.Resources("ButtonRevealStyle"),
+                        .Content = iconoAmpliar,
+                        .Visibility = Visibility.Collapsed,
+                        .Margin = New Thickness(0, 15, 5, 0),
+                        .Tag = tweet,
+                        .HorizontalAlignment = HorizontalAlignment.Center
+                    }
+
+                    ToolTipService.SetToolTip(botonAmpliar, recursos.GetString("Open"))
+                    ToolTipService.SetPlacement(botonAmpliar, PlacementMode.Bottom)
+
+                    ' AddHandler botonResponder.Click, AddressOf Enviar.Responder
+                    AddHandler botonAmpliar.PointerEntered, AddressOf Entra_Boton_Icono
+                    AddHandler botonAmpliar.PointerExited, AddressOf Sale_Boton_Icono
+
+                    spIzquierda.Children.Add(botonAmpliar)
+                End If
 
                 gridInferior.Children.Add(spIzquierda)
 
@@ -117,8 +170,6 @@ Namespace Interfaz
                 End If
 
                 spInferiorCentro.Children.Add(Media(tweet))
-
-                'spInferiorCentro.Children.Add(TweetEnviarTweet.Generar(tweet, megaUsuario, Visibility.Collapsed, color))
 
                 gridInferior.Children.Add(spInferiorCentro)
 
@@ -748,7 +799,16 @@ Namespace Interfaz
                                 AddHandler gridMedia.PointerEntered, AddressOf Entra_Boton_Imagen
                                 AddHandler gridMedia.PointerExited, AddressOf Sale_Boton_Imagen
                             ElseIf objetoString = "animated_gif" Then
-                                gridMedia.Tag = itemMedia.VideoDetails.Variants(0).URL
+                                Dim listaVideos As Entities.ExtendedEntities.IVideoEntityVariant() = itemMedia.VideoDetails.Variants
+                                Dim listaOrdenada As New List(Of Entities.ExtendedEntities.IVideoEntityVariant)
+
+                                For Each item In listaVideos
+                                    listaOrdenada.Add(item)
+                                Next
+
+                                listaOrdenada.Sort(Function(x, y) y.Bitrate.CompareTo(x.Bitrate))
+
+                                gridMedia.Tag = listaOrdenada(0).URL
 
                                 ToolTipService.SetToolTip(gridMedia, recursos.GetString("ClickExpandGif"))
                                 ToolTipService.SetPlacement(gridMedia, PlacementMode.Bottom)
@@ -998,6 +1058,19 @@ Namespace Interfaz
 
             Dim grid As Grid = sender
             Dim subgrid As Grid = grid.Children(1)
+            Dim sp2 As StackPanel = subgrid.Children(0)
+            Dim boton As Button = sp2.Children(1)
+
+            If Not boton Is Nothing Then
+                boton.Visibility = Visibility.Visible
+            End If
+
+            Dim boton2 As Button = sp2.Children(2)
+
+            If Not boton2 Is Nothing Then
+                boton2.Visibility = Visibility.Visible
+            End If
+
             Dim subgrid2 As Grid = subgrid.Children(subgrid.Children.Count - 1)
             Dim sp As StackPanel = subgrid2.Children(0)
             Dim spBotones As StackPanel = sp.Children(1)
@@ -1009,6 +1082,19 @@ Namespace Interfaz
 
             Dim grid As Grid = sender
             Dim subgrid As Grid = grid.Children(1)
+            Dim sp2 As StackPanel = subgrid.Children(0)
+            Dim boton As Button = sp2.Children(1)
+
+            If Not boton Is Nothing Then
+                boton.Visibility = Visibility.Collapsed
+            End If
+
+            Dim boton2 As Button = sp2.Children(2)
+
+            If Not boton2 Is Nothing Then
+                boton2.Visibility = Visibility.Collapsed
+            End If
+
             Dim subgrid2 As Grid = subgrid.Children(subgrid.Children.Count - 1)
             Dim sp As StackPanel = subgrid2.Children(0)
             Dim spBotones As StackPanel = sp.Children(1)
