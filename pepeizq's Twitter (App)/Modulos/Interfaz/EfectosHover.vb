@@ -20,7 +20,7 @@ Namespace Interfaz
 
         End Sub
 
-        Public Sub Entra_Sp_IconoNombre(sender As Object, e As PointerRoutedEventArgs)
+        Public Sub Entra_Boton_IconoTexto(sender As Object, e As PointerRoutedEventArgs)
 
             Dim boton As Button = sender
             Dim sp As StackPanel = boton.Content
@@ -35,7 +35,7 @@ Namespace Interfaz
 
         End Sub
 
-        Public Sub Sale_Sp_IconoNombre(sender As Object, e As PointerRoutedEventArgs)
+        Public Sub Sale_Boton_IconoTexto(sender As Object, e As PointerRoutedEventArgs)
 
             Dim boton As Button = sender
             Dim sp As StackPanel = boton.Content

@@ -30,7 +30,6 @@ Namespace Interfaz
                 }
 
                 Dim grid As New Grid With {
-                    .Name = "gridTweet" + tweet.Id.ToString,
                     .Margin = New Thickness(0, 0, 30, 20),
                     .BorderBrush = New SolidColorBrush(App.Current.Resources("ColorPrimario")),
                     .BorderThickness = New Thickness(1, 1, 1, 1),
@@ -100,7 +99,7 @@ Namespace Interfaz
                         .Style = App.Current.Resources("ButtonRevealStyle"),
                         .Content = iconoResponder,
                         .Visibility = Visibility.Collapsed,
-                        .Margin = New Thickness(0, 20, 5, 0),
+                        .Margin = New Thickness(0, 20, 10, 0),
                         .Tag = tweet,
                         .HorizontalAlignment = HorizontalAlignment.Center
                     }
@@ -126,15 +125,15 @@ Namespace Interfaz
                         .Style = App.Current.Resources("ButtonRevealStyle"),
                         .Content = iconoAmpliar,
                         .Visibility = Visibility.Collapsed,
-                        .Margin = New Thickness(0, 15, 5, 0),
+                        .Margin = New Thickness(0, 15, 10, 0),
                         .Tag = tweet,
                         .HorizontalAlignment = HorizontalAlignment.Center
                     }
 
-                    ToolTipService.SetToolTip(botonAmpliar, recursos.GetString("Open"))
+                    ToolTipService.SetToolTip(botonAmpliar, recursos.GetString("OpenWebBrowser"))
                     ToolTipService.SetPlacement(botonAmpliar, PlacementMode.Bottom)
 
-                    ' AddHandler botonResponder.Click, AddressOf Enviar.Responder
+                    AddHandler botonAmpliar.Click, AddressOf AbrirNavegadorTweetClick
                     AddHandler botonAmpliar.PointerEntered, AddressOf Entra_Boton_Icono
                     AddHandler botonAmpliar.PointerExited, AddressOf Sale_Boton_Icono
 
@@ -600,6 +599,14 @@ Namespace Interfaz
                                     .Foreground = New SolidColorBrush(App.Current.Resources("ColorTerciario"))
                                 }
 
+                                Dim spUsuarioTooltip As New StackPanel With {
+                                    .Tag = contenidoEnlace.Text
+                                }
+                                AddHandler spUsuarioTooltip.Loaded, AddressOf UsuarioTootip
+
+                                ToolTipService.SetToolTip(enlaceUsuario, spUsuarioTooltip)
+                                ToolTipService.SetPlacement(enlaceUsuario, PlacementMode.Bottom)
+
                                 AddHandler enlaceUsuario.Click, AddressOf OtroUsuario.CargarClick2
 
                                 enlaceUsuario.Inlines.Add(contenidoEnlace)
@@ -682,7 +689,7 @@ Namespace Interfaz
             Dim sp As New StackPanel With {
                 .Background = New SolidColorBrush(App.Current.Resources("ColorCuarto")),
                 .Margin = New Thickness(5, 15, 5, 5),
-                .Padding = New Thickness(15, 15, 15, 0),
+                .Padding = New Thickness(15, 15, 15, 15),
                 .BorderBrush = New SolidColorBrush(App.Current.Resources("ColorPrimario")),
                 .BorderThickness = New Thickness(1, 1, 1, 1)
             }
@@ -1276,26 +1283,6 @@ Namespace Interfaz
             AddHandler botonCopiarEnlaceTweet.PointerExited, AddressOf Sale_MFItem_Icono
             menu.Items.Add(botonCopiarEnlaceTweet)
 
-            Dim separador As New MenuFlyoutSeparator
-            menu.Items.Add(separador)
-
-            Dim iconoAbrirNavegadorTweet As New FontAwesome5.FontAwesome With {
-                .Icon = FontAwesome5.EFontAwesomeIcon.Brands_Edge,
-                .Foreground = New SolidColorBrush(Colors.Black)
-            }
-
-            Dim botonAbrirNavegadorTweet As New MenuFlyoutItem With {
-                .Text = recursos.GetString("OpenWebBrowser"),
-                .Icon = iconoAbrirNavegadorTweet,
-                .Foreground = New SolidColorBrush(Colors.Black),
-                .Tag = clienteyTweet
-            }
-
-            AddHandler botonAbrirNavegadorTweet.Click, AddressOf AbrirNavegadorTweetClick
-            AddHandler botonAbrirNavegadorTweet.PointerEntered, AddressOf Entra_MFItem_Icono
-            AddHandler botonAbrirNavegadorTweet.PointerExited, AddressOf Sale_MFItem_Icono
-            menu.Items.Add(botonAbrirNavegadorTweet)
-
             FlyoutBase.SetAttachedFlyout(boton, menu)
             menu.ShowAt(boton)
 
@@ -1358,11 +1345,8 @@ Namespace Interfaz
 
         Private Async Sub AbrirNavegadorTweetClick(sender As Object, e As RoutedEventArgs)
 
-            Dim boton As MenuFlyoutItem = sender
-            Dim cosas As ClienteyTweet = boton.Tag
-
-            Dim cliente As TwitterClient = cosas.cliente
-            Dim tweet As ITweet = cosas.tweet
+            Dim boton As Button = sender
+            Dim tweet As ITweet = boton.Tag
 
             If tweet.IsRetweet = False Then
                 Try
@@ -1377,6 +1361,17 @@ Namespace Interfaz
 
                 End Try
             End If
+
+        End Sub
+
+        Private Async Sub UsuarioTootip(sender As Object, e As RoutedEventArgs)
+
+            Dim sp As StackPanel = sender
+            Dim nombre As String = sp.Tag
+            Dim usuario As IUser = Await cliente_.Users.GetUserAsync(nombre)
+
+            sp.Children.Clear()
+            sp.Children.Add(Busqueda.BotonUsuario(usuario))
 
         End Sub
 

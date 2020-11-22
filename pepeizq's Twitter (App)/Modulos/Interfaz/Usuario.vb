@@ -19,6 +19,7 @@ Namespace Interfaz
             usuario_ = usuario
 
             Enviar.Cargar()
+            Menciones.Cargar()
             Busqueda.Cargar()
 
             Dim frame As Frame = Window.Current.Content
@@ -79,11 +80,11 @@ Namespace Interfaz
             RemoveHandler botonActualizarUsuarioTweets.Click, AddressOf ActualizarTweets2
             AddHandler botonActualizarUsuarioTweets.Click, AddressOf ActualizarTweets2
 
-            RemoveHandler botonActualizarUsuarioTweets.PointerEntered, AddressOf Entra_Sp_IconoNombre
-            AddHandler botonActualizarUsuarioTweets.PointerEntered, AddressOf Entra_Sp_IconoNombre
+            RemoveHandler botonActualizarUsuarioTweets.PointerEntered, AddressOf Entra_Boton_IconoTexto
+            AddHandler botonActualizarUsuarioTweets.PointerEntered, AddressOf Entra_Boton_IconoTexto
 
-            RemoveHandler botonActualizarUsuarioTweets.PointerExited, AddressOf Sale_Sp_IconoNombre
-            AddHandler botonActualizarUsuarioTweets.PointerExited, AddressOf Sale_Sp_IconoNombre
+            RemoveHandler botonActualizarUsuarioTweets.PointerExited, AddressOf Sale_Boton_IconoTexto
+            AddHandler botonActualizarUsuarioTweets.PointerExited, AddressOf Sale_Boton_IconoTexto
 
             Dim svTweets As ScrollViewer = pagina.FindName("svUsuarioTweets")
             svTweets.Tag = cliente
@@ -157,8 +158,16 @@ Namespace Interfaz
                         spTweets.Children.Insert(i, Interfaz.Tweets.GenerarTweet(cliente, tweet, True))
                         i += 1
 
-                        If config.Values("Estado_App") = 1 Then
-                            Notificaciones.ToastTweet(tweet)
+                        Dim mostrar As Boolean = True
+
+                        If tweet.CreatedBy.Id = usuario_.Id Then
+                            mostrar = False
+                        End If
+
+                        If mostrar = True Then
+                            If config.Values("Estado_App") = 1 Then
+                                Notificaciones.ToastTweet(tweet)
+                            End If
                         End If
                     End If
                 Next
@@ -220,7 +229,7 @@ Namespace Interfaz
 
         Private Sub BorrarTweet(sender As Object, e As TweetDeletedEvent)
 
-            Notificaciones.Toast("Borrado: " + e.TweetId.ToString)
+            Notificaciones.Toast("Test Tweet Deleted: " + e.TweetId.ToString)
 
         End Sub
 

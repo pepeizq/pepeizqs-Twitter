@@ -73,6 +73,18 @@
                                 </Button.Content>
                             </Button>
 
+                            <Button x:Name="botonMenciones" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" BorderBrush="White" BorderThickness="0" Margin="10,0,0,0">
+                                <ToolTipService.ToolTip>
+                                    <StackPanel>
+                                        <TextBlock x:Uid="Mentions"/>
+                                    </StackPanel>
+                                </ToolTipService.ToolTip>
+
+                                <Button.Content>
+                                    <iconos:FontAwesome Icon="Solid_Bell" Foreground="White"/>
+                                </Button.Content>
+                            </Button>
+
                             <Button x:Name="botonBusqueda" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" BorderBrush="White" BorderThickness="0" Margin="10,0,0,0">
                                 <ToolTipService.ToolTip>
                                     <StackPanel>
@@ -120,6 +132,10 @@
                                     <iconos:FontAwesome Icon="Solid_Video" Foreground="White"/>
                                 </Button.Content>
                             </Button>
+                        </StackPanel>
+
+                        <StackPanel x:Name="spMencionesAviso" Grid.Column="2" Orientation="Horizontal" Visibility="Collapsed">
+                            <TextBlock x:Name="tbMencionesAviso" Foreground="White" VerticalAlignment="Center"/>
                         </StackPanel>
 
                         <StackPanel x:Name="spUsuarioImagenBotones" Grid.Column="2" Orientation="Horizontal" Visibility="Collapsed">
@@ -216,22 +232,68 @@
                                 </ScrollViewer.Resources>
 
                                 <StackPanel Orientation="Vertical">
-                                    <StackPanel x:Name="spEscribirTweetOrigen" Visibility="Collapsed" Margin="0,0,0,20"/>
+                                    <StackPanel x:Name="spEscribirTweetOrigen" Visibility="Collapsed"/>
 
-                                    <TextBox x:Name="tbEscribirMensaje" TextWrapping="Wrap" RequestedTheme="Dark" AcceptsReturn="True"/>
+                                    <StackPanel Orientation="Vertical" Padding="30" Margin="0,0,30,0" BorderBrush="{StaticResource ColorPrimario}" BorderThickness="1">
+                                        <StackPanel.Background>
+                                            <SolidColorBrush Color="{StaticResource ColorCuarto}" Opacity="1"/>
+                                        </StackPanel.Background>
+                                        
+                                        <TextBox x:Name="tbEscribirMensaje" TextWrapping="Wrap" RequestedTheme="Dark" AcceptsReturn="True"/>
 
-                                    <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
-                                        <Button x:Name="botonEnviarMensaje" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="15,12" BorderBrush="White" BorderThickness="0">
-                                            <Button.Content>
-                                                <TextBlock x:Uid="Send" Foreground="White"/>
-                                            </Button.Content>
-                                        </Button>
-                                        
-                                        
-                                    </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Margin="0,25,0,0">
+                                            <Button x:Name="botonEnviarMensajeAñadirImagen" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="15,12" BorderBrush="White" BorderThickness="0" VerticalAlignment="Top">
+                                                <ToolTipService.ToolTip>
+                                                    <StackPanel>
+                                                        <TextBlock x:Uid="AddImage"/>
+                                                    </StackPanel>
+                                                </ToolTipService.ToolTip>
+
+                                                <Button.Content>
+                                                    <iconos:FontAwesome Icon="Solid_Image" Foreground="White"/>
+                                                </Button.Content>
+                                            </Button>
+
+                                            <StackPanel x:Name="spEnviarMensajeImagenes" Orientation="Horizontal" Margin="20,0,0,0"/>
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" Margin="0,25,0,0">
+                                            <ProgressRing x:Name="prEnviarMensaje" Foreground="White" Width="20" Height="20" Margin="0,0,20,0" IsActive="True" Visibility="Collapsed"/>
+
+                                            <Button x:Name="botonEnviarMensaje" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="15,12" BorderBrush="White" BorderThickness="0">
+                                                <Button.Content>
+                                                    <TextBlock x:Uid="Send" Foreground="White"/>
+                                                </Button.Content>
+                                            </Button>
+
+                                            <ProgressBar x:Name="pbEnviarMensajeCaracteres" Margin="30,0,0,0" VerticalAlignment="Center" Width="100" Maximum="280"/>
+                                            <TextBlock x:Name="tbEnviarMensajeCaracteres" Margin="20,0,0,0" VerticalAlignment="Center" Foreground="White"/>
+                                        </StackPanel>
+                                    </StackPanel>                                   
                                 </StackPanel>
                             </ScrollViewer>
                         </Grid>
+
+                        <Grid x:Name="gridMenciones" Visibility="Collapsed">
+                            <ScrollViewer x:Name="svMenciones" VerticalScrollBarVisibility="Visible">
+                                <ScrollViewer.Resources>
+                                    <SolidColorBrush x:Key="ScrollBarThumbFill" Color="White"/>
+                                    <SolidColorBrush x:Key="ScrollBarThumbFillPointerOver" Color="White"/>
+                                </ScrollViewer.Resources>
+
+                                <StackPanel x:Name="spMenciones" Orientation="Vertical"/>
+                            </ScrollViewer>
+
+                            <StackPanel Orientation="Horizontal" Margin="20" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                <ProgressRing x:Name="prMenciones" IsActive="True" Padding="10" Margin="0,0,15,0" Foreground="White" Visibility="Collapsed"/>
+
+                                <Button x:Name="botonSubirArribaMenciones" Style="{ThemeResource ButtonRevealStyle}" Padding="12" BorderThickness="1" BorderBrush="{StaticResource BrushPrimario}" Visibility="Collapsed">
+                                    <Button.Content>
+                                        <iconos:FontAwesome Icon="Solid_ArrowCircleUp" Foreground="White"/>
+                                    </Button.Content>
+                                </Button>
+                            </StackPanel>
+                        </Grid> 
 
                         <Grid x:Name="gridBusqueda" Visibility="Collapsed">
                             <Grid.RowDefinitions>
@@ -239,13 +301,17 @@
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
 
-                            <Grid Grid.Row="0" Padding="10">
+                            <Grid Grid.Row="0" Padding="30" BorderBrush="{StaticResource ColorPrimario}" BorderThickness="1">
+                                <Grid.Background>
+                                    <SolidColorBrush Color="{StaticResource ColorCuarto}" Opacity="1"/>
+                                </Grid.Background>
+
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Button x:Name="botonBusquedaBuscar" Grid.Row="0" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="15,12" BorderBrush="White" BorderThickness="0">
+                                <Button x:Name="botonBusquedaBuscar" Grid.Row="0" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" BorderBrush="White" BorderThickness="0">
                                     <Button.Content>
                                         <StackPanel Orientation="Horizontal">
                                             <iconos:FontAwesome Icon="Solid_Search" Foreground="White"/>
@@ -257,7 +323,7 @@
                                 <TextBox x:Name="tbBusqueda" Grid.Column="1" Margin="30,0,00,0" VerticalAlignment="Center" RequestedTheme="Dark" BorderBrush="White" BorderThickness="1"/>
                             </Grid>
 
-                            <controls:AdaptiveGridView x:Name="gvResultadosBusqueda" Grid.Row="1" Padding="10"/>
+                            <controls:AdaptiveGridView x:Name="gvResultadosBusqueda" Grid.Row="1" Margin="0,10,0,0" Padding="0,0,20,0"/>
                                 
                             <Grid x:Name="gridCargaBusqueda" Grid.Row="1" Padding="10" Visibility="Collapsed">
                                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -361,8 +427,18 @@
                 
                 <Grid x:Name="gridCarga">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <ProgressRing Width="60" Height="60" IsActive="True" Foreground="White" HorizontalAlignment="Center"/>
-                        <TextBlock x:Uid="Loading" Foreground="White" FontSize="17" Margin="0,20,0,0" HorizontalAlignment="Center"/>
+                        <StackPanel x:Name="spCarga" Visibility="Collapsed" Orientation="Vertical">
+                            <ProgressRing Width="60" Height="60" IsActive="True" Foreground="White" HorizontalAlignment="Center"/>
+                            <TextBlock x:Uid="Loading" Foreground="White" FontSize="17" Margin="0,20,0,0" HorizontalAlignment="Center"/>
+                        </StackPanel> 
+
+                        <StackPanel x:Name="spConexion" Visibility="Collapsed" Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal" Padding="0,0,0,20" Visibility="Collapsed">
+                                <TextBox x:Name="tbConexionCodigo" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <WebView x:Name="wvConexionCodigo" MinWidth="700" MinHeight="700"/>
+                        </StackPanel>
                     </StackPanel>
                 </Grid>
                 
@@ -500,13 +576,6 @@
                         </Grid> 
                     </Grid>
 
-                    <StackPanel x:Name="spConexion" Visibility="Collapsed" Grid.Row="1" Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal" Padding="0,0,0,20">
-                            <TextBox x:Name="tbConexionCodigo" TextWrapping="Wrap" VerticalAlignment="Center"/>
-                        </StackPanel>
-
-                        <WebView x:Name="wvConexionCodigo" MinWidth="700" MinHeight="700"/>
-                    </StackPanel>
                 </Grid>
             </Grid>
         </NavigationView>

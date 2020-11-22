@@ -120,6 +120,9 @@
   <data name="Add.Text" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="AddImage.Text" xml:space="preserve">
+    <value>Add Image</value>
+  </data>
   <data name="AddUser.Text" xml:space="preserve">
     <value>Add User</value>
   </data>
@@ -188,6 +191,15 @@
   </data>
   <data name="Loading.Text" xml:space="preserve">
     <value>Loading</value>
+  </data>
+  <data name="Mentions.Text" xml:space="preserve">
+    <value>Mentions</value>
+  </data>
+  <data name="NewMention" xml:space="preserve">
+    <value>new mention</value>
+  </data>
+  <data name="NewMentions" xml:space="preserve">
+    <value>new mentions</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>No</value>

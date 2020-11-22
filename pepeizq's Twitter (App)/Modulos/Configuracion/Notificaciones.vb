@@ -116,11 +116,11 @@ Namespace Configuracion
             RemoveHandler botonSonido.Click, AddressOf Notificaciones_Sonido_Reproducir
             AddHandler botonSonido.Click, AddressOf Notificaciones_Sonido_Reproducir
 
-            RemoveHandler botonSonido.PointerEntered, AddressOf Interfaz.Entra_Sp_IconoNombre
-            AddHandler botonSonido.PointerEntered, AddressOf Interfaz.Entra_Sp_IconoNombre
+            RemoveHandler botonSonido.PointerEntered, AddressOf Interfaz.Entra_Boton_IconoTexto
+            AddHandler botonSonido.PointerEntered, AddressOf Interfaz.Entra_Boton_IconoTexto
 
-            RemoveHandler botonSonido.PointerExited, AddressOf Interfaz.Sale_Sp_IconoNombre
-            AddHandler botonSonido.PointerExited, AddressOf Interfaz.Sale_Sp_IconoNombre
+            RemoveHandler botonSonido.PointerExited, AddressOf Interfaz.Sale_Boton_IconoTexto
+            AddHandler botonSonido.PointerExited, AddressOf Interfaz.Sale_Boton_IconoTexto
 
         End Sub
 

@@ -30,6 +30,17 @@
             RemoveHandler botonEscribir.PointerExited, AddressOf Sale_Boton_Icono
             AddHandler botonEscribir.PointerExited, AddressOf Sale_Boton_Icono
 
+            Dim botonMenciones As Button = pagina.FindName("botonMenciones")
+
+            RemoveHandler botonMenciones.Click, AddressOf Visibilidad_Usuario_Menciones
+            AddHandler botonMenciones.Click, AddressOf Visibilidad_Usuario_Menciones
+
+            RemoveHandler botonMenciones.PointerEntered, AddressOf Entra_Boton_Icono
+            AddHandler botonMenciones.PointerEntered, AddressOf Entra_Boton_Icono
+
+            RemoveHandler botonMenciones.PointerExited, AddressOf Sale_Boton_Icono
+            AddHandler botonMenciones.PointerExited, AddressOf Sale_Boton_Icono
+
             Dim botonBusqueda As Button = pagina.FindName("botonBusqueda")
 
             RemoveHandler botonBusqueda.Click, AddressOf Visibilidad_Usuario_Busqueda
@@ -121,6 +132,18 @@
 
             Dim boton As Button = pagina.FindName("botonEscribir")
             Dim grid As Grid = pagina.FindName("gridEscribir")
+
+            Visibilidad_Pestañas_Usuario(boton, grid)
+
+        End Sub
+
+        Private Sub Visibilidad_Usuario_Menciones(ByVal sender As Object, ByVal e As RoutedEventArgs)
+
+            Dim frame As Frame = Window.Current.Content
+            Dim pagina As Page = frame.Content
+
+            Dim boton As Button = pagina.FindName("botonMenciones")
+            Dim grid As Grid = pagina.FindName("gridMenciones")
 
             Visibilidad_Pestañas_Usuario(boton, grid)
 
@@ -237,6 +260,12 @@
             Dim gridEscribir As Grid = pagina.FindName("gridEscribir")
             gridEscribir.Visibility = Visibility.Collapsed
 
+            Dim botonMenciones As Button = pagina.FindName("botonMenciones")
+            botonMenciones.BorderThickness = New Thickness(0, 0, 0, 0)
+
+            Dim gridMenciones As Grid = pagina.FindName("gridMenciones")
+            gridMenciones.Visibility = Visibility.Collapsed
+
             Dim botonBusqueda As Button = pagina.FindName("botonBusqueda")
             botonBusqueda.BorderThickness = New Thickness(0, 0, 0, 0)
 
@@ -273,6 +302,17 @@
             gridMostrar.Visibility = Visibility.Visible
 
             '--------------------------------------------------------
+
+            If gridMostrar.Name = "gridEscribir" Then
+                Dim spEscribirTweetOrigen As StackPanel = pagina.FindName("spEscribirTweetOrigen")
+                spEscribirTweetOrigen.Children.Clear()
+
+                Dim tbEscribirMensaje As TextBox = pagina.FindName("tbEscribirMensaje")
+                tbEscribirMensaje.Text = String.Empty
+
+                Dim spImagenes As StackPanel = pagina.FindName("spEnviarMensajeImagenes")
+                spImagenes.Children.Clear()
+            End If
 
             If gridMostrar.Name = "gridUsuarioImagen" Then
                 spImagenBotones.Visibility = Visibility.Visible

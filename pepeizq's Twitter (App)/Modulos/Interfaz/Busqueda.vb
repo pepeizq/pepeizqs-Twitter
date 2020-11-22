@@ -18,11 +18,11 @@ Namespace Interfaz
             RemoveHandler botonBuscar.Click, AddressOf BusquedaUsuario
             AddHandler botonBuscar.Click, AddressOf BusquedaUsuario
 
-            RemoveHandler botonBuscar.PointerEntered, AddressOf Entra_Sp_IconoNombre
-            AddHandler botonBuscar.PointerEntered, AddressOf Entra_Sp_IconoNombre
+            RemoveHandler botonBuscar.PointerEntered, AddressOf Entra_Boton_IconoTexto
+            AddHandler botonBuscar.PointerEntered, AddressOf Entra_Boton_IconoTexto
 
-            RemoveHandler botonBuscar.PointerExited, AddressOf Sale_Sp_IconoNombre
-            AddHandler botonBuscar.PointerExited, AddressOf Sale_Sp_IconoNombre
+            RemoveHandler botonBuscar.PointerExited, AddressOf Sale_Boton_IconoTexto
+            AddHandler botonBuscar.PointerExited, AddressOf Sale_Boton_IconoTexto
 
             Dim tbBuscar As TextBox = pagina.FindName("tbBusqueda")
 
@@ -68,7 +68,7 @@ Namespace Interfaz
 
         End Sub
 
-        Private Function BotonUsuario(usuario As IUser)
+        Public Function BotonUsuario(usuario As IUser)
 
             Dim recursos As New Resources.ResourceLoader
 
@@ -80,7 +80,7 @@ Namespace Interfaz
                 .HorizontalAlignment = HorizontalAlignment.Stretch,
                 .HorizontalContentAlignment = HorizontalAlignment.Stretch,
                 .Tag = usuario.ScreenName,
-                .Margin = New Thickness(5, 5, 5, 5)
+                .Margin = New Thickness(0, 0, 0, 0)
             }
 
             Dim colorFondo As New SolidColorBrush With {

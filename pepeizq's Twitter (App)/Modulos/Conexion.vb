@@ -11,10 +11,12 @@ Module Conexion
         Dim pagina As Page = frame.Content
 
         Dim tbUsuario As TextBox = pagina.FindName("tbUsuario")
+
         RemoveHandler tbUsuario.TextChanged, AddressOf Configuracion.Usuario_Texto_Cambia
         AddHandler tbUsuario.TextChanged, AddressOf Configuracion.Usuario_Texto_Cambia
 
         Dim pbUsuarioContraseña As PasswordBox = pagina.FindName("pbUsuarioContraseña")
+
         RemoveHandler pbUsuarioContraseña.PasswordChanging, AddressOf Configuracion.Contraseña_Texto_Cambia
         AddHandler pbUsuarioContraseña.PasswordChanging, AddressOf Configuracion.Contraseña_Texto_Cambia
 
@@ -23,11 +25,11 @@ Module Conexion
         RemoveHandler botonAñadirUsuario.Click, AddressOf GuardarUsuario
         AddHandler botonAñadirUsuario.Click, AddressOf GuardarUsuario
 
-        RemoveHandler botonAñadirUsuario.PointerEntered, AddressOf Interfaz.Entra_Sp_IconoNombre
-        AddHandler botonAñadirUsuario.PointerEntered, AddressOf Interfaz.Entra_Sp_IconoNombre
+        RemoveHandler botonAñadirUsuario.PointerEntered, AddressOf Interfaz.Entra_Boton_IconoTexto
+        AddHandler botonAñadirUsuario.PointerEntered, AddressOf Interfaz.Entra_Boton_IconoTexto
 
-        RemoveHandler botonAñadirUsuario.PointerExited, AddressOf Interfaz.Sale_Sp_IconoNombre
-        AddHandler botonAñadirUsuario.PointerExited, AddressOf Interfaz.Sale_Sp_IconoNombre
+        RemoveHandler botonAñadirUsuario.PointerExited, AddressOf Interfaz.Sale_Boton_IconoTexto
+        AddHandler botonAñadirUsuario.PointerExited, AddressOf Interfaz.Sale_Boton_IconoTexto
 
         Dim spUsuariosGuardados As StackPanel = pagina.FindName("spUsuariosGuardados")
 
@@ -111,6 +113,12 @@ Module Conexion
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
+        Dim spCarga As StackPanel = pagina.FindName("spCarga")
+        spCarga.Visibility = Visibility.Visible
+
+        Dim spConexion As StackPanel = pagina.FindName("spConexion")
+        spConexion.Visibility = Visibility.Collapsed
+
         Dim tbCodigo As TextBox = pagina.FindName("tbConexionCodigo")
 
         Dim wvTwitter As WebView = pagina.FindName("wvConexionCodigo")
@@ -158,6 +166,14 @@ Module Conexion
 
         Dim mostrarConfig As Boolean = False
 
+        If wvTwitter.Source.AbsoluteUri.Contains("https://twitter.com/login?username_disabled=true&redirect_after_login=") Then
+            Dim spCarga As StackPanel = pagina.FindName("spCarga")
+            spCarga.Visibility = Visibility.Collapsed
+
+            Dim spConexion As StackPanel = pagina.FindName("spConexion")
+            spConexion.Visibility = Visibility.Visible
+        End If
+
         If wvTwitter.Source.AbsoluteUri.Contains("https://api.twitter.com/oauth/authorize") Then
             Try
                 Dim usuario As String = "document.getElementById('username_or_email').value = '" + credencial.UserName + "'"
@@ -165,7 +181,17 @@ Module Conexion
 
                 Dim contraseña As String = "document.getElementById('password').value = '" + credencial.Password + "'"
                 Await wvTwitter.InvokeScriptAsync("eval", New List(Of String) From {contraseña})
+            Catch ex As Exception
 
+            End Try
+
+            Try
+                Await wvTwitter.InvokeScriptAsync("eval", New String() {"document.getElementById('remember').checked = true;"})
+            Catch ex As Exception
+
+            End Try
+
+            Try
                 Await wvTwitter.InvokeScriptAsync("eval", New String() {"document.getElementById('allow').click();"})
             Catch ex As Exception
 
