@@ -34,17 +34,30 @@ Module Conexion
         Dim spUsuariosGuardados As StackPanel = pagina.FindName("spUsuariosGuardados")
 
         Dim caja As New PasswordVault
-        Dim listaUsuarios As IReadOnlyList(Of PasswordCredential) = caja.FindAllByResource(Package.Current.DisplayName)
+        Dim listaUsuarios As IReadOnlyList(Of PasswordCredential)
 
-        If listaUsuarios.Count > 0 Then
-            Dim gridCarga As Grid = pagina.FindName("gridCarga")
-            Interfaz.Pestañas.Visibilidad_Pestañas(gridCarga)
+        Try
+            listaUsuarios = caja.FindAllByResource(Package.Current.DisplayName)
 
-            spUsuariosGuardados.Visibility = Visibility.Visible
-            CargarListaUsuarios()
-        Else
+            If listaUsuarios.Count > 0 Then
+                Dim gridCarga As Grid = pagina.FindName("gridCarga")
+                Interfaz.Pestañas.Visibilidad_Pestañas(gridCarga)
+
+                spUsuariosGuardados.Visibility = Visibility.Visible
+                CargarListaUsuarios()
+            Else
+                spUsuariosGuardados.Visibility = Visibility.Collapsed
+            End If
+        Catch ex As Exception
             spUsuariosGuardados.Visibility = Visibility.Collapsed
-        End If
+
+            Dim gridConfig As Grid = pagina.FindName("gridConfig")
+            Interfaz.Pestañas.Visibilidad_Pestañas(gridConfig)
+
+            Dim botonConfiguracionUsuarios As Button = pagina.FindName("botonConfiguracionUsuarios")
+            Dim gridConfiguracionUsuarios As Grid = pagina.FindName("gridConfiguracionUsuarios")
+            Interfaz.Pestañas.Visibilidad_Pestañas_Config(botonConfiguracionUsuarios, gridConfiguracionUsuarios)
+        End Try
 
     End Sub
 
@@ -56,12 +69,40 @@ Module Conexion
         Dim frame As Frame = Window.Current.Content
         Dim pagina As Page = frame.Content
 
+        Dim spUsuariosGuardados As StackPanel = pagina.FindName("spUsuariosGuardados")
+
         Dim spUsuariosGuardadosLista As StackPanel = pagina.FindName("spUsuariosGuardadosLista")
         spUsuariosGuardadosLista.Children.Clear()
 
-        For Each usuario In listaUsuarios
-            spUsuariosGuardadosLista.Children.Add(Configuracion.AñadirListaGuardados(usuario.UserName))
-        Next
+        If listaUsuarios.Count > 0 Then
+            spUsuariosGuardados.Visibility = Visibility.Visible
+
+            For Each usuario In listaUsuarios
+                spUsuariosGuardadosLista.Children.Add(Configuracion.AñadirListaGuardados(usuario.UserName))
+            Next
+
+            Dim enseñarConfig As Boolean = True
+
+            For Each usuario In spUsuariosGuardadosLista.Children
+                Dim grid As Grid = usuario
+                Dim toggle As ToggleSwitch = grid.Children(1)
+
+                If toggle.IsOn = True Then
+                    enseñarConfig = False
+                End If
+            Next
+
+            If enseñarConfig = True Then
+                Dim gridConfig As Grid = pagina.FindName("gridConfig")
+                Interfaz.Pestañas.Visibilidad_Pestañas(gridConfig)
+
+                Dim botonConfiguracionUsuarios As Button = pagina.FindName("botonConfiguracionUsuarios")
+                Dim gridConfiguracionUsuarios As Grid = pagina.FindName("gridConfiguracionUsuarios")
+                Interfaz.Pestañas.Visibilidad_Pestañas_Config(botonConfiguracionUsuarios, gridConfiguracionUsuarios)
+            End If
+        Else
+            spUsuariosGuardados.Visibility = Visibility.Collapsed
+        End If
 
     End Sub
 
@@ -86,25 +127,35 @@ Module Conexion
 
         If guardar = True Then
             Dim caja As New PasswordVault
-            Dim listaUsuarios As IReadOnlyList(Of PasswordCredential) = caja.FindAllByResource(Package.Current.DisplayName)
+            Dim listaUsuarios As IReadOnlyList(Of PasswordCredential)
 
-            Dim añadir As Boolean = True
+            Try
+                listaUsuarios = caja.FindAllByResource(Package.Current.DisplayName)
 
-            For Each usuario In listaUsuarios
-                If usuario.UserName.ToLower = tbUsuario.Text.ToLower.Trim Then
-                    añadir = False
+                Dim añadir As Boolean = True
+
+                For Each usuario In listaUsuarios
+                    If usuario.UserName.ToLower = tbUsuario.Text.ToLower.Trim Then
+                        añadir = False
+                    End If
+                Next
+
+                If añadir = True Then
+                    If listaUsuarios.Count = 0 Then
+                        ApplicationData.Current.LocalSettings.Values("idUsuario") = tbUsuario.Text.Trim
+                    End If
+
+                    caja.Add(New PasswordCredential(Package.Current.DisplayName, tbUsuario.Text.Trim, pbContraseña.Password.Trim))
+                    CargarListaUsuarios()
                 End If
-            Next
-
-            If añadir = True Then
-                If listaUsuarios.Count = 0 Then
-                    ApplicationData.Current.LocalSettings.Values("idUsuario") = tbUsuario.Text.Trim
-                End If
-
+            Catch ex As Exception
                 caja.Add(New PasswordCredential(Package.Current.DisplayName, tbUsuario.Text.Trim, pbContraseña.Password.Trim))
                 CargarListaUsuarios()
-            End If
+            End Try
         End If
+
+        tbUsuario.Text = String.Empty
+        pbContraseña.Password = String.Empty
 
     End Sub
 

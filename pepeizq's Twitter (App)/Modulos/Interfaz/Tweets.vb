@@ -26,7 +26,7 @@ Namespace Interfaz
 
                 Dim colorFondo As New SolidColorBrush With {
                     .Color = App.Current.Resources("ColorCuarto"),
-                    .Opacity = 0.8
+                    .Opacity = 0.5
                 }
 
                 Dim grid As New Grid With {
@@ -89,19 +89,21 @@ Namespace Interfaz
                 If ampliar = True Then
                     Dim iconoResponder As New FontAwesome5.FontAwesome With {
                         .Foreground = New SolidColorBrush(Colors.White),
-                        .Icon = FontAwesome5.EFontAwesomeIcon.Solid_Comment
+                        .Icon = FontAwesome5.EFontAwesomeIcon.Solid_Comment,
+                        .FontSize = 17
                     }
 
                     Dim botonResponder As New Button With {
-                        .Padding = New Thickness(0, 0, 0, 0),
-                        .Background = New SolidColorBrush(Colors.Transparent),
+                        .Padding = New Thickness(10, 8, 10, 8),
+                        .Background = New SolidColorBrush(App.Current.Resources("ColorCuarto")),
                         .BorderThickness = New Thickness(0, 0, 0, 0),
                         .Style = App.Current.Resources("ButtonRevealStyle"),
                         .Content = iconoResponder,
                         .Visibility = Visibility.Collapsed,
                         .Margin = New Thickness(0, 20, 10, 0),
                         .Tag = tweet,
-                        .HorizontalAlignment = HorizontalAlignment.Center
+                        .HorizontalAlignment = HorizontalAlignment.Center,
+                        .Width = 45
                     }
 
                     ToolTipService.SetToolTip(botonResponder, recursos.GetString("Reply"))
@@ -115,19 +117,21 @@ Namespace Interfaz
 
                     Dim iconoAmpliar As New FontAwesome5.FontAwesome With {
                         .Foreground = New SolidColorBrush(Colors.White),
-                        .Icon = FontAwesome5.EFontAwesomeIcon.Solid_Eye
+                        .Icon = FontAwesome5.EFontAwesomeIcon.Solid_Eye,
+                        .FontSize = 17
                     }
 
                     Dim botonAmpliar As New Button With {
-                        .Padding = New Thickness(0, 0, 0, 0),
-                        .Background = New SolidColorBrush(Colors.Transparent),
+                        .Padding = New Thickness(10, 8, 10, 8),
+                        .Background = New SolidColorBrush(App.Current.Resources("ColorCuarto")),
                         .BorderThickness = New Thickness(0, 0, 0, 0),
                         .Style = App.Current.Resources("ButtonRevealStyle"),
                         .Content = iconoAmpliar,
                         .Visibility = Visibility.Collapsed,
                         .Margin = New Thickness(0, 15, 10, 0),
                         .Tag = tweet,
-                        .HorizontalAlignment = HorizontalAlignment.Center
+                        .HorizontalAlignment = HorizontalAlignment.Center,
+                        .Width = 45
                     }
 
                     ToolTipService.SetToolTip(botonAmpliar, recursos.GetString("OpenWebBrowser"))
@@ -177,7 +181,7 @@ Namespace Interfaz
                 Dim gridInferiorDerecha As New Grid With {
                     .HorizontalAlignment = HorizontalAlignment.Right,
                     .Margin = New Thickness(10, 5, 25, 0),
-                    .Width = 50
+                    .Width = 70
                 }
 
                 gridInferiorDerecha.SetValue(Grid.ColumnProperty, 2)
@@ -687,8 +691,8 @@ Namespace Interfaz
         Private Function Cita(cliente As TwitterClient, tweet As ITweet)
 
             Dim sp As New StackPanel With {
-                .Background = New SolidColorBrush(App.Current.Resources("ColorCuarto")),
-                .Margin = New Thickness(5, 15, 5, 5),
+                .Background = New SolidColorBrush(Colors.Transparent),
+                .Margin = New Thickness(5, 15, 5, 15),
                 .Padding = New Thickness(15, 15, 15, 15),
                 .BorderBrush = New SolidColorBrush(App.Current.Resources("ColorPrimario")),
                 .BorderThickness = New Thickness(1, 1, 1, 1)
@@ -803,8 +807,8 @@ Namespace Interfaz
                                 ToolTipService.SetPlacement(gridMedia, PlacementMode.Bottom)
 
                                 AddHandler gridMedia.PointerPressed, AddressOf AbrirVideo
-                                AddHandler gridMedia.PointerEntered, AddressOf Entra_Boton_Imagen
-                                AddHandler gridMedia.PointerExited, AddressOf Sale_Boton_Imagen
+                                AddHandler gridMedia.PointerEntered, AddressOf Entra_Video
+                                AddHandler gridMedia.PointerExited, AddressOf Sale_Video
                             ElseIf objetoString = "animated_gif" Then
                                 Dim listaVideos As Entities.ExtendedEntities.IVideoEntityVariant() = itemMedia.VideoDetails.Variants
                                 Dim listaOrdenada As New List(Of Entities.ExtendedEntities.IVideoEntityVariant)
@@ -967,6 +971,74 @@ Namespace Interfaz
 
         End Sub
 
+        Private Sub Entra_Video(sender As Object, e As PointerRoutedEventArgs)
+
+            Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Hand, 1)
+
+            Dim grid As Grid = sender
+            Dim enlace As String = grid.Tag
+
+            Dim imagen As ImageEx = grid.Children(0)
+
+            Dim añadirReproductor As Boolean = True
+
+            For Each hijo In grid.Children
+                If TypeOf hijo Is MediaPlayerElement Then
+                    añadirReproductor = False
+
+                    Dim reproductor As MediaPlayerElement = hijo
+                    reproductor.MediaPlayer.Play()
+                    reproductor.MediaPlayer.IsMuted = True
+                End If
+            Next
+
+            If añadirReproductor = True Then
+                Dim pr As New ProgressRing With {
+                    .IsActive = True,
+                    .Width = 20,
+                    .Height = 20,
+                    .Foreground = New SolidColorBrush(Colors.White),
+                    .HorizontalAlignment = HorizontalAlignment.Left,
+                    .VerticalAlignment = VerticalAlignment.Top,
+                    .Margin = New Thickness(5, 5, 5, 5)
+                }
+
+                grid.Children.Add(pr)
+
+                Try
+                    Dim reproductor As New MediaPlayerElement With {
+                        .Source = MediaSource.CreateFromUri(New Uri(enlace)),
+                        .Width = imagen.ActualWidth,
+                        .Height = imagen.ActualHeight,
+                        .MinWidth = 0
+                    }
+                    reproductor.MediaPlayer.IsLoopingEnabled = True
+                    reproductor.MediaPlayer.Play()
+                    reproductor.MediaPlayer.IsMuted = True
+
+                    grid.Children.Add(reproductor)
+                Catch ex As Exception
+
+                End Try
+            End If
+
+        End Sub
+
+        Private Sub Sale_Video(sender As Object, e As PointerRoutedEventArgs)
+
+            Window.Current.CoreWindow.PointerCursor = New CoreCursor(CoreCursorType.Arrow, 1)
+
+            Dim grid As Grid = sender
+
+            For Each hijo In grid.Children
+                If TypeOf hijo Is MediaPlayerElement Then
+                    Dim reproductor As MediaPlayerElement = hijo
+                    reproductor.MediaPlayer.Pause()
+                End If
+            Next
+
+        End Sub
+
         Private Sub AbrirVideo(sender As Object, e As RoutedEventArgs)
 
             Dim frame As Frame = Window.Current.Content
@@ -1119,7 +1191,8 @@ Namespace Interfaz
 
             Dim iconoRetweet As New FontAwesome5.FontAwesome With {
                 .Icon = FontAwesome5.EFontAwesomeIcon.Solid_Retweet,
-                .Foreground = New SolidColorBrush(Colors.White)
+                .Foreground = New SolidColorBrush(Colors.White),
+                .FontSize = 17
             }
 
             If tweet.Retweeted = True Then
@@ -1127,14 +1200,15 @@ Namespace Interfaz
             End If
 
             Dim botonRetweet As New Button With {
-                .Padding = New Thickness(5, 5, 5, 5),
+                .Padding = New Thickness(10, 8, 10, 8),
+                .Background = New SolidColorBrush(App.Current.Resources("ColorCuarto")),
                 .Margin = New Thickness(0, 0, 0, 0),
-                .Background = New SolidColorBrush(Colors.Transparent),
                 .BorderThickness = New Thickness(0, 0, 0, 0),
                 .Style = App.Current.Resources("ButtonRevealStyle"),
                 .Content = iconoRetweet,
                 .Tag = New ClienteyTweet(cliente, tweet),
-                .HorizontalAlignment = HorizontalAlignment.Center
+                .HorizontalAlignment = HorizontalAlignment.Center,
+                .Width = 45
             }
 
             AddHandler botonRetweet.Click, AddressOf RetweetClick
@@ -1147,7 +1221,8 @@ Namespace Interfaz
 
             Dim iconoFavorito As New FontAwesome5.FontAwesome With {
                 .Icon = FontAwesome5.EFontAwesomeIcon.Solid_Heart,
-                .Foreground = New SolidColorBrush(Colors.White)
+                .Foreground = New SolidColorBrush(Colors.White),
+                .FontSize = 17
             }
 
             If tweet.Favorited = True Then
@@ -1155,14 +1230,15 @@ Namespace Interfaz
             End If
 
             Dim botonFavorito As New Button With {
-                .Padding = New Thickness(5, 5, 5, 5),
-                .Margin = New Thickness(0, 10, 0, 0),
-                .Background = New SolidColorBrush(Colors.Transparent),
+                .Padding = New Thickness(10, 8, 10, 8),
+                .Background = New SolidColorBrush(App.Current.Resources("ColorCuarto")),
+                .Margin = New Thickness(0, 15, 0, 0),
                 .BorderThickness = New Thickness(0, 0, 0, 0),
                 .Style = App.Current.Resources("ButtonRevealStyle"),
                 .Content = iconoFavorito,
                 .Tag = New ClienteyTweet(cliente, tweet),
-                .HorizontalAlignment = HorizontalAlignment.Center
+                .HorizontalAlignment = HorizontalAlignment.Center,
+                .Width = 45
             }
 
             AddHandler botonFavorito.Click, AddressOf FavoritoClick
@@ -1175,18 +1251,20 @@ Namespace Interfaz
 
             Dim iconoMasOpciones As New FontAwesome5.FontAwesome With {
                 .Icon = FontAwesome5.EFontAwesomeIcon.Solid_EllipsisH,
-                .Foreground = New SolidColorBrush(Colors.White)
+                .Foreground = New SolidColorBrush(Colors.White),
+                .FontSize = 17
             }
 
             Dim botonMasOpciones As New Button With {
-                .Padding = New Thickness(5, 5, 5, 5),
-                .Margin = New Thickness(0, 10, 0, 0),
-                .Background = New SolidColorBrush(Colors.Transparent),
+                .Padding = New Thickness(10, 8, 10, 8),
+                .Background = New SolidColorBrush(App.Current.Resources("ColorCuarto")),
+                .Margin = New Thickness(0, 15, 0, 0),
                 .BorderThickness = New Thickness(0, 0, 0, 0),
                 .Style = App.Current.Resources("ButtonRevealStyle"),
                 .Content = iconoMasOpciones,
                 .Tag = New ClienteyTweet(cliente, tweet),
-                .HorizontalAlignment = HorizontalAlignment.Center
+                .HorizontalAlignment = HorizontalAlignment.Center,
+                .Width = 45
             }
 
             AddHandler botonMasOpciones.Click, AddressOf MasOpcionesClick

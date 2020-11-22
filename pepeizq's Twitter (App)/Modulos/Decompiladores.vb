@@ -7,7 +7,7 @@ Module Decompiladores
         Dim cliente As New HttpClient()
         Dim httpFinal As String = Nothing
 
-        cliente.DefaultRequestHeaders.Add("user-agent", "Chrome/45.0.2454.93")
+        cliente.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.18362")
 
         Try
             Dim respuesta As New HttpResponseMessage

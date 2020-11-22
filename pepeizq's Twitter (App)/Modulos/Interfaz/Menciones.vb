@@ -37,7 +37,6 @@ Namespace Interfaz
 
             End Try
 
-            Dim i As Integer = 0
             If Not tweets Is Nothing Then
                 For Each tweet In tweets
                     spMenciones.Children.Add(Interfaz.Tweets.GenerarTweet(cliente_, tweet, True))
@@ -52,7 +51,6 @@ Namespace Interfaz
 
                     If añadir = True Then
                         listaMenciones.Add(New Mencion(usuario_.Id, tweet.Id))
-                        i += 1
                     End If
                 Next
             End If
@@ -62,19 +60,6 @@ Namespace Interfaz
             Catch ex As Exception
 
             End Try
-
-            If i > 0 Then
-                Dim spAviso As StackPanel = pagina.FindName("spMencionesAviso")
-                spAviso.Visibility = Visibility.Visible
-
-                Dim tbAviso As TextBlock = pagina.FindName("tbMencionesAviso")
-
-                If i = 1 Then
-                    tbAviso.Text = i.ToString + " " + recursos.GetString("NewMention")
-                Else
-                    tbAviso.Text = i.ToString + " " + recursos.GetString("NewMentions")
-                End If
-            End If
 
             Dim svMenciones As ScrollViewer = pagina.FindName("svMenciones")
             RemoveHandler svMenciones.ViewChanging, AddressOf SvMenciones_ViewChanging

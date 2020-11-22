@@ -195,6 +195,57 @@
   <data name="Mentions.Text" xml:space="preserve">
     <value>Menciones</value>
   </data>
+  <data name="MoreThings" xml:space="preserve">
+    <value>Más Cosas</value>
+  </data>
+  <data name="MoreThingsContact" xml:space="preserve">
+    <value>Contactar</value>
+  </data>
+  <data name="MoreThingsHelpTranslate" xml:space="preserve">
+    <value>Ayuda a Traducir</value>
+  </data>
+  <data name="MoreThingsHelpTranslateDescription" xml:space="preserve">
+    <value>Si la aplicación no está en tu idioma, puedes ayudarme a traducirla a tu idioma usando la plataforma Poeditor.</value>
+  </data>
+  <data name="MoreThingsMyTwitterDescription" xml:space="preserve">
+    <value>En mi cuenta de Twitter iré comentando los avances que vaya realizando en mis aplicaciones y juegos, pero también pondré cosas relacionadas con plataformas de videojuegos de PC.</value>
+  </data>
+  <data name="MoreThingsOpen" xml:space="preserve">
+    <value>Abrir</value>
+  </data>
+  <data name="MoreThingspepeizqappsDescription" xml:space="preserve">
+    <value>Si quieres contactar conmigo o ver otras aplicaciones y juegos que he creado, puedes visitar mi web.</value>
+  </data>
+  <data name="MoreThingspepeizqdealsDescription" xml:space="preserve">
+    <value>También he creado una web de ofertas de videojuegos para PC, os animo a visitar la web.</value>
+  </data>
+  <data name="MoreThingsRate" xml:space="preserve">
+    <value>Calificar</value>
+  </data>
+  <data name="MoreThingsRateApp" xml:space="preserve">
+    <value>Calificar la Aplicación</value>
+  </data>
+  <data name="MoreThingsRateAppDescription" xml:space="preserve">
+    <value>Puedes calificar la aplicación con la valoración que tu creas que merezca.</value>
+  </data>
+  <data name="MoreThingsRateAppThanks" xml:space="preserve">
+    <value>Gracias por calificar la app</value>
+  </data>
+  <data name="MoreThingsSourceCode" xml:space="preserve">
+    <value>Código Fuente</value>
+  </data>
+  <data name="MoreThingsSourceCodeDescription" xml:space="preserve">
+    <value>Puedes ver el código fuente de la aplicación en Github, si tienes cuenta puedes ponerle una estrella.</value>
+  </data>
+  <data name="MoreThingsVideo" xml:space="preserve">
+    <value>Vídeo en Youtube</value>
+  </data>
+  <data name="MoreThingsVideoDescription" xml:space="preserve">
+    <value>Por si tienes dudas de como usar la aplicación, he subido un video a Youtube.</value>
+  </data>
+  <data name="MuteUser" xml:space="preserve">
+    <value>Silenciar Usuario</value>
+  </data>
   <data name="NewMention" xml:space="preserve">
     <value>nueva mención</value>
   </data>
@@ -249,11 +300,20 @@
   <data name="ShareUser" xml:space="preserve">
     <value>Compartir Usuario</value>
   </data>
+  <data name="StoreDescription" xml:space="preserve">
+    <value>Cliente no oficial de Twitter integrado en Windows 10, con soporte para Notificaciones en el Centro de Actividades.</value>
+  </data>
+  <data name="StoreTags" xml:space="preserve">
+    <value>Twitter,Redes Sociales,Tweet,</value>
+  </data>
   <data name="TrialMessageNotifications.Text" xml:space="preserve">
     <value>Debes comprar la app si quieres que aparezcan las notificaciones</value>
   </data>
   <data name="UnblockUser" xml:space="preserve">
     <value>Desbloquear Usuario</value>
+  </data>
+  <data name="UnmuteUser" xml:space="preserve">
+    <value>Desilenciar Usuario</value>
   </data>
   <data name="User.Text" xml:space="preserve">
     <value>Usuario</value>

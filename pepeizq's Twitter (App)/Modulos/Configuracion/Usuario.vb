@@ -42,35 +42,28 @@ Namespace Configuracion
 
             '-------------------------------------------------------------
 
-            Dim tbConectar As New TextBlock With {
-                .Text = recursos.GetString("ConnectTwitter"),
-                .Foreground = New SolidColorBrush(Colors.White),
-                .Margin = New Thickness(5, 0, 0, 0)
-            }
-
-            Dim cb As New CheckBox With {
-                .Content = tbConectar,
-                .BorderBrush = New SolidColorBrush(Colors.White),
+            Dim toggle As New ToggleSwitch With {
+                .OffContent = recursos.GetString("ConnectTwitter"),
+                .OnContent = recursos.GetString("ConnectTwitter"),
                 .RequestedTheme = ElementTheme.Dark,
-                .BorderThickness = New Thickness(1, 1, 1, 1),
+                .Foreground = New SolidColorBrush(Colors.White),
                 .Tag = nombre,
                 .VerticalAlignment = VerticalAlignment.Center
             }
 
-            AddHandler cb.Checked, AddressOf Usuario_Conectar
-            AddHandler cb.Unchecked, AddressOf Usuario_Desconectar
-            AddHandler cb.PointerEntered, AddressOf Interfaz.Entra_Basico
-            AddHandler cb.PointerExited, AddressOf Interfaz.Sale_Basico
+            AddHandler toggle.Toggled, AddressOf Usuario_Conectar
+            AddHandler toggle.PointerEntered, AddressOf Interfaz.Entra_Basico
+            AddHandler toggle.PointerExited, AddressOf Interfaz.Sale_Basico
 
             If Not ApplicationData.Current.LocalSettings.Values("idUsuario") = Nothing Then
                 If nombre = ApplicationData.Current.LocalSettings.Values("idUsuario") Then
-                    cb.IsChecked = True
+                    toggle.IsOn = True
                     Conexion.Conectar(ApplicationData.Current.LocalSettings.Values("idUsuario"), True)
                 End If
             End If
 
-            cb.SetValue(Grid.ColumnProperty, 2)
-            grid.Children.Add(cb)
+            toggle.SetValue(Grid.ColumnProperty, 2)
+            grid.Children.Add(toggle)
 
             '-------------------------------------------------------------
 
@@ -105,28 +98,24 @@ Namespace Configuracion
             Dim frame As Frame = Window.Current.Content
             Dim pagina As Page = frame.Content
 
-            Dim cb As CheckBox = sender
-            Dim nombre As String = cb.Tag
+            Dim toggle As ToggleSwitch = sender
+            Dim nombre As String = toggle.Tag
 
             Dim spUsuarios As StackPanel = pagina.FindName("spUsuariosGuardadosLista")
 
             For Each hijo In spUsuarios.Children
                 Dim grid As Grid = hijo
-                Dim cbUsuario As CheckBox = grid.Children(1)
+                Dim toggleUsuario As ToggleSwitch = grid.Children(1)
 
                 Dim tbNombre As TextBlock = grid.Children(0)
 
                 If Not tbNombre.Text = nombre Then
-                    cbUsuario.IsChecked = False
+                    toggleUsuario.IsOn = False
                 Else
                     ApplicationData.Current.LocalSettings.Values("idUsuario") = nombre
                     Conexion.Conectar(ApplicationData.Current.LocalSettings.Values("idUsuario"), False)
                 End If
             Next
-
-        End Sub
-
-        Private Sub Usuario_Desconectar(ByVal sender As Object, ByVal e As RoutedEventArgs)
 
         End Sub
 
@@ -163,6 +152,11 @@ Namespace Configuracion
                     caja.Remove(New PasswordCredential(Package.Current.DisplayName, nombre, credencial.Password))
                 End If
             Next
+
+            If spUsuarios.Children.Count = 0 Then
+                Dim spUsuariosGuardados As StackPanel = pagina.FindName("spUsuariosGuardados")
+                spUsuariosGuardados.Visibility = Visibility.Collapsed
+            End If
 
         End Sub
 

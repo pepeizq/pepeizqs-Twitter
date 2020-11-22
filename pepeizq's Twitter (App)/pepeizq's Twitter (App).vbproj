@@ -116,31 +116,12 @@
     <Compile Include="App.xaml.vb">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Antiguo\Clases\UsuarioBloqueos.vb" />
-    <Compile Include="Antiguo\Clases\MegaUsuario.vb" />
-    <Compile Include="Antiguo\Clases\Objetos\BusquedaUsuario.vb" />
-    <Compile Include="Antiguo\Clases\Objetos\EnviarTweet.vb" />
-    <Compile Include="Antiguo\Clases\Objetos\MediaDatos.vb" />
-    <Compile Include="Antiguo\Clases\Objetos\SeguirUsuarioBoton.vb" />
-    <Compile Include="Antiguo\Clases\Objetos\TweetAmpliado.vb" />
-    <Compile Include="Antiguo\Clases\Objetos\TweetXamlBoton.vb" />
-    <Compile Include="Antiguo\Clases\Objetos\ScrollViewerTweets.vb" />
-    <Compile Include="Antiguo\Clases\Objetos\TextoTweetEntidad.vb" />
-    <Compile Include="Antiguo\Clases\Objetos\UsuarioAmpliado.vb" />
-    <Compile Include="Antiguo\Clases\OEmbed.vb" />
-    <Compile Include="Antiguo\Clases\TweetsBusqueda.vb" />
-    <Compile Include="Antiguo\Clases\UsuarioMuteados.vb" />
     <Compile Include="MainPage.xaml.vb">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Antiguo\Modulos\Cliente\FichaBusquedaTweetsXaml.vb" />
-    <Compile Include="Antiguo\Modulos\Cliente\FichaBusquedaUsuariosXaml.vb" />
-    <Compile Include="Antiguo\Modulos\Conexion\TwitterPeticiones.vb" />
     <Compile Include="Modulos\Configuracion\Notificaciones.vb" />
     <Compile Include="Modulos\Conexion.vb" />
     <Compile Include="Modulos\Decompiladores.vb" />
-    <Compile Include="Antiguo\Modulos\MasCosas.vb" />
-    <Compile Include="Antiguo\Modulos\NavigationViewItems.vb" />
     <Compile Include="Modulos\Interfaz\Busqueda.vb" />
     <Compile Include="Modulos\Interfaz\EfectosHover.vb" />
     <Compile Include="Modulos\Interfaz\Enviar.vb" />
@@ -151,28 +132,8 @@
     <Compile Include="Modulos\Interfaz\NavigationViewItems.vb" />
     <Compile Include="Modulos\Interfaz\Tweets.vb" />
     <Compile Include="Modulos\Interfaz\Usuario.vb" />
+    <Compile Include="Modulos\MasCosas.vb" />
     <Compile Include="Modulos\Notificaciones.vb" />
-    <Compile Include="Antiguo\Modulos\Conexion\TwitterConexion.vb" />
-    <Compile Include="Antiguo\Modulos\Conexion\TwitterStream.vb" />
-    <Compile Include="Antiguo\Modulos\Conexion\TwitterTimeLineInicio.vb" />
-    <Compile Include="Antiguo\Modulos\Conexion\TwitterTimeLineMenciones.vb" />
-    <Compile Include="Antiguo\Modulos\Cliente\FichaOEmbedXaml.vb" />
-    <Compile Include="Antiguo\Modulos\Cliente\FichaTweetXaml.vb" />
-    <Compile Include="Antiguo\Modulos\Cliente\FichaUsuarioXaml.vb" />
-    <Compile Include="Antiguo\Modulos\Cliente\TweetXaml\TweetXaml.vb" />
-    <Compile Include="Antiguo\Modulos\Cliente\TweetXaml\TweetXamlAvatar.vb" />
-    <Compile Include="Antiguo\Modulos\Cliente\TweetXaml\TweetXamlBotones.vb" />
-    <Compile Include="Antiguo\Modulos\Cliente\TweetXaml\TweetXamlEnviarTweet.vb" />
-    <Compile Include="Antiguo\Modulos\Cliente\TweetXaml\TweetXamlMedia.vb" />
-    <Compile Include="Antiguo\Modulos\Cliente\TweetXaml\TweetXamlCita.vb" />
-    <Compile Include="Antiguo\Modulos\Cliente\TweetXaml\TweetXamlRetweet.vb" />
-    <Compile Include="Antiguo\Modulos\Cliente\TweetXaml\TweetXamlTexto.vb" />
-    <Compile Include="Antiguo\Modulos\Cliente\TweetXaml\TweetXamlUsuario.vb" />
-    <Compile Include="Antiguo\Modulos\Cliente\UsuarioXaml\UsuarioXaml.vb" />
-    <Compile Include="Antiguo\Modulos\Cliente\UsuarioXaml\EscribirXaml.vb" />
-    <Compile Include="Antiguo\Modulos\Cliente\UsuarioXaml\InicioXaml.vb" />
-    <Compile Include="Antiguo\Modulos\Cliente\UsuarioXaml\MencionesXaml.vb" />
-    <Compile Include="Modulos\Tiles.vb" />
     <Compile Include="Modulos\Trial.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
   </ItemGroup>
@@ -186,10 +147,6 @@
     <PRIResource Include="Strings\en-US\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Config\dimensiones_maximas_vista_previa.png" />
-    <Content Include="Assets\Config\notificacion_encabezado.png" />
-    <Content Include="Assets\Config\notificacion_usuario_dirigido.png" />
-    <Content Include="Assets\Config\tweetcard.png" />
     <Content Include="Assets\Logos\BadgeLogo.scale-100.png" />
     <Content Include="Assets\Logos\BadgeLogo.scale-125.png" />
     <Content Include="Assets\Logos\BadgeLogo.scale-150.png" />

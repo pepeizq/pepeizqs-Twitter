@@ -20,7 +20,7 @@ Module Trial
                 If licencia.IsActive = True And licencia.IsTrial = False Then
                     config.Values("Estado_App") = 1
                 Else
-                    config.Values("Estado_App") = 1 '0
+                    config.Values("Estado_App") = 0
                 End If
             End If
         End If

@@ -391,6 +391,48 @@ Namespace Interfaz
                 botonDesbloquearPerfil.Visibility = Visibility.Collapsed
             End If
 
+            Dim iconoSilenciarPerfil As New FontAwesome5.FontAwesome With {
+                .Icon = FontAwesome5.EFontAwesomeIcon.Solid_VolumeMute,
+                .Foreground = New SolidColorBrush(Colors.Black)
+            }
+
+            Dim botonSilenciarPerfil As New MenuFlyoutItem With {
+                .Text = recursos.GetString("MuteUser"),
+                .Icon = iconoSilenciarPerfil,
+                .Foreground = New SolidColorBrush(Colors.Black),
+                .Tag = cosas
+            }
+
+            AddHandler botonSilenciarPerfil.Click, AddressOf SilenciarPerfilClick
+            AddHandler botonSilenciarPerfil.PointerEntered, AddressOf Entra_MFItem_Icono
+            AddHandler botonSilenciarPerfil.PointerExited, AddressOf Sale_MFItem_Icono
+            menu.Items.Add(botonSilenciarPerfil)
+
+            Dim iconoDesilenciarPerfil As New FontAwesome5.FontAwesome With {
+                .Icon = FontAwesome5.EFontAwesomeIcon.Solid_VolumeUp,
+                .Foreground = New SolidColorBrush(Colors.Black)
+            }
+
+            Dim botonDesilenciarPerfil As New MenuFlyoutItem With {
+                .Text = recursos.GetString("UnmuteUser"),
+                .Icon = iconoDesilenciarPerfil,
+                .Foreground = New SolidColorBrush(Colors.Black),
+                .Tag = cosas
+            }
+
+            AddHandler botonDesilenciarPerfil.Click, AddressOf DesilenciarPerfilClick
+            AddHandler botonDesilenciarPerfil.PointerEntered, AddressOf Entra_MFItem_Icono
+            AddHandler botonDesilenciarPerfil.PointerExited, AddressOf Sale_MFItem_Icono
+            menu.Items.Add(botonDesilenciarPerfil)
+
+            If relacion.Muting = True Then
+                botonSilenciarPerfil.Visibility = Visibility.Collapsed
+                botonDesilenciarPerfil.Visibility = Visibility.Visible
+            Else
+                botonSilenciarPerfil.Visibility = Visibility.Visible
+                botonDesilenciarPerfil.Visibility = Visibility.Collapsed
+            End If
+
             '-----------------------------------------------------
 
             Dim separador As New MenuFlyoutSeparator
@@ -593,6 +635,40 @@ Namespace Interfaz
                     Next
                 End If
             End If
+
+            boton.IsEnabled = True
+
+        End Sub
+
+        Private Async Sub SilenciarPerfilClick(sender As Object, e As RoutedEventArgs)
+
+            Dim boton As MenuFlyoutItem = sender
+            boton.IsEnabled = False
+
+            Dim recursos As New Resources.ResourceLoader
+            Dim cosas As ClienteyUsuario = boton.Tag
+
+            Dim cliente As TwitterClient = cosas.cliente
+            Dim usuario As IUser = cosas.usuario
+
+            Await cliente.Users.MuteUserAsync(usuario.Id)
+
+            boton.IsEnabled = True
+
+        End Sub
+
+        Private Async Sub DesilenciarPerfilClick(sender As Object, e As RoutedEventArgs)
+
+            Dim boton As MenuFlyoutItem = sender
+            boton.IsEnabled = False
+
+            Dim recursos As New Resources.ResourceLoader
+            Dim cosas As ClienteyUsuario = boton.Tag
+
+            Dim cliente As TwitterClient = cosas.cliente
+            Dim usuario As IUser = cosas.usuario
+
+            Await cliente.Users.UnmuteUserAsync(usuario.Id)
 
             boton.IsEnabled = True
 

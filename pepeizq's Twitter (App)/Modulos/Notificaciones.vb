@@ -120,12 +120,6 @@ Module Notificaciones
 
                 Dim atribucion As ToastGenericAttributionText = Nothing
 
-                'If ApplicationData.Current.LocalSettings.Values("notificacionUsuario") = True Then
-                '    atribucion = New ToastGenericAttributionText With {
-                '        .Text = "@" + megaUsuario.Usuario.ScreenNombre
-                '    }
-                'End If
-
                 Dim contenido As New ToastBindingGeneric With {
                     .AppLogoOverride = logo
                 }
@@ -218,117 +212,6 @@ Module Notificaciones
         End If
 
     End Sub
-
-    'Public Sub ToastTweets(cantidad As Integer, megaUsuario As pepeizq.Twitter.MegaUsuario, segundos As Integer, tipo As Integer)
-
-    '    Dim recursos As New Resources.ResourceLoader
-
-    '    Dim textoFinal As String = Nothing
-
-    '    If tipo = 0 Then
-    '        textoFinal = "@" + megaUsuario.Usuario.ScreenNombre + " " + recursos.GetString("UserNewTweets") + " (" + cantidad.ToString + ")"
-    '    ElseIf tipo = 1 Then
-    '        textoFinal = "@" + megaUsuario.Usuario.ScreenNombre + " " + recursos.GetString("UserNewMentions") + " (" + cantidad.ToString + ")"
-    '    End If
-
-    '    Dim texto As New AdaptiveText With {
-    '       .Text = textoFinal,
-    '       .HintMaxLines = 4
-    '    }
-
-    '    Dim logo As New ToastGenericAppLogo With {
-    '       .Source = megaUsuario.Usuario.ImagenAvatar,
-    '       .HintCrop = ToastGenericAppLogoCrop.Circle
-    '    }
-
-    '    Dim contenido As New ToastBindingGeneric With {
-    '        .AppLogoOverride = logo
-    '    }
-
-    '    contenido.Children.Add(texto)
-
-    '    Dim tostadaVisual As New ToastVisual With {
-    '        .BindingGeneric = contenido
-    '    }
-
-    '    Dim tostadaAudio As New ToastAudio
-
-    '    If ApplicationData.Current.LocalSettings.Values("notificacionSonido") = False Then
-    '        tostadaAudio.Silent = True
-    '    Else
-    '        tostadaAudio.Silent = False
-
-    '        If ApplicationData.Current.LocalSettings.Values("notificacionSonidoElegido") = Nothing Then
-    '            tostadaAudio.Src = New Uri("ms-winsoundevent:Notification.Default")
-    '        Else
-    '            tostadaAudio.Src = New Uri(ApplicationData.Current.LocalSettings.Values("notificacionSonidoElegido"))
-    '        End If
-    '    End If
-
-    '    Dim tostada As New ToastContent With {
-    '        .Launch = textoFinal,
-    '        .Visual = tostadaVisual,
-    '        .Audio = tostadaAudio
-    '    }
-
-    '    Try
-    '        Dim notificacion As ToastNotification = New ToastNotification(tostada.GetXml)
-
-    '        If Not segundos = 0 Then
-    '            notificacion.ExpirationTime = DateTime.Now.AddSeconds(segundos)
-    '        End If
-
-    '        Dim notificador As ToastNotifier = ToastNotificationManager.CreateToastNotifier()
-    '        notificador.Show(notificacion)
-    '    Catch ex As Exception
-
-    '    End Try
-
-    'End Sub
-
-    'Public Sub ToastMencion(usuario As TwitterUsuario)
-
-    '    Dim recursos As New Resources.ResourceLoader
-
-    '    Dim textoFinal As String = "@" + usuario.ScreenNombre + " " + recursos.GetString("UserNewMentions")
-
-    '    Dim texto As New AdaptiveText With {
-    '       .Text = textoFinal,
-    '       .HintMaxLines = 4
-    '    }
-
-    '    Dim logo As New ToastGenericAppLogo With {
-    '       .Source = usuario.ImagenAvatar,
-    '       .HintCrop = ToastGenericAppLogoCrop.Circle
-    '    }
-
-    '    Dim contenido As New ToastBindingGeneric With {
-    '        .AppLogoOverride = logo
-    '    }
-
-    '    contenido.Children.Add(texto)
-
-    '    Dim tostadaVisual As New ToastVisual With {
-    '        .BindingGeneric = contenido
-    '    }
-
-    '    Dim tostada As New ToastContent With {
-    '        .Launch = textoFinal,
-    '        .Visual = tostadaVisual
-    '    }
-
-    '    Try
-    '        Dim notificacion As ToastNotification = New ToastNotification(tostada.GetXml) With {
-    '            .ExpirationTime = DateTime.Now.AddSeconds(20)
-    '        }
-
-    '        Dim notificador As ToastNotifier = ToastNotificationManager.CreateToastNotifier()
-    '        notificador.Show(notificacion)
-    '    Catch ex As Exception
-
-    '    End Try
-
-    'End Sub
 
 End Module
 

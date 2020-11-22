@@ -239,6 +239,9 @@
             Dim gridConfig As Grid = pagina.FindName("gridConfig")
             gridConfig.Visibility = Visibility.Collapsed
 
+            Dim gridMasCosas As Grid = pagina.FindName("gridMasCosas")
+            gridMasCosas.Visibility = Visibility.Collapsed
+
             gridMostrar.Visibility = Visibility.Visible
 
         End Sub

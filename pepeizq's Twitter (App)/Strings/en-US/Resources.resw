@@ -195,6 +195,57 @@
   <data name="Mentions.Text" xml:space="preserve">
     <value>Mentions</value>
   </data>
+  <data name="MoreThings" xml:space="preserve">
+    <value>More Things</value>
+  </data>
+  <data name="MoreThingsContact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="MoreThingsHelpTranslate" xml:space="preserve">
+    <value>Help to Translate</value>
+  </data>
+  <data name="MoreThingsHelpTranslateDescription" xml:space="preserve">
+    <value>If the application is not in your language, you can help me translate it into your language using the Poeditor platform.</value>
+  </data>
+  <data name="MoreThingsMyTwitterDescription" xml:space="preserve">
+    <value>In my Twitter account I will comment on the progress that I make in my applications and games, but I will also post things related to PC video game platforms.</value>
+  </data>
+  <data name="MoreThingsOpen" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="MoreThingspepeizqappsDescription" xml:space="preserve">
+    <value>If you want to contact me or see other applications and games that I have created, you can visit my website.</value>
+  </data>
+  <data name="MoreThingspepeizqdealsDescription" xml:space="preserve">
+    <value>I have also created a web of video game deals for PC, I encourage you to visit it.</value>
+  </data>
+  <data name="MoreThingsRate" xml:space="preserve">
+    <value>Rate</value>
+  </data>
+  <data name="MoreThingsRateApp" xml:space="preserve">
+    <value>Rate the App</value>
+  </data>
+  <data name="MoreThingsRateAppDescription" xml:space="preserve">
+    <value>You can rate the application with the rating that you think it deserves.</value>
+  </data>
+  <data name="MoreThingsRateAppThanks" xml:space="preserve">
+    <value>Thanks for rating the app</value>
+  </data>
+  <data name="MoreThingsSourceCode" xml:space="preserve">
+    <value>Source Code</value>
+  </data>
+  <data name="MoreThingsSourceCodeDescription" xml:space="preserve">
+    <value>You can see the source code of the application on Github, if you have an account you can put a star on it.</value>
+  </data>
+  <data name="MoreThingsVideo" xml:space="preserve">
+    <value>Video on Youtube</value>
+  </data>
+  <data name="MoreThingsVideoDescription" xml:space="preserve">
+    <value>In case you have questions about how to use the application, I have uploaded a video to Youtube.</value>
+  </data>
+  <data name="MuteUser" xml:space="preserve">
+    <value>Mute User</value>
+  </data>
   <data name="NewMention" xml:space="preserve">
     <value>new mention</value>
   </data>
@@ -249,11 +300,20 @@
   <data name="ShareUser" xml:space="preserve">
     <value>Share User</value>
   </data>
+  <data name="StoreDescription" xml:space="preserve">
+    <value>Unofficial Twitter client built into Windows 10, with support for Notifications in the Action Center.</value>
+  </data>
+  <data name="StoreTags" xml:space="preserve">
+    <value>Twitter,Social networks,Tweet,</value>
+  </data>
   <data name="TrialMessageNotifications.Text" xml:space="preserve">
     <value>You must buy the app if you want the notifications to appear</value>
   </data>
   <data name="UnblockUser" xml:space="preserve">
     <value>Unblock User</value>
+  </data>
+  <data name="UnmuteUser" xml:space="preserve">
+    <value>Unmute User</value>
   </data>
   <data name="User.Text" xml:space="preserve">
     <value>User</value>
