@@ -161,30 +161,43 @@ Module Conexion
 
     Public Async Sub Conectar(usuario As String, primeraVez As Boolean)
 
-        Dim frame As Frame = Window.Current.Content
-        Dim pagina As Page = frame.Content
+        Dim conectar As Boolean = True
 
-        Dim spCarga As StackPanel = pagina.FindName("spCarga")
-        spCarga.Visibility = Visibility.Visible
-
-        Dim spConexion As StackPanel = pagina.FindName("spConexion")
-        spConexion.Visibility = Visibility.Collapsed
-
-        Dim tbCodigo As TextBox = pagina.FindName("tbConexionCodigo")
-
-        Dim wvTwitter As WebView = pagina.FindName("wvConexionCodigo")
-
-        If primeraVez = False Then
-            Await WebView.ClearTemporaryWebDataAsync
+        If Not Interfaz.usuario_ Is Nothing Then
+            If usuario = Interfaz.usuario_.ScreenName Then
+                conectar = False
+            End If
         End If
 
-        AddHandler wvTwitter.NavigationCompleted, AddressOf Comprobar
+        If conectar = True Then
+            Dim frame As Frame = Window.Current.Content
+            Dim pagina As Page = frame.Content
 
-        Dim appCliente As New TwitterClient("poGVvY5De5zBqQ4ceqp7jw7cj", "f8PCcuwFZxYi0r5iG6UaysgxD0NoaCT2RgYG8I41mvjghy58rc")
-        Dim peticion As IAuthenticationRequest = Await appCliente.Auth.RequestAuthenticationUrlAsync
+            Dim gridCarga As Grid = pagina.FindName("gridCarga")
+            Interfaz.Pestañas.Visibilidad_Pestañas(gridCarga)
 
-        wvTwitter.Source = New Uri(peticion.AuthorizationURL)
-        tbCodigo.Tag = New AppClienteyPeticion(appCliente, peticion, usuario)
+            Dim spCarga As StackPanel = pagina.FindName("spCarga")
+            spCarga.Visibility = Visibility.Visible
+
+            Dim spConexion As StackPanel = pagina.FindName("spConexion")
+            spConexion.Visibility = Visibility.Collapsed
+
+            Dim tbCodigo As TextBox = pagina.FindName("tbConexionCodigo")
+
+            Dim wvTwitter As WebView = pagina.FindName("wvConexionCodigo")
+
+            If primeraVez = False Then
+                Await WebView.ClearTemporaryWebDataAsync
+            End If
+
+            AddHandler wvTwitter.NavigationCompleted, AddressOf Comprobar
+
+            Dim appCliente As New TwitterClient("poGVvY5De5zBqQ4ceqp7jw7cj", "f8PCcuwFZxYi0r5iG6UaysgxD0NoaCT2RgYG8I41mvjghy58rc")
+            Dim peticion As IAuthenticationRequest = Await appCliente.Auth.RequestAuthenticationUrlAsync
+
+            wvTwitter.Source = New Uri(peticion.AuthorizationURL)
+            tbCodigo.Tag = New AppClienteyPeticion(appCliente, peticion, usuario)
+        End If
 
     End Sub
 

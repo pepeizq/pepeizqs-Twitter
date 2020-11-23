@@ -150,6 +150,17 @@ Namespace Configuracion
                     Dim credencial As PasswordCredential = listaUsuarios(i)
                     credencial.RetrievePassword()
                     caja.Remove(New PasswordCredential(Package.Current.DisplayName, nombre, credencial.Password))
+
+                    If Not Interfaz.usuario_ Is Nothing Then
+                        If nombre = Interfaz.usuario_.ScreenName Then
+                            Interfaz.usuario_ = Nothing
+                            Interfaz.cliente_ = Nothing
+
+                            Dim nvPrincipal As NavigationView = pagina.FindName("nvPrincipal")
+                            Dim item As NavigationViewItem = nvPrincipal.MenuItems(0)
+                            item.Visibility = Visibility.Collapsed
+                        End If
+                    End If
                 End If
             Next
 

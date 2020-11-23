@@ -235,7 +235,7 @@ Namespace Interfaz
                     End If
 
                     If añadir = True Then
-                        spTweets.Children.Insert(0, Interfaz.Tweets.GenerarTweet(cliente, tweet, True))
+                        spTweets.Children.Add(Interfaz.Tweets.GenerarTweet(cliente, tweet, True))
                     End If
                 Next
             End If
