@@ -269,7 +269,7 @@ Module Conexion
                             Dim usuario As IAuthenticatedUser = Await usuarioCliente.Users.GetAuthenticatedUserAsync
 
                             If Not usuario Is Nothing Then
-                                Interfaz.Usuario.CargarDatos(usuarioCliente, usuario)
+                                Interfaz.Inicio.CargarDatos(usuarioCliente, usuario)
                             Else
                                 mostrarConfig = True
                             End If

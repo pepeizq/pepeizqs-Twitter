@@ -8,7 +8,7 @@ Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Shapes
 
 Namespace Interfaz
-    Module Usuario
+    Module Inicio
 
         Public cliente_ As TwitterClient
         Public usuario_ As IAuthenticatedUser
@@ -62,7 +62,17 @@ Namespace Interfaz
 
             If Not tweets Is Nothing Then
                 For Each tweet In tweets
-                    spTweets.Children.Add(Interfaz.Tweets.GenerarTweet(cliente, tweet, True))
+                    Dim añadir As Boolean = True
+
+                    If ApplicationData.Current.LocalSettings.Values("inicio_usuario") = 0 Then
+                        If tweet.CreatedBy.Id = usuario_.Id Then
+                            añadir = False
+                        End If
+                    End If
+
+                    If añadir = True Then
+                        spTweets.Children.Add(Interfaz.Tweets.GenerarTweet(cliente, tweet, True))
+                    End If
                 Next
             End If
 
@@ -154,6 +164,12 @@ Namespace Interfaz
                         End If
                     Next
 
+                    If ApplicationData.Current.LocalSettings.Values("inicio_usuario") = 0 Then
+                        If tweet.CreatedBy.Id = usuario_.Id Then
+                            añadir = False
+                        End If
+                    End If
+
                     If añadir = True Then
                         spTweets.Children.Insert(i, Interfaz.Tweets.GenerarTweet(cliente, tweet, True))
                         i += 1
@@ -211,6 +227,12 @@ Namespace Interfaz
                             añadir = False
                         End If
                     Next
+
+                    If ApplicationData.Current.LocalSettings.Values("inicio_usuario") = 0 Then
+                        If tweet.CreatedBy.Id = usuario_.Id Then
+                            añadir = False
+                        End If
+                    End If
 
                     If añadir = True Then
                         spTweets.Children.Insert(0, Interfaz.Tweets.GenerarTweet(cliente, tweet, True))
@@ -287,6 +309,12 @@ Namespace Interfaz
                                     añadir = False
                                 End If
                             Next
+
+                            If ApplicationData.Current.LocalSettings.Values("inicio_usuario") = 0 Then
+                                If tweet.CreatedBy.Id = usuario_.Id Then
+                                    añadir = False
+                                End If
+                            End If
 
                             If añadir = True Then
                                 spTweets.Children.Add(Interfaz.Tweets.GenerarTweet(cliente, tweet, True))

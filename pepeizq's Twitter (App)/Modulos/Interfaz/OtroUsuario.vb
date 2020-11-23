@@ -26,7 +26,7 @@ Namespace Interfaz
             Dim contenido As Run = enlace.Inlines(0)
             Dim usuario As String = contenido.Text
 
-            Dim cliente As TwitterClient = Interfaz.Usuario.cliente_
+            Dim cliente As TwitterClient = Interfaz.Inicio.cliente_
 
             Cargar(cliente, Nothing, usuario)
 
@@ -37,7 +37,7 @@ Namespace Interfaz
             Dim boton As Button = sender
             Dim usuario As String = boton.Tag
 
-            Dim cliente As TwitterClient = Interfaz.Usuario.cliente_
+            Dim cliente As TwitterClient = Interfaz.Inicio.cliente_
 
             Cargar(cliente, Nothing, usuario)
 
@@ -85,7 +85,7 @@ Namespace Interfaz
 
                 '--------------------------------------------------------
 
-                Dim relacion As IRelationshipDetails = Await cliente.Users.GetRelationshipBetweenAsync(Interfaz.Usuario.usuario_.Id, usuario.Id)
+                Dim relacion As IRelationshipDetails = Await cliente.Users.GetRelationshipBetweenAsync(Interfaz.Inicio.usuario_.Id, usuario.Id)
 
                 Dim botonSeguir As Button = pagina.FindName("botonOtroUsuarioSeguir")
                 botonSeguir.Tag = New ClienteyUsuario(cliente, usuario)
@@ -342,7 +342,7 @@ Namespace Interfaz
             Dim boton As Button = sender
             Dim cosas As ClienteyUsuario = boton.Tag
 
-            Dim relacion As IRelationshipDetails = Await cosas.cliente.Users.GetRelationshipBetweenAsync(Interfaz.Usuario.usuario_.Id, cosas.usuario.Id)
+            Dim relacion As IRelationshipDetails = Await cosas.cliente.Users.GetRelationshipBetweenAsync(Interfaz.Inicio.usuario_.Id, cosas.usuario.Id)
 
             Dim menu As New MenuFlyout With {
                 .Placement = FlyoutPlacementMode.Bottom,

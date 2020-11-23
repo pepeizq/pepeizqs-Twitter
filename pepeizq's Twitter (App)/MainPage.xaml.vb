@@ -94,6 +94,7 @@ Public NotInheritable Class MainPage
 
         Trial.Cargar()
         Configuracion.Notificaciones.Cargar()
+        Configuracion.Inicio.Cargar()
         Conexion.Cargar()
         Interfaz.Pestañas.Cargar()
         Interfaz.Enviar.Cargar()

@@ -29,7 +29,7 @@ Namespace Interfaz
             Dim spTweet As StackPanel = pagina.FindName("spEscribirTweetOrigen")
             spTweet.Children.Clear()
 
-            spTweet.Children.Add(GenerarTweet(Interfaz.Usuario.cliente_, tweet, False))
+            spTweet.Children.Add(GenerarTweet(Interfaz.Inicio.cliente_, tweet, False))
             spTweet.Visibility = Visibility.Visible
 
             Dim tbEscribirMensaje As TextBox = pagina.FindName("tbEscribirMensaje")
@@ -136,6 +136,8 @@ Namespace Interfaz
             End If
 
             Await cliente_.Tweets.PublishTweetAsync(parametros)
+
+            tbEscribirMensaje.Text = String.Empty
 
             If spImagenes.Children.Count > 0 Then
                 For Each imagen In spImagenes.Children

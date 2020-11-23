@@ -144,6 +144,9 @@
   <data name="Config" xml:space="preserve">
     <value>Configuration</value>
   </data>
+  <data name="ConfigHome.Text" xml:space="preserve">
+    <value>Do you want your tweets to appear on the Home timeline?</value>
+  </data>
   <data name="ConfigMessage.Text" xml:space="preserve">
     <value>These options will apply to all Twitter users</value>
   </data>

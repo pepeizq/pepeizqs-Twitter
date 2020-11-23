@@ -459,6 +459,12 @@
                                 <TextBlock x:Uid="Notifications" Foreground="White" FontSize="18"/>
                             </Button.Content>
                         </Button>
+
+                        <Button x:Name="botonConfiguracionInicio" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10" BorderBrush="White" BorderThickness="0" Margin="10,0,0,0">
+                            <Button.Content>
+                                <TextBlock x:Uid="Home" Foreground="White" FontSize="18"/>
+                            </Button.Content>
+                        </Button>
                     </StackPanel>
 
                     <Grid Grid.Row="1" Padding="40" BorderBrush="{StaticResource BrushPrimario}" BorderThickness="1">
@@ -569,12 +575,27 @@
                                                 </Button.Content>
                                             </Button>
                                         </StackPanel>
-                                    </StackPanel> 
+                                    </StackPanel>
                                 </StackPanel>
-                            </ScrollViewer> 
-                        </Grid> 
-                    </Grid>
+                            </ScrollViewer>
+                        </Grid>
 
+                        <Grid x:Name="gridConfiguracionInicio" Visibility="Collapsed">
+                            <ScrollViewer VerticalScrollBarVisibility="Visible">
+                                <StackPanel Orientation="Vertical">
+                                    <StackPanel Orientation="Horizontal" Padding="0,10">
+                                        <iconos:FontAwesome Icon="Solid_InfoCircle" VerticalAlignment="Center" Foreground="White"/>
+                                        <TextBlock x:Uid="ConfigMessage" Margin="15,0,0,0" TextWrapping="Wrap" Foreground="White" VerticalAlignment="Center"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Vertical" Padding="0,10" Margin="0,30,0,0">
+                                        <TextBlock x:Uid="ConfigHome" Foreground="White"/>
+                                        <ToggleSwitch x:Name="tsInicioUsuario" Margin="0,15,0,0" Foreground="White" RequestedTheme="Dark"/>
+                                    </StackPanel>
+                                </StackPanel> 
+                            </ScrollViewer> 
+                        </Grid>
+                    </Grid>
                 </Grid>
 
                 <Grid x:Name="gridMasCosas"/>

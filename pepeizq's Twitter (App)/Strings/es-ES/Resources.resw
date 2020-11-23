@@ -144,6 +144,9 @@
   <data name="Config" xml:space="preserve">
     <value>Configuración</value>
   </data>
+  <data name="ConfigHome.Text" xml:space="preserve">
+    <value>¿Quieres que tus tweets aparezcan en el timeline de Inicio?</value>
+  </data>
   <data name="ConfigMessage.Text" xml:space="preserve">
     <value>Estas opciones se aplicarán a todos los usuarios de Twitter</value>
   </data>

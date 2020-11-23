@@ -109,6 +109,17 @@
             RemoveHandler botonNotificaciones.PointerExited, AddressOf Sale_Basico
             AddHandler botonNotificaciones.PointerExited, AddressOf Sale_Basico
 
+            Dim botonInicio As Button = pagina.FindName("botonConfiguracionInicio")
+
+            RemoveHandler botonInicio.Click, AddressOf Visibilidad_Config_Inicio
+            AddHandler botonInicio.Click, AddressOf Visibilidad_Config_Inicio
+
+            RemoveHandler botonInicio.PointerEntered, AddressOf Entra_Basico
+            AddHandler botonInicio.PointerEntered, AddressOf Entra_Basico
+
+            RemoveHandler botonInicio.PointerExited, AddressOf Sale_Basico
+            AddHandler botonInicio.PointerExited, AddressOf Sale_Basico
+
         End Sub
 
         '------------------------------------------------------
@@ -223,6 +234,18 @@
 
         End Sub
 
+        Private Sub Visibilidad_Config_Inicio(ByVal sender As Object, ByVal e As RoutedEventArgs)
+
+            Dim frame As Frame = Window.Current.Content
+            Dim pagina As Page = frame.Content
+
+            Dim boton As Button = pagina.FindName("botonConfiguracionInicio")
+            Dim grid As Grid = pagina.FindName("gridConfiguracionInicio")
+
+            Visibilidad_Pestañas_Config(boton, grid)
+
+        End Sub
+
         '------------------------------------------------------
 
         Public Sub Visibilidad_Pestañas(gridMostrar As Grid)
@@ -317,6 +340,11 @@
                 spImagenes.Children.Clear()
             End If
 
+            If gridMostrar.Name = "gridMenciones" Then
+                Dim tbMencionesAviso As TextBlock = pagina.FindName("tbMencionesAviso")
+                tbMencionesAviso.Text = String.Empty
+            End If
+
             If gridMostrar.Name = "gridUsuarioImagen" Then
                 spImagenBotones.Visibility = Visibility.Visible
             ElseIf gridMostrar.Name = "gridUsuarioVideo" Then
@@ -353,6 +381,12 @@
 
             Dim gridNotificaciones As Grid = pagina.FindName("gridConfiguracionNotificaciones")
             gridNotificaciones.Visibility = Visibility.Collapsed
+
+            Dim botonInicio As Button = pagina.FindName("botonConfiguracionInicio")
+            botonInicio.BorderThickness = New Thickness(0, 0, 0, 0)
+
+            Dim gridInicio As Grid = pagina.FindName("gridConfiguracionInicio")
+            gridInicio.Visibility = Visibility.Collapsed
 
             '--------------------------------------------------------
 

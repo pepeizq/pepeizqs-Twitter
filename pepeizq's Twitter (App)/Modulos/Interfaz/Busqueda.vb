@@ -48,7 +48,7 @@ Namespace Interfaz
 
             Dim tbBuscar As TextBox = pagina.FindName("tbBusqueda")
 
-            Dim cliente As TwitterClient = Interfaz.Usuario.cliente_
+            Dim cliente As TwitterClient = Interfaz.Inicio.cliente_
 
             Dim parametros As New Parameters.SearchUsersParameters(tbBuscar.Text) With {
                 .PageSize = 20
