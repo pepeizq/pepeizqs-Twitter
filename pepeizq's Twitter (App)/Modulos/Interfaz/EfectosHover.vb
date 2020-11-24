@@ -1,7 +1,5 @@
 ﻿Imports Microsoft.Toolkit.Uwp.UI.Animations
 Imports Microsoft.Toolkit.Uwp.UI.Controls
-Imports Windows.Media.Core
-Imports Windows.UI
 Imports Windows.UI.Core
 Imports Windows.UI.Xaml.Shapes
 

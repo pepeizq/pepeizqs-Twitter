@@ -179,7 +179,7 @@ Module Notificaciones
                     End If
                 End If
 
-                Dim bytesTexto() As Byte = Encoding.Default.GetBytes(tweet.FullText)
+                Dim bytesTexto() As Byte = Encoding.Default.GetBytes(tweet.Text)
                 Dim textoFinal As String = Encoding.UTF8.GetString(bytesTexto)
 
                 Dim tostada As New ToastContent With {

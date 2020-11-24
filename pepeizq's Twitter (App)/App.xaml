@@ -21,6 +21,5 @@
         <Color x:Key="ColorCajaRojaSombra">#6b2121</Color>
         <Color x:Key="ColorCajaRojaBoton">#c84d4d</Color>
         <Color x:Key="ColorCajaRojaBotonHover">#892a2a</Color>
-
     </Application.Resources>
 </Application>

@@ -500,7 +500,6 @@
 
                                         <StackPanel x:Name="spUsuariosGuardadosLista" Orientation="Vertical" Margin="10,0,10,0"/>
                                     </StackPanel>
-
                                 </StackPanel>
                             </ScrollViewer>
                         </Grid>
@@ -509,24 +508,26 @@
                             <ScrollViewer VerticalScrollBarVisibility="Visible">
                                 <StackPanel Orientation="Vertical">
                                     <Grid x:Name="gridMensajeTrialNotificaciones" Visibility="Collapsed" Margin="0,0,0,40">
-                                        <controls:DropShadowPanel Color="{StaticResource ColorCajaRojaSombra}" ShadowOpacity="0.5" BlurRadius="20">
-                                            <Grid Padding="15" Background="{StaticResource ColorCajaRojaFondo}">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                </Grid.ColumnDefinitions>
+                                        <Grid Width="750" Padding="15" BorderBrush="{StaticResource ColorCajaRojaSombra}" BorderThickness="1">
+                                            <Grid.Background>
+                                                <SolidColorBrush Color="{StaticResource ColorCajaRojaFondo}" Opacity="0.8"/>
+                                            </Grid.Background>
 
-                                                <iconos:FontAwesome Grid.Column="0" Margin="5,0,10,0" Icon="Solid_ExclamationCircle" VerticalAlignment="Center" Foreground="White"/>
-                                                <TextBlock Grid.Column="1" x:Uid="TrialMessageNotifications" Margin="10,0,40,0" TextWrapping="Wrap" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
 
-                                                <Button x:Name="botonComprarApp" Grid.Column="2" Style="{ThemeResource ButtonRevealStyle}" Background="Transparent" Padding="12,10">
-                                                    <Button.Content>
-                                                        <TextBlock x:Uid="BuyApp" Foreground="White"/>
-                                                    </Button.Content>
-                                                </Button>
-                                            </Grid>
-                                        </controls:DropShadowPanel>
+                                            <iconos:FontAwesome Grid.Column="0" Margin="5,0,10,0" Icon="Solid_ExclamationCircle" VerticalAlignment="Center" Foreground="White"/>
+                                            <TextBlock Grid.Column="1" x:Uid="TrialMessageNotifications" Margin="10,0,50,0" TextWrapping="Wrap" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+                                            <Button x:Name="botonComprarApp" Grid.Column="2" Style="{ThemeResource ButtonRevealStyle}" Background="{StaticResource ColorCajaRojaFondo}" Padding="12,10">
+                                                <Button.Content>
+                                                    <TextBlock x:Uid="BuyApp" Foreground="White"/>
+                                                </Button.Content>
+                                            </Button>
+                                        </Grid>
                                     </Grid>
 
                                     <StackPanel Orientation="Horizontal" Padding="0,10">

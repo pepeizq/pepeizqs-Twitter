@@ -180,7 +180,7 @@ Namespace Interfaz
 
                 Dim gridInferiorDerecha As New Grid With {
                     .HorizontalAlignment = HorizontalAlignment.Right,
-                    .Margin = New Thickness(10, 5, 25, 0),
+                    .Margin = New Thickness(10, 5, 10, 0),
                     .Width = 70
                 }
 

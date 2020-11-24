@@ -79,12 +79,6 @@ Public NotInheritable Class MainPage
 
     End Sub
 
-    Private Sub Nv_ItemFlyout(sender As NavigationViewItem, args As TappedRoutedEventArgs)
-
-        FlyoutBase.ShowAttachedFlyout(sender)
-
-    End Sub
-
     Private Sub Page_Loaded(sender As FrameworkElement, args As Object)
 
         'Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = "es-ES"
