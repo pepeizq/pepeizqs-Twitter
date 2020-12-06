@@ -138,13 +138,7 @@ Namespace Interfaz
             Await cliente_.Tweets.PublishTweetAsync(parametros)
 
             tbEscribirMensaje.Text = String.Empty
-
-            If spImagenes.Children.Count > 0 Then
-                For Each imagen In spImagenes.Children
-                    Dim boton As Button = imagen
-                    boton.IsEnabled = True
-                Next
-            End If
+            spImagenes.Children.Clear()
 
             pr.Visibility = Visibility.Collapsed
             botonEnviar.IsEnabled = True
