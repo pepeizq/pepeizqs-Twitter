@@ -756,7 +756,8 @@ Namespace Interfaz
 
                             Dim imagenMedia As New ImageEx With {
                                 .Stretch = Stretch.Uniform,
-                                .IsCacheEnabled = True
+                                .IsCacheEnabled = True,
+                                .EnableLazyLoading = True
                             }
 
                             If listaMedia.Count = 1 Then
