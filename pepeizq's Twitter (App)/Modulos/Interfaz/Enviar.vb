@@ -21,7 +21,7 @@ Namespace Interfaz
             Dim boton As Button = pagina.FindName("botonEscribir")
             Dim grid As Grid = pagina.FindName("gridEscribir")
 
-            Pestañas.Visibilidad_Pestañas_Usuario(boton, grid)
+            Pestañas.Visibilidad_Usuario(boton, grid, sender)
 
             Dim gridBotones As Grid = pagina.FindName("gridUsuarioBotones")
             gridBotones.Visibility = Visibility.Visible

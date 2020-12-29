@@ -41,7 +41,7 @@ Module Conexion
 
             If listaUsuarios.Count > 0 Then
                 Dim gridCarga As Grid = pagina.FindName("gridCarga")
-                Interfaz.Pestañas.Visibilidad_Pestañas(gridCarga)
+                Interfaz.Pestañas.Visibilidad(gridCarga, Nothing)
 
                 spUsuariosGuardados.Visibility = Visibility.Visible
                 CargarListaUsuarios()
@@ -52,7 +52,7 @@ Module Conexion
             spUsuariosGuardados.Visibility = Visibility.Collapsed
 
             Dim gridConfig As Grid = pagina.FindName("gridConfig")
-            Interfaz.Pestañas.Visibilidad_Pestañas(gridConfig)
+            Interfaz.Pestañas.Visibilidad(gridConfig, Nothing)
 
             Dim botonConfiguracionUsuarios As Button = pagina.FindName("botonConfiguracionUsuarios")
             Dim gridConfiguracionUsuarios As Grid = pagina.FindName("gridConfiguracionUsuarios")
@@ -94,7 +94,7 @@ Module Conexion
 
             If enseñarConfig = True Then
                 Dim gridConfig As Grid = pagina.FindName("gridConfig")
-                Interfaz.Pestañas.Visibilidad_Pestañas(gridConfig)
+                Interfaz.Pestañas.Visibilidad(gridConfig, Nothing)
 
                 Dim botonConfiguracionUsuarios As Button = pagina.FindName("botonConfiguracionUsuarios")
                 Dim gridConfiguracionUsuarios As Grid = pagina.FindName("gridConfiguracionUsuarios")
@@ -174,7 +174,7 @@ Module Conexion
             Dim pagina As Page = frame.Content
 
             Dim gridCarga As Grid = pagina.FindName("gridCarga")
-            Interfaz.Pestañas.Visibilidad_Pestañas(gridCarga)
+            Interfaz.Pestañas.Visibilidad(gridCarga, Nothing)
 
             Dim spCarga As StackPanel = pagina.FindName("spCarga")
             spCarga.Visibility = Visibility.Visible
@@ -298,7 +298,7 @@ Module Conexion
 
         If mostrarConfig = True Then
             Dim gridConfig As Grid = pagina.FindName("gridConfig")
-            Interfaz.Pestañas.Visibilidad_Pestañas(gridConfig)
+            Interfaz.Pestañas.Visibilidad(gridConfig, Nothing)
 
             Dim botonConfiguracionUsuarios As Button = pagina.FindName("botonConfiguracionUsuarios")
             Dim gridConfiguracionUsuarios As Grid = pagina.FindName("gridConfiguracionUsuarios")

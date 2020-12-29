@@ -50,7 +50,7 @@ Public NotInheritable Class MainPage
         nvPrincipal.MenuItems.Add(nvItemCuenta)
 
         nvPrincipal.MenuItems.Add(Interfaz.NavigationViewItems.Generar(recursos.GetString("Config"), FontAwesome5.EFontAwesomeIcon.Solid_Cog))
-        nvPrincipal.MenuItems.Add(Interfaz.NavigationViewItems.Generar(recursos.GetString("MoreThings"), FontAwesome5.EFontAwesomeIcon.Solid_Cube))
+        nvPrincipal.MenuItems.Add(New NavigationViewItemSeparator)
 
     End Sub
 
@@ -62,7 +62,7 @@ Public NotInheritable Class MainPage
             Dim sp As StackPanel = args.InvokedItem
 
             If sp.Name = "spCuentaSeleccionada" Then
-                Interfaz.Pestañas.Visibilidad_Pestañas(gridUsuario)
+                Interfaz.Pestañas.Visibilidad(gridUsuario, sender)
             End If
         End If
 
@@ -70,10 +70,8 @@ Public NotInheritable Class MainPage
             Dim item As TextBlock = args.InvokedItem
 
             If item.Text = recursos.GetString("Config") Then
-                Interfaz.Pestañas.Visibilidad_Pestañas(gridConfig)
+                Interfaz.Pestañas.Visibilidad(gridConfig, sender)
                 Interfaz.Pestañas.Visibilidad_Pestañas_Config(botonConfiguracionUsuarios, gridConfiguracionUsuarios)
-            ElseIf item.Text = recursos.GetString("MoreThings") Then
-                Interfaz.Pestañas.Visibilidad_Pestañas(gridMasCosas)
             End If
         End If
 

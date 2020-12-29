@@ -889,7 +889,7 @@ Namespace Interfaz
             botonImagen.Visibility = Visibility.Visible
 
             Dim gridImagen As Grid = pagina.FindName("gridUsuarioImagen")
-            Pestañas.Visibilidad_Pestañas_Usuario(botonImagen, gridImagen)
+            Pestañas.Visibilidad_Usuario(botonImagen, gridImagen, sender)
 
             Dim gridMedia As Grid = sender
             Dim imagenOrigen As ImageEx = gridMedia.Children(0)
@@ -1052,7 +1052,7 @@ Namespace Interfaz
             botonVideo.Visibility = Visibility.Visible
 
             Dim gridVideo As Grid = pagina.FindName("gridUsuarioVideo")
-            Pestañas.Visibilidad_Pestañas_Usuario(botonVideo, gridVideo)
+            Pestañas.Visibilidad_Usuario(botonVideo, gridVideo, sender)
 
             Dim gridMedia As Grid = sender
             Dim enlaceVideo As String = gridMedia.Tag

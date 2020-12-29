@@ -26,11 +26,11 @@ Namespace Interfaz
             Dim pagina As Page = frame.Content
 
             Dim gridUsuario As Grid = pagina.FindName("gridUsuario")
-            Pestañas.Visibilidad_Pestañas(gridUsuario)
+            Pestañas.Visibilidad(gridUsuario, Nothing)
 
             Dim botonTweets As Button = pagina.FindName("botonUsuarioTweets")
             Dim gridTweets As Grid = pagina.FindName("gridUsuarioTweets")
-            Pestañas.Visibilidad_Pestañas_Usuario(botonTweets, gridTweets)
+            Pestañas.Visibilidad_Usuario(botonTweets, gridTweets, Nothing)
 
             Dim nvItemCuenta As NavigationViewItem = pagina.FindName("nvItemCuenta")
             nvItemCuenta.Visibility = Visibility.Visible

@@ -24,8 +24,35 @@
                         PaneDisplayMode="Top" AlwaysShowHeader="False" IsSettingsVisible="False" IsBackButtonVisible="Collapsed">
 
             <NavigationView.Resources>
-                <SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground" Color="Transparent" />
+                <SolidColorBrush x:Key="NavigationViewSelectionIndicatorForeground" Color="Transparent"/>
             </NavigationView.Resources>
+
+            <NavigationView.PaneCustomContent>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="botonMasCosas">
+                        <Button.Flyout>
+                            <Flyout>
+                                <Flyout.FlyoutPresenterStyle>
+                                    <Style TargetType="FlyoutPresenter">
+                                        <Setter Property="Background" Value="Transparent"/>
+                                        <Setter Property="Padding" Value="0"/>
+                                    </Style>
+                                </Flyout.FlyoutPresenterStyle>
+
+                                <Grid Padding="10" MaxHeight="500">
+                                    <Grid.Background>
+                                        <SolidColorBrush Color="{StaticResource ColorCuarto}" Opacity="0.9"/>
+                                    </Grid.Background>
+
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                        <StackPanel x:Name="spMasCosas" Orientation="Vertical" Margin="5" Padding="0,0,15,0"/>
+                                    </ScrollViewer>
+                                </Grid>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                </StackPanel>
+            </NavigationView.PaneCustomContent>
 
             <Grid Padding="20">
                 <Grid x:Name="gridUsuario">
@@ -598,8 +625,6 @@
                         </Grid>
                     </Grid>
                 </Grid>
-
-                <Grid x:Name="gridMasCosas"/>
             </Grid>
         </NavigationView>      
     </Grid>

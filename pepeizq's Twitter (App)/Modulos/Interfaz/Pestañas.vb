@@ -1,4 +1,6 @@
-﻿Namespace Interfaz
+﻿Imports Windows.UI.Xaml.Media.Animation
+
+Namespace Interfaz
     Module Pestañas
 
         Public Sub Cargar()
@@ -132,7 +134,7 @@
             Dim boton As Button = pagina.FindName("botonUsuarioTweets")
             Dim grid As Grid = pagina.FindName("gridUsuarioTweets")
 
-            Visibilidad_Pestañas_Usuario(boton, grid)
+            Visibilidad_Usuario(boton, grid, sender)
 
         End Sub
 
@@ -144,7 +146,7 @@
             Dim boton As Button = pagina.FindName("botonEscribir")
             Dim grid As Grid = pagina.FindName("gridEscribir")
 
-            Visibilidad_Pestañas_Usuario(boton, grid)
+            Visibilidad_Usuario(boton, grid, sender)
 
         End Sub
 
@@ -156,7 +158,7 @@
             Dim boton As Button = pagina.FindName("botonMenciones")
             Dim grid As Grid = pagina.FindName("gridMenciones")
 
-            Visibilidad_Pestañas_Usuario(boton, grid)
+            Visibilidad_Usuario(boton, grid, sender)
 
         End Sub
 
@@ -168,7 +170,7 @@
             Dim boton As Button = pagina.FindName("botonBusqueda")
             Dim grid As Grid = pagina.FindName("gridBusqueda")
 
-            Visibilidad_Pestañas_Usuario(boton, grid)
+            Visibilidad_Usuario(boton, grid, sender)
 
         End Sub
 
@@ -180,7 +182,7 @@
             Dim boton As Button = pagina.FindName("botonOtroUsuarioTweets")
             Dim grid As Grid = pagina.FindName("gridOtroUsuarioTweets")
 
-            Visibilidad_Pestañas_Usuario(boton, grid)
+            Visibilidad_Usuario(boton, grid, sender)
 
         End Sub
 
@@ -192,7 +194,7 @@
             Dim boton As Button = pagina.FindName("botonUsuarioImagen")
             Dim grid As Grid = pagina.FindName("gridUsuarioImagen")
 
-            Visibilidad_Pestañas_Usuario(boton, grid)
+            Visibilidad_Usuario(boton, grid, sender)
 
         End Sub
 
@@ -204,7 +206,7 @@
             Dim boton As Button = pagina.FindName("botonUsuarioVideo")
             Dim grid As Grid = pagina.FindName("gridUsuarioVideo")
 
-            Visibilidad_Pestañas_Usuario(boton, grid)
+            Visibilidad_Usuario(boton, grid, sender)
 
         End Sub
 
@@ -248,7 +250,7 @@
 
         '------------------------------------------------------
 
-        Public Sub Visibilidad_Pestañas(gridMostrar As Grid)
+        Public Sub Visibilidad(gridMostrar As Grid, origen As Object)
 
             Dim frame As Frame = Window.Current.Content
             Dim pagina As Page = frame.Content
@@ -262,14 +264,23 @@
             Dim gridConfig As Grid = pagina.FindName("gridConfig")
             gridConfig.Visibility = Visibility.Collapsed
 
-            Dim gridMasCosas As Grid = pagina.FindName("gridMasCosas")
-            gridMasCosas.Visibility = Visibility.Collapsed
-
             gridMostrar.Visibility = Visibility.Visible
+
+            '--------------------------------------------------------
+
+            'If Not origen Is Nothing Then
+            '    ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("animacion", origen)
+            '    Dim animacion As ConnectedAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("animacion")
+
+            '    If Not animacion Is Nothing Then
+            '        animacion.Configuration = New BasicConnectedAnimationConfiguration
+            '        animacion.TryStart(gridMostrar)
+            '    End If
+            'End If
 
         End Sub
 
-        Public Sub Visibilidad_Pestañas_Usuario(botonMostrar As Button, gridMostrar As Grid)
+        Public Sub Visibilidad_Usuario(botonMostrar As Button, gridMostrar As Grid, origen As Object)
 
             Dim frame As Frame = Window.Current.Content
             Dim pagina As Page = frame.Content
@@ -326,6 +337,18 @@
 
             botonMostrar.BorderThickness = New Thickness(0, 0, 0, 1)
             gridMostrar.Visibility = Visibility.Visible
+
+            '--------------------------------------------------------
+
+            If Not origen Is Nothing Then
+                ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("animacion2", origen)
+                Dim animacion As ConnectedAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("animacion2")
+
+                If Not animacion Is Nothing Then
+                    animacion.Configuration = New DirectConnectedAnimationConfiguration
+                    animacion.TryStart(gridMostrar)
+                End If
+            End If
 
             '--------------------------------------------------------
 

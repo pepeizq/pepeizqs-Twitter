@@ -89,6 +89,7 @@ NotInheritable Class App
         Dim nuevaSesion As New ExtendedExecutionForegroundSession With {
             .Reason = ExtendedExecutionForegroundReason.Unconstrained
         }
+        AddHandler nuevaSesion.Revoked, AddressOf SesionRevocada
 
         Dim resultado As ExtendedExecutionForegroundResult = Await nuevaSesion.RequestExtensionAsync
 
@@ -99,5 +100,14 @@ NotInheritable Class App
         End If
 
     End Function
+
+    Private Sub SesionRevocada(sender As Object, e As ExtendedExecutionForegroundRevokedEventArgs)
+
+        If Not sesion Is Nothing Then
+            sesion.Dispose()
+            sesion = Nothing
+        End If
+
+    End Sub
 
 End Class
