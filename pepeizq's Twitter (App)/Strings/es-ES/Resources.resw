@@ -297,6 +297,9 @@
   <data name="Send.Text" xml:space="preserve">
     <value>Enviar</value>
   </data>
+  <data name="SendError" xml:space="preserve">
+    <value>Error en la api de Twitter, no se pudo enviar el tweet.</value>
+  </data>
   <data name="ShareTweet" xml:space="preserve">
     <value>Compartir Tweet</value>
   </data>

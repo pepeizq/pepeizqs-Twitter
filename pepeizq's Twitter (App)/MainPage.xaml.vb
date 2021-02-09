@@ -9,7 +9,7 @@ Public NotInheritable Class MainPage
 
     Private Sub Nv_Loaded(sender As Object, e As RoutedEventArgs)
 
-        Dim recursos As New Resources.ResourceLoader()
+        Dim recursos As New Resources.ResourceLoader
 
         Dim nvItemCuenta As New NavigationViewItem With {
             .Margin = New Thickness(-8, 0, 0, 0),

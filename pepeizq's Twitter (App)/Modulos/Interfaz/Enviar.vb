@@ -80,6 +80,8 @@ Namespace Interfaz
 
         Private Async Sub EnviarMensaje(sender As Object, e As RoutedEventArgs)
 
+            Dim recursos As New Resources.ResourceLoader
+
             Dim botonEnviar As Button = sender
             botonEnviar.IsEnabled = False
 
@@ -135,10 +137,13 @@ Namespace Interfaz
                 parametros.Text = tbEscribirMensaje.Text.Trim
             End If
 
-            Await cliente_.Tweets.PublishTweetAsync(parametros)
-
-            tbEscribirMensaje.Text = String.Empty
-            spImagenes.Children.Clear()
+            Try
+                Await cliente_.Tweets.PublishTweetAsync(parametros)
+                tbEscribirMensaje.Text = String.Empty
+                spImagenes.Children.Clear()
+            Catch ex As Exception
+                Notificaciones.Toast(recursos.GetString("SendError"))
+            End Try
 
             pr.Visibility = Visibility.Collapsed
             botonEnviar.IsEnabled = True
